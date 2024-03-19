@@ -16,7 +16,7 @@ protected:
 	bool isFlipX = false;
 	bool isFlipY = false;
 
-	Scene* scene;
+	Scene* scene = nullptr;
 
 public:
 	GameObject(const std::string& name = "");

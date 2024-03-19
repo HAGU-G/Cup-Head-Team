@@ -152,16 +152,24 @@ float Utils::Angle360(const sf::Vector2f& vec)
 		angle1 = 2.f * M_PI - angle1;
 	return RadianToDegree(angle1);
 }
-float Utils::Angle360(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
+float Utils::AngleSize(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
 {
 	return RadianToDegree(acosf((vec1.x * vec2.x + vec1.y * vec2.y) / (Magnitude(vec1) * Magnitude(vec2))));
 }
-float Utils::Angle360(const sf::Vector2f& vec1, float degree)
+float Utils::AngleSize(const sf::Vector2f& vec1, float degree)
 {
 	sf::Vector2f vec2 = { 1.f, 0.f };
 	vec2 = sf::Transform().rotate(degree).translate(vec2).transformPoint(vec2);
-	return Angle360(vec1, vec2);
+	return AngleSize(vec1, vec2);
 }
+
+float Utils::AngleDirection(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
+{
+	float temp = asinf((vec1.x * vec2.y - vec2.x * vec1.y) / (Magnitude(vec1) * Magnitude(vec2)));
+	return temp > 0.f ? 1.f : 0.f + temp < 0.f ? -1.f : 0.f + temp == -0.f ? -0.f : 0.f;
+}
+
+
 
 
 

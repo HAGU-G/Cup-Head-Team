@@ -6,6 +6,11 @@ ObjectBullet::ObjectBullet(const std::string& name)
 {
 }
 
+ObjectBullet::~ObjectBullet()
+{
+	OnDie();
+}
+
 void ObjectBullet::Init()
 {
 }
@@ -23,8 +28,9 @@ void ObjectBullet::Reset()
 void ObjectBullet::Update(float dt)
 {
 	Translate(direction * speed * dt);
-	if (type == Type::Tracking)
+	if (type == Type::Homing)
 	{
+		if (doHoming) { Homing(dt); }
 		Flip();
 	}
 
@@ -32,8 +38,9 @@ void ObjectBullet::Update(float dt)
 
 void ObjectBullet::LateUpdate(float dt)
 {
-	if (moveDistance > range)
+	if (moveDistance >= range)
 	{
+		OnDie();
 		scene->RemoveGo(this);
 	}
 }
@@ -54,6 +61,7 @@ void ObjectBullet::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 	Flip();
 	this->scene = scene;
 	scene->AddGo(this);
+	OnCreate();
 }
 
 void ObjectBullet::SetDirection(Direction direction)
@@ -79,6 +87,21 @@ void ObjectBullet::Flip()
 	}
 }
 
+void ObjectBullet::Homing(float dt)
+{
+	SetRotation(rotation + rotateSpeed * dt * Utils::AngleDirection(direction, targetPosition - position));
+	SetDirection(sf::Transform().rotate(rotation).transformPoint(1.f, 0.f), true);
+
+}
+
+void ObjectBullet::OnCreate()
+{
+}
+
+void ObjectBullet::OnDie()
+{
+}
+
 void ObjectBullet::SetPosition(const sf::Vector2f& position)
 {
 	SpriteGo::SetPosition(position);
@@ -87,4 +110,9 @@ void ObjectBullet::SetPosition(const sf::Vector2f& position)
 	moveDistance += Utils::Distance(prePosition, position);
 	prePosition = position;
 
+}
+
+void ObjectBullet::SetTargetPosition(const sf::Vector2f position)
+{
+	targetPosition = position;
 }
