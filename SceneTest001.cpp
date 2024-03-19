@@ -17,6 +17,8 @@ void SceneTest001::AddResource()
 
 void SceneTest001::Init()
 {
+
+
 	Scene::Init();
 }
 

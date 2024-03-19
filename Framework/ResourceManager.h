@@ -51,10 +51,6 @@ public:
 		}
 		return count;
 	}
-	size_t Add(const std::shared_ptr<Scene>& scene)
-	{
-		return Add(scene->GetResourcePathList());
-	}
 
 	//resourcePathList를 resourceObjectList의 파일 경로들로 변경
 	size_t AddFromLoaded()
