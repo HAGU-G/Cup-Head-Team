@@ -1,82 +1,92 @@
 #pragma once
-#ifndef OBJECT_H
-#define OBJECT_H
-
-
-class Scene;
 
 class GameObject
 {
-private:
-	static size_t currentCount;
-	static size_t totalCount;
-
-	std::string key; //"gameObjectType_CreatedTime_totalCount"
-	GAME_OBJECT_TYPE gameObjectType;
-
-	//AddObject 하기 전에 호출.
-	void Setkey(const std::string& loadedKey);
-
 protected:
-	Scene* scene;
-	std::list<GAME_OBJECT_TAG> gameObjectTagList;
+	bool active = true;
 
-	float drawDeep = 0.f;
+	Origins originPreset = Origins::TL;
+	sf::Vector2f origin = { 0.f, 0.f };
+	sf::Vector2f position = { 0.f, 0.f };
+	float rotation = 0.f; // degree
+	sf::Vector2f scale = { 1.f, 1.f };
 
-	bool isActive = true;
-	bool isShow = true;
-	bool isMute = false;
+	bool isFlipX = false;
+	bool isFlipY = false;
 
-	sf::Vector2f position;
-	sf::Vector2f direction;
-
-	explicit GameObject(Scene* scene, const std::string& name, GAME_OBJECT_TYPE objectType = GAME_OBJECT_TYPE::NONE);
-	GameObject(const GameObject&) = delete;
-	GameObject(GameObject&&) = delete;
-	GameObject& operator=(const GameObject&) = delete;
-	GameObject& operator=(GameObject&&) = delete;
 public:
-
+	GameObject(const std::string& name = "");
 	virtual ~GameObject();
 
-	//Management
-	virtual void Init(); //empty
-	virtual void PreUpdate(float timeDelta, float timeScale); //empty
-	virtual void Update(float timeDelta, float timeScale); //empty
-	virtual void PostUpdate(float timeDelta, float timeScale); //empty
-	virtual void Draw(sf::RenderWindow& window); //empty
-	virtual void Reset(); //empty
+	static bool CompareDrawOrder(const GameObject& lhs, const GameObject& rhs)
+	{
+		if (lhs.sortLayer != rhs.sortLayer)
+		{
+			return lhs.sortLayer < rhs.sortLayer;
+		}
+		return lhs.sortOrder < rhs.sortOrder;
+	}
+	static bool CompareDrawOrder(const GameObject* lhs, const GameObject* rhs)
+	{
+		if (lhs->sortLayer != rhs->sortLayer)
+		{
+			return lhs->sortLayer < rhs->sortLayer;
+		}
+		return lhs->sortOrder < rhs->sortOrder;
+	}
+
+	bool operator<(const GameObject& rhs)
+	{
+		if (sortLayer != rhs.sortLayer)
+		{
+			return sortLayer < rhs.sortLayer;
+		}
+		return sortOrder < rhs.sortOrder;
+	}
+
+	bool GetActive() const { return active; }
+	virtual void SetActive(bool active) { this->active = active; }
+
+	sf::Vector2f GetOrigin() const { return origin; }
+
+	virtual void SetOrigin(Origins preset);
+	virtual void SetOrigin(const sf::Vector2f& newOrigin)
+	{
+		originPreset = Origins::Custom;
+		origin = newOrigin;
+	}
+
+	sf::Vector2f GetPosition() const { return position; }
+	virtual void SetPosition(const sf::Vector2f& pos) { position = pos; }
+	virtual void Translate(const sf::Vector2f& delta) { position += delta; };
+
+	float GetRotation() const { return rotation; }
+	virtual void SetRotation(float r) { rotation = r; }
+
+	sf::Vector2f GetScale() const { return scale; }
+	virtual void SetScale(const sf::Vector2f& scale);
+
+	bool GetFlipX() const { return isFlipX; }
+	virtual void SetFlipX(bool flip) { isFlipX = flip; }
+
+	virtual sf::FloatRect GetLocalBounds() { return sf::FloatRect(); }
+	virtual sf::FloatRect GetGlobalBounds() { return sf::FloatRect(position, { 0.f, 0.f }); }
+
+	bool GetFlipY() const { return isFlipY; }
+	virtual void SetFlipY(bool flip) { isFlipY = flip; }
+
+	virtual void Init();
 	virtual void Release();
 
-	//Set
-	void SetScene(Scene* scene);
-	void SetPositionX(float x);
-	void SetPositionY(float y);
-	virtual void SetPosition(const sf::Vector2f& position);
-	void SetDrawDeep(float deep);
-	void SetActive(bool value);
-	inline void SetShow(bool value) { isShow = value; }
-	inline void SetMute(bool value) { isMute = value; }
+	virtual void Reset();
 
-	//Get
-	static size_t GetObjectsCount();
-	static size_t GetObjectsTotalCount();
-	std::string GetKey() const;
-	inline Scene* GetScene() const { return scene; }
-	const GAME_OBJECT_TYPE& GetGameObjectType() const;
-	const std::list<GAME_OBJECT_TAG>& GetGameObjectTagList() const;
-	const sf::Vector2f& GetPosition() const;
-	const float& GetDrawDeep() const;
-	inline bool IsActive() const { return isActive; }
-	inline bool IsShow() const { return isShow; }
-	inline bool IsMute() const { return isMute; }
+	virtual void Update(float dt);
+	virtual void LateUpdate(float dt);
+	virtual void FixedUpdate(float dt);
+	virtual void Draw(sf::RenderWindow& window);
 
-	//Add
-	bool AddTag(GAME_OBJECT_TAG tag);
-
-	//Remove
-	bool RemoveTag(GAME_OBJECT_TAG tag);
+	std::string name = "";
+	int sortLayer = 0;
+	int sortOrder = 0;
 };
 
-
-#endif // !OBJECT_H

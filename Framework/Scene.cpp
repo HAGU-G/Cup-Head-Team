@@ -1,208 +1,341 @@
 #include "pch.h"
 #include "Scene.h"
-#include "Framework.h"
 
-
-size_t Scene::currentCount = 0;
-size_t Scene::totalCount = 0;
-
-Scene::Scene(const std::string& name)
-	:name(name)
+Scene::Scene(SceneIds id) :
+	id(id),
+	texResMgr(RES_MGR_TEXTURE),
+	fontResMgr(RES_MGR_FONT),
+	soundResMgr(RES_MGR_SOUND_BUFFER)
 {
-	currentCount++;
-	totalCount++;
 }
 
-Scene::~Scene()
+sf::Vector2f Scene::ScreenToWorld(sf::Vector2i screenPos)
 {
-	currentCount--;
+	return FRAMEWORK.GetWindow().mapPixelToCoords(screenPos, worldView);
 }
 
-void Scene::AddResource()
+sf::Vector2i Scene::WorldToScreen(sf::Vector2f worldPos)
 {
+	return FRAMEWORK.GetWindow().mapCoordsToPixel(worldPos, worldView);
+}
+
+sf::Vector2f Scene::ScreenToUi(sf::Vector2i screenPos)
+{
+	return FRAMEWORK.GetWindow().mapPixelToCoords(screenPos, uiView);
+}
+
+sf::Vector2i Scene::UiToScreen(sf::Vector2f uiPos)
+{
+	return FRAMEWORK.GetWindow().mapCoordsToPixel(uiPos, uiView);
 }
 
 void Scene::Init()
 {
-	view.setSize(Framework::GetDefaultSize().x, Framework::GetDefaultSize().x / Framework::GetWindowRatio().x * Framework::GetWindowRatio().y);
-	view.setCenter(view.getSize() * 0.5f);
-	resetView = view;
-}
-
-void Scene::PreUpdate(float timeDelta, float timeScale)
-{
-	mousePosWorld = Framework::GetWindow().mapPixelToCoords(Framework::GetMousePosWindow(), view);
-	for (auto& pair : gameObjects)
+	for (auto obj : gameObjects)
 	{
-		if (pair.second->IsActive())
-			pair.second->PreUpdate(timeDelta, timeScale);
-	}
-}
-
-void Scene::Update(float timeDelta, float timeScale)
-{
-	for (auto& pair : gameObjects)
-	{
-		if (pair.second->IsActive())
-			pair.second->Update(timeDelta, timeScale);
-	}
-}
-void Scene::PostUpdate(float timeDelta, float timeScale)
-{
-	for (auto& pair : gameObjects)
-	{
-		if (pair.second->IsActive())
-			pair.second->PostUpdate(timeDelta, timeScale);
+		obj->Init();
 	}
 
-
-	//delete
-	while (!deleteDeque.empty())
+	for (auto obj : uiGameObjects)
 	{
-		auto it = gameObjects.find(deleteDeque.front());
-		if (it != gameObjects.end())
-		{
-			auto drawIt = drawList.begin();
-			while (drawIt != drawList.end())
-			{
-				if (drawIt->first == it->first)
-				{
-					drawIt = drawList.erase(drawIt);
-					break;
-				}
-				else
-				{
-					drawIt++;
-				}
-			}
-			delete it->second;
-			gameObjects.erase(it);
-		}
-		deleteDeque.pop_front();
-	}
-}
-
-void Scene::Draw(sf::RenderWindow& window)
-{
-	if (doDrawLayerSort)
-		SortDrawList();
-	const sf::View& preView = window.getView();
-	window.setView(view);
-	for (auto& pair : drawList)
-	{
-		if (pair.second->IsActive() && pair.second->IsShow())
-			pair.second->Draw(window);
-	}
-	window.setView(preView);
-}
-
-void Scene::Reset()
-{
-	for (auto& pair : gameObjects)
-	{
-		delete pair.second;
+		obj->Init();
 	}
 }
 
 void Scene::Release()
 {
-	for (auto& pair : gameObjects)
+	for (auto obj : gameObjects)
 	{
-		pair.second->Release();
+		delete obj;
 	}
+
+	for (auto obj : uiGameObjects)
+	{
+		delete obj;
+	}
+
 	gameObjects.clear();
-	drawList.clear();
+	uiGameObjects.clear();
 }
 
 void Scene::Enter()
 {
+	for (auto obj : gameObjects)
+	{
+		obj->Reset();
+	}
+
+	for (auto obj : uiGameObjects)
+	{
+		obj->Reset();
+	}
 }
 
 void Scene::Exit()
 {
-}
-
-float Scene::GetTimeScale() const
-{
-	if (useGlobalTimeScale)
+	for (auto obj : removeGameObjects)
 	{
-		return Framework::GetGlobalTimeScale();
+		gameObjects.remove(obj);
+		uiGameObjects.remove(obj);
+		delete obj;
 	}
-	else
+	removeGameObjects.clear();
+}
+
+void Scene::Update(float dt)
+{
+	for (auto obj : gameObjects)
 	{
-		return timeScale;
-	}
-}
-
-size_t Scene::GetScenesCount()
-{
-	return currentCount;
-}
-
-size_t Scene::GetScenesTotalCount()
-{
-	return totalCount;
-}
-
-const std::string& Scene::GetSceneName() const
-{
-	return name;
-}
-
-
-const GameObject* Scene::AddGo(GameObject* object)
-{
-	auto it = gameObjects.insert(std::make_pair(object->GetKey(), object));
-
-	if (!it.second)
-		return nullptr;
-
-	if (drawList.empty())
-	{
-		drawList.push_back(*it.first);
-		return object;
-	}
-	else
-	{
-		auto drawIt = drawList.begin();
-		while (drawIt != drawList.end())
+		if (obj->GetActive())
 		{
-			if (it.first->second->GetDrawDeep() > drawIt->second->GetDrawDeep())
+			obj->Update(dt);
+		}
+	}
+
+	for (auto obj : uiGameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->Update(dt);
+		}
+	}
+}
+
+void Scene::LateUpdate(float dt)
+{
+	for (auto obj : gameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->LateUpdate(dt);
+		}
+	}
+
+	for (auto obj : uiGameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->LateUpdate(dt);
+		}
+	}
+
+	for (auto obj : resortingGameObjects)
+	{
+		auto it = std::find(gameObjects.begin(), gameObjects.end(), obj);
+		if (it != gameObjects.end())
+		{
+			gameObjects.remove(obj);
+			AddGo(obj, Layers::World);
+			continue;
+		}
+
+		it = std::find(uiGameObjects.begin(), uiGameObjects.end(), obj);
+		if (it != uiGameObjects.end())
+		{
+			uiGameObjects.remove(obj);
+			AddGo(obj, Layers::Ui);
+			continue;
+		}
+	}
+
+	for (auto obj : removeGameObjects)
+	{
+		gameObjects.remove(obj);
+		uiGameObjects.remove(obj);
+
+		delete obj;
+	}
+	removeGameObjects.clear();
+}
+
+void Scene::FixedUpdate(float dt)
+{
+	for (auto obj : gameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->FixedUpdate(dt);
+		}
+	}
+
+	for (auto obj : uiGameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->FixedUpdate(dt);
+		}
+	}
+}
+
+void Scene::Draw(sf::RenderWindow& window)
+{
+	// gameObjects.sort();
+	//std::sort(gameObjects.begin(), gameObjects.end(),
+	//	[](GameObject* a, GameObject* b) {
+	//		// a + b
+	//		if (a->sortLayer != b->sortLayer)
+	//		{
+	//			return a->sortLayer < b->sortLayer;
+	//		}
+	//		return a->sortOrder < b->sortOrder;
+	//	});
+	//std::sort(uiGameObjects.begin(), uiGameObjects.end(),
+	//	[](GameObject* a, GameObject* b) {
+	//		// a + b
+	//		if (a->sortLayer != b->sortLayer)
+	//		{
+	//			return a->sortLayer < b->sortLayer;
+	//		}
+	//		return a->sortOrder < b->sortOrder;
+	//	});
+
+	const sf::View& saveView = window.getView();
+
+	window.setView(worldView);
+
+	for (auto obj : gameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->Draw(window);
+		}
+	}
+
+	window.setView(uiView);
+	for (auto obj : uiGameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->Draw(window);
+		}
+	}
+
+	window.setView(saveView); // 처음 사용한 뷰를 다시 되돌린다.
+}
+
+GameObject* Scene::FindGo(const std::string& name, Layers layer)
+{
+	if ((layer & Layers::World) == Layers::World)
+	{
+		for (auto obj : gameObjects)
+		{
+			if (obj->name == name)
 			{
-				drawList.insert(drawIt, *it.first);
-				return object;
-			}
-			else
-			{
-				drawIt++;
+				return obj;
 			}
 		}
-		drawList.push_back(*it.first);
-		return object;
 	}
-}
 
-void Scene::SortDrawList()
-{
-	drawList.sort(
-		[](std::pair<std::string, GameObject*>& left,
-			std::pair<std::string, GameObject*>& right)
+	if ((layer & Layers::Ui) == Layers::Ui)
+	{
+		for (auto obj : uiGameObjects)
 		{
-			return left.second->GetDrawDeep() > right.second->GetDrawDeep();
-		});
-}
+			if (obj->name == name)
+			{
+				return obj;
+			}
+		}
+	}
 
-const GameObject* Scene::FindGo(const std::string& key) const
-{
-	auto it = gameObjects.find(key);
-	if (it != gameObjects.end())
-		return it->second;
 	return nullptr;
 }
 
-void Scene::DeleteGo(const std::string& key)
+int Scene::FindGoAll(const std::string& name, std::list<GameObject*>& list, Layers layer)
 {
-	deleteDeque.push_back(key);
+	list.clear();
+
+	if ((layer & Layers::World) == Layers::World)
+	{
+		for (auto obj : gameObjects)
+		{
+			if (obj->name == name)
+			{
+				list.push_back(obj);
+			}
+		}
+	}
+
+	if ((layer & Layers::Ui) == Layers::Ui)
+	{
+		for (auto obj : uiGameObjects)
+		{
+			if (obj->name == name)
+			{
+				list.push_back(obj);
+			}
+		}
+	}
+
+	return list.size();
 }
 
+GameObject* Scene::AddGo(GameObject* obj, Layers layer)
+{
+	if (layer == Layers::World)
+	{
+		if (std::find(gameObjects.begin(), gameObjects.end(), obj) == gameObjects.end())
+		{
+			if (gameObjects.empty())
+			{
+				gameObjects.push_back(obj);
+				return obj;
+			}
 
+			auto it = gameObjects.begin();
+			while (it != gameObjects.end())
+			{
+				if (GameObject::CompareDrawOrder(obj, *it))
+				{
+					gameObjects.insert(it, obj);
+					return obj;
+				}
+				++it;
+			}
+			gameObjects.push_back(obj);
+			return obj;
+		}
+	}
+
+	if (layer == Layers::Ui)
+	{
+		if (std::find(uiGameObjects.begin(), uiGameObjects.end(), obj) == uiGameObjects.end())
+		{
+			if (uiGameObjects.empty())
+			{
+				uiGameObjects.push_back(obj);
+				return obj;
+			}
+
+			auto it = uiGameObjects.begin();
+			while (it != uiGameObjects.end())
+			{
+				if (GameObject::CompareDrawOrder(obj, *it))
+				{
+					uiGameObjects.insert(it, obj);
+					return obj;
+				}
+				++it;
+			}
+			uiGameObjects.push_back(obj);
+			return obj;
+		}
+	}
+	return nullptr;
+}
+
+void Scene::RemoveGo(GameObject* obj)
+{
+	//obj->SetActive(false);
+	if (std::find(removeGameObjects.begin(), removeGameObjects.end(), obj) == removeGameObjects.end())
+	{
+		removeGameObjects.push_back(obj);
+	}
+}
+
+void Scene::ResortGo(GameObject* obj)
+{
+	if (std::find(resortingGameObjects.begin(), resortingGameObjects.end(), obj) == resortingGameObjects.end())
+	{
+		resortingGameObjects.push_back(obj);
+	}
+}

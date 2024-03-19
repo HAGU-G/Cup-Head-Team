@@ -4,9 +4,9 @@
 
 int main()
 {
-	Framework::Init();
-	Framework::MainLoop();
-	Framework::Release();
+	FRAMEWORK.Init(1920,1080,"Cup Head");
+	FRAMEWORK.Do();
+	FRAMEWORK.Release();
 
 	return 0;
 }

@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "rapidcsv.h"
 #include "Animator.h"
+#include "rapidcsv.h"
 
 Animator::Animator()
 {
@@ -8,8 +8,6 @@ Animator::Animator()
 
 Animator::~Animator()
 {
-	currentClip = nullptr;
-	target = nullptr;
 }
 
 void Animator::AddEvent(const std::string& clipId, int frame, std::function<void()> action)
@@ -22,62 +20,61 @@ void Animator::ClearEvent()
 	eventList.clear();
 }
 
-void Animator::SetFrame(const AnimationFrame& frame)
+//void Animator::AddClip(const AnimationClip& clip)
+//{
+//	//중복 허용 x, 키 검사를 하고 넣기
+//	if (clips.find(clip.id) == clips.end())         //중복 검사 필수
+//	{
+//		//clips.insert({ clip.id, clip });          //아래와 동일
+//		clips[clip.id] = clip;            
+//	}
+//}
+
+void Animator::Update(float dt)
 {
-	target->setTexture(frame.GetTexture());
-	target->setTextureRect(frame.texCoord);
-}
-
-void Animator::Update(float dt, float timeScale)
-{
-	//첫프레임 부분에 대한 것이 부족하다.
-	//개선 필요!
-	//마지막 프레임에서 event호출이 두번 이뤄진다. 수정 필요!
-
-
 	if (!isPlaying)
 		return;
 
-	accumTime += dt * speed * timeScale;
+	accumTime += dt * speed;
 	if (accumTime < clipDuration)
 		return;
 
 	accumTime = 0.f;
-	currentFrame += frameDirection;
+	currentFrame += addFrame;
 
 	if (currentFrame == totalFrame)
 	{
-		if (!playQueue.empty())
+		if (!queue.empty())
 		{
-			Play(playQueue.front(), false);
-			playQueue.pop();
+			std::string id = queue.front();
+			queue.pop();                             //반환형이 없음
+			Play(id, false);
 			return;
 		}
-		switch (currentClip->loopType)
+
+
+		switch (currentClip->looptype)
 		{
-		case AnimationLoopTypes::Single:
+		case AnimationLoopType::Single:              //싱글이면 마지막 프레임 유지
 			currentFrame = totalFrame - 1;
-			isPlaying = false;
 			break;
-		case AnimationLoopTypes::Loop:
+		case AnimationLoopType::Loop:                //루프이면 첫 번째 프레임으로 이동
 			currentFrame = 0;
 			break;
-		case AnimationLoopTypes::PingPong:
-			if (frameDirection > 0)
+		case AnimationLoopType::Pingpong:
+			if (addFrame > 0)
 			{
-				currentFrame = totalFrame - 2;
-				frameDirection = -1;
+				currentFrame = totalFrame - 2;       //1 프레임인 경우 오류 처리
+
+				addFrame = -1;
 				totalFrame = -1;
 			}
-			else if (frameDirection < 0)
+			else
 			{
-				currentFrame = totalFrame + 2;
-				frameDirection = 1;
-				totalFrame = currentClip->GetTotalFrame();
+				currentFrame = 1;
+				addFrame = 1;
+				totalFrame = currentClip->frames.size();
 			}
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -86,44 +83,40 @@ void Animator::Update(float dt, float timeScale)
 		if (currentClip->id == event.clipId && currentFrame == event.frame)
 		{
 			if (event.action != nullptr)
+			{
 				event.action();
+			}
 		}
 	}
+
 
 	SetFrame(currentClip->frames[currentFrame]);
 }
 
-void Animator::PlayQueue(const std::string& clipId)
+void Animator::Play(const std::string& clipId, bool clearQueue) //첫번째 프레임 상태로 설정, 맴버변수의 값을 세팅
 {
-	playQueue.push(clipId);
-	isPlaying = true;
-
-}
-
-void Animator::Play(const std::string& clipId, bool clearQueue)
-{
+	addFrame = 1;
 	if (clearQueue)
 	{
-		while (!playQueue.empty())
+		while (!queue.empty())
 		{
-			playQueue.pop();
+			queue.pop();
 		}
 	}
 
 	isPlaying = true;
 	accumTime = 0.f;
 
-	currentClip = &SFGM_ANICLIP.Get(clipId);
+	currentClip = &RES_MGR_ANI_CLIP.Get(clipId);
 	currentFrame = 0;
 	totalFrame = currentClip->GetTotalFrame();
-	frameDirection = 1;
-	clipDuration = 1.f / currentClip->fps;
-	SetFrame(currentClip->frames[0]);
+	clipDuration = 1.f / currentClip->fps;               //한 프레임당 시간
+	SetFrame(currentClip->frames[currentFrame]);         //첫 번째 프레임으로 설정
 }
 
-void Animator::Pause()
+void Animator::PlayQueue(const std::string& clipId)
 {
-	isPlaying = false;
+	queue.push(clipId);
 }
 
 void Animator::Stop()
@@ -131,19 +124,26 @@ void Animator::Stop()
 	isPlaying = false;
 }
 
+void Animator::SetFrame(const AnimationFrame& frame)
+{
+	//애니매이션에 들어가 있는 정보를 
+	target->setTexture(frame.GetTexture());
+	target->setTextureRect(frame.texCoord);
+}
+
 bool AnimationClip::loadFromFile(const std::string& filePath)
 {
-	const rapidcsv::Document& doc = SFGM_CSVFILE.Get(filePath).GetDocument();
+	rapidcsv::Document doc(filePath);
 
-	id = doc.GetCell<std::string>(0, 0);
+	//id = doc.GetCell<std::string>(0, 0);
+	id = filePath;
 	fps = doc.GetCell<int>(1, 0);
-	loopType = AnimationLoopTypes(doc.GetCell<int>(2, 0));
+	looptype = (AnimationLoopType)doc.GetCell<int>(2, 0);
 
-	for (int i = 3; i < doc.GetRowCount(); i++)
+	for (int i = 3; i < doc.GetRowCount(); ++i)
 	{
 		auto row = doc.GetRow<std::string>(i);
-		frames.push_back({ row[0], { std::stoi(row[1]), std::stoi(row[2]), std::stoi(row[3]), std::stoi(row[4]) } });
+		frames.push_back({ row[0],{ std::stoi(row[1]),std::stoi(row[2]), std::stoi(row[3]), std::stoi(row[4])} });
 	}
-
 	return true;
 }

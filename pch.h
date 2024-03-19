@@ -1,25 +1,32 @@
 #pragma once
 
-//c++, STL
 #define _USE_MATH_DEFINES
-#include <iostream>
-#include <string>
-#include <list>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <random>
-#include <cmath>
 
-//SFML
+// C++
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <vector>
+#include <list>
+#include <unordered_map>
+#include <string>
+#include <queue>
+#include <fstream>
+#include <functional>
+
+// SFML
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
 #include "Defines.h"
 #include "Utils.h"
-#include "ResourceManager.h"
-#include "InputManager.h"
-#include "SoundManager.h"
-#include "GameObject.h"
+#include "Framework.h"
+#include "InputMgr.h"
+#include "ResourceMgr.h"
+#include "SceneMgr.h"
+#include "SoundMgr.h"
+
 #include "Scene.h"
-#include "SceneManager.h"
+#include "GameObject.h"
+#include "Animator.h"

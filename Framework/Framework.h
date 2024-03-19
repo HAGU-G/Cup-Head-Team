@@ -1,72 +1,56 @@
 #pragma once
-#include <Defines.h>
-#include <random>
+#include "Singleton.h"
 
-class SceneTitle;
+// 1. 초기화 / 메인루프 / 정리
+// 2. 시간 관련 기능 / 윈도우 정보
+// 3. ...Mgr 
 
-class Framework final
+class Framework : public Singleton<Framework>
 {
-	friend SceneTitle;
-private:
-	static sf::RenderWindow window;
-	static sf::RenderWindow debugWindow;
-	static sf::VertexArray fpsGraph;
+	friend Singleton<Framework>;
 
-	static WINDOW_MODE currentMode;
-	static sf::Vector2u currentSize;
-	static sf::Vector2f windowRatio;
-	static sf::Vector2f defaultSize;
+protected:
+	Framework() = default;
+	virtual ~Framework() = default;
 
-	static sf::Vector2i mousePosScreen;
-	static sf::Vector2i mousePosWindow; // = mousePosView
+	sf::RenderWindow window;
+	sf::Vector2i windowSize;
+	float fixedUpdateTime = 1.f / 50.f;
 
-	static sf::Clock globalClock;
-	static float globalTimeDelta;
-	static float globalTimeScale;
-	static float globalTimer;
+	sf::Clock clock;
+	float timeScale = 1.f;
 
-	static std::random_device* rd; // randomDevice
-	static std::mt19937* rg; //randomGenerator
+	sf::Time realTime; // 게임 시작부터 경과 시간
+	sf::Time time; // 게임 시작부터 경과 시간 (timeScale 적용된...)
 
-	static bool doDebug;
-	static bool canDebug;
+	sf::Time realDeltaTime;
+	sf::Time deltaTime;
+
+	sf::Time fixedDeltaTime;
+
+	float fpsTimer = 0.f;
+	int fpsCount = 0;
+	int fps = 0;
+
 public:
+	sf::RenderWindow& GetWindow() { return window; }	// !!
+	const sf::Vector2i& GetWindowSize() const { return windowSize; }
 
-	static std::string lastGameName;
+	float GetRealTime() const { return realTime.asSeconds(); }
+	float GetTime() const { return time.asSeconds(); }
+	float GetRealDT() const { return realDeltaTime.asSeconds(); }
+	float GetDT() const { return deltaTime.asSeconds(); }
 
-	static void Init();
-	static void MainLoop();
-	static void Release();
+	float GetTimeScale() const { return timeScale; }
+	void SetTimeScale(float scale) { timeScale = scale; }
 
-	//Window
-	static void DebugUpdate();
-	static void Exit();
-	static void SetCanDebug(bool valuse);
+	int GetFps() const { return fps; }
 
-	//Set
-	inline static float SetGlobalTimeScale(float value) { globalTimeScale = value; }
-	inline static void SetWindowMode(WINDOW_MODE mode) { currentMode = mode; }
-	static void SetWindowSize(unsigned int x);
-	static void SetWindowRatio(unsigned int x, unsigned int y);
-	static void SetWindowPosition(sf::Vector2i position);
+	virtual void Init(int width, int height, const std::string& name = "Game");
+	virtual void Do();
+	virtual void Release();
 
-	//Get
-	inline static sf::RenderWindow& GetWindow() { return window; }
-	inline static sf::Vector2u GetWindowSize() { return currentSize; }
-	inline static sf::Vector2f GetWindowRatio() { return windowRatio; }
-	inline static sf::Vector2f GetDefaultSize() { return defaultSize; }
-	inline static sf::Vector2i GetMousePosScreen() { return sf::Mouse::getPosition(); }
-	inline static sf::Vector2i GetMousePosWindow() { return mousePosWindow; }
-	inline static float GetGlobalTimeScale() { return globalTimeScale; }
-	inline static float GetGlobalTimer() { return globalTimer; }
-	inline static bool DoDebug() { return doDebug; }
-
-	//AddScene
-	static void AddScene();
-
-	//Random
-	inline static unsigned int Random() { return (*rg)(); }
-	static float RandomRange(float a, float b);
-	static int RandomRange(int a, int b);
 };
+
+#define FRAMEWORK (Singleton<Framework>::Instance())
 

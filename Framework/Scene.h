@@ -1,75 +1,64 @@
 #pragma once
-#ifndef SCENE_H
-#define SCENE_H
-#include "SceneManager.h"
 
 class GameObject;
 
 class Scene
 {
-private:
-	static size_t currentCount;
-	static size_t totalCount;
-
-	const std::string name;
+public:
+	enum Layers
+	{
+		None = 0,
+		World = 1,
+		Ui = 2,
+		Everything = 0xFFFFFFFF // 비트 연산자 &을 사용하면 동일한 값이 나온다.
+	};
 
 protected:
-	std::unordered_map<std::string, GameObject*> gameObjects;
-	std::list<std::pair<std::string, GameObject*>> drawList;
-	std::deque<std::string> deleteDeque;
+	SceneIds id;
 
-	float timeScale = 1.f;
-	bool useGlobalTimeScale = true;
-	bool doDrawLayerSort = false;
-	sf::View view;
-	sf::View resetView;
-	sf::Vector2f mousePosWorld;
-	sf::Vector2f worldCenter = { 0.f, 0.f };
+	std::list<GameObject*> gameObjects;
+	std::list<GameObject*> uiGameObjects;
 
-	explicit Scene(const std::string& name);
-	Scene(const Scene&) = delete;
-	Scene(Scene&&) = delete;
-	Scene& operator=(const Scene&) = delete;
-	Scene& operator=(Scene&&) = delete;
+	std::list<GameObject*> removeGameObjects;
+	std::list<GameObject*> resortingGameObjects;
 
+	sf::View worldView;
+	sf::View uiView;
+
+	ResourceMgr<sf::Texture>& texResMgr;
+	ResourceMgr<sf::Font>& fontResMgr;
+	ResourceMgr<sf::SoundBuffer>& soundResMgr;
 public:
-	virtual ~Scene();
+	Scene(SceneIds id);
+	virtual ~Scene() = default;
 
-	virtual void AddResource();//empty
+	sf::Vector2f ScreenToWorld(sf::Vector2i screenPos);
+	sf::Vector2i WorldToScreen(sf::Vector2f worldPos);
+	sf::Vector2f ScreenToUi(sf::Vector2i screenPos);
+	sf::Vector2i UiToScreen(sf::Vector2f uiPos);
+
 	virtual void Init();
-	virtual void PreUpdate(float timeDelta, float timeScale);	//생성
-	virtual void Update(float timeDelta, float timeScale);		//메인 업데이트
-	virtual void PostUpdate(float timeDelta, float timeScale);	//삭제
-	virtual void Draw(sf::RenderWindow& window);
-	virtual void Reset();
 	virtual void Release();
 
 	virtual void Enter();
 	virtual void Exit();
 
-	//Set
-	void UseGlobalTimeScale(bool value) { useGlobalTimeScale = value; }
-	void SetTimeScale(float value) { timeScale = value; }
-	inline void SetDoDrawlayerSort(bool value) { doDrawLayerSort = value; }
+	virtual void Update(float dt);
+	virtual void LateUpdate(float dt);
+	virtual void FixedUpdate(float dt);
+	virtual void Draw(sf::RenderWindow& window);
 
-	//Get
-	static size_t GetScenesCount();
-	static size_t GetScenesTotalCount();
-	const std::string& GetSceneName() const;
-	float GetTimeScale() const;
-	inline const sf::View& GetView() const { return view; }
-	inline const sf::View& GetResetView() const { return resetView; }
-	inline const sf::Vector2f& GetMousePosWorld() const { return mousePosWorld; }
+	virtual GameObject* FindGo(const std::string& name, Layers layer = Layers::Everything);
+	virtual int FindGoAll(const std::string& name, std::list<GameObject*>& list,
+		Layers layer = Layers::Everything);
 
-	//gameObjectsList
-	const GameObject* AddGo(GameObject* object);
-	const GameObject* FindGo(const std::string& key) const;
-	void DeleteGo(const std::string& key);
+	virtual GameObject* AddGo(GameObject* obj, Layers layer = Layers::World);
+	virtual void RemoveGo(GameObject* obj);
+	virtual void ResortGo(GameObject* obj);
 
-	//drawList
-	virtual void SortDrawList();
+	Scene(const Scene&) = delete;
+	Scene(Scene&&) = delete;
+	Scene& operator=(const Scene&) = delete;
+	Scene& operator=(Scene&&) = delete;
 };
 
-
-
-#endif // !SCENE_H

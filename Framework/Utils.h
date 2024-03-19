@@ -1,46 +1,41 @@
 #pragma once
 
-enum class ORIGIN
+class Utils
 {
-	LT, CT, RT,
-	LC, CC, RC,
-	LB, CB, RB,
+public:
+	static float Clamp(float v, float min, float max);
+	static sf::Vector2f Clamp(const sf::Vector2f& v, const sf::FloatRect& rect);
 
-	TL = LT, TR = RT, BL = LB, BR = RB,
-	TC = CT, MT = CT, TM = CT,
-	CL = LC, ML = LC, LM = LC,
-	CM = CC, MC = CC, MM = CC, C = CC, M = CC,
-	CR = RC, MR = RC, RM = RC,
-	BC = CB, MB = CB, BM = CB
+	static sf::FloatRect ResizeRect(const sf::FloatRect& rect, const sf::Vector2f& delta);
+
+	// Random
+	static float RandomValue(); // 0.0f ~ 1.0f
+	static float RandomRange(float min, float max);
+	static sf::Vector2f RandomOnUnitCircle();
+	static sf::Vector2f RandomInUnitCircle();
+	static sf::Vector2f RandomInRing(float outRadius, float inRadius);
+	static int RandomRange(int min, int maxExclude);
+
+
+	// Origin
+	static sf::Vector2f SetOrigin(sf::Transformable& obj, Origins originPreset, const sf::FloatRect& rect);
+	static sf::Vector2f SetOrigin(sf::Sprite& obj, Origins originPreset);
+	static sf::Vector2f SetOrigin(sf::Text& obj, Origins originPreset);
+	static sf::Vector2f SetOrigin(sf::Shape& obj, Origins originPreset);
+
+	// Math
+	static float SqrMagnitude(const sf::Vector2f& vec); // 길이의 제곱
+	static float Magnitude(const sf::Vector2f& vec); // 벡터의 길이
+	static void Normalize(sf::Vector2f& vec); // 단위 벡터로 변환
+	static sf::Vector2f GetNormal(const sf::Vector2f& vec); // 단위 벡터를 반환
+	static float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2); // 두 점 사이의 거리
+
+	static float RadianToDegree(float radian);
+	static float DegreeToRadian(float degree);
+
+	static float Angle(const sf::Vector2f& vec);
+	static sf::Vector2f Rotate(const sf::Vector2f& dir, float degrees);                        ////////////////////////개인 프로젝트 Isaac에서 추가한 부분
+
+	static float Lerp(float min, float max, float t);
+	static sf::Vector2f Lerp(const sf::Vector2f& min, const sf::Vector2f& max, float t);
 };
-
-namespace Utils {
-	//distance
-	float Magnitude(const sf::Vector2f& vec);
-	sf::Vector2f GetNormalize(const sf::Vector2f& vec);
-	void Normalize(sf::Vector2f& vec);
-	float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2);
-
-	//Origin
-	sf::Vector2f SetOrigin(sf::Transformable& transformable, ORIGIN origin, const sf::FloatRect& rect);
-	sf::Vector2f SetOrigin(sf::Sprite& sprite, ORIGIN origin);
-	sf::Vector2f SetOrigin(sf::Text& text, ORIGIN origin);
-	sf::Vector2f SetOrigin(sf::Shape& shape, ORIGIN origin);
-
-	//conversion
-	std::string ThousandsSeparator(int num);
-
-	//Angle
-	float RadianToDegree(float radian);
-	float Angle(const sf::Vector2f& vec);
-	float Angle360(const sf::Vector2f& vec);
-	float Angle360(const sf::Vector2f& vec1, const sf::Vector2f& vec2);
-	float Angle360(const sf::Vector2f& vec1, float degree);
-
-	//clamp
-	float Clamp(float target, float a, float b);
-
-	//3D
-	float OnPlane(const sf::Vector3f& plane, const sf::Vector3f& target);
-	sf::Vector3f To3D(const sf::Vector2f& point);
-}
