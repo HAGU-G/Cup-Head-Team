@@ -18,7 +18,7 @@ private:
 	void Setkey(const std::string& loadedKey);
 
 protected:
-	std::weak_ptr<Scene> scene;
+	Scene* scene;
 	std::list<GAME_OBJECT_TAG> gameObjectTagList;
 
 	float drawDeep = 0.f;
@@ -30,13 +30,13 @@ protected:
 	sf::Vector2f position;
 	sf::Vector2f direction;
 
-	explicit GameObject(std::weak_ptr<Scene> scene, const std::string& name, GAME_OBJECT_TYPE objectType = GAME_OBJECT_TYPE::NONE);
+	explicit GameObject(Scene* scene, const std::string& name, GAME_OBJECT_TYPE objectType = GAME_OBJECT_TYPE::NONE);
 	GameObject(const GameObject&) = delete;
 	GameObject(GameObject&&) = delete;
 	GameObject& operator=(const GameObject&) = delete;
 	GameObject& operator=(GameObject&&) = delete;
-
 public:
+
 	virtual ~GameObject();
 
 	//Management
@@ -49,7 +49,7 @@ public:
 	virtual void Release();
 
 	//Set
-	void SetScene(std::weak_ptr<Scene> scene);
+	void SetScene(Scene* scene);
 	void SetPositionX(float x);
 	void SetPositionY(float y);
 	virtual void SetPosition(const sf::Vector2f& position);
@@ -59,11 +59,10 @@ public:
 	inline void SetMute(bool value) { isMute = value; }
 
 	//Get
-	const std::shared_ptr<GameObject>& This();
 	static size_t GetObjectsCount();
 	static size_t GetObjectsTotalCount();
 	std::string GetKey() const;
-	inline std::weak_ptr<Scene> GetScene() const { return scene; }
+	inline Scene* GetScene() const { return scene; }
 	const GAME_OBJECT_TYPE& GetGameObjectType() const;
 	const std::list<GAME_OBJECT_TAG>& GetGameObjectTagList() const;
 	const sf::Vector2f& GetPosition() const;

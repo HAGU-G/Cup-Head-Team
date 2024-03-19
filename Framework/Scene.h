@@ -14,8 +14,8 @@ private:
 	const std::string name;
 
 protected:
-	GameObjectList gameObjectList;
-	std::list<std::pair<std::string, std::weak_ptr<GameObject>>> drawList;
+	std::unordered_map<std::string, GameObject*> gameObjects;
+	std::list<std::pair<std::string, GameObject*>> drawList;
 	std::deque<std::string> deleteDeque;
 
 	float timeScale = 1.f;
@@ -51,22 +51,20 @@ public:
 	void UseGlobalTimeScale(bool value) { useGlobalTimeScale = value; }
 	void SetTimeScale(float value) { timeScale = value; }
 	inline void SetDoDrawlayerSort(bool value) { doDrawLayerSort = value; }
+
 	//Get
-	const std::shared_ptr<Scene>& This() { return SceneManager::Get(name); };
 	static size_t GetScenesCount();
 	static size_t GetScenesTotalCount();
 	const std::string& GetSceneName() const;
-	const GameObjectList& GetObjects() const;
 	float GetTimeScale() const;
 	inline const sf::View& GetView() const { return view; }
 	inline const sf::View& GetResetView() const { return resetView; }
 	inline const sf::Vector2f& GetMousePosWorld() const { return mousePosWorld; }
 
 	//gameObjectsList
-	const std::shared_ptr<GameObject>& AddObject(const std::shared_ptr<GameObject>& object);
-	const std::shared_ptr<GameObject>& GetObject(const std::string& key) const;
-	const std::shared_ptr<GameObject>& GetObject(std::weak_ptr<GameObject> object) const;
-	void DeleteObject(const std::string& key);
+	const GameObject* AddGo(GameObject* object);
+	const GameObject* FindGo(const std::string& key) const;
+	void DeleteGo(const std::string& key);
 
 	//drawList
 	virtual void SortDrawList();

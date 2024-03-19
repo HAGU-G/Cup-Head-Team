@@ -32,7 +32,7 @@ void Scene::Init()
 void Scene::PreUpdate(float timeDelta, float timeScale)
 {
 	mousePosWorld = Framework::GetWindow().mapPixelToCoords(Framework::GetMousePosWindow(), view);
-	for (auto& pair : gameObjectList)
+	for (auto& pair : gameObjects)
 	{
 		if (pair.second->IsActive())
 			pair.second->PreUpdate(timeDelta, timeScale);
@@ -41,7 +41,7 @@ void Scene::PreUpdate(float timeDelta, float timeScale)
 
 void Scene::Update(float timeDelta, float timeScale)
 {
-	for (auto& pair : gameObjectList)
+	for (auto& pair : gameObjects)
 	{
 		if (pair.second->IsActive())
 			pair.second->Update(timeDelta, timeScale);
@@ -49,7 +49,7 @@ void Scene::Update(float timeDelta, float timeScale)
 }
 void Scene::PostUpdate(float timeDelta, float timeScale)
 {
-	for (auto& pair : gameObjectList)
+	for (auto& pair : gameObjects)
 	{
 		if (pair.second->IsActive())
 			pair.second->PostUpdate(timeDelta, timeScale);
@@ -59,8 +59,8 @@ void Scene::PostUpdate(float timeDelta, float timeScale)
 	//delete
 	while (!deleteDeque.empty())
 	{
-		auto it = gameObjectList.find(deleteDeque.front());
-		if (it != gameObjectList.end())
+		auto it = gameObjects.find(deleteDeque.front());
+		if (it != gameObjects.end())
 		{
 			auto drawIt = drawList.begin();
 			while (drawIt != drawList.end())
@@ -75,7 +75,8 @@ void Scene::PostUpdate(float timeDelta, float timeScale)
 					drawIt++;
 				}
 			}
-			gameObjectList.erase(it);
+			delete it->second;
+			gameObjects.erase(it);
 		}
 		deleteDeque.pop_front();
 	}
@@ -89,27 +90,27 @@ void Scene::Draw(sf::RenderWindow& window)
 	window.setView(view);
 	for (auto& pair : drawList)
 	{
-		if (pair.second.lock()->IsActive() && pair.second.lock()->IsShow())
-			pair.second.lock()->Draw(window);
+		if (pair.second->IsActive() && pair.second->IsShow())
+			pair.second->Draw(window);
 	}
 	window.setView(preView);
 }
 
 void Scene::Reset()
 {
-	for (auto& pair : gameObjectList)
+	for (auto& pair : gameObjects)
 	{
-		pair.second->Reset();
+		delete pair.second;
 	}
 }
 
 void Scene::Release()
 {
-	for (auto& pair : gameObjectList)
+	for (auto& pair : gameObjects)
 	{
 		pair.second->Release();
 	}
-	gameObjectList.clear();
+	gameObjects.clear();
 	drawList.clear();
 }
 
@@ -148,18 +149,13 @@ const std::string& Scene::GetSceneName() const
 	return name;
 }
 
-const std::unordered_map<std::string, std::shared_ptr<GameObject>>& Scene::GetObjects() const
-{
-	return gameObjectList;
-}
 
-
-const std::shared_ptr<GameObject>& Scene::AddObject(const std::shared_ptr<GameObject>& object)
+const GameObject* Scene::AddGo(GameObject* object)
 {
-	auto it = gameObjectList.insert(std::make_pair(object->GetKey(), object));
+	auto it = gameObjects.insert(std::make_pair(object->GetKey(), object));
 
 	if (!it.second)
-		return std::shared_ptr<GameObject>(nullptr);
+		return nullptr;
 
 	if (drawList.empty())
 	{
@@ -171,7 +167,7 @@ const std::shared_ptr<GameObject>& Scene::AddObject(const std::shared_ptr<GameOb
 		auto drawIt = drawList.begin();
 		while (drawIt != drawList.end())
 		{
-			if (it.first->second->GetDrawDeep() > drawIt->second.lock()->GetDrawDeep())
+			if (it.first->second->GetDrawDeep() > drawIt->second->GetDrawDeep())
 			{
 				drawList.insert(drawIt, *it.first);
 				return object;
@@ -189,26 +185,22 @@ const std::shared_ptr<GameObject>& Scene::AddObject(const std::shared_ptr<GameOb
 void Scene::SortDrawList()
 {
 	drawList.sort(
-		[](std::pair<std::string, std::weak_ptr<GameObject>>& left,
-			std::pair<std::string, std::weak_ptr<GameObject>>& right)
+		[](std::pair<std::string, GameObject*>& left,
+			std::pair<std::string, GameObject*>& right)
 		{
-			return left.second.lock()->GetDrawDeep() > right.second.lock()->GetDrawDeep();
+			return left.second->GetDrawDeep() > right.second->GetDrawDeep();
 		});
 }
 
-const std::shared_ptr<GameObject>& Scene::GetObject(const std::string& key) const
+const GameObject* Scene::FindGo(const std::string& key) const
 {
-	auto it = gameObjectList.find(key);
-	if (it != gameObjectList.end())
+	auto it = gameObjects.find(key);
+	if (it != gameObjects.end())
 		return it->second;
-	return std::shared_ptr<GameObject>(nullptr);
-}
-const std::shared_ptr<GameObject>& Scene::GetObject(std::weak_ptr<GameObject> object) const
-{
-	return GetObject(object.lock()->GetKey());
+	return nullptr;
 }
 
-void Scene::DeleteObject(const std::string& key)
+void Scene::DeleteGo(const std::string& key)
 {
 	deleteDeque.push_back(key);
 }

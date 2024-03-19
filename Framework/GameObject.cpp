@@ -10,7 +10,7 @@ void GameObject::Setkey(const std::string& loadedKey)
 	key = loadedKey;
 }
 
-GameObject::GameObject(std::weak_ptr<Scene> scene, const std::string& name, GAME_OBJECT_TYPE objectType)
+GameObject::GameObject(Scene* scene, const std::string& name, GAME_OBJECT_TYPE objectType)
 	:scene(scene), key(name), gameObjectType(objectType)
 {
 	currentCount++;
@@ -71,10 +71,10 @@ void GameObject::Reset()
 
 void GameObject::Release()
 {
-	scene.reset();
+	scene = nullptr;
 }
 
-void GameObject::SetScene(std::weak_ptr<Scene> scene)
+void GameObject::SetScene(Scene* scene)
 {
 	this->scene = scene;
 }
@@ -102,11 +102,6 @@ void GameObject::SetDrawDeep(float value)
 void GameObject::SetActive(bool value)
 {
 	isActive = value;
-}
-
-const std::shared_ptr<GameObject>& GameObject::This()
-{
-	return scene.lock()->GetObject(key);
 }
 
 size_t GameObject::GetObjectsCount()
