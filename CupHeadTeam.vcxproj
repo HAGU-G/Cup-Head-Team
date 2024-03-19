@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.;.\SFML-2.6.1\include;.\Framework</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GameObject;.\Scene;.;.\SFML-2.6.1\include;.\Framework</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -147,9 +147,11 @@
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Scene\SceneDev.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animator.h" />
@@ -167,7 +169,9 @@
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\Bullet\ObjectBullet.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Scene\SceneDev.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
