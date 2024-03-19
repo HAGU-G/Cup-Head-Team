@@ -150,6 +150,7 @@
     </ClCompile>
     <ClCompile Include="Framework\SoundManager.cpp" />
     <ClCompile Include="SceneTest001.cpp" />
+    <ClCompile Include="SpriteGo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animator.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Framework\SoundManager.h" />
     <ClInclude Include="SceneTest001.h" />
+    <ClInclude Include="SpriteGo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
