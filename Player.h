@@ -9,6 +9,8 @@ class Player :  public SpriteGo
 protected:
 	/*Animator animator;*/
 	SceneDev2* sceneDev2 = nullptr;
+	Direction currentDirection = Direction::Right;
+	Direction PreDirection = Direction::Right;
 
 	float gravity = 500.f;
 	float speed = 500.f;
@@ -34,12 +36,15 @@ public:
 
 	void Draw(sf::RenderWindow& window);
 
-	void Fire(sf::Vector2f direction);
+	void Fire(Direction direction);
 	int GetHp() { return hp; }
 	void ReSetHp() { hp = maxHp; }
 
 	void OnDamage();
 	void OnDie();
+
+
+	std::wstring SelectFile();
 
 };
 
