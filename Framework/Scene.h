@@ -57,7 +57,6 @@ public:
 	static size_t GetScenesTotalCount();
 	const std::string& GetSceneName() const;
 	const GameObjectList& GetObjects() const;
-	const FilePathList& GetResourcePathList() const;
 	float GetTimeScale() const;
 	inline const sf::View& GetView() const { return view; }
 	inline const sf::View& GetResetView() const { return resetView; }
