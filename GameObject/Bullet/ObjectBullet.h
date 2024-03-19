@@ -3,6 +3,14 @@
 class ObjectBullet : public SpriteGo
 {
 protected:
+	enum class Type
+	{
+		Straight,
+		Tracking,
+	};
+
+	Type type = Type::Straight;
+
 	sf::Vector2f prePosition;
 	sf::Vector2f direction;
 	float speed = 0.f;
@@ -12,7 +20,7 @@ protected:
 	sf::RectangleShape bound;
 
 public:
-	ObjectBullet(const std::string& name = "");
+	ObjectBullet(const std::string& name = "Bullet");
 	~ObjectBullet() override = default;
 	ObjectBullet(const ObjectBullet&) = delete;
 	ObjectBullet(ObjectBullet&&) = delete;
@@ -27,10 +35,13 @@ public:
 	void LateUpdate(float dt) override;
 
 	void Draw(sf::RenderWindow& window) override;
-	static void Create(const sf::Vector2f&, Direction direction, Scene* scene);
+	void CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 	inline void SetSpeed(float speed) { this->speed = speed; }
+	inline void SetRange(float range) { this->range = range; }
 	void SetDirection(Direction direction);
+	void SetDirection(const sf::Vector2f& direction, bool isConversed = false);
+	void Flip();
 	void SetPosition(const sf::Vector2f& position) override;
 };
 

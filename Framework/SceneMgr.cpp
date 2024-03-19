@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "SceneMgr.h"
-
+#include "SceneDev.h"
 
 
 SceneMgr::~SceneMgr()
@@ -14,7 +14,7 @@ void SceneMgr::Init()
 	//scenes.push_back(new SceneTitle(SceneIds::SceneTitle));
 	//scenes.push_back(new SceneIntro(SceneIds::SceneIntro));
 	//scenes.push_back(new SceneMapTool(SceneIds::SceneMapTool));
-	//scenes.push_back(new SceneDev1(SceneIds::SceneDev1));
+	scenes.push_back(new SceneDev(SceneIds::SceneDev));
 	//scenes.push_back(new SceneDev2(SceneIds::SceneDev2));
 	
 	for (auto scene : scenes)
