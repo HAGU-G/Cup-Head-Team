@@ -21,10 +21,7 @@ private:
 		if (typeid(T).name() == typeid(sf::Texture).name())
 			unknownResource.loadFromFile("resource/Unknown.png");
 		else if (typeid(T).name() == typeid(sf::Font).name())
-			unknownResource.loadFromFile("resource/font/ROKAF Sans Bold.ttf");
-		else if (typeid(T).name() == typeid(CsvFile).name())
-			unknownResource.loadFromFile("data/Unknown.csv");
-		//else if (typeid(T).name() == typeid(sf::SoundBuffer))
+			unknownResource.loadFromFile("resource/Font/YoonBackjaeM Bold.ttf");
 	}
 
 public:

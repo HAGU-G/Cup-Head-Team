@@ -228,7 +228,7 @@ void Framework::DebugUpdate()
 	float graphRatio = fontSize / 165.f;
 	float infoY = 0.f;
 	text.setCharacterSize(fontSize);
-	text.setFont(SFGM_FONT.Load("resource/font/ROKAF Sans Medium.ttf"));
+	text.setFont(SFGM_FONT.Load("resource/Font/YoonBackjaeM Bold.ttf"));
 
 	//·»´õ¸µ
 	debugWindow.clear();
