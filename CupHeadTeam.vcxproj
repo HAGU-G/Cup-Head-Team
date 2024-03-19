@@ -149,6 +149,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Framework\SoundManager.cpp" />
+    <ClCompile Include="SceneTest001.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animator.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Framework\SoundManager.h" />
+    <ClInclude Include="SceneTest001.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

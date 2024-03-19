@@ -144,7 +144,6 @@ void SceneManager::Unuse()
 		{
 			unuseSceneList.insert(std::make_pair(usingScene->first, usingScene->second));
 			usingScene->second->Exit();
-			usingScene->second->RemoveResource();
 			usingScene->second->Release();
 			usingSceneList.erase(name);
 			doUnLoad = true;
@@ -155,7 +154,6 @@ void SceneManager::Unuse()
 			if (watingScene != waitingSceneList.end())
 			{
 				unuseSceneList.insert(std::make_pair(watingScene->first, watingScene->second));
-				watingScene->second->RemoveResource();
 				usingScene->second->Release();
 				waitingSceneList.erase(name);
 				doUnLoad = true;

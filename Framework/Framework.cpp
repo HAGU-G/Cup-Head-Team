@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Framework.h"
 #include <SceneManager.h>
+#include <SceneTest001.h>
 
 sf::RenderWindow Framework::window;
 sf::RenderWindow Framework::debugWindow;
@@ -192,17 +193,9 @@ void Framework::SetWindowPosition(sf::Vector2i position)
 
 void Framework::AddScene()
 {
-	//SceneManager::Add(std::make_shared<SceneTitle>("SceneTitle"));
-	//SceneManager::Add(std::make_shared<SceneGame>("SceneGame"));
-	//SceneManager::Add(std::make_shared<SceneGameUI>("SceneGameUI"));
-	//SceneManager::Add(std::make_shared<SceneMenu>("SceneMenu"));
+	SceneManager::Add(std::make_shared<SceneTest001>("SceneTest001"));
+	SceneManager::Use("SceneTest001");
 }
-
-
-
-
-
-
 
 
 /////////////////////////////

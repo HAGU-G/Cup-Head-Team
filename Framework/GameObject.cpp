@@ -10,9 +10,8 @@ void GameObject::Setkey(const std::string& loadedKey)
 	key = loadedKey;
 }
 
-GameObject::GameObject(std::weak_ptr<Scene> scene, GAME_OBJECT_TYPE objectType)
-	:scene(scene), gameObjectType(objectType),
-	key(std::to_string((int)objectType) + "_" + std::to_string(time(NULL)) + "_" + std::to_string(totalCount))
+GameObject::GameObject(std::weak_ptr<Scene> scene, const std::string& name, GAME_OBJECT_TYPE objectType)
+	:scene(scene), key(name), gameObjectType(objectType)
 {
 	currentCount++;
 	totalCount++;
