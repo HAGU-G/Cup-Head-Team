@@ -22,10 +22,6 @@ void Scene::AddResource()
 {
 }
 
-void Scene::RemoveResource()
-{
-}
-
 void Scene::Init()
 {
 	view.setSize(Framework::GetDefaultSize().x, Framework::GetDefaultSize().x / Framework::GetWindowRatio().x * Framework::GetWindowRatio().y);
@@ -115,7 +111,6 @@ void Scene::Release()
 	}
 	gameObjectList.clear();
 	drawList.clear();
-	resourcePathList.clear(); //파일 경로들이 담긴 컨테이너
 }
 
 void Scene::Enter()
@@ -156,11 +151,6 @@ const std::string& Scene::GetSceneName() const
 const std::unordered_map<std::string, std::shared_ptr<GameObject>>& Scene::GetObjects() const
 {
 	return gameObjectList;
-}
-
-const FilePathList& Scene::GetResourcePathList() const
-{
-	return resourcePathList;
 }
 
 

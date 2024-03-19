@@ -16,10 +16,7 @@ private:
 protected:
 	GameObjectList gameObjectList;
 	std::list<std::pair<std::string, std::weak_ptr<GameObject>>> drawList;
-	FilePathList resourcePathList; //파일 경로들이 담긴 컨테이너
 	std::deque<std::string> deleteDeque;
-
-	int drawLayer = 0;
 
 	float timeScale = 1.f;
 	bool useGlobalTimeScale = true;
@@ -39,7 +36,6 @@ public:
 	virtual ~Scene();
 
 	virtual void AddResource();//empty
-	virtual void RemoveResource();//empty
 	virtual void Init();
 	virtual void PreUpdate(float timeDelta, float timeScale);	//생성
 	virtual void Update(float timeDelta, float timeScale);		//메인 업데이트
