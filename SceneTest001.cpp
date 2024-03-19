@@ -12,7 +12,7 @@ SceneTest001::~SceneTest001()
 
 void SceneTest001::AddResource()
 {
-	SFGM_TEXTURE.Add("sdfsdfsd");
+	//SFGM_TEXTURE.Add("sdfsdfsd");
 }
 
 void SceneTest001::Init()
