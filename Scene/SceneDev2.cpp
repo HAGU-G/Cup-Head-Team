@@ -21,7 +21,12 @@ void SceneDev2::Init()
 	uiView.setCenter(centerPos);
 
 	AddGo(new Player());
-	
+
+
+	circle.setRadius(50.f);
+	circle.setFillColor(sf::Color::Red);
+	circle.setPosition({ centerPos.x, centerPos.y - 300});
+
 	Scene::Init();
 }
 
@@ -43,4 +48,10 @@ void SceneDev2::Exit()
 void SceneDev2::Update(float dt)
 {
 	Scene::Update(dt);
+}
+
+void SceneDev2::Draw(sf::RenderWindow& window)
+{
+	window.draw(circle);
+	Scene::Draw(window);
 }

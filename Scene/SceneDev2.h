@@ -3,6 +3,7 @@
 class SceneDev2 : public Scene
 {
 protected:
+	sf::CircleShape circle;
 
 public:
 	SceneDev2(SceneIds id);
@@ -15,5 +16,6 @@ public:
 	void Exit() override;
 
 	void Update(float dt) override;
+	void Draw(sf::RenderWindow& window) override;
 };
 

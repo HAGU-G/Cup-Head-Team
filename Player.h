@@ -4,7 +4,7 @@
 
 class SceneDev2;
 
-class Player :  public SpriteGo
+class Player : public SpriteGo
 {
 protected:
 	/*Animator animator;*/
@@ -14,7 +14,9 @@ protected:
 
 	float gravity = 500.f;
 	float speed = 500.f;
-	
+
+	float parryDamage = 100.f;
+
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
 
@@ -25,6 +27,7 @@ protected:
 	int maxHp = 3;
 	int hp;
 
+	float horizontalInput;
 public:
 	Player(const std::string& name = "");
 	~Player() override;
@@ -44,7 +47,5 @@ public:
 	void OnDie();
 
 
-	std::wstring SelectFile();
 
 };
-

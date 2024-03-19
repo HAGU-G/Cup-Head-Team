@@ -124,11 +124,11 @@ void SpriteGo::Draw(sf::RenderWindow& window)
 		imageBox.setOutlineThickness(1.f);
 		imageBox.setFillColor(sf::Color::Transparent);
 
-		/*localHitBox.setPosition(localBound.left, localBound.top);
+		localHitBox.setPosition(localBound.left, localBound.top);
 		localHitBox.setSize({ localBound.width, localBound.height });
 		localHitBox.setOutlineColor(sf::Color::Blue);
 		localHitBox.setOutlineThickness(1.f);
-		localHitBox.setFillColor(sf::Color::Transparent);*/
+		localHitBox.setFillColor(sf::Color::Transparent);
 
 		window.draw(globalHitBox);
 		window.draw(imageBox);
