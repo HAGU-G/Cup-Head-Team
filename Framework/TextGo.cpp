@@ -116,7 +116,7 @@ void TextGo::SetFlipY(bool filp)
 	SetScale(scale);
 }
 
-void TextGo::Draw(sf::RenderWindow& window)
+void TextGo::Draw(sf::RenderTexture& window)
 {
 	window.draw(text);
 }

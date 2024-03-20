@@ -9,6 +9,8 @@ ObjectMonster::ObjectMonster(const std::string& name)
 void ObjectMonster::Init()
 {
 	shaderHit.setUniform("texture", sf::Shader::CurrentTexture);
+	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
+	renderStates.shader = &shaderHit;
 }
 
 void ObjectMonster::Update(float dt)

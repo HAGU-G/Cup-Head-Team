@@ -21,7 +21,7 @@ public:
 	void Enter() override;
 	void Exit() override;
 
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderTexture& window) override;
 	void Update(float dt) override;
 };
 

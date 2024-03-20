@@ -22,7 +22,7 @@ public:
 	void Init() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderTexture& window) override;
 
 	void SetDirection(const sf::Vector2f direction);
 

@@ -40,7 +40,7 @@ public:
 	void Reset();
 
 	void Update(float dt);
-	void Draw(sf::RenderWindow& window);
+	void Draw(sf::RenderTexture& window);
 
 	std::vector<std::wstring> selectedFilePaths;
 };
