@@ -1,7 +1,8 @@
 #include "pch.h"
-#include "SceneDev1.h"
 #include "SceneMgr.h"
-
+#include "SceneDev2.h"
+#include "SceneDev1.h"
+#include "SceneDev.h"
 
 
 SceneMgr::~SceneMgr()
@@ -12,12 +13,10 @@ SceneMgr::~SceneMgr()
 void SceneMgr::Init()
 {
 	Release(); 
-	//scenes.push_back(new SceneTitle(SceneIds::SceneTitle));
-	//scenes.push_back(new SceneIntro(SceneIds::SceneIntro));
-	//scenes.push_back(new SceneMapTool(SceneIds::SceneMapTool));
+	scenes.push_back(new SceneDev2(SceneIds::SceneDev2));
 	scenes.push_back(new SceneDev1(SceneIds::SceneDev1));
-	//scenes.push_back(new SceneDev2(SceneIds::SceneDev2));
-	
+	scenes.push_back(new SceneDev(SceneIds::SceneDev));
+
 	for (auto scene : scenes)
 	{
 		scene->Init();

@@ -8,14 +8,18 @@ class Player : public SpriteGo
 {
 protected:
 	/*Animator animator;*/
-	SceneDev2* sceneDev2 = nullptr;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 
-	float gravity = 500.f;
+	float gravity = 800.f;
 	float speed = 500.f;
 
 	float parryDamage = 100.f;
+
+	float dashSpeed = 1000.0f;  
+	bool isDashing = false;     
+	float dashDuration = 0.2f; 
+	float dashTimer = 0.0f;    
 
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
@@ -23,6 +27,8 @@ protected:
 	bool isGrounded = true;
 	bool isAlive = true;
 	bool isFire = false;
+	bool isJumping = false;
+	bool isCKeyPressed;
 
 	int maxHp = 3;
 	int hp;
@@ -37,11 +43,15 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 
+	void UpdateDirection(float horizontalInput, float dt);
+	void UpdateJumpingDirection(float horizontalInput, float verticalInput);
+
 	void Draw(sf::RenderWindow& window);
 
 	void Fire(Direction direction);
 	int GetHp() { return hp; }
 	void ReSetHp() { hp = maxHp; }
+	void Dash(float dt);
 
 	void OnDamage();
 	void OnDie();
