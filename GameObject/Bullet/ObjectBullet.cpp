@@ -27,6 +27,7 @@ void ObjectBullet::Reset()
 
 void ObjectBullet::Update(float dt)
 {
+	SpriteGo::Update(dt);
 	Translate(direction * speed * dt);
 	if (type == Type::Homing)
 	{

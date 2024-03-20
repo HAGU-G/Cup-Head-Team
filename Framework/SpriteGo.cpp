@@ -90,6 +90,12 @@ void SpriteGo::SetFlipY(bool filp)
 	SetScale(scale);
 }
 
+void SpriteGo::Update(float dt)
+{
+	GameObject::Update(dt);
+	animator.Update(dt);
+}
+
 void SpriteGo::Reset()
 {
 
@@ -97,7 +103,14 @@ void SpriteGo::Reset()
 
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite, renderStates);
+	if (useRenderStates)
+	{
+		window.draw(sprite, renderStates);
+	}
+	else
+	{
+		window.draw(sprite);
+	}
 
 	if (hasHitBox && SCENE_MGR.GetDeveloperMode())
 	{

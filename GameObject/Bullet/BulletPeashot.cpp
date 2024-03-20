@@ -9,8 +9,18 @@ BulletPeashot::BulletPeashot(const std::string& name)
 
 void BulletPeashot::Init()
 {
-	SetTexture("resource/Sprite/peashot/weapon_peashot_intro_b_0001.png");
-	SetOrigin(Origins::ML);
+	if (rand() % 2 == 0)
+	{
+		animator.SetTarget(&sprite);
+		animator.SetCurrentCilp("animations/peashotIntroA.csv");
+	}
+	else
+	{
+		animator.SetTarget(&sprite);
+		animator.SetCurrentCilp("animations/peashotIntroB.csv");
+	}
+	animator.Play();
+	animator.PlayQueue("animations/peashotMain.csv");
 	SetSpeed(1200.f);
 	SetRange(3000.f);
 	type = Type::Straight;
@@ -20,12 +30,14 @@ void BulletPeashot::Init()
 void BulletPeashot::SetPosition(const sf::Vector2f& pos)
 {
 	ObjectBullet::SetPosition(pos);
-	bound.setPosition(pos + direction * sprite.getLocalBounds().width * 0.75f * GetScale().x);
+	bound.setPosition(pos);
 }
 
 void BulletPeashot::OnCreate()
 {
 	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
+	
+
 }
 
 void BulletPeashot::OnDie()
@@ -42,5 +54,6 @@ BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, const sf::Vector2f
 {
 	BulletPeashot* bp = new BulletPeashot();
 	bp->CreateInit(pos, direction, scene);
+	bp->SetPosition(pos + direction * (bp->sprite.getLocalBounds().width - bp->GetOrigin().x) * bp->GetScale().x);
 	return bp;
 }

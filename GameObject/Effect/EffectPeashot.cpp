@@ -12,20 +12,18 @@ EffectPeashot* EffectPeashot::Create(const sf::Vector2f& pos, const sf::Vector2f
 	EffectPeashot* oe = new EffectPeashot();
 	if (isCreate)
 	{
-		oe->SetTexture("resource/Sprite/peashot/weapon_peashot_spark_0004.png");
-		oe->SetOrigin(Origins::MC);
+		oe->animator.SetTarget(&oe->sprite);
+		oe->animator.SetCurrentCilp("animations/peashotCreate.csv");
 	}
 	else
 	{
-		oe->SetTexture("resource/Sprite/peashot/weapon_peashot_death_0001.png");
-		oe->SetOrigin(Origins::MC);
+		oe->animator.SetTarget(&oe->sprite);
+		oe->animator.SetCurrentCilp("animations/peashotDeath.csv");
 	}
+	oe->animator.AddEvent(oe->animator.GetCurrentCilpId(), oe->animator.GetCurrentClip()->GetTotalFrame(), std::bind(&EffectPeashot::OnDie, oe));
+	oe->animator.Play();
 	oe->CreateInit(pos, direction, scene);
 
-	oe->isDieByTime = true;
-	oe->duration = 0.5f;
-
-	
 	return oe;
 }
 

@@ -36,6 +36,10 @@ struct AnimationClip
 	{
 		return frames.size();
 	}
+	int GetLastFrame() const
+	{
+		return frames.size() - 1;
+	}
 
 	bool loadFromFile(const std::string& filePath);
 };
@@ -60,6 +64,7 @@ protected:
 	AnimationClip* currentClip = nullptr;   //현재 플레이중인 애니매이션
 	int totalFrame = 0;
 	int currentFrame = -1;
+	int eventFrame = -1;
 	int addFrame = 1;
 	float clipDuration = 0.f;
 
@@ -77,10 +82,11 @@ public:
 	void ClearEvent();
 
 	bool IsPlaying() const { return isPlaying; }
-	const std::string& GetCurrentCilpId()
-	{
-		return currentClip->id;
-	}
+
+	void SetCurrentCilp(const std::string& clipId);
+	AnimationClip* GetCurrentClip() const { return currentClip; }
+	const std::string& GetCurrentCilpId(){return currentClip->id;}
+
 	sf::Sprite* GetTarget() const { return target; }
 	void SetTarget(sf::Sprite* t) { target = t; }
 
@@ -90,6 +96,7 @@ public:
 	void Update(float dt);    //현재 재생되고 있는 시간을 누적하면서 프래임 변경
 
 	void Play(const std::string& clipId, bool clearQueue = true);
+	void Play(bool clearQueue = true);
 	void PlayQueue(const std::string& clipId);
 	void Stop();
 	void SetFrame(const AnimationFrame& frame);
