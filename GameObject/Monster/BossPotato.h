@@ -17,7 +17,7 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
-	sf::RenderTexture renderTexture;
+	sf::Shader shaderHit;
 
 	int patternCount = 0;
 	float patternTimer = 0.f;

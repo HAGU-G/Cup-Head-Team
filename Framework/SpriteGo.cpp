@@ -97,7 +97,14 @@ void SpriteGo::Reset()
 
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite, renderStates);
+	if (useRenderStates)
+	{
+		window.draw(sprite, renderStates);
+	}
+	else
+	{
+		window.draw(sprite);
+	}
 
 	if (hasHitBox && SCENE_MGR.GetDeveloperMode())
 	{

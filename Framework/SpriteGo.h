@@ -10,6 +10,7 @@ protected:
 	sf::Vector2f size;
 
 	bool hasHitBox = false;
+	bool useRenderStates = false;
 
 public:
 	SpriteGo(const std::string& name = "");

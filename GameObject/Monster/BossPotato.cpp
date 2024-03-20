@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "BossPotato.h"
 #include "Bullet/BulletPeashot.h"
-#include <sstream>
-#include <string>
+
 BossPotato::BossPotato(const std::string& name)
 	:SpriteGo(name)
 {
@@ -10,6 +9,8 @@ BossPotato::BossPotato(const std::string& name)
 
 void BossPotato::Init()
 {
+	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
+	renderStates.shader = &shaderHit;
 }
 
 void BossPotato::Reset()
@@ -78,11 +79,12 @@ void BossPotato::LateUpdate(float dt)
 {
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-
+		shaderHit.setUniform("texture", sf::Shader::CurrentTexture);
+		useRenderStates = true;
 	}
 	else if (InputMgr::GetKeyUp(sf::Keyboard::Space))
 	{
-		renderStates.blendMode = sf::BlendMode();
+		useRenderStates = false;
 	}
 }
 
