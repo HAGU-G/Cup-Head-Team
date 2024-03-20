@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.;.\SFML-2.6.1\include;.\Framework</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SFML-2.6.1\include;.\Framework;.\Scene;.\GameObject;.</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationTool.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
@@ -150,8 +151,10 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Scene\SceneDev1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationTool.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\Defines.h" />
     <ClInclude Include="Framework\Framework.h" />
@@ -168,6 +171,7 @@
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Scene\SceneDev1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
