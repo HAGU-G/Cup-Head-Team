@@ -17,6 +17,8 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
+	sf::RenderTexture renderTexture;
+
 	int patternCount = 0;
 	float patternTimer = 0.f;
 	float patternInterval = 1.5f;
@@ -43,5 +45,7 @@ public:
 
 	bool PatternTimer(float dt);
 	void SetState(State state);
+
+	bool Damage(int damage);
 };
 

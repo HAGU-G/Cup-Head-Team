@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BossPotato.h"
 #include "Bullet/BulletPeashot.h"
+#include <sstream>
+#include <string>
 BossPotato::BossPotato(const std::string& name)
 	:SpriteGo(name)
 {
@@ -78,14 +80,16 @@ void BossPotato::LateUpdate(float dt)
 	{
 
 	}
-	else if(InputMgr::GetKeyUp(sf::Keyboard::Space))
+	else if (InputMgr::GetKeyUp(sf::Keyboard::Space))
 	{
-
+		renderStates.blendMode = sf::BlendMode();
 	}
 }
 
 void BossPotato::Intro()
 {
+
+
 }
 
 void BossPotato::Death()
@@ -153,4 +157,9 @@ void BossPotato::SetState(State state)
 	default:
 		break;
 	}
+}
+
+bool BossPotato::Damage(int damage)
+{
+	return true;
 }
