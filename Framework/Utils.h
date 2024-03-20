@@ -34,7 +34,14 @@ public:
 	static float DegreeToRadian(float degree);
 
 	static float Angle(const sf::Vector2f& vec);
+	static float Angle360(const sf::Vector2f& vec); //Cuphead 추가
+	static float AngleSize(const sf::Vector2f& vec1, const sf::Vector2f& vec2); //Cuphead 추가
+	static float AngleSize(const sf::Vector2f& vec1, float degree); //Cuphead 추가
+	static float AngleDirection(const sf::Vector2f& vec1, const sf::Vector2f& vec2);
 	static sf::Vector2f Rotate(const sf::Vector2f& dir, float degrees);                        ////////////////////////개인 프로젝트 Isaac에서 추가한 부분
+	static sf::Vector2f DirectionConversion(Direction direction);
+
+
 
 	static float Lerp(float min, float max, float t);
 	static sf::Vector2f Lerp(const sf::Vector2f& min, const sf::Vector2f& max, float t);

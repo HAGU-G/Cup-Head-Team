@@ -129,6 +129,7 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	//애니매이션에 들어가 있는 정보를 
 	target->setTexture(frame.GetTexture());
 	target->setTextureRect(frame.texCoord);
+	Utils::SetOrigin(*target, frame.origin);
 }
 
 bool AnimationClip::loadFromFile(const std::string& filePath)
@@ -143,7 +144,11 @@ bool AnimationClip::loadFromFile(const std::string& filePath)
 	for (int i = 3; i < doc.GetRowCount(); ++i)
 	{
 		auto row = doc.GetRow<std::string>(i);
-		frames.push_back({ row[0],{ std::stoi(row[1]),std::stoi(row[2]), std::stoi(row[3]), std::stoi(row[4])} });
+		frames.push_back({
+			row[0],
+			{ std::stoi(row[1]), std::stoi(row[2]) , std::stoi(row[3]), std::stoi(row[4]) },
+			Origins(std::stoi(row[5]))
+			});
 	}
 	return true;
 }

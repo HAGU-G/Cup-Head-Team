@@ -145,6 +145,36 @@ float Utils::Angle(const sf::Vector2f& vec)
 {
 	return RadianToDegree(std::atan2f(vec.y, vec.x));
 }
+float Utils::Angle360(const sf::Vector2f& vec)
+{
+	float angle1 = acosf(vec.x / Magnitude(vec));
+	if (vec.y < 0)
+		angle1 = 2.f * M_PI - angle1;
+	return RadianToDegree(angle1);
+}
+float Utils::AngleSize(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
+{
+	return RadianToDegree(acosf((vec1.x * vec2.x + vec1.y * vec2.y) / (Magnitude(vec1) * Magnitude(vec2))));
+}
+float Utils::AngleSize(const sf::Vector2f& vec1, float degree)
+{
+	sf::Vector2f vec2 = { 1.f, 0.f };
+	vec2 = sf::Transform().rotate(degree).translate(vec2).transformPoint(vec2);
+	return AngleSize(vec1, vec2);
+}
+
+float Utils::AngleDirection(const sf::Vector2f& vec1, const sf::Vector2f& vec2)
+{
+	float temp = asinf((vec1.x * vec2.y - vec2.x * vec1.y) / (Magnitude(vec1) * Magnitude(vec2)));
+	return temp > 0.f ? 1.f : 0.f + temp < 0.f ? -1.f : 0.f + temp == -0.f ? -0.f : 0.f;
+}
+
+
+
+
+
+
+
 
 sf::Vector2f Utils::Rotate(const sf::Vector2f& dir, float degrees)
 {
@@ -156,6 +186,40 @@ sf::Vector2f Utils::Rotate(const sf::Vector2f& dir, float degrees)
 		dir.x * cosTheta - dir.y * sinTheta,
 		dir.x * sinTheta + dir.y * cosTheta
 	);
+}
+
+sf::Vector2f Utils::DirectionConversion(Direction direction)
+{
+	switch (direction)
+	{
+	case Direction::Right:
+		return { 1.f, 0.f };
+		break;
+	case Direction::RightUp:
+		return Utils::GetNormal({ 1.f, -1.f });
+		break;
+	case Direction::Up:
+		return { 0.f, -1.f };
+		break;
+	case Direction::LeftUp:
+		return Utils::GetNormal({ -1.f, -1.f });
+		break;
+	case Direction::Left:
+		return { -1.f, 0.f };
+		break;
+	case Direction::LeftDown:
+		return Utils::GetNormal({ -1.f, 1.f });
+		break;
+	case Direction::Down:
+		return { 0.f, 1.f };
+		break;
+	case Direction::RightDown:
+		return Utils::GetNormal({ 1.f, 1.f });
+		break;
+	case Direction::None:
+		return { 0.f, 0.f };
+		break;
+	}
 }
 
 float Utils::Lerp(float min, float max, float t)

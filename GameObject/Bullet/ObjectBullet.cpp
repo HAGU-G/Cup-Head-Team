@@ -6,11 +6,13 @@ ObjectBullet::ObjectBullet(const std::string& name)
 {
 }
 
+ObjectBullet::~ObjectBullet()
+{
+	OnDie();
+}
+
 void ObjectBullet::Init()
 {
-	SetTexture("resource/Sprite/peashot/weapon_peashot_intro_b_0001.png");
-	SetOrigin(Origins::ML);
-	SetSpeed(300.f);
 }
 
 void ObjectBullet::Release()
@@ -26,12 +28,19 @@ void ObjectBullet::Reset()
 void ObjectBullet::Update(float dt)
 {
 	Translate(direction * speed * dt);
+	if (type == Type::Homing)
+	{
+		if (doHoming) { Homing(dt); }
+		Flip();
+	}
+
 }
 
 void ObjectBullet::LateUpdate(float dt)
 {
-	if (moveDistance > range)
+	if (moveDistance >= range)
 	{
+		OnDie();
 		scene->RemoveGo(this);
 	}
 }
@@ -41,51 +50,56 @@ void ObjectBullet::Draw(sf::RenderWindow& window)
 	SpriteGo::Draw(window);
 }
 
-void ObjectBullet::Create(const sf::Vector2f& pos, Direction direction, Scene* scene)
+void ObjectBullet::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)
 {
-	ObjectBullet* ob = new ObjectBullet();
-	ob->Init();
-	ob->Reset();
-	ob->prePosition = pos;
-	ob->SetPosition(pos);
-	ob->SetDirection(direction);
-	scene->AddGo(ob);
-	ob->scene = scene;
-
+	Init();
+	Reset();
+	prePosition = pos;
+	SetPosition(pos);
+	SetDirection(direction);
+	SetRotation(Utils::Angle360(direction));
+	Flip();
+	this->scene = scene;
+	scene->AddGo(this);
+	OnCreate();
 }
 
 void ObjectBullet::SetDirection(Direction direction)
 {
-	switch (direction)
+	this->SetDirection(Utils::DirectionConversion(direction), true);
+}
+
+void ObjectBullet::SetDirection(const sf::Vector2f& direction, bool isConversed)
+{
+	this->direction = direction;
+	if (!isConversed)
 	{
-	case Direction::Right:
-		this->direction = { 1.f, 0.f };
-		break;
-	case Direction::RightUp:
-		this->direction = Utils::GetNormal({ 1.f, -1.f });
-		break;
-	case Direction::Up:
-		this->direction = { 0.f, -1.f };
-		break;
-	case Direction::LeftUp:
-		this->direction = Utils::GetNormal({ -1.f, -1.f });
-		break;
-	case Direction::Left:
-		this->direction = { -1.f, 0.f };
-		break;
-	case Direction::LeftDown:
-		this->direction = Utils::GetNormal({ -1.f, 1.f });
-		break;
-	case Direction::Down:
-		this->direction = { 0.f, 1.f };
-		break;
-	case Direction::RightDown:
-		this->direction = Utils::GetNormal({ 1.f, 1.f });
-		break;
-	case Direction::None:
-		this->direction = { 0.f, 0.f };
-		break;
+		Utils::Normalize(this->direction);
 	}
+}
+
+void ObjectBullet::Flip()
+{
+
+	if (direction.x != 0.f)
+	{
+		SetScale({ 1.f, abs(direction.x) / direction.x });
+	}
+}
+
+void ObjectBullet::Homing(float dt)
+{
+	SetRotation(rotation + rotateSpeed * dt * Utils::AngleDirection(direction, targetPosition - position));
+	SetDirection(sf::Transform().rotate(rotation).transformPoint(1.f, 0.f), true);
+
+}
+
+void ObjectBullet::OnCreate()
+{
+}
+
+void ObjectBullet::OnDie()
+{
 }
 
 void ObjectBullet::SetPosition(const sf::Vector2f& position)
@@ -96,4 +110,9 @@ void ObjectBullet::SetPosition(const sf::Vector2f& position)
 	moveDistance += Utils::Distance(prePosition, position);
 	prePosition = position;
 
+}
+
+void ObjectBullet::SetTargetPosition(const sf::Vector2f position)
+{
+	targetPosition = position;
 }

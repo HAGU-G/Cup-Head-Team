@@ -7,11 +7,11 @@ protected:
 public:
 	SceneDev(SceneIds id);
 	virtual ~SceneDev();
-	//SceneDev() = default;
-	//SceneDev(const SceneDev&) = delete;
-	//SceneDev(SceneDev&&) = delete;
-	//SceneDev& operator=(const SceneDev&) = delete;
-	//SceneDev& operator=(SceneDev&&) = delete;
+	SceneDev() = default;
+	SceneDev(const SceneDev&) = delete;
+	SceneDev(SceneDev&&) = delete;
+	SceneDev& operator=(const SceneDev&) = delete;
+	SceneDev& operator=(SceneDev&&) = delete;
 
 
 

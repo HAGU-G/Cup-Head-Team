@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "SceneDev.h"
-#include "Bullet/ObjectBullet.h"
+#include "Bullet/BulletPeaShot.h"
 
 SceneDev::SceneDev(SceneIds id)
 	:Scene(id)
@@ -14,9 +14,7 @@ SceneDev::~SceneDev()
 void SceneDev::Init()
 {
 	worldView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
-	worldView.setCenter(960, 540);
-	ObjectBullet* ob = new ObjectBullet();
-	AddGo(ob);
+	worldView.setCenter(0.f, 0.f);
 	Scene::Init();
 }
 
@@ -45,8 +43,43 @@ void SceneDev::Update(float dt)
 	Scene::Update(dt);
 
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Up))
+	if (InputMgr::GetAxisRaw(Axis::Horizontal) > 0.f)
 	{
-		ObjectBullet::Create({ 960,540 }, Direction::Up, this);
+		if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::RightDown, this);
+		}
+		else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::RightUp, this);
+		}
+		else
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::Right, this);
+		}
 	}
+	else if (InputMgr::GetAxisRaw(Axis::Horizontal) < 0.f)
+	{
+		if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::LeftDown, this);
+		}
+		else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::LeftUp, this);
+		}
+		else
+		{
+			BulletPeashot::Create(worldView.getCenter(), Direction::Left, this);
+		}
+	}
+	else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
+	{
+		BulletPeashot::Create(worldView.getCenter(), Direction::Up, this);
+	}
+	else if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+	{
+		BulletPeashot::Create(worldView.getCenter(), Direction::Down, this);
+	}
+
 }
