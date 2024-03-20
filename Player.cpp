@@ -67,6 +67,7 @@ void Player::Update(float dt)
 
 	if (isDashing)
 	{
+		animator.Play("animations/PlayerDash.csv");
 		Dash(dt);
 	}
 	else
@@ -76,8 +77,8 @@ void Player::Update(float dt)
 
 		if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
 		{
-			animator.Play("animations/PlayerIdle.csv");
-			SetOrigin(Origins::BC);
+			//animator.PlayQueue("animations/PlayerIdle.csv");
+			//SetOrigin(Origins::BC);
 			velocity.x = horizontalInput * speed;
 		}
 		else
@@ -119,7 +120,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 
 	if (isJumping)
 	{
-		animator.Play("animations/PlayerIdle.csv");             //점프 애니메이션으로 교체
+		animator.PlayQueue("animations/PlayerJump.csv");             //점프 애니메이션으로 교체
 		UpdateJumpingDirection(horizontalInput, InputMgr::GetAxisRaw(Axis::Vertical));
 		return; 
 	}
@@ -132,17 +133,17 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 		{
 			if (verticalInput > 0.f)
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.Play("animations/PlayerAimSideDown.csv");
 				currentDirection = Direction::RightDown;
 			}
 			else if (verticalInput < 0.f)
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.Play("animations/PlayerAimSideUp.csv");
 				currentDirection = Direction::RightUp;
 			}
 			else
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.PlayQueue("animations/PlayerAimStraight.csv");
 				currentDirection = Direction::Right;
 			}
 		}
@@ -150,28 +151,28 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 		{
 			if (verticalInput > 0.f)
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.Play("animations/PlayerAimSideDown.csv");
 				currentDirection = Direction::LeftDown;
 			}
 			else if (verticalInput < 0.f)
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.Play("animations/PlayerAimSideUp.csv");
 				currentDirection = Direction::LeftUp;
 			}
 			else
 			{
-				animator.Play("animations/PlayerIdle.csv");
+				animator.PlayQueue("animations/PlayerAimStraight.csv");
 				currentDirection = Direction::Left;
 			}
 		}
 		else if (verticalInput > 0.f)
 		{
-			animator.Play("animations/PlayerIdle.csv");
+			animator.PlayQueue("animations/PlayerAimDown.csv");
 			currentDirection = Direction::Down;
 		}
 		else if (verticalInput < 0.f)
 		{
-			animator.Play("animations/PlayerIdle.csv");
+			animator.PlayQueue("animations/PlayerAimUp.csv");
 			currentDirection = Direction::Up;
 		}
 	}
