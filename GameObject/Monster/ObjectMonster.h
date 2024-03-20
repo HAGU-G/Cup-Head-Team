@@ -25,5 +25,8 @@ public:
 
 	virtual bool OnDamage(int damage);
 	virtual bool CollisionCheck() = 0;
+
+	inline int GetHp() const { return hp; }
+	inline int GetMaxHp() const { return hp; }
 };
 

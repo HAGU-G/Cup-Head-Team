@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BossPotato.h"
-#include "Bullet/BulletPeashot.h"
+#include "Bullet/BulletPotatoShoot.h"
+#include "Bullet/BulletPotatoShootPink.h"
 
 BossPotato::BossPotato(const std::string& name)
 	:ObjectMonster(name)
@@ -18,6 +19,9 @@ void BossPotato::Init()
 	RES_MGR_TEXTURE.Load("resource/potatoIntro.png");
 	RES_MGR_TEXTURE.Load("resource/potatoLeave.png");
 	RES_MGR_TEXTURE.Load("resource/potatoShoot.png");
+
+	//TODO 임시 코드 삭제 필요
+	SetPosition({ 600.f,0.f });
 }
 
 void BossPotato::Reset()
@@ -84,7 +88,15 @@ void BossPotato::Idle()
 
 void BossPotato::Shoot()
 {
-	BulletPeashot::Create(position, Direction::Left, scene);
+	if (++shootCount < 4)
+	{
+		BulletPotatoShoot::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+	}
+	else
+	{
+		BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+
+	}
 }
 
 void BossPotato::ShootEnd()
@@ -147,7 +159,8 @@ void BossPotato::SetState(State state)
 		break;
 	case BossPotato::State::Shoot:
 		animator.SetSpeed(shootSpeed);
-		shootSpeed += 1.f;
+		shootSpeed += 0.5f;
+		shootCount = 0;
 		animator.ClearEvent();
 		animator.Play("animations/potatoShoot.csv");
 		animator.PlayQueue("animations/potatoShoot.csv");
