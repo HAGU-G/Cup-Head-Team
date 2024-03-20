@@ -20,9 +20,13 @@ void SceneDev2::Init()
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
+	background = new SpriteGo();
+	background->SetTexture("resource/RuseofanOoze.png");
+	background->SetOrigin(Origins::MC);
+	background->SetPosition({ 0,0 });
+
+
 	AddGo(new Player());
-
-
 
 	Scene::Init();
 }
@@ -46,4 +50,3 @@ void SceneDev2::Update(float dt)
 {
 	Scene::Update(dt);
 }
-

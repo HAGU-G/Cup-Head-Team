@@ -22,26 +22,27 @@ void Player::Init()
 {
 	SpriteGo::Init(); 
 
-	SetTexture("resource/cuphead_idle_0001.png");
+	/*SetTexture("resource/cuphead_idle_0001.png");
 	SetOrigin(Origins::BC);
-	SetPosition({0,0});
+	SetPosition({0,0});*/
 
-	hasHitBox = true;
-}
-
-void Player::Release()
-{
-	SpriteGo::Release();
+	animator.SetTarget(&sprite);
 }
 
 void Player::Reset()
 {
 	scene = SCENE_MGR.GetCurrentScene();
+
+	animator.Play("animations/PlayerIdle.csv");
+	SetOrigin(Origins::BC);
+	SetPosition({ 0.f,0.f });
 }
 
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
+	animator.Update(dt);
+
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
@@ -75,7 +76,7 @@ void Player::Update(float dt)
 
 		if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
 		{
-			SetTexture("resource/cuphead_idle_0001.png");
+			animator.Play("animations/PlayerIdle.csv");
 			SetOrigin(Origins::BC);
 			velocity.x = horizontalInput * speed;
 		}
@@ -104,7 +105,7 @@ void Player::Update(float dt)
 		}
 
 
-		if (InputMgr::GetKeyDown(sf::Keyboard::X))
+		if (InputMgr::GetKey(sf::Keyboard::X))
 		{
 			Fire(currentDirection);
 		}
@@ -115,9 +116,10 @@ void Player::Update(float dt)
 
 void Player::UpdateDirection(float horizontalInput, float dt)
 {
+
 	if (isJumping)
 	{
-		SetTexture("resource/cuphead_jump_0001.png");
+		animator.Play("animations/PlayerIdle.csv");             //점프 애니메이션으로 교체
 		UpdateJumpingDirection(horizontalInput, InputMgr::GetAxisRaw(Axis::Vertical));
 		return; 
 	}
@@ -130,17 +132,17 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 		{
 			if (verticalInput > 0.f)
 			{
-				SetTexture("resource/cuphead_aim_diagonal_down_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::RightDown;
 			}
 			else if (verticalInput < 0.f)
 			{
-				SetTexture("resource/cuphead_aim_diagonal_up_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::RightUp;
 			}
 			else
 			{
-				SetTexture("resource/cuphead_aim_straight_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::Right;
 			}
 		}
@@ -148,28 +150,28 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 		{
 			if (verticalInput > 0.f)
 			{
-				SetTexture("resource/cuphead_aim_diagonal_down_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::LeftDown;
 			}
 			else if (verticalInput < 0.f)
 			{
-				SetTexture("resource/cuphead_aim_diagonal_up_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::LeftUp;
 			}
 			else
 			{
-				SetTexture("resource/cuphead_aim_straight_0001.png");
+				animator.Play("animations/PlayerIdle.csv");
 				currentDirection = Direction::Left;
 			}
 		}
 		else if (verticalInput > 0.f)
 		{
-			SetTexture("resource/cuphead_aim_down_0001.png");
+			animator.Play("animations/PlayerIdle.csv");
 			currentDirection = Direction::Down;
 		}
 		else if (verticalInput < 0.f)
 		{
-			SetTexture("resource/cuphead_aim_up_0001.png");
+			animator.Play("animations/PlayerIdle.csv");
 			currentDirection = Direction::Up;
 		}
 	}
@@ -191,13 +193,13 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	}
 	if (!isJumping && !InputMgr::GetKey(sf::Keyboard::C) && InputMgr::GetKey(sf::Keyboard::Down))
 	{
-		SetTexture("resource/cuphead_duck_0004.png");
+		animator.Play("animations/PlayerIdle.csv");
 	}
 
 
 	if (!InputMgr::GetKey(sf::Keyboard::C) && isGrounded && horizontalInput == 0 && verticalInput == 0) 
 	{
-		SetTexture("resource/cuphead_idle_0001.png");
+		animator.Play("animations/PlayerIdle.csv");
 	}
 
 	SetOrigin(Origins::BC);
@@ -218,11 +220,6 @@ void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput)
 	{
 		currentDirection = verticalInput > 0.f ? Direction::Down : verticalInput < 0.f ? Direction::Up : currentDirection;
 	}
-}
-
-void Player::Draw(sf::RenderWindow& window)
-{
-	window.draw(sprite);
 }
 
 void Player::Fire(Direction dir)
