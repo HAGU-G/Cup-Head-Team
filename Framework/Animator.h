@@ -96,7 +96,7 @@ public:
 	void Update(float dt);    //현재 재생되고 있는 시간을 누적하면서 프래임 변경
 
 	void Play(const std::string& clipId, bool clearQueue = true);
-	void Play(bool clearQueue = true);
+	void Play();
 	void PlayQueue(const std::string& clipId);
 	void Stop();
 	void SetFrame(const AnimationFrame& frame);

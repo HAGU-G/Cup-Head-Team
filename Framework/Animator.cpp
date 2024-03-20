@@ -137,9 +137,9 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	Utils::SetOrigin(*target, frame.origin);
 }
 
-void Animator::Play(bool clearQueue)
+void Animator::Play()
 {
-	Play(currentClip->id, clearQueue);
+	Play(currentClip->id, true);
 }
 
 void Animator::SetCurrentCilp(const std::string& clipId)

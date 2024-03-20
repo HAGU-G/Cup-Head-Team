@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+
 class SceneDev2 : public Scene
 {
 protected:
