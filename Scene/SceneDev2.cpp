@@ -24,7 +24,7 @@ void SceneDev2::Init()
 	background->SetTexture("resource/RuseofanOoze.png");
 	background->SetOrigin(Origins::MC);
 	background->SetPosition({ 0,0 });
-
+	AddGo(background);
 
 	AddGo(new Player());
 
