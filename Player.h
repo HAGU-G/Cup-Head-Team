@@ -16,6 +16,11 @@ protected:
 
 	float parryDamage = 100.f;
 
+	float dashSpeed = 1000.0f;  
+	bool isDashing = false;     
+	float dashDuration = 0.2f; 
+	float dashTimer = 0.0f;    
+
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
 
@@ -46,6 +51,7 @@ public:
 	void Fire(Direction direction);
 	int GetHp() { return hp; }
 	void ReSetHp() { hp = maxHp; }
+	void Dash(float dt);
 
 	void OnDamage();
 	void OnDie();
