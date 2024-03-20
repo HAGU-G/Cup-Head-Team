@@ -1,6 +1,5 @@
 #pragma once
 
-class SpriteGo;
 
 class SceneDev1 : public Scene
 {
@@ -10,6 +9,8 @@ protected:
 
 	sf::FloatRect spriteBound;
 	sf::RenderTexture renderTexture;
+
+	Animator animator;
 
 	std::string renderTextureName;
 	std::string filePathId;
@@ -36,6 +37,7 @@ public:
 
 	void Enter() override;
 	void Exit() override;
+	void Reset();
 
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);

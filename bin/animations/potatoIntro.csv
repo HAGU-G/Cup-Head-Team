@@ -1,0 +1,14 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+potatoIntro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/potatoIntro.png,0,0,240,418,7
+resource/potatoIntro.png,240,0,246,418,7
+resource/potatoIntro.png,486,0,289,418,7
+resource/potatoIntro.png,775,0,444,418,7
+resource/potatoIntro.png,1219,0,481,418,7
+resource/potatoIntro.png,1700,0,529,418,7
+resource/potatoIntro.png,2229,0,501,418,7
+resource/potatoIntro.png,2730,0,483,418,7
+resource/potatoIntro.png,3213,0,467,418,7
+resource/potatoIntro.png,3680,0,466,418,7
+resource/potatoIntro.png,4146,0,467,418,7

@@ -214,6 +214,7 @@ void SceneDev1::SaveSpriteSheet()
     renderTextureName += ".png";
     image.saveToFile("resource/" + renderTextureName);
     std::cout << "저장 완료" << std::endl;
+    std::cout << "R키를 누를시 추가 작업이 가능합니다" << std::endl;
 }
 
 void SceneDev1::Init()
@@ -230,6 +231,20 @@ void SceneDev1::Enter()
     Scene::Enter();
 }
 
+void SceneDev1::Reset()
+{
+    sprites.clear();
+    for (auto& texture : textures)
+    {
+        delete texture;
+    }
+    textures.clear();
+    renderTexture.clear(sf::Color::Transparent);
+    spritePos = sf::Vector2f(0.f, 0.f);
+
+    LoadImagesAndDisplay();
+}
+
 void SceneDev1::Exit()
 {
     Scene::Exit();
@@ -237,6 +252,10 @@ void SceneDev1::Exit()
 
 void SceneDev1::Update(float dt)
 {
+    if (InputMgr::GetKeyDown(sf::Keyboard::LShift))
+    {
+        //aniTool->SetAnimationClipId(renderTextureName);
+    }
     if (InputMgr::GetKeyDown(sf::Keyboard::F1))
     {
         LoadImagesAndDisplay();
@@ -246,6 +265,12 @@ void SceneDev1::Update(float dt)
     {
         SaveSpriteSheet();
     }
+
+    if (InputMgr::GetKeyDown(sf::Keyboard::R))
+    {
+        Reset();
+    }
+    Scene::Update(dt);
 }
 
 void SceneDev1::Draw(sf::RenderWindow& window)

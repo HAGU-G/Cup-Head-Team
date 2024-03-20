@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp" />
     <ClCompile Include="AnimationTool.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameObject\Monster\BossPotato.cpp" />
@@ -164,6 +166,8 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h" />
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h" />
     <ClInclude Include="AnimationTool.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameObject\Monster\BossPotato.h" />

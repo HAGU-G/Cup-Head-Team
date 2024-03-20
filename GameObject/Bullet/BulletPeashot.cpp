@@ -9,14 +9,13 @@ BulletPeashot::BulletPeashot(const std::string& name)
 
 void BulletPeashot::Init()
 {
+	animator.SetTarget(&sprite);
 	if (rand() % 2 == 0)
 	{
-		animator.SetTarget(&sprite);
 		animator.SetCurrentCilp("animations/peashotIntroA.csv");
 	}
 	else
 	{
-		animator.SetTarget(&sprite);
 		animator.SetCurrentCilp("animations/peashotIntroB.csv");
 	}
 	animator.Play();
@@ -26,13 +25,6 @@ void BulletPeashot::Init()
 	type = Type::Straight;
 	ObjectBullet::Init();
 }
-
-void BulletPeashot::SetPosition(const sf::Vector2f& pos)
-{
-	ObjectBullet::SetPosition(pos);
-	bound.setPosition(pos);
-}
-
 void BulletPeashot::OnCreate()
 {
 	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
