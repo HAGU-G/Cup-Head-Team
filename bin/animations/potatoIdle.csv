@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+potatoIdle,15,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/potatoIdle.png,0,0,486,387,7
+resource/potatoIdle.png,486,0,466,387,7
+resource/potatoIdle.png,952,0,467,387,7
+resource/potatoIdle.png,1419,0,469,387,7
+resource/potatoIdle.png,1888,0,467,387,7

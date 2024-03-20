@@ -12,31 +12,32 @@ void BossPotato::Init()
 	ObjectMonster::Init();
 	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
 	renderStates.shader = &shaderHit;
+
+	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
+	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");
+	RES_MGR_TEXTURE.Load("resource/potatoIntro.png");
+	RES_MGR_TEXTURE.Load("resource/potatoLeave.png");
+	RES_MGR_TEXTURE.Load("resource/potatoShoot.png");
 }
 
 void BossPotato::Reset()
 {
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
-	SetState(State::Intro);
+	animator.SetTarget(&sprite);
+	Intro();
 }
 
 void BossPotato::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::Death)
+	if (hp == 0 && state < State::None)
 	{
-		SetState(State::Death);
+		Death();
 	}
 
 	switch (state)
 	{
-	case BossPotato::State::Intro:
-		if (PatternTimer(dt))
-		{
-			SetState(State::Idle);
-		}
-		break;
 	case BossPotato::State::Idle:
 		if (PatternTimer(dt))
 		{
@@ -51,42 +52,8 @@ void BossPotato::Update(float dt)
 		else if (PatternTimer(dt))
 		{
 			patternCount++;
-			SetState(State::Shot);
+			SetState(State::Shoot);
 		}
-		break;
-	case BossPotato::State::Shot:
-		if (shotCount < 4)
-		{
-			shotTimer += dt;
-			if (shotTimer >= shotInterval)
-			{
-				SetTexture("resource/Sprite/stage01/potato/veggie_potato_shoot_0013.png");
-				SetOrigin(Origins::BC);
-				shotTimer = 0.f;
-				shotCount++;
-				BulletPeashot::Create(position, Direction::Left, scene);
-			}
-		}
-		else if (true) //애니메이션이 끝났을 때를 조건으로
-		{
-			shotInterval -= 0.5f;
-			SetState(State::Pattern1);
-		}
-		break;
-	case BossPotato::State::Death:
-		if (PatternTimer(dt))
-		{
-			SetState(State::Leave);
-		}
-		break;
-	case BossPotato::State::Leave:
-		if (PatternTimer(dt))
-		{
-			scene->RemoveGo(this);
-			SetState(State::None);
-		}
-		break;
-	default:
 		break;
 	}
 }
@@ -103,16 +70,46 @@ void BossPotato::LateUpdate(float dt)
 
 void BossPotato::Intro()
 {
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/potatoIntro.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::Idle, this));
 
+}
 
+void BossPotato::Idle()
+{
+	SetState(State::Idle);
+}
+
+void BossPotato::Shoot()
+{
+	BulletPeashot::Create(position, Direction::Left, scene);
+}
+
+void BossPotato::ShootEnd()
+{
+	SetState(State::Pattern1);
 }
 
 void BossPotato::Death()
 {
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/potatoDeath.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::Leave, this));
 }
 
 void BossPotato::Leave()
 {
+	SetState(State::None);
+	animator.Play("animations/potatoLeave.csv");
+	animator.AddEvent("animations/potatoLeave.csv", animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::OnDie, this));
+}
+
+void BossPotato::OnDie()
+{
+	scene->RemoveGo(this);
 }
 
 bool BossPotato::PatternTimer(float dt)
@@ -131,43 +128,34 @@ void BossPotato::SetState(State state)
 	this->state = state;
 	switch (state)
 	{
-	case BossPotato::State::Intro:
-		SetTexture("resource/Sprite/stage01/potato/veggie_potato_intro_0001.png");
-		SetOrigin(Origins::BC);
-		Intro();
-		preState = State::Intro;
-		break;
 	case BossPotato::State::Idle:
-		SetTexture("resource/Sprite/stage01/potato/veggie_potato_idle_0001.png");
-		SetOrigin(Origins::BC);
+		animator.Play("animations/potatoIdle.csv");
 		preState = State::Idle;
 		break;
 	case BossPotato::State::Pattern1:
-		if (preState == State::Shot)
+		if (preState == State::Shoot)
 		{
-			SetTexture("resource/Sprite/stage01/potato/veggie_potato_idle_0001.png");
-			SetOrigin(Origins::BC);
+			animator.Play("animations/potatoIdle.csv");
+			animator.SetSpeed(1.f);
 		}
 		else
 		{
 			patternCount = 0;
-			shotInterval = 1.5f;
+			shootSpeed = 1.f;
 		}
 		preState = State::Pattern1;
 		break;
-	case BossPotato::State::Shot:
-		shotCount = 0;
-		preState = State::Shot;
-		break;
-	case BossPotato::State::Death:
-		SetTexture("resource/Sprite/stage01/potato/veggie_potato_death_0001.png");
-		SetOrigin(Origins::BC);
-		preState = State::Death;
-		break;
-	case BossPotato::State::Leave:
-		SetTexture("resource/Sprite/stage01/potato/veggie_potato_leave_0024.png");
-		SetOrigin(Origins::BC);
-		preState = State::Leave;
+	case BossPotato::State::Shoot:
+		animator.SetSpeed(shootSpeed);
+		shootSpeed += 1.f;
+		animator.ClearEvent();
+		animator.Play("animations/potatoShoot.csv");
+		animator.PlayQueue("animations/potatoShoot.csv");
+		animator.PlayQueue("animations/potatoShoot.csv");
+		animator.PlayQueue("animations/potatoShoot.csv");
+		animator.AddEvent(animator.GetCurrentCilpId(), 12, std::bind(&BossPotato::Shoot, this));
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::ShootEnd, this));
+		preState = State::Shoot;
 		break;
 	default:
 		break;

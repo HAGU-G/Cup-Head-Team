@@ -4,12 +4,9 @@ class BossPotato : public ObjectMonster
 {
 	enum class State
 	{
-		Intro,
 		Idle,
 		Pattern1,
-		Shot,
-		Death,
-		Leave,
+		Shoot,
 		None
 	};
 
@@ -19,10 +16,8 @@ protected:
 
 	int patternCount = 0;
 	float patternTimer = 0.f;
-	float patternInterval = 1.5f;
-	int shotCount = 0;
-	float shotTimer = 0.f;
-	float shotInterval = 0.5f;
+	float patternInterval = 2.0f;
+	float shootSpeed = 1.0f;
 
 public:
 	BossPotato(const std::string& name = "BossPotato");
@@ -38,8 +33,12 @@ public:
 	void LateUpdate(float dt) override;
 	
 	void Intro();
+	void Idle();
+	void Shoot();
+	void ShootEnd();
 	void Death();
 	void Leave();
+	void OnDie();
 
 	bool PatternTimer(float dt);
 	void SetState(State state);

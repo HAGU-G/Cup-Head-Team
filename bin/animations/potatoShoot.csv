@@ -1,0 +1,25 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+potatoShoot,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/potatoShoot.png,0,0,527,402,7
+resource/potatoShoot.png,527,0,516,402,7
+resource/potatoShoot.png,1043,0,405,402,7
+resource/potatoShoot.png,1448,0,408,402,7
+resource/potatoShoot.png,1856,0,407,402,7
+resource/potatoShoot.png,2263,0,398,402,7
+resource/potatoShoot.png,2661,0,383,402,7
+resource/potatoShoot.png,3044,0,337,402,7
+resource/potatoShoot.png,3381,0,339,402,7
+resource/potatoShoot.png,3720,0,430,402,7
+resource/potatoShoot.png,4150,0,450,402,7
+resource/potatoShoot.png,4600,0,477,402,7
+resource/potatoShoot.png,5077,0,491,402,7
+resource/potatoShoot.png,5568,0,471,402,7
+resource/potatoShoot.png,6039,0,464,402,7
+resource/potatoShoot.png,6503,0,458,402,7
+resource/potatoShoot.png,6961,0,428,402,7
+resource/potatoShoot.png,7389,0,452,402,7
+resource/potatoShoot.png,7841,0,452,402,7
+resource/potatoShoot.png,8293,0,459,402,7
+resource/potatoShoot.png,8752,0,464,402,7
+resource/potatoShoot.png,9216,0,469,402,7
