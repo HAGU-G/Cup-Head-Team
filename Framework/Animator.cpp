@@ -117,6 +117,16 @@ void Animator::Play(const std::string& clipId, bool clearQueue) //첫번째 프레임 
 	totalFrame = currentClip->GetTotalFrame();
 	clipDuration = 1.f / currentClip->fps;               //한 프레임당 시간
 	SetFrame(currentClip->frames[currentFrame]);         //첫 번째 프레임으로 설정
+	for (auto& event : eventList)
+	{
+		if (currentClip->id == event.clipId && eventFrame == event.frame)
+		{
+			if (event.action != nullptr)
+			{
+				event.action();
+			}
+		}
+	}
 }
 
 void Animator::PlayQueue(const std::string& clipId)
@@ -137,9 +147,9 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	Utils::SetOrigin(*target, frame.origin);
 }
 
-void Animator::Play(bool clearQueue)
+void Animator::Play()
 {
-	Play(currentClip->id, clearQueue);
+	Play(currentClip->id, true);
 }
 
 void Animator::SetCurrentCilp(const std::string& clipId)
