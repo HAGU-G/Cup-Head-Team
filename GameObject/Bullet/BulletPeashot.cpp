@@ -11,11 +11,9 @@ void BulletPeashot::Init()
 {
 	SetTexture("resource/Sprite/peashot/weapon_peashot_intro_b_0001.png");
 	SetOrigin(Origins::ML);
-	SetSpeed(300.f);
-	SetRange(900.f);
-	type = Type::Homing;
-	SetTargetPosition({- 300.f, -300.f });
-	SetRotateSpeed(180.f);
+	SetSpeed(1200.f);
+	SetRange(3000.f);
+	type = Type::Straight;
 	ObjectBullet::Init();
 }
 
