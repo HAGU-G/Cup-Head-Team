@@ -146,7 +146,9 @@
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletPeashot.cpp" />
     <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp" />
+    <ClCompile Include="GameObject\Effect\ObjectEffect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -171,7 +173,9 @@
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\Bullet\BulletPeashot.h" />
     <ClInclude Include="GameObject\Bullet\ObjectBullet.h" />
+    <ClInclude Include="GameObject\Effect\ObjectEffect.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\SceneDev.h" />

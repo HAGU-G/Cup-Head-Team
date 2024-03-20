@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "SceneDev2.h"
-#include "Bullet/ObjectBullet.h"
+#include "Bullet/BulletPeashot.h"
 
 // 해야하는 일 
 // 플레이어 키 입력별 텍스쳐 변환 (완료)
@@ -165,7 +165,7 @@ void Player::Update(float dt)
 			isFire = false;
 		}
 
-		if (isFire && InputMgr::GetKeyDown(sf::Keyboard::X))
+		if (InputMgr::GetKeyDown(sf::Keyboard::X))
 		{
 			Fire(currentDirection);
 		}
@@ -206,7 +206,7 @@ void Player::Fire(Direction dir)
 	}
 
 	pos.y -= 100;
-	ObjectBullet::Create(pos, dir, sceneDev2);
+	BulletPeashot::Create(pos, dir, sceneDev2);
 }
 
 void Player::OnDamage()
