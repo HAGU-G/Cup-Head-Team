@@ -11,8 +11,7 @@ BossPotato::BossPotato(const std::string& name)
 void BossPotato::Init()
 {
 	ObjectMonster::Init();
-	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
-	renderStates.shader = &shaderHit;
+
 
 	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
 	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");

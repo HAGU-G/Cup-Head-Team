@@ -40,7 +40,7 @@ void SceneDev::Exit()
 	Scene::Exit();
 }
 
-void SceneDev::Draw(sf::RenderWindow& window)
+void SceneDev::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
 }

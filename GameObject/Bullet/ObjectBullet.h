@@ -45,7 +45,7 @@ public:
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
 
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderTexture& window) override;
 
 	inline void SetSpeed(float speed) { this->speed = speed; }
 	inline void SetRotateSpeed(float rotateSpeed) { this->rotateSpeed = rotateSpeed; }

@@ -169,7 +169,7 @@ void Scene::FixedUpdate(float dt)
 	}
 }
 
-void Scene::Draw(sf::RenderWindow& window)
+void Scene::Draw(sf::RenderTexture& window)
 {
 	// gameObjects.sort();
 	//std::sort(gameObjects.begin(), gameObjects.end(),

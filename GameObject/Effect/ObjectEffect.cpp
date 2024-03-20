@@ -35,7 +35,7 @@ void ObjectEffect::LateUpdate(float dt)
 	}
 }
 
-void ObjectEffect::Draw(sf::RenderWindow& window)
+void ObjectEffect::Draw(sf::RenderTexture& window)
 {
 	SpriteGo::Draw(window);
 }

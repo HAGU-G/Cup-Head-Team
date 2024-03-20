@@ -101,7 +101,7 @@ void SpriteGo::Reset()
 
 }
 
-void SpriteGo::Draw(sf::RenderWindow& window)
+void SpriteGo::Draw(sf::RenderTexture& window)
 {
 	if (useRenderStates)
 	{

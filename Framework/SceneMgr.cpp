@@ -75,7 +75,7 @@ void SceneMgr::FixedUpdate(float dt)
 	scenes[(int)currentScene]->FixedUpdate(dt);
 }
 
-void SceneMgr::Draw(sf::RenderWindow& window)
+void SceneMgr::Draw(sf::RenderTexture& window)
 {
 	scenes[(int)currentScene]->Draw(window);
 }

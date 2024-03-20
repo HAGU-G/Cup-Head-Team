@@ -46,7 +46,7 @@ public:
 	virtual void Update(float dt);
 	virtual void LateUpdate(float dt);
 	virtual void FixedUpdate(float dt);
-	virtual void Draw(sf::RenderWindow& window);
+	virtual void Draw(sf::RenderTexture& window);
 	const sf::View& GetWorldView() const { return worldView; }
 	const sf::View& GetUiView() const { return uiView; }
 

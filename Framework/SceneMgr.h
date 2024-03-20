@@ -35,7 +35,7 @@ public:
 	bool Update(float dt);
 	void LateUpdate(float dt);
 	void FixedUpdate(float dt);
-	void Draw(sf::RenderWindow& window);
+	void Draw(sf::RenderTexture& window);
 
 	SceneMgr(const SceneMgr&) = delete;
 	SceneMgr(SceneMgr&&) = delete;

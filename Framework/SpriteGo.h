@@ -32,7 +32,7 @@ public:
 	
 	void Update(float dt) override;
 	void Reset() override;
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderTexture& window) override;
 
 };
 

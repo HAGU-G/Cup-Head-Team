@@ -46,7 +46,7 @@ void ObjectBullet::LateUpdate(float dt)
 	}
 }
 
-void ObjectBullet::Draw(sf::RenderWindow& window)
+void ObjectBullet::Draw(sf::RenderTexture& window)
 {
 	SpriteGo::Draw(window);
 }
