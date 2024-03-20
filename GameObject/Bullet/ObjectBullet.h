@@ -61,18 +61,6 @@ public:
 	virtual void OnCreate();
 	virtual void OnDie();
 
-	//bool OnDamage(int damage)
-	//{
-	//	hp -= damage;
-	//	return true;
-	//}
-	//bool OnDamage(int damage, bool isParry)
-	//{
-	//	OnDamage(damage);
-	//	return true;
-	//}
-
-
 
 
 };
