@@ -3,6 +3,7 @@
 class SpriteGo : public GameObject
 {
 protected:
+	sf::RenderStates renderStates;
 	sf::Sprite sprite;
 	std::string textureId;
 
