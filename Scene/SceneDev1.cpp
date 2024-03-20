@@ -198,7 +198,7 @@ void SceneDev1::LoadImagesAndDisplay()
         spritePos.x += sprite->getGlobalBounds().width;
 
         renderTexture.draw(*sprite);
-        file << "graphics/" + renderTextureName + ".png" << ","
+        file << "resource/" + renderTextureName + ".png" << ","
             << sprite->getPosition().x << "," << 0 << ","
             << sprite->getGlobalBounds().width << "," << maxHeight << ","<< setOrigin << std::endl;
     }
