@@ -1,23 +1,21 @@
 #pragma once
-#include "SpriteGo.h"
-class BossPotato : public SpriteGo
+#include "ObjectMonster.h"
+class BossPotato : public ObjectMonster
 {
 	enum class State
 	{
-		None,
 		Intro,
 		Idle,
 		Pattern1,
 		Shot,
 		Death,
-		Leave
+		Leave,
+		None
 	};
 
 protected:
 	State state = State::None;
 	State preState = State::None;
-
-	sf::Shader shaderHit;
 
 	int patternCount = 0;
 	float patternTimer = 0.f;
@@ -46,6 +44,6 @@ public:
 	bool PatternTimer(float dt);
 	void SetState(State state);
 
-	bool Damage(int damage);
+	bool CollisionCheck() override;
 };
 

@@ -13,7 +13,10 @@ void BulletPeashot::Init()
 	SetOrigin(Origins::ML);
 	SetSpeed(1200.f);
 	SetRange(3000.f);
-	type = Type::Straight;
+	//type = Type::Straight;
+	type = Type::Homing;
+	SetTargetPosition({ 0.f, 0.f });
+	SetRotateSpeed(360.f);
 	ObjectBullet::Init();
 }
 

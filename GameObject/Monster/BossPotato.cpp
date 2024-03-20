@@ -3,25 +3,32 @@
 #include "Bullet/BulletPeashot.h"
 
 BossPotato::BossPotato(const std::string& name)
-	:SpriteGo(name)
+	:ObjectMonster(name)
 {
 }
 
 void BossPotato::Init()
 {
+	ObjectMonster::Init();
 	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
 	renderStates.shader = &shaderHit;
 }
 
 void BossPotato::Reset()
 {
+	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
 	SetState(State::Intro);
 }
 
 void BossPotato::Update(float dt)
 {
-	SpriteGo::Update(dt);
+	ObjectMonster::Update(dt);
+	if (hp == 0 && state < State::Death)
+	{
+		SetState(State::Death);
+	}
+
 	switch (state)
 	{
 	case BossPotato::State::Intro:
@@ -67,8 +74,17 @@ void BossPotato::Update(float dt)
 		}
 		break;
 	case BossPotato::State::Death:
+		if (PatternTimer(dt))
+		{
+			SetState(State::Leave);
+		}
 		break;
 	case BossPotato::State::Leave:
+		if (PatternTimer(dt))
+		{
+			scene->RemoveGo(this);
+			SetState(State::None);
+		}
 		break;
 	default:
 		break;
@@ -77,14 +93,11 @@ void BossPotato::Update(float dt)
 
 void BossPotato::LateUpdate(float dt)
 {
+	ObjectMonster::LateUpdate(dt);
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-		shaderHit.setUniform("texture", sf::Shader::CurrentTexture);
-		useRenderStates = true;
-	}
-	else if (InputMgr::GetKeyUp(sf::Keyboard::Space))
-	{
-		useRenderStates = false;
+		OnDamage(10);
 	}
 }
 
@@ -161,7 +174,8 @@ void BossPotato::SetState(State state)
 	}
 }
 
-bool BossPotato::Damage(int damage)
+bool BossPotato::CollisionCheck()
 {
+
 	return true;
 }
