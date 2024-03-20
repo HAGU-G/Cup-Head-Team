@@ -138,6 +138,8 @@
   <ItemGroup>
     <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp" />
+    <ClCompile Include="AnimationTool.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameObject\Monster\BossPotato.cpp" />
     <ClCompile Include="GameObject\Effect\EffectPeashot.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
@@ -160,11 +162,14 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\SceneDev.cpp" />
+    <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h" />
     <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h" />
+    <ClInclude Include="AnimationTool.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameObject\Monster\BossPotato.h" />
     <ClInclude Include="GameObject\Effect\EffectPeashot.h" />
     <ClInclude Include="Framework\Animator.h" />
@@ -189,6 +194,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\SceneDev.h" />
+    <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\SceneDev2.h" />
   </ItemGroup>
   <ItemGroup>
