@@ -9,7 +9,6 @@
 #include "rapidcsv.h"
 #include <filesystem> 
 #include <ShObjIdl.h>
-#include "rapidcsv.h"
 
 namespace fs = std::filesystem;
 
@@ -106,12 +105,28 @@ void SceneDev1::LoadImagesAndDisplay()
     textures.clear();
     std::cout << "파일 이름 :" << std::endl;
     std::cin >> renderTextureName;
+    std::ofstream file("animations/" + renderTextureName + ".csv");
+    std::cout << "FPS 값을 지정해 주세요" << std::endl;
+    std::cin >> fps;
+    std::cout << "LoopType을 정해주세요(0:SINGLE 1:LOOP 2:PING PONG)" << std::endl;
+    std::cin >> loopType;
+    while (loopType > 2 || loopType < 0)
+    {
+        std::cout << "범위를 벗어났습니다 다시 입력해주세요." << std::endl;
+        std::cin >> loopType;
+    }
+    std::cout << "Origin을 정해주세요" << std::endl;
+    std::cout << "0:TL, 1:TC, 2:TR, 3:ML, 4:MC, 5:MR, 6:BL, 7:BC, 8:BR" << std::endl;
+    std::cin >> setOrigin;
+    file << "ID" << "," << "FPS" << "," << "LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG)" << "," << "," << "," << std::endl;
+    file << renderTextureName << "," << fps << "," << loopType << "," << "," << std::endl;
+    file << "TEXTURE ID" << "," << "LEFT" << "," << "TOP" << "," << "WIDTH" << "," << "HEIGHT" << "," << "ORIGIN" << std::endl;
     int num;
     std::cout << " -----------------------------------------" << std::endl;
     std::cout << " : 1. 좌측상단 2. 좌측 중앙 3. 좌측 하단 :" << std::endl;
     std::cout << " -----------------------------------------" << std::endl;
     std::cin >> num;
-    if (num > 3 || num < 1)
+    while (num > 3 || num < 1)
     {
         std::cout << "스프라이트 시트 기준점이 틀립니다 다시 입력하세요." << std::endl;
         std::cin >> num;
@@ -183,9 +198,13 @@ void SceneDev1::LoadImagesAndDisplay()
         spritePos.x += sprite->getGlobalBounds().width;
 
         renderTexture.draw(*sprite);
-
+        file << "graphics/" + renderTextureName + ".png" << ","
+            << sprite->getPosition().x << "," << 0 << ","
+            << sprite->getGlobalBounds().width << "," << maxHeight << ","<< setOrigin << std::endl;
     }
+
     renderTexture.display();
+    file.close();
 }
 
 void SceneDev1::SaveSpriteSheet()
@@ -193,7 +212,7 @@ void SceneDev1::SaveSpriteSheet()
     const sf::Texture& texture = renderTexture.getTexture();
     sf::Image image = texture.copyToImage();
     renderTextureName += ".png";
-    image.saveToFile("graphics/" + renderTextureName);
+    image.saveToFile("resource/" + renderTextureName);
     std::cout << "저장 완료" << std::endl;
 }
 

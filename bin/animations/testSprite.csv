@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+testSprite,10,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+graphics/testSprite.png,0,0,118,175,7
+graphics/testSprite.png,118,0,129,175,7
+graphics/testSprite.png,247,0,99,175,7
+graphics/testSprite.png,346,0,129,175,7
+graphics/testSprite.png,475,0,106,175,7
+graphics/testSprite.png,581,0,161,175,7
+graphics/testSprite.png,742,0,98,175,7
+graphics/testSprite.png,840,0,77,175,7
+graphics/testSprite.png,917,0,126,175,7

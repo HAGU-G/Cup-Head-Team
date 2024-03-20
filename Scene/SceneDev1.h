@@ -10,17 +10,17 @@ protected:
 
 	sf::FloatRect spriteBound;
 	sf::RenderTexture renderTexture;
-	sf::Vector2f spritePos = { 0.f,0.f };
 
 	std::string renderTextureName;
+	std::string filePathId;
 
-	sf::Texture testtex;
-	sf::Sprite testSprite;
+	int fps = 0;
+	int loopType = 0;
+	int setOrigin = 0;
 
 	int sheetWidth = 0;
 	int sheetHeight = 0;
-	sf::Vector2f scale = { 1.f,1.f };
-
+	sf::Vector2f spritePos = { 0.f,0.f };
 
 public:
 	SceneDev1(SceneIds id);
