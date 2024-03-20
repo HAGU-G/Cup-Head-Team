@@ -1,4 +1,7 @@
 #pragma once
+
+class Player;
+
 class CollisionManager
 {
 public:
@@ -10,16 +13,25 @@ public:
 	};
 
 protected:
-	std::list<GameObject> bulletList;
-	std::list<GameObject> parryList;
-	
+	std::list<GameObject*> BulletList;
+	std::list<GameObject*> monsterList;
+    //std::list<GameObject*> playerList;
+
+	Player* player;
 public:
-	
+    CollisionManager();
+    ~CollisionManager();
+
+	void Reset();
+
 	bool BulletCollsion();
 	bool ParryCollsion();
+	bool PlayerCollsion();
 
-	void Bullet();
-	void Parry();
+    void RegisterMonsterCollider(GameObject* collider);
+    void RegisterBulletCollider(GameObject* collider);
+    void MonsterCollisions();
+    void BulletCollisions();
 
 
 };

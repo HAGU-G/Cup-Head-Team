@@ -47,6 +47,12 @@ void Player::Update(float dt)
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 
 
+	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing) 
+	{
+		isDashing = true;
+		dashTimer = dashDuration;
+	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Z))
 	{
 		isJumping = true;
@@ -58,43 +64,51 @@ void Player::Update(float dt)
 		}
 	}
 
-	velocity.x = horizontalInput * speed;
-	velocity.y += gravity * dt;
-
-	if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
+	if (isDashing)
 	{
-		SetTexture("resource/cuphead_idle_0001.png");
-		SetOrigin(Origins::BC);
-		velocity.x = horizontalInput * speed;
+		Dash(dt);
 	}
 	else
 	{
-		velocity.x = 0;
-	}
+		velocity.x = horizontalInput * speed;
+		velocity.y += gravity * dt;
+
+		if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
+		{
+			SetTexture("resource/cuphead_idle_0001.png");
+			SetOrigin(Origins::BC);
+			velocity.x = horizontalInput * speed;
+		}
+		else
+		{
+			velocity.x = 0;
+		}
 
 
-	position += velocity * dt;
+		position += velocity * dt;
 
-	if (position.y > 0.f)
-	{
-		isGrounded = true;
-		isJumping = false;
-		position.y = 0.f;
-		velocity.y = 0.f;
-	}
+		if (position.y > 0.f)
+		{
+			isGrounded = true;
+			isJumping = false;
+			position.y = 0.f;
+			velocity.y = 0.f;
+		}
+		UpdateDirection(horizontalInput, dt);
 
-	SetPosition(position);
+		SetPosition(position);
 
-	if (horizontalInput != 0.f)
-	{
-		SetFlipX(horizontalInput < 0);
-	}
+		if (horizontalInput != 0.f)
+		{
+			SetFlipX(horizontalInput < 0);
+		}
 
-	UpdateDirection(horizontalInput, dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::X))
-	{
-		Fire(currentDirection);
+		if (InputMgr::GetKeyDown(sf::Keyboard::X))
+		{
+			Fire(currentDirection);
+		}
+
 	}
 	
 }
@@ -241,6 +255,31 @@ void Player::Fire(Direction dir)
 
 	pos.y -= 100;
 	BulletPeashot::Create(pos, dir, scene);
+}
+
+void Player::Dash(float dt) 
+{
+	if (dashTimer > 0) 
+	{
+		sf::Vector2f dashDirection;
+		switch (currentDirection) 
+		{
+		case Direction::Right:
+			dashDirection = sf::Vector2f(1, 0);
+			break;
+		case Direction::Left:
+			dashDirection = sf::Vector2f(-1, 0);
+			break;
+
+		}
+
+		SetPosition(position + dashDirection * dashSpeed * dt);
+		dashTimer -= dt;
+	}
+	else 
+	{
+		isDashing = false;
+	}
 }
 
 void Player::OnDamage()
