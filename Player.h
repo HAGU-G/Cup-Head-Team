@@ -11,7 +11,7 @@ protected:
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 
-	float gravity = 500.f;
+	float gravity = 800.f;
 	float speed = 500.f;
 
 	float parryDamage = 100.f;
@@ -22,6 +22,8 @@ protected:
 	bool isGrounded = true;
 	bool isAlive = true;
 	bool isFire = false;
+	bool isJumping = false;
+	bool isCKeyPressed;
 
 	int maxHp = 3;
 	int hp;
@@ -35,6 +37,9 @@ public:
 	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
+
+	void UpdateDirection(float horizontalInput, float dt);
+	void UpdateJumpingDirection(float horizontalInput, float verticalInput);
 
 	void Draw(sf::RenderWindow& window);
 
