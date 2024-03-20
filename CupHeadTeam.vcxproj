@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Monster\BossPotato.cpp" />
     <ClCompile Include="GameObject\Effect\EffectPeashot.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp" />
     <ClCompile Include="GameObject\Effect\ObjectEffect.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameObject\Monster\ObjectMonster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -159,6 +161,7 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Monster\BossPotato.h" />
     <ClInclude Include="GameObject\Effect\EffectPeashot.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="Framework\Defines.h" />
@@ -178,10 +181,14 @@
     <ClInclude Include="GameObject\Bullet\BulletPeashot.h" />
     <ClInclude Include="GameObject\Bullet\ObjectBullet.h" />
     <ClInclude Include="GameObject\Effect\ObjectEffect.h" />
+    <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\SceneDev.h" />
     <ClInclude Include="Scene\SceneDev2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\resource\Shader\Hit.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

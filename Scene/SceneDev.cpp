@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "SceneDev.h"
 #include "Bullet/BulletPeaShot.h"
+#include "Player.h"
+#include "Monster/BossPotato.h"
 
 SceneDev::SceneDev(SceneIds id)
 	:Scene(id)
@@ -15,6 +17,11 @@ void SceneDev::Init()
 {
 	worldView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
 	worldView.setCenter(0.f, 0.f);
+
+	AddGo(new Player());
+	AddGo(new BossPotato())->SetPosition({0.f, 0.f});
+
+
 	Scene::Init();
 }
 
@@ -47,39 +54,39 @@ void SceneDev::Update(float dt)
 	{
 		if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::RightDown, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::RightDown, this);
 		}
 		else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::RightUp, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::RightUp, this);
 		}
 		else
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::Right, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::Right, this);
 		}
 	}
 	else if (InputMgr::GetAxisRaw(Axis::Horizontal) < 0.f)
 	{
 		if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::LeftDown, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::LeftDown, this);
 		}
 		else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::LeftUp, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::LeftUp, this);
 		}
 		else
 		{
-			BulletPeashot::Create(worldView.getCenter(), Direction::Left, this);
+			//BulletPeashot::Create(worldView.getCenter(), Direction::Left, this);
 		}
 	}
 	else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
 	{
-		BulletPeashot::Create(worldView.getCenter(), Direction::Up, this);
+		//BulletPeashot::Create(worldView.getCenter(), Direction::Up, this);
 	}
 	else if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
 	{
-		BulletPeashot::Create(worldView.getCenter(), Direction::Down, this);
+		//BulletPeashot::Create(worldView.getCenter(), Direction::Down, this);
 	}
 
 }

@@ -37,53 +37,52 @@ void Player::Release()
 void Player::Reset()
 {
 	scene = SCENE_MGR.GetCurrentScene();
-	sceneDev2 = dynamic_cast<SceneDev2*>(scene);
 }
 
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
-	
-	if (!InputMgr::GetKey(sf::Keyboard::C))
+	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
+	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
+
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z))
 	{
+		isJumping = true;
 
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		if (isGrounded)
 		{
-			if (isGrounded)
-			{
-				isGrounded = false;
-				velocity.y = -500.f;
-				SetTexture("resource/cuphead_jump_0001.png");
-				SetOrigin(Origins::BC);
-			}
-			else
-			{
-				if (/*분홍 객체와 충돌 중 && */InputMgr::GetKeyDown(sf::Keyboard::Z))
-				{
-					/*if(monster.OnDamage(damage,true))
-					{
-
-					}*/
-					velocity.y = -500.f;
-					SetTexture("resource/cuphead_jump_0001.png");
-					SetOrigin(Origins::BC);
-				}
-			}
-		}
-
-		velocity.x = horizontalInput * speed;
-		velocity.y += gravity * dt;
-
-		position += velocity * dt;
-
-		if (position.y > 0.f)
-		{
-			isGrounded = true;
-			position.y = 0.f;
-			velocity.y = 0.f;
+			isGrounded = false;
+			velocity.y = -500.f;
 		}
 	}
+
+	velocity.x = horizontalInput * speed;
+	velocity.y += gravity * dt;
+
+	if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
+	{
+		SetTexture("resource/cuphead_idle_0001.png");
+		SetOrigin(Origins::BC);
+		velocity.x = horizontalInput * speed;
+	}
+	else
+	{
+		velocity.x = 0;
+	}
+
+
+	position += velocity * dt;
+
+	if (position.y > 0.f)
+	{
+		isGrounded = true;
+		isJumping = false;
+		position.y = 0.f;
+		velocity.y = 0.f;
+	}
+
 	SetPosition(position);
 
 	if (horizontalInput != 0.f)
@@ -91,84 +90,119 @@ void Player::Update(float dt)
 		SetFlipX(horizontalInput < 0);
 	}
 
-	if (isGrounded)
-	{
-		SetTexture("resource/cuphead_idle_0001.png");
-		SetOrigin(Origins::BC);
+	UpdateDirection(horizontalInput, dt);
 
-		if (InputMgr::GetAxisRaw(Axis::Horizontal) > 0.f)
+	if (InputMgr::GetKeyDown(sf::Keyboard::X))
+	{
+		Fire(currentDirection);
+	}
+	
+}
+
+void Player::UpdateDirection(float horizontalInput, float dt)
+{
+	if (isJumping)
+	{
+		SetTexture("resource/cuphead_jump_0001.png");
+		UpdateJumpingDirection(horizontalInput, InputMgr::GetAxisRaw(Axis::Vertical));
+		return; 
+	}
+
+	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
+
+	if (isCKeyPressed)
+	{
+		if (horizontalInput > 0.f)
 		{
-			SetTexture("resource/cuphead_aim_straight_0001.png");
-			if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+			if (verticalInput > 0.f)
 			{
 				SetTexture("resource/cuphead_aim_diagonal_down_0001.png");
 				currentDirection = Direction::RightDown;
 			}
-			else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
+			else if (verticalInput < 0.f)
 			{
 				SetTexture("resource/cuphead_aim_diagonal_up_0001.png");
 				currentDirection = Direction::RightUp;
 			}
 			else
 			{
+				SetTexture("resource/cuphead_aim_straight_0001.png");
 				currentDirection = Direction::Right;
 			}
-			SetOrigin(Origins::BC);
-			PreDirection = Direction::Right;
-			isFire = true;
 		}
-		else if (InputMgr::GetAxisRaw(Axis::Horizontal) < 0.f)
+		else if (horizontalInput < 0.f)
 		{
-			SetTexture("resource/cuphead_aim_straight_0001.png");
-			if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+			if (verticalInput > 0.f)
 			{
 				SetTexture("resource/cuphead_aim_diagonal_down_0001.png");
 				currentDirection = Direction::LeftDown;
 			}
-			else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
+			else if (verticalInput < 0.f)
 			{
 				SetTexture("resource/cuphead_aim_diagonal_up_0001.png");
 				currentDirection = Direction::LeftUp;
 			}
 			else
 			{
+				SetTexture("resource/cuphead_aim_straight_0001.png");
 				currentDirection = Direction::Left;
 			}
-			SetOrigin(Origins::BC);
-			PreDirection = Direction::Left;
-			isFire = true;
 		}
-		else if (InputMgr::GetAxisRaw(Axis::Vertical) < 0.f)
-		{
-			SetTexture("resource/cuphead_aim_up_0001.png");
-			SetOrigin(Origins::BC);
-			currentDirection = Direction::Up;
-			isFire = true;
-		}
-		else if (InputMgr::GetAxisRaw(Axis::Vertical) > 0.f)
+		else if (verticalInput > 0.f)
 		{
 			SetTexture("resource/cuphead_aim_down_0001.png");
-			SetOrigin(Origins::BC);
 			currentDirection = Direction::Down;
-			isFire = true;
 		}
-		else
+		else if (verticalInput < 0.f)
 		{
-			currentDirection = PreDirection;
+			SetTexture("resource/cuphead_aim_up_0001.png");
+			currentDirection = Direction::Up;
 		}
+	}
+	else
+	{
+		// C 키x, 방향은 변경o 텍스처는 변경x
+		if (horizontalInput > 0.f)
+		{
+			currentDirection = verticalInput < 0.f ? Direction::RightUp : Direction::Right;
+		}
+		else if (horizontalInput < 0.f)
+		{
+			currentDirection = verticalInput < 0.f ? Direction::LeftUp : Direction::Left;
+		}
+		else if (verticalInput < 0.f)
+		{
+			currentDirection = Direction::Up;
+		}
+	}
+	if (!isJumping && !InputMgr::GetKey(sf::Keyboard::C) && InputMgr::GetKey(sf::Keyboard::Down))
+	{
+		SetTexture("resource/cuphead_duck_0004.png");
+	}
 
-		if (InputMgr::GetKeyUp(sf::Keyboard::Left) || InputMgr::GetKeyUp(sf::Keyboard::Right) ||
-			InputMgr::GetKeyUp(sf::Keyboard::Up) || InputMgr::GetKeyUp(sf::Keyboard::Down))
-		{
-			SetTexture("resource/cuphead_idle_0001.png");
-			SetOrigin(Origins::BC);
-			isFire = false;
-		}
 
-		if (InputMgr::GetKeyDown(sf::Keyboard::X))
-		{
-			Fire(currentDirection);
-		}
+	if (!InputMgr::GetKey(sf::Keyboard::C) && isGrounded && horizontalInput == 0 && verticalInput == 0) 
+	{
+		SetTexture("resource/cuphead_idle_0001.png");
+	}
+
+	SetOrigin(Origins::BC);
+}
+
+void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput) 
+{
+
+	if (horizontalInput > 0.f) 
+	{
+		currentDirection = verticalInput > 0.f ? Direction::RightDown : verticalInput < 0.f ? Direction::RightUp : Direction::Right;
+	}
+	else if (horizontalInput < 0.f) 
+	{
+		currentDirection = verticalInput > 0.f ? Direction::LeftDown : verticalInput < 0.f ? Direction::LeftUp : Direction::Left;
+	}
+	else 
+	{
+		currentDirection = verticalInput > 0.f ? Direction::Down : verticalInput < 0.f ? Direction::Up : currentDirection;
 	}
 }
 
@@ -181,7 +215,7 @@ void Player::Fire(Direction dir)
 {
 	sf::Vector2f pos = position;                 //손가락 포지션 변경 필요
 
-	const float random = 20.f;
+	const float random = 20.f;                   //약간의 랜덤 방향으로 발사
 	int temp = rand();
 	switch (dir)
 	{
@@ -206,7 +240,7 @@ void Player::Fire(Direction dir)
 	}
 
 	pos.y -= 100;
-	BulletPeashot::Create(pos, dir, sceneDev2);
+	BulletPeashot::Create(pos, dir, scene);
 }
 
 void Player::OnDamage()

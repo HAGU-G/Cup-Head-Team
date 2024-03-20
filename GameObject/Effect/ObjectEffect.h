@@ -6,8 +6,6 @@ protected:
 	float deadTimer = 0.f;
 	float duration = 0.f;
 	bool isDieByTime = false;
-
-	Animator animator;
 	
 	sf::Vector2f direction;
 
@@ -27,5 +25,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SetDirection(const sf::Vector2f direction);
+
+	void OnDie();
 };
 

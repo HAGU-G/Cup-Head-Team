@@ -1,0 +1,9 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+peashotDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/peashotDeath.png,0,0,84,283,4
+resource/peashotDeath.png,84,0,95,283,4
+resource/peashotDeath.png,179,0,169,283,4
+resource/peashotDeath.png,348,0,236,283,4
+resource/peashotDeath.png,584,0,261,283,4
+resource/peashotDeath.png,845,0,263,283,4

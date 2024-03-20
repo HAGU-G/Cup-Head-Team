@@ -1,0 +1,7 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+peashotCreate,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/peashotCreate.png,0,0,63,99,4
+resource/peashotCreate.png,63,0,69,99,4
+resource/peashotCreate.png,132,0,94,99,4
+resource/peashotCreate.png,226,0,105,99,4
