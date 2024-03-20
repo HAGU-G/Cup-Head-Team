@@ -11,9 +11,10 @@ struct AnimationFrame
 {
 	std::string textureId;
 	sf::IntRect texCoord;
+	Origins origin;
 
-	AnimationFrame(const std::string& id, const sf::IntRect& coord)
-		: textureId(id), texCoord(coord)
+	AnimationFrame(const std::string& id, const sf::IntRect& coord, Origins origin)
+		: textureId(id), texCoord(coord), origin(origin)
 	{
 
 	}

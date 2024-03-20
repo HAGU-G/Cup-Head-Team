@@ -119,6 +119,15 @@ void Scene::LateUpdate(float dt)
 		}
 	}
 
+	for (auto obj : removeGameObjects)
+	{
+		gameObjects.remove(obj);
+		uiGameObjects.remove(obj);
+
+		delete obj;
+	}
+	removeGameObjects.clear();
+
 	for (auto obj : resortingGameObjects)
 	{
 		auto it = std::find(gameObjects.begin(), gameObjects.end(), obj);
@@ -138,14 +147,7 @@ void Scene::LateUpdate(float dt)
 		}
 	}
 
-	for (auto obj : removeGameObjects)
-	{
-		gameObjects.remove(obj);
-		uiGameObjects.remove(obj);
 
-		delete obj;
-	}
-	removeGameObjects.clear();
 }
 
 void Scene::FixedUpdate(float dt)

@@ -16,6 +16,12 @@ void GameObject::SetOrigin(Origins preset)
 	origin = { 0.f, 0.f };
 }
 
+void GameObject::Translate(const sf::Vector2f& delta)
+{
+	position += delta;
+	SetPosition(position);
+}
+
 void GameObject::SetScale(const sf::Vector2f& scale)
 {
 	this->scale = scale;

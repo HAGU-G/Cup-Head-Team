@@ -16,10 +16,10 @@ sf::FloatRect SpriteGo::GetGlobalBounds()
 	return sprite.getGlobalBounds();
 }
 
-void SpriteGo::SetTexture(const std::string& textureId)
+void SpriteGo::SetTexture(const std::string& textureId, bool resetRect)
 {
 	this->textureId = textureId;
-	sprite.setTexture(RES_MGR_TEXTURE.Get(textureId));
+	sprite.setTexture(RES_MGR_TEXTURE.Get(textureId), resetRect);
 }
 
 void SpriteGo::SetPosition(const sf::Vector2f& pos)
@@ -92,13 +92,12 @@ void SpriteGo::SetFlipY(bool filp)
 
 void SpriteGo::Reset()
 {
-	// 씬이 다시 들어왔을 때, 텍스터가 없는 상황이 발생할 수 있으므로...
-	sprite.setTexture(RES_MGR_TEXTURE.Get(textureId));
+
 }
 
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
+	window.draw(sprite, renderStates);
 
 	if (hasHitBox && SCENE_MGR.GetDeveloperMode())
 	{
@@ -124,11 +123,11 @@ void SpriteGo::Draw(sf::RenderWindow& window)
 		imageBox.setOutlineThickness(1.f);
 		imageBox.setFillColor(sf::Color::Transparent);
 
-		/*localHitBox.setPosition(localBound.left, localBound.top);
+		localHitBox.setPosition(localBound.left, localBound.top);
 		localHitBox.setSize({ localBound.width, localBound.height });
 		localHitBox.setOutlineColor(sf::Color::Blue);
 		localHitBox.setOutlineThickness(1.f);
-		localHitBox.setFillColor(sf::Color::Transparent);*/
+		localHitBox.setFillColor(sf::Color::Transparent);
 
 		window.draw(globalHitBox);
 		window.draw(imageBox);

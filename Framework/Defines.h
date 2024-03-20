@@ -16,3 +16,16 @@ enum class Languages
 {
 	Korean, English
 };
+
+enum class Direction
+{
+	None = -1,
+	Right,
+	RightUp,
+	Up,
+	LeftUp, 
+	Left, 
+	LeftDown,
+	Down,
+	RightDown,
+};

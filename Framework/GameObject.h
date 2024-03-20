@@ -1,5 +1,7 @@
 #pragma once
 
+class Scene;
+
 class GameObject
 {
 protected:
@@ -13,6 +15,8 @@ protected:
 
 	bool isFlipX = false;
 	bool isFlipY = false;
+
+	Scene* scene = nullptr;
 
 public:
 	GameObject(const std::string& name = "");
@@ -58,7 +62,7 @@ public:
 
 	sf::Vector2f GetPosition() const { return position; }
 	virtual void SetPosition(const sf::Vector2f& pos) { position = pos; }
-	virtual void Translate(const sf::Vector2f& delta) { position += delta; };
+	virtual void Translate(const sf::Vector2f& delta);
 
 	float GetRotation() const { return rotation; }
 	virtual void SetRotation(float r) { rotation = r; }
