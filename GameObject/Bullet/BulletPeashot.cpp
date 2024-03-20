@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BulletPeashot.h"
-#include "Effect/ObjectEffect.h"
+#include "Effect/EffectPeashot.h"
 
 BulletPeashot::BulletPeashot(const std::string& name)
 	:ObjectBullet(name)
@@ -25,12 +25,12 @@ void BulletPeashot::SetPosition(const sf::Vector2f& pos)
 
 void BulletPeashot::OnCreate()
 {
-	ObjectEffect::Create(position, direction, scene);
+	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
 }
 
 void BulletPeashot::OnDie()
 {
-	ObjectEffect::Create(bound.getPosition(), direction, scene);
+	EffectPeashot::Create(bound.getPosition(), Utils::RandomOnUnitCircle(), scene, false);
 }
 
 BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, Direction direction, Scene* scene)

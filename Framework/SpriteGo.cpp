@@ -92,13 +92,12 @@ void SpriteGo::SetFlipY(bool filp)
 
 void SpriteGo::Reset()
 {
-	// 씬이 다시 들어왔을 때, 텍스터가 없는 상황이 발생할 수 있으므로...
-	sprite.setTexture(RES_MGR_TEXTURE.Get(textureId));
+
 }
 
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
+	window.draw(sprite, renderStates);
 
 	if (hasHitBox && SCENE_MGR.GetDeveloperMode())
 	{

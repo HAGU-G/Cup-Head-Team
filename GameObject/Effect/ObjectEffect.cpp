@@ -17,19 +17,8 @@ void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 	scene->AddGo(this);
 }
 
-ObjectEffect* ObjectEffect::Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)
-{
-	ObjectEffect* oe = new ObjectEffect();
-	oe->CreateInit(pos, direction, scene);
-	oe->isDieByTime = true;
-	oe->duration = 0.5f;
-	return oe;
-}
-
 void ObjectEffect::Init()
 {
-	SetTexture("resource/Sprite/peashot/weapon_peashot_death_0001.png");
-	SetOrigin(Origins::MC);
 }
 
 void ObjectEffect::Update(float dt)

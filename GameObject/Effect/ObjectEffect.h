@@ -11,16 +11,15 @@ protected:
 	
 	sf::Vector2f direction;
 
-public:
 	ObjectEffect(const std::string& name = "Effect");
-	~ObjectEffect() override = default;
+public:
+	virtual ~ObjectEffect() = default;
 	ObjectEffect(const ObjectEffect&) = delete;
 	ObjectEffect(ObjectEffect&&) = delete;
 	ObjectEffect& operator=(const ObjectEffect&) = delete;
 	ObjectEffect& operator=(ObjectEffect&&) = delete;
 
 	void CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
-	static ObjectEffect* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 	void Init() override;
 	void Update(float dt) override;
