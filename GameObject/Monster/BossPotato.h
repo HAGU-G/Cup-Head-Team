@@ -7,6 +7,7 @@ class BossPotato : public SpriteGo
 		None,
 		Intro,
 		Idle,
+		Pattern1,
 		Shot,
 		Death,
 		Leave
@@ -14,11 +15,14 @@ class BossPotato : public SpriteGo
 
 protected:
 	State state = State::None;
+	State preState = State::None;
 
+	int patternCount = 0;
 	float patternTimer = 0.f;
-	float patternInterval = 3.f;
+	float patternInterval = 1.5f;
+	int shotCount = 0;
 	float shotTimer = 0.f;
-	float shotInterval = 1.f;
+	float shotInterval = 0.5f;
 
 public:
 	BossPotato(const std::string& name = "BossPotato");
@@ -34,8 +38,6 @@ public:
 	void LateUpdate(float dt) override;
 	
 	void Intro();
-	void Idel();
-	void Shot();
 	void Death();
 	void Leave();
 
