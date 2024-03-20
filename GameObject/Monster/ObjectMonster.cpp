@@ -13,6 +13,7 @@ void ObjectMonster::Init()
 
 void ObjectMonster::Update(float dt)
 {
+	SpriteGo::Update(dt);
 	if (useRenderStates)
 	{
 		hitEffectTimer += dt;

@@ -41,6 +41,7 @@ void Animator::Update(float dt)
 
 	accumTime = 0.f;
 	currentFrame += addFrame;
+	eventFrame += addFrame;
 
 	if (currentFrame == totalFrame)
 	{
@@ -57,21 +58,24 @@ void Animator::Update(float dt)
 		{
 		case AnimationLoopType::Single:              //싱글이면 마지막 프레임 유지
 			currentFrame = totalFrame - 1;
+			eventFrame = totalFrame;
 			break;
 		case AnimationLoopType::Loop:                //루프이면 첫 번째 프레임으로 이동
 			currentFrame = 0;
+			eventFrame = currentFrame;
 			break;
 		case AnimationLoopType::Pingpong:
 			if (addFrame > 0)
 			{
 				currentFrame = totalFrame - 2;       //1 프레임인 경우 오류 처리
-
+				eventFrame = currentFrame;
 				addFrame = -1;
 				totalFrame = -1;
 			}
 			else
 			{
 				currentFrame = 1;
+				eventFrame = currentFrame;
 				addFrame = 1;
 				totalFrame = currentClip->frames.size();
 			}
@@ -80,7 +84,7 @@ void Animator::Update(float dt)
 
 	for (auto& event : eventList)
 	{
-		if (currentClip->id == event.clipId && currentFrame == event.frame)
+		if (currentClip->id == event.clipId && eventFrame == event.frame)
 		{
 			if (event.action != nullptr)
 			{
@@ -109,6 +113,7 @@ void Animator::Play(const std::string& clipId, bool clearQueue) //첫번째 프레임 
 
 	currentClip = &RES_MGR_ANI_CLIP.Get(clipId);
 	currentFrame = 0;
+	eventFrame = currentFrame;
 	totalFrame = currentClip->GetTotalFrame();
 	clipDuration = 1.f / currentClip->fps;               //한 프레임당 시간
 	SetFrame(currentClip->frames[currentFrame]);         //첫 번째 프레임으로 설정
@@ -130,6 +135,16 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	target->setTexture(frame.GetTexture());
 	target->setTextureRect(frame.texCoord);
 	Utils::SetOrigin(*target, frame.origin);
+}
+
+void Animator::Play(bool clearQueue)
+{
+	Play(currentClip->id, clearQueue);
+}
+
+void Animator::SetCurrentCilp(const std::string& clipId)
+{
+	currentClip = &RES_MGR_ANI_CLIP.Get(clipId);
 }
 
 bool AnimationClip::loadFromFile(const std::string& filePath)

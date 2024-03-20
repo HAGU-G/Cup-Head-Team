@@ -90,6 +90,12 @@ void SpriteGo::SetFlipY(bool filp)
 	SetScale(scale);
 }
 
+void SpriteGo::Update(float dt)
+{
+	GameObject::Update(dt);
+	animator.Update(dt);
+}
+
 void SpriteGo::Reset()
 {
 

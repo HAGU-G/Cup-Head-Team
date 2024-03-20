@@ -6,7 +6,7 @@ protected:
 	sf::RenderStates renderStates;
 	sf::Sprite sprite;
 	std::string textureId;
-
+	Animator animator;
 	sf::Vector2f size;
 
 	bool hasHitBox = false;
@@ -30,7 +30,7 @@ public:
 	void SetFlipX(bool filp) override;
 	void SetFlipY(bool filp) override;
 	
-
+	void Update(float dt) override;
 	void Reset() override;
 	void Draw(sf::RenderWindow& window) override;
 

@@ -23,6 +23,7 @@ void ObjectEffect::Init()
 
 void ObjectEffect::Update(float dt)
 {
+	SpriteGo::Update(dt);
 	if (isDieByTime) { deadTimer += dt; }
 }
 
@@ -30,7 +31,7 @@ void ObjectEffect::LateUpdate(float dt)
 {
 	if (isDieByTime && deadTimer >= duration)
 	{
-		scene->RemoveGo(this);
+		OnDie();
 	}
 }
 
@@ -42,4 +43,9 @@ void ObjectEffect::Draw(sf::RenderWindow& window)
 void ObjectEffect::SetDirection(const sf::Vector2f direction)
 {
 	this->direction = direction;
+}
+
+void ObjectEffect::OnDie()
+{
+	scene->RemoveGo(this);
 }
