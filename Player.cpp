@@ -37,7 +37,6 @@ void Player::Release()
 void Player::Reset()
 {
 	scene = SCENE_MGR.GetCurrentScene();
-	sceneDev2 = dynamic_cast<SceneDev2*>(scene);
 }
 
 void Player::Update(float dt)
@@ -206,7 +205,7 @@ void Player::Fire(Direction dir)
 	}
 
 	pos.y -= 100;
-	BulletPeashot::Create(pos, dir, sceneDev2);
+	BulletPeashot::Create(pos, dir, scene);
 }
 
 void Player::OnDamage()

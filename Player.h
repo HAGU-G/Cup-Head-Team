@@ -8,7 +8,6 @@ class Player : public SpriteGo
 {
 protected:
 	/*Animator animator;*/
-	SceneDev2* sceneDev2 = nullptr;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 

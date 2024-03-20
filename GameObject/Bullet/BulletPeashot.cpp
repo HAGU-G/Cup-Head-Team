@@ -25,12 +25,12 @@ void BulletPeashot::SetPosition(const sf::Vector2f& pos)
 
 void BulletPeashot::OnCreate()
 {
-	EffectPeashot::Create(position, direction, scene, true);
+	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
 }
 
 void BulletPeashot::OnDie()
 {
-	EffectPeashot::Create(bound.getPosition(), direction, scene, false);
+	EffectPeashot::Create(bound.getPosition(), Utils::RandomOnUnitCircle(), scene, false);
 }
 
 BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, Direction direction, Scene* scene)
