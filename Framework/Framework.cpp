@@ -9,8 +9,8 @@ void Framework::Init(int width, int height, const std::string& name)
     windowSize.y = height;
 
     window.create(sf::VideoMode(windowSize.x, windowSize.y), name);
+    preDraw.create(windowSize.x*2, windowSize.y*2);
     preDraw.setSmooth(true);
-    preDraw.create(windowSize.x, windowSize.y);
     shader.setUniform("texture", sf::Shader::CurrentTexture);
     shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
 
@@ -70,15 +70,19 @@ void Framework::Do()
         preDraw.clear();
         SCENE_MGR.Draw(preDraw);
         preDraw.display();
+
+        sf::Sprite postEffect(preDraw.getTexture());
+        postEffect.setScale(0.5f, 0.5f);
+
         //ÈÄÃ³¸®
         window.clear();
         if (useShader)
         {
-            window.draw(sf::Sprite(preDraw.getTexture()), &shader);
+            window.draw(postEffect, &shader);
         }
         else
         {
-            window.draw(sf::Sprite(preDraw.getTexture()));
+            window.draw(postEffect);
         }
         window.display();
     }
