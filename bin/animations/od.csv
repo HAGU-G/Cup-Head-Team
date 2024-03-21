@@ -1,0 +1,7 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+od,2,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/od.png,0,0,662,411,1
+resource/od.png,662,0,663,411,1
+resource/od.png,1325,0,658,411,1
+resource/od.png,1983,0,660,411,1

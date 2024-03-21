@@ -26,6 +26,6 @@ public:
 
 	void SetDirection(const sf::Vector2f direction);
 
-	void OnDie();
+	virtual void OnDie();
 };
 
