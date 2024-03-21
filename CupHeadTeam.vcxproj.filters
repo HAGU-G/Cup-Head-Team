@@ -87,6 +87,12 @@
     <ClCompile Include="GameObject\Monster\ObjectMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animator.h">
@@ -173,8 +179,17 @@
     <ClInclude Include="GameObject\Monster\ObjectMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="bin\resource\Shader\RGB.frag" />
   </ItemGroup>
 </Project>

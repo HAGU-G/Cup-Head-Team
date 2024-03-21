@@ -29,6 +29,6 @@ public:
 	void SetFlipX(bool filp) override;
 	void SetFlipY(bool filp) override;
 
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderTexture& window) override;
 };
 

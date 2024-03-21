@@ -1,0 +1,18 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+onionIdle,15,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/onionIdle.png,0,0,476,656,7
+resource/onionIdle.png,476,0,477,656,7
+resource/onionIdle.png,953,0,479,656,7
+resource/onionIdle.png,1432,0,480,656,7
+resource/onionIdle.png,1912,0,483,656,7
+resource/onionIdle.png,2395,0,486,656,7
+resource/onionIdle.png,2881,0,495,656,7
+resource/onionIdle.png,3376,0,506,656,7
+resource/onionIdle.png,3882,0,494,656,7
+resource/onionIdle.png,4376,0,487,656,7
+resource/onionIdle.png,4863,0,490,656,7
+resource/onionIdle.png,5353,0,481,656,7
+resource/onionIdle.png,5834,0,481,656,7
+resource/onionIdle.png,6315,0,488,656,7
+resource/onionIdle.png,6803,0,481,656,7

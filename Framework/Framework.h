@@ -15,7 +15,11 @@ protected:
 
 	sf::RenderWindow window;
 	sf::Vector2i windowSize;
+	sf::RenderTexture preDraw;
+	sf::Shader shader;
 	float fixedUpdateTime = 1.f / 50.f;
+
+	bool useShader = true;
 
 	sf::Clock clock;
 	float timeScale = 1.f;
@@ -33,7 +37,8 @@ protected:
 	int fps = 0;
 
 public:
-	sf::RenderWindow& GetWindow() { return window; }	// !!
+	sf::RenderTexture& GetWindow() { return preDraw; }	// !!
+	sf::RenderWindow& GetWindowReal() { return window; }
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
 
 	float GetRealTime() const { return realTime.asSeconds(); }
@@ -45,6 +50,8 @@ public:
 	void SetTimeScale(float scale) { timeScale = scale; }
 
 	int GetFps() const { return fps; }
+
+	void SetUseShader(bool value) { useShader = value; }
 
 	virtual void Init(int width, int height, const std::string& name = "Game");
 	virtual void Do();

@@ -9,6 +9,10 @@ void Framework::Init(int width, int height, const std::string& name)
     windowSize.y = height;
 
     window.create(sf::VideoMode(windowSize.x, windowSize.y), name);
+    preDraw.create(windowSize.x*2, windowSize.y*2);
+    preDraw.setSmooth(true);
+    shader.setUniform("texture", sf::Shader::CurrentTexture);
+    shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
 
     InputMgr::Init();
     SOUND_MGR.Init();
@@ -61,8 +65,25 @@ void Framework::Do()
            }
         }
   
+
+        //1차 렌더링
+        preDraw.clear();
+        SCENE_MGR.Draw(preDraw);
+        preDraw.display();
+
+        sf::Sprite postEffect(preDraw.getTexture());
+        postEffect.setScale(0.5f, 0.5f);
+
+        //후처리
         window.clear();
-        SCENE_MGR.Draw(window);
+        if (useShader)
+        {
+            window.draw(postEffect, &shader);
+        }
+        else
+        {
+            window.draw(postEffect);
+        }
         window.display();
     }
 }

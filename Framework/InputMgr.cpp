@@ -69,7 +69,7 @@ void InputMgr::UpdateEvent(const sf::Event& ev)
 
 void InputMgr::Update(float dt)
 {
-    mousePos = (sf::Vector2f)sf::Mouse::getPosition(FRAMEWORK.GetWindow());
+    mousePos = (sf::Vector2f)sf::Mouse::getPosition(FRAMEWORK.GetWindowReal());
 
     for (auto& pair : axisInfoMap)
     {

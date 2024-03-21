@@ -3,6 +3,7 @@
 #include "Bullet/BulletPeaShot.h"
 #include "Player.h"
 #include "Monster/BossPotato.h"
+#include "Monster/BossOnion.h"
 
 SceneDev::SceneDev(SceneIds id)
 	:Scene(id)
@@ -19,7 +20,8 @@ void SceneDev::Init()
 	worldView.setCenter(0.f, 0.f);
 
 	AddGo(new Player());
-	AddGo(new BossPotato())->SetPosition({0.f, 0.f});
+	AddGo(new BossPotato())->SetPosition({-300.f, 300.f});
+	AddGo(new BossOnion())->SetPosition({300.f, 300.f});
 
 
 	Scene::Init();
@@ -40,7 +42,7 @@ void SceneDev::Exit()
 	Scene::Exit();
 }
 
-void SceneDev::Draw(sf::RenderWindow& window)
+void SceneDev::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
 }

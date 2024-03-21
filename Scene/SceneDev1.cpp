@@ -279,6 +279,7 @@ void SceneDev1::Release()
 
 void SceneDev1::Enter()
 {
+    FRAMEWORK.SetUseShader(false);
     Scene::Enter();
 }
 
@@ -331,7 +332,7 @@ void SceneDev1::Update(float dt)
     Scene::Update(dt);
 }
 
-void SceneDev1::Draw(sf::RenderWindow& window)
+void SceneDev1::Draw(sf::RenderTexture& window)
 {
     Scene::Draw(window);
 

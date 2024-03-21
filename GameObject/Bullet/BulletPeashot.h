@@ -16,7 +16,6 @@ public:
 	static BulletPeashot* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 	void Init() override;
-	void SetPosition(const sf::Vector2f& pos) override;
 
 	void OnCreate() override;
 	void OnDie() override;
