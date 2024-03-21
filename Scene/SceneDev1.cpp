@@ -9,6 +9,8 @@
 #include "rapidcsv.h"
 #include <filesystem> 
 #include <ShObjIdl.h>
+#include "Animator.h"
+#include "AnimationTool.h"
 
 namespace fs = std::filesystem;
 
@@ -200,7 +202,7 @@ void SceneDev1::LoadImagesAndDisplay()
         renderTexture.draw(*sprite);
         file << "resource/" + renderTextureName + ".png" << ","
             << sprite->getPosition().x << "," << 0 << ","
-            << sprite->getGlobalBounds().width << "," << maxHeight << ","<< setOrigin << std::endl;
+            << sprite->getGlobalBounds().width << "," << maxHeight << "," << setOrigin << std::endl;
     }
 
     renderTexture.display();
@@ -214,11 +216,60 @@ void SceneDev1::SaveSpriteSheet()
     renderTextureName += ".png";
     image.saveToFile("resource/" + renderTextureName);
     std::cout << "저장 완료" << std::endl;
-    std::cout << "R키를 누를시 추가 작업이 가능합니다" << std::endl;
+    std::cout << "Reset을 누를시 추가 작업이 가능합니다" << std::endl;
 }
 
 void SceneDev1::Init()
 {
+    loadShape.setFillColor(sf::Color::Transparent);
+    loadShape.setOutlineThickness(3);
+    loadShape.setOutlineColor(sf::Color::White);
+    loadShape.setSize({ 250.f,50.f });
+    loadShape.setOrigin(50.f, 50.f);
+    loadShape.setPosition({ 100.f,100.f });
+
+    saveShape.setFillColor(sf::Color::Transparent);
+    saveShape.setOutlineThickness(3);
+    saveShape.setOutlineColor(sf::Color::White);
+    saveShape.setSize({ 250.f,50.f });
+    saveShape.setOrigin(50.f, 50.f);
+    saveShape.setPosition({ 400.f,100.f });
+
+    resetShape.setFillColor(sf::Color::Transparent);
+    resetShape.setOutlineThickness(3);
+    resetShape.setOutlineColor(sf::Color::White);
+    resetShape.setSize({ 250.f,50.f });
+    resetShape.setOrigin(50.f, 50.f);
+    resetShape.setPosition({ 700.f,100.f });
+
+    loadFile = new TextGo("loadFile");
+    loadFile->Set(fontResMgr.Get("resource/Font/YoonBackjaeM Bold.ttf"),"",30,sf::Color::White);
+    loadFile->SetString("Load");
+    loadFile->SetPosition({ loadShape.getPosition().x - 10, loadShape.getPosition().y - 35 });
+    loadFile->SetOrigin(Origins::MC);
+    loadFile->sortLayer = 2;
+    AddGo(loadFile);
+
+    saveFile = new TextGo("saveFile");
+    saveFile->Set(fontResMgr.Get("resource/Font/YoonBackjaeM Bold.ttf"), "", 30, sf::Color::White);
+    saveFile->SetString("Save");
+    saveFile->SetPosition({ loadFile->GetPosition().x + 160, loadFile->GetPosition().y});
+    saveFile->SetOrigin(Origins::MC);
+    saveFile->sortLayer = 2;
+    AddGo(saveFile);
+
+    resetFile = new TextGo("resetFile");
+    resetFile->Set(fontResMgr.Get("resource/Font/YoonBackjaeM Bold.ttf"), "", 30, sf::Color::White);
+    resetFile->SetString("Reset");
+    resetFile->SetPosition({ saveFile->GetPosition().x + 150, saveFile->GetPosition().y });
+    resetFile->SetOrigin(Origins::MC);
+    resetFile->sortLayer = 2;
+    AddGo(resetFile);
+
+    //aniTool = new AnimationTool("aniTool");
+    //AddGo(aniTool);
+
+    Scene::Init();
 }
 
 void SceneDev1::Release()
@@ -242,8 +293,6 @@ void SceneDev1::Reset()
     textures.clear();
     renderTexture.clear(sf::Color::Transparent);
     spritePos = sf::Vector2f(0.f, 0.f);
-
-    LoadImagesAndDisplay();
 }
 
 void SceneDev1::Exit()
@@ -253,23 +302,32 @@ void SceneDev1::Exit()
 
 void SceneDev1::Update(float dt)
 {
-    if (InputMgr::GetKeyDown(sf::Keyboard::LShift))
-    {
-        //aniTool->SetAnimationClipId(renderTextureName);
-    }
-    if (InputMgr::GetKeyDown(sf::Keyboard::F1))
-    {
-        LoadImagesAndDisplay();
-    }
+    sf::Vector2i mousePos = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
+    sf::Vector2f worldMousPos = FRAMEWORK.GetWindow().mapPixelToCoords(mousePos);
+    sf::FloatRect loadShapeRect = loadShape.getGlobalBounds();
+    sf::FloatRect saveShapeRect = saveShape.getGlobalBounds();
+    sf::FloatRect resetShapeRect = resetShape.getGlobalBounds();
 
-    if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+    if (loadShapeRect.contains(worldMousPos))
     {
-        SaveSpriteSheet();
+        if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+        {
+            LoadImagesAndDisplay();
+        }
     }
-
-    if (InputMgr::GetKeyDown(sf::Keyboard::R))
+    if (saveShapeRect.contains(worldMousPos))
     {
-        Reset();
+        if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+        {
+            SaveSpriteSheet();
+        }
+    }
+    if (resetShapeRect.contains(worldMousPos))
+    {
+        if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+        {
+            Reset();
+        }
     }
     Scene::Update(dt);
 }
@@ -293,4 +351,8 @@ void SceneDev1::Draw(sf::RenderTexture& window)
     window.setView(view);
     window.draw(sf::Sprite(renderTexture.getTexture()));
     window.setView(window.getDefaultView());
+
+    window.draw(loadShape);
+    window.draw(saveShape);
+    window.draw(resetShape);
 }
