@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BossOnion.h"
 #include "Effect/EffectOnionTears.h"
+#include "Bullet/BulletOnionTear.h"
 
 BossOnion::BossOnion(const std::string& name)
 	:ObjectMonster(name)
@@ -30,7 +31,7 @@ void BossOnion::Reset()
 void BossOnion::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0 && state < State::Crying)
 	{
 		Death();
 	}
@@ -46,6 +47,27 @@ void BossOnion::Update(float dt)
 	case BossOnion::State::Pattern1:
 		break;
 	case BossOnion::State::Crying:
+		if (TearTimer(dt))
+		{
+			if (rand() % 5 == 0)
+			{
+				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, FRAMEWORK.GetWindowSize().x * 0.5f),
+					-2.f * sprite.getGlobalBounds().height), { 0.f , 1.f }, scene, true);
+			}
+			else
+			{
+				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, FRAMEWORK.GetWindowSize().x * 0.5f),
+					-2.f * sprite.getGlobalBounds().height), { 0.f , 1.f }, scene);
+			}
+			tearSide *= -1;
+		}
+		cryingTimer += dt;
+		if (cryingTimer >= cryingDuration)
+		{
+			cryingTimer = 0.f;
+			cryingDuration = 5.f;
+			SetState(State::Pattern1);
+		}
 		break;
 	default:
 		break;
@@ -82,8 +104,8 @@ void BossOnion::Cry()
 
 void BossOnion::Tears()
 {
-	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, - sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, 5.f);
-	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, - sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, 5.f);
+	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, cryingDuration * 1.15f);
+	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, cryingDuration * 1.15f);
 }
 
 void BossOnion::Death()
@@ -106,12 +128,12 @@ void BossOnion::OnDie()
 	scene->RemoveGo(this);
 }
 
-bool BossOnion::PatternTimer(float dt)
+bool BossOnion::TearTimer(float dt)
 {
-	patternTimer += dt;
-	if (patternTimer >= patternInterval)
+	tearTimer += dt;
+	if (tearTimer >= tearInterval)
 	{
-		patternTimer = 0.f;
+		tearTimer = 0.f;
 		return true;
 	}
 	return false;
@@ -130,8 +152,13 @@ void BossOnion::SetState(State state)
 		if (preState == State::Crying)
 		{
 			animator.Play("animations/onionCryingReverse.csv");
+			animator.PlayQueue("animations/onionCrying.csv");
 		}
-		animator.PlayQueue("animations/onionCrying.csv");
+		else
+		{
+			animator.Play("animations/onionCrying.csv");
+		}
+		animator.ClearEvent();
 		animator.AddEvent("animations/onionCrying.csv", 21, std::bind(&BossOnion::Cry, this));
 		animator.AddEvent("animations/onionCrying.csv", 11, std::bind(&BossOnion::Tears, this));
 		preState = State::Pattern1;

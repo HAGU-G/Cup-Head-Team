@@ -4,7 +4,10 @@
 class SceneDev : public Scene
 {
 protected:
-	Animator animator;
+	sf::Music bgm;
+
+
+
 public:
 	SceneDev(SceneIds id);
 	virtual ~SceneDev();
