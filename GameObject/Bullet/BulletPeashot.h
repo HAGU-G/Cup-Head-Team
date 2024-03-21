@@ -1,14 +1,16 @@
 #pragma once
 #include "ObjectBullet.h"
 #include "Monster/BossPotato.h"
+#include "Monster/BossOnion.h"
 
-class SceneDev2; /////////////////////////////////////////
+class SceneDev3;
 
 class BulletPeashot : public ObjectBullet
 {
 protected:
-	BossPotato* bossPotato;                                 //////////////////////
-	SceneDev2* sceneDev2;                                  /////////////////////////////////////////
+	SceneDev3* sceneDev3;
+	BossPotato* bossPotato;
+	BossOnion* bossOnion;
 
 public:
 	BulletPeashot(const std::string& name = "BulletPeashot");

@@ -48,6 +48,6 @@ public:
 
 	bool CollisionCheck() override;
 
-	sf::FloatRect GetCustomBounds() const { return customBounds; }////////////////////////////////////////
+	sf::FloatRect GetCustomBounds() const override;
 };
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BulletPeashot.h"
 #include "Effect/EffectPeashot.h"
-#include "SceneDev2.h"                                                  /////////////////////////////////////
+#include "SceneDev3.h"                                                  /////////////////////////////////////
 #include "Monster/BossPotato.h"
 
 BulletPeashot::BulletPeashot(const std::string& name)
@@ -30,17 +30,20 @@ void BulletPeashot::Init()
 /// /////////////////////////////////////////////////////////////
 void BulletPeashot::Reset()
 {
-	sceneDev2 = dynamic_cast<SceneDev2*>(SCENE_MGR.GetCurrentScene());
-	bossPotato = dynamic_cast<BossPotato*>(SCENE_MGR.GetCurrentScene()->FindGo("potato"));
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
 }
 
 void BulletPeashot::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	if (this->GetGlobalBounds().intersects(bossPotato->GetCustomBounds()))
+	auto monsters = sceneDev3->getAllMonsters();
+	for (auto& monster : monsters) 
 	{
-		OnDie();
-		bossPotato->OnDamage(10);
+		if (this->GetGlobalBounds().intersects(monster->GetCustomBounds())) 
+		{
+			monster->OnDamage(10);
+			OnDie();
+		}
 	}
 
 }
