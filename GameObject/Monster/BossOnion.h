@@ -5,6 +5,7 @@ class BossOnion : public ObjectMonster
 	enum class State
 	{
 		Idle,
+		Pattern1,
 		Crying,
 		None
 	};
@@ -34,8 +35,7 @@ public:
 
 	void Intro();
 	void Idle();
-	void Shoot();
-	void ShootEnd();
+	void Cry();
 	void Death();
 	void Leave();
 	void OnDie();
