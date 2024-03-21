@@ -11,6 +11,8 @@ class BossCarrot : public ObjectMonster
 	};
 
 protected:
+	sf::FloatRect customBounds;//////////////////////////////////
+
 	State state = State::None;
 	State preState = State::None;
 
@@ -51,5 +53,7 @@ public:
 	bool PatternTimer(float dt);
 	bool BoomTimer(float dt);
 	bool Ringimer(float dt);
+
+	sf::FloatRect GetCustomBounds() const override;
 };
 

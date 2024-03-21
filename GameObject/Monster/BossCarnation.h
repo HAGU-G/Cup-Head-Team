@@ -1,5 +1,8 @@
 #pragma once
 #include "ObjectMonster.h"
+
+class SpriteGo;
+
 class BossCarnation : public ObjectMonster
 {
 	enum class State
@@ -10,9 +13,22 @@ class BossCarnation : public ObjectMonster
 	};
 
 protected:
+	sf::FloatRect customBounds;//////////////////////////////////
 	State state = State::None;
 	State preState = State::None;
 
+	SpriteGo* mainBg;
+	SpriteGo* skyBg;
+	SpriteGo* frontBush;
+	SpriteGo* frontBg;
+	SpriteGo* cloudBg;
+	SpriteGo* frontCloudBg;
+	SpriteGo* cloudBg2;
+	SpriteGo* frontCloudBg2;
+
+
+	float cloudSpeed = -50.f;
+	float frontCloudSpeed = -40.f;
 	int patternCount = 0;
 	float patternTimer = 0.f;
 	float patternInterval = 2.0f;
@@ -31,6 +47,7 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
+	void Draw(sf::RenderTexture& window) override;
 
 	void FaHigh();
 	void FaLow();
@@ -45,5 +62,6 @@ public:
 	void SetState(State state);
 
 	bool CollisionCheck() override;
+	sf::FloatRect GetCustomBounds() const override;
 };
 

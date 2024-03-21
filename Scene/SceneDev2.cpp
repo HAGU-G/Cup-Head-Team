@@ -22,15 +22,15 @@ void SceneDev2::Init()
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
-	background = new SpriteGo();
-	background->SetTexture("resource/flower_bg_main.png");
-	background->SetOrigin(Origins::MC);
-	background->SetPosition({ 0,-300.f });
-	AddGo(background);
+	//background = new SpriteGo();
+	//background->SetTexture("resource/flower_bg_main.png");
+	//background->SetOrigin(Origins::MC);
+	//background->SetPosition({ 0,-300.f });
+	//AddGo(background);
 
 	AddGo(new Player())->SetPosition({ 0.f,300.f });
 
-	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 550.f,50.f });
+	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 650.f,50.f });
 	Scene::Init();
 }
 

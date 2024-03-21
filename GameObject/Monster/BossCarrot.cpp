@@ -188,3 +188,8 @@ bool BossCarrot::Ringimer(float dt)
 	}
 	return false;
 }
+
+sf::FloatRect BossCarrot::GetCustomBounds() const
+{
+	return customBounds;
+}
