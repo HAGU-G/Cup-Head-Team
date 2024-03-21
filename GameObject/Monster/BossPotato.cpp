@@ -111,6 +111,7 @@ void BossPotato::ShootEnd()
 
 void BossPotato::Death()
 {
+	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/potatoDeath.csv");
@@ -182,7 +183,6 @@ void BossPotato::SetState(State state)
 
 bool BossPotato::CollisionCheck()
 {
-
 	return true;
 }
 

@@ -2,7 +2,6 @@
 #include "BulletPeashot.h"
 #include "Effect/EffectPeashot.h"
 #include "SceneDev3.h"                                                  /////////////////////////////////////
-#include "Monster/BossPotato.h"
 
 BulletPeashot::BulletPeashot(const std::string& name)
 	:ObjectBullet(name)
@@ -39,10 +38,13 @@ void BulletPeashot::Update(float dt)
 	auto monsters = sceneDev3->getAllMonsters();
 	for (auto& monster : monsters) 
 	{
-		if (this->GetGlobalBounds().intersects(monster->GetCustomBounds())) 
+		if (monster != nullptr)
 		{
-			monster->OnDamage(10);
-			OnDie();
+			if (monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+			{
+				monster->OnDamage(10);
+				OnDie();
+			}
 		}
 	}
 

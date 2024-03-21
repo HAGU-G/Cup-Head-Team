@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "SceneDev2.h"
+#include "SceneDev3.h"
 #include "Bullet/BulletPeashot.h"
 
 // 해야하는 일 
@@ -34,9 +35,11 @@ void Player::Init()
 void Player::Reset()
 {
 	scene = SCENE_MGR.GetCurrentScene();
-
+	hp = maxHp;
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
+
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
 }
 
 void Player::Update(float dt)
@@ -48,7 +51,29 @@ void Player::Update(float dt)
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 
+	if (isInvincible)                                      //무적 상태 o 
+	{
+		invincibilityTimer += dt;
+		if (invincibilityTimer >= invincibilityDuration) 
+		{
+			isInvincible = false;                          //무적 상태 x
+			invincibilityTimer = 0.0f;
+		}
+	}
 
+	auto monsters = sceneDev3->getAllMonsters();
+	for (auto& monster : monsters)
+	{
+		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+		{
+			if (!isInvincible)
+			{
+				isInvincible = true;
+				invincibilityTimer = 0.0f;
+				OnDamage();
+			}
+		}
+	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing) 
 	{
 		animator.Play("animations/PlayerDash.csv");
@@ -363,7 +388,7 @@ void Player::OnDamage()
 {
 	/*데미지 애니메이션 출력*/
 	hp -= 1;
-
+	std::cout << "On" << std::endl;
 	if (hp == 0)
 	{
 		OnDie();
@@ -374,6 +399,7 @@ void Player::OnDie()
 {
 	/*사망 애니매이션 출력*/
 	isAlive = false;
+	speed = 0;
 }
 
 

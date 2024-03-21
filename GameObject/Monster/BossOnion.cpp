@@ -17,6 +17,7 @@ void BossOnion::Init()
 	RES_MGR_TEXTURE.Load("resource/onionLeave.png");
 	RES_MGR_TEXTURE.Load("resource/onionCry.png");
 	RES_MGR_TEXTURE.Load("resource/onionCrying.png");
+	hasHitBox = true;
 }
 
 void BossOnion::Reset()
@@ -32,7 +33,7 @@ void BossOnion::Update(float dt)
 	ObjectMonster::Update(dt);
 
 	auto bounds = sprite.getGlobalBounds();
-	float shrinkFactor = 0.4f;
+	float shrinkFactor = 0.1f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
 	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
@@ -95,6 +96,7 @@ void BossOnion::Tears()
 
 void BossOnion::Death()
 {
+	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/onionDeath.csv");

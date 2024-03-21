@@ -1,7 +1,5 @@
 #pragma once
 #include "ObjectBullet.h"
-#include "Monster/BossPotato.h"
-#include "Monster/BossOnion.h"
 
 class SceneDev3;
 
@@ -9,8 +7,6 @@ class BulletPeashot : public ObjectBullet
 {
 protected:
 	SceneDev3* sceneDev3;
-	BossPotato* bossPotato;
-	BossOnion* bossOnion;
 
 public:
 	BulletPeashot(const std::string& name = "BulletPeashot");

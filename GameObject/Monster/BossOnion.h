@@ -21,7 +21,6 @@ protected:
 	float patternInterval = 2.0f;
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
-
 public:
 	BossOnion(const std::string& name = "BossOnion");
 	~BossOnion() override = default;
