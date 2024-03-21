@@ -1,0 +1,9 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotBoom,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotBoom.png,0,0,84,147,4
+resource/carrotBoom.png,84,0,82,147,4
+resource/carrotBoom.png,166,0,91,147,4
+resource/carrotBoom.png,257,0,83,147,4
+resource/carrotBoom.png,340,0,87,147,4
+resource/carrotBoom.png,427,0,83,147,4

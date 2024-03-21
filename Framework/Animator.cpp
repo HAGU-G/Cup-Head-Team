@@ -93,7 +93,7 @@ void Animator::Update(float dt)
 		}
 	}
 
-
+	std::cout << currentClip->id << " " << currentFrame << std::endl;
 	SetFrame(currentClip->frames[currentFrame]);
 }
 
@@ -166,7 +166,7 @@ bool AnimationClip::loadFromFile(const std::string& filePath)
 	fps = doc.GetCell<int>(1, 0);
 	looptype = (AnimationLoopType)doc.GetCell<int>(2, 0);
 
-	for (int i = 3; i < doc.GetRowCount(); ++i)
+	for (int i = 2; i < doc.GetRowCount(); ++i)
 	{
 		auto row = doc.GetRow<std::string>(i);
 		frames.push_back({

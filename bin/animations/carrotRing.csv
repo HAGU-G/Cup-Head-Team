@@ -1,0 +1,15 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotRing,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotRing.png,0,0,26,168,4
+resource/carrotRing.png,26,0,54,168,4
+resource/carrotRing.png,80,0,66,168,4
+resource/carrotRing.png,146,0,74,168,4
+resource/carrotRing.png,220,0,97,168,4
+resource/carrotRing.png,317,0,112,168,4
+resource/carrotRing.png,429,0,153,168,4
+resource/carrotRing.png,582,0,154,168,4
+resource/carrotRing.png,736,0,173,168,4
+resource/carrotRing.png,909,0,169,168,4
+resource/carrotRing.png,1078,0,169,168,4
+resource/carrotRing.png,1247,0,163,168,4

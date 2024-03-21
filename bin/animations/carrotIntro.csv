@@ -1,0 +1,28 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotIntro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotIntro.png,0,0,512,600,7
+resource/carrotIntro.png,512,0,512,600,7
+resource/carrotIntro.png,1024,0,512,600,7
+resource/carrotIntro.png,1536,0,512,600,7
+resource/carrotIntro.png,2048,0,512,600,7
+resource/carrotIntro.png,2560,0,512,600,7
+resource/carrotIntro.png,3072,0,512,600,7
+resource/carrotIntro.png,3584,0,512,600,7
+resource/carrotIntro.png,4096,0,512,600,7
+resource/carrotIntro.png,4608,0,512,600,7
+resource/carrotIntro.png,5120,0,640,600,7
+resource/carrotIntro.png,5760,0,640,600,7
+resource/carrotIntro.png,6400,0,640,600,7
+resource/carrotIntro.png,7040,0,640,600,7
+resource/carrotIntro.png,7680,0,640,600,7
+resource/carrotIntro.png,8320,0,640,600,7
+resource/carrotIntro.png,8960,0,640,600,7
+resource/carrotIntro.png,9600,0,512,600,7
+resource/carrotIntro.png,10112,0,512,600,7
+resource/carrotIntro.png,10624,0,512,600,7
+resource/carrotIntro.png,11136,0,512,600,7
+resource/carrotIntro.png,11648,0,512,600,7
+resource/carrotIntro.png,12160,0,512,600,7
+resource/carrotIntro.png,12672,0,512,600,7
+resource/carrotIntro.png,13184,0,360,600,7

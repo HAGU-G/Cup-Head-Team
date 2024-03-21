@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotRingDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotRingDeath.png,0,0,163,178,4
+resource/carrotRingDeath.png,163,0,159,178,4
+resource/carrotRingDeath.png,322,0,159,178,4

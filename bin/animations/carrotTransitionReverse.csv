@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotTransition,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotTransition.png,3378,0,331,526,7
+resource/carrotTransition.png,3035,0,343,526,7
+resource/carrotTransition.png,2604,0,431,526,7
+resource/carrotTransition.png,2114,0,490,526,7
+resource/carrotTransition.png,1641,0,473,526,7
+resource/carrotTransition.png,1192,0,449,526,7
+resource/carrotTransition.png,759,0,433,526,7
+resource/carrotTransition.png,360,0,399,526,7
+resource/carrotTransition.png,0,0,360,526,7

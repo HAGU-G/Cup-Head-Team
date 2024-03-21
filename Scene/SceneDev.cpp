@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Monster/BossPotato.h"
 #include "Monster/BossOnion.h"
+#include "Monster/BossCarrot.h"
 
 SceneDev::SceneDev(SceneIds id)
 	:Scene(id)
@@ -21,7 +22,8 @@ void SceneDev::Init()
 
 	//TODO 보스 테스트코드 삭제해야함
 	//AddGo(new BossPotato())->SetPosition({300.f, 300.f});
-	AddGo(new BossOnion())->SetPosition({0, 300.f});
+	//AddGo(new BossOnion())->SetPosition({0, 300.f});
+	AddGo(new BossCarrot())->SetPosition({0, 300.f});
 
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);

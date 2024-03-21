@@ -1,0 +1,7 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotShootBody,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotShootBody.png,0,0,329,522,7
+resource/carrotShootBody.png,329,0,335,522,7
+resource/carrotShootBody.png,664,0,334,522,7
+resource/carrotShootBody.png,998,0,336,522,7
