@@ -139,7 +139,9 @@
     <ClCompile Include="GameObject\Monster\BossOnion.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp" />
-    <ClCompile Include="AnimationTool.cpp" />
+    <ClCompile Include="AnimationTool.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GameObject\Monster\BossPotato.cpp" />
     <ClCompile Include="GameObject\Effect\EffectPeashot.cpp" />
@@ -170,7 +172,9 @@
     <ClInclude Include="GameObject\Monster\BossOnion.h" />
     <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h" />
     <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h" />
-    <ClInclude Include="AnimationTool.h" />
+    <ClInclude Include="AnimationTool.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GameObject\Monster\BossPotato.h" />
     <ClInclude Include="GameObject\Effect\EffectPeashot.h" />

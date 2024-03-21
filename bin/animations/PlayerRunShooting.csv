@@ -1,0 +1,21 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerRunShooting,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerRunShooting.png,0,0,138,175,7
+resource/PlayerRunShooting.png,138,0,128,175,7
+resource/PlayerRunShooting.png,266,0,119,175,7
+resource/PlayerRunShooting.png,385,0,119,175,7
+resource/PlayerRunShooting.png,504,0,121,175,7
+resource/PlayerRunShooting.png,625,0,124,175,7
+resource/PlayerRunShooting.png,749,0,133,175,7
+resource/PlayerRunShooting.png,882,0,140,175,7
+resource/PlayerRunShooting.png,1022,0,134,175,7
+resource/PlayerRunShooting.png,1156,0,128,175,7
+resource/PlayerRunShooting.png,1284,0,123,175,7
+resource/PlayerRunShooting.png,1407,0,122,175,7
+resource/PlayerRunShooting.png,1529,0,126,175,7
+resource/PlayerRunShooting.png,1655,0,126,175,7
+resource/PlayerRunShooting.png,1781,0,140,175,7
+resource/PlayerRunShooting.png,1921,0,144,175,7
+resource/PlayerRunShooting.png,2065,0,137,175,7
+resource/PlayerRunShooting.png,2202,0,135,175,7

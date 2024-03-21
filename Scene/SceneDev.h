@@ -1,9 +1,10 @@
 #pragma once
 #include "Scene.h"
+#include "Animator.h"
 class SceneDev : public Scene
 {
 protected:
-
+	Animator animator;
 public:
 	SceneDev(SceneIds id);
 	virtual ~SceneDev();

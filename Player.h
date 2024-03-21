@@ -2,12 +2,10 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
-class SceneDev2;
-
 class Player : public SpriteGo
 {
 protected:
-	/*Animator animator;*/
+	Animator animator;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 
@@ -19,7 +17,10 @@ protected:
 	float dashSpeed = 1000.0f;  
 	bool isDashing = false;     
 	float dashDuration = 0.2f; 
-	float dashTimer = 0.0f;    
+	float dashTimer = 0.f;    
+
+	float fireTimer = 0.f;
+	float fireIntervel = 0.2f;
 
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
@@ -39,14 +40,11 @@ public:
 	~Player() override;
 
 	void Init() override;
-	void Release() override;
 	void Reset() override;
 	void Update(float dt) override;
 
 	void UpdateDirection(float horizontalInput, float dt);
 	void UpdateJumpingDirection(float horizontalInput, float verticalInput);
-
-	void Draw(sf::RenderWindow& window);
 
 	void Fire(Direction direction);
 	int GetHp() { return hp; }

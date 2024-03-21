@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerJump,10,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerJump.png,0,0,77,109,7
+resource/PlayerJump.png,77,0,77,109,7
+resource/PlayerJump.png,154,0,82,109,7
+resource/PlayerJump.png,236,0,80,109,7
+resource/PlayerJump.png,316,0,81,109,7
+resource/PlayerJump.png,397,0,76,109,7
+resource/PlayerJump.png,473,0,88,109,7
+resource/PlayerJump.png,561,0,86,109,7

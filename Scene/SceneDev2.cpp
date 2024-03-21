@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneDev2.h"
 #include "Player.h"
+#include "Monster/BossPotato.h"
 
 SceneDev2::SceneDev2(SceneIds id)
 	:Scene(id)
@@ -20,13 +21,15 @@ void SceneDev2::Init()
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
+	background = new SpriteGo();
+	background->SetTexture("resource/RuseofanOoze.png");
+	background->SetOrigin(Origins::MC);
+	background->SetPosition({ 0,0 });
+	AddGo(background);
+
 	AddGo(new Player());
 
-
-	circle.setRadius(50.f);
-	circle.setFillColor(sf::Color::Red);
-	circle.setPosition({ centerPos.x, centerPos.y - 300});
-
+	AddGo(new BossPotato("potato"))->SetPosition({0.f, 0.f});
 	Scene::Init();
 }
 
@@ -48,6 +51,7 @@ void SceneDev2::Exit()
 void SceneDev2::Update(float dt)
 {
 	Scene::Update(dt);
+
 }
 
 void SceneDev2::Draw(sf::RenderTexture& window)

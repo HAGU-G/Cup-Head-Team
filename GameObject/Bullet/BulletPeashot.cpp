@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BulletPeashot.h"
 #include "Effect/EffectPeashot.h"
+#include "SceneDev2.h"                                                  /////////////////////////////////////
+#include "Monster/BossPotato.h"
 
 BulletPeashot::BulletPeashot(const std::string& name)
 	:ObjectBullet(name)
@@ -25,6 +27,25 @@ void BulletPeashot::Init()
 	type = Type::Straight;
 	ObjectBullet::Init();
 }
+/// /////////////////////////////////////////////////////////////
+void BulletPeashot::Reset()
+{
+	sceneDev2 = dynamic_cast<SceneDev2*>(SCENE_MGR.GetCurrentScene());
+	bossPotato = dynamic_cast<BossPotato*>(SCENE_MGR.GetCurrentScene()->FindGo("potato"));
+}
+
+void BulletPeashot::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	if (this->GetGlobalBounds().intersects(bossPotato->GetCustomBounds()))
+	{
+		OnDie();
+		bossPotato->OnDamage(10);
+	}
+
+}
+/// /////////////////////////////////////////////////////////////
+
 void BulletPeashot::OnCreate()
 {
 	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
@@ -35,7 +56,9 @@ void BulletPeashot::OnCreate()
 void BulletPeashot::OnDie()
 {
 	EffectPeashot::Create(bound.getPosition(), Utils::RandomOnUnitCircle(), scene, false);
+	ObjectBullet::OnDie();
 }
+
 
 BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, Direction direction, Scene* scene)
 {

@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerShootStraight,10,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerShootStraight.png,0,0,126,157,7
+resource/PlayerShootStraight.png,126,0,127,157,7
+resource/PlayerShootStraight.png,253,0,118,157,7
