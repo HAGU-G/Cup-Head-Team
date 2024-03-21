@@ -72,7 +72,14 @@ void Framework::Do()
         preDraw.display();
         //ÈÄÃ³¸®
         window.clear();
-        window.draw(sf::Sprite(preDraw.getTexture()), &shader);
+        if (useShader)
+        {
+            window.draw(sf::Sprite(preDraw.getTexture()), &shader);
+        }
+        else
+        {
+            window.draw(sf::Sprite(preDraw.getTexture()));
+        }
         window.display();
     }
 }
