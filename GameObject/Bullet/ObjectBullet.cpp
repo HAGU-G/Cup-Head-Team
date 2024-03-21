@@ -81,7 +81,6 @@ void ObjectBullet::SetDirection(const sf::Vector2f& direction, bool isConversed)
 
 void ObjectBullet::Flip()
 {
-
 	if (direction.x != 0.f)
 	{
 		SetScale({ 1.f, abs(direction.x) / direction.x });
@@ -92,7 +91,6 @@ void ObjectBullet::Homing(float dt)
 {
 	SetRotation(rotation + rotateSpeed * dt * Utils::AngleDirection(direction, targetPosition - position));
 	SetDirection(sf::Transform().rotate(rotation).transformPoint(1.f, 0.f), true);
-
 }
 
 void ObjectBullet::OnCreate()

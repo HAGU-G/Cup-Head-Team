@@ -111,6 +111,9 @@
     <ClCompile Include="GameObject\Monster\BossCarrot.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Bullet\BulletCarrotBoom.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animator.h">
@@ -219,6 +222,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Monster\BossCarrot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Bullet\BulletCarrotBoom.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

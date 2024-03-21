@@ -11,7 +11,7 @@ protected:
 
 	sf::Shader shaderHit;
 
-	ObjectMonster(const std::string& name = "Monster");
+	ObjectMonster(const std::string& name = "Monster");			//상속받아서 새 클래스 만들어주세요.
 public:
 	~ObjectMonster() override = default;
 	ObjectMonster(const ObjectMonster&) = delete;
