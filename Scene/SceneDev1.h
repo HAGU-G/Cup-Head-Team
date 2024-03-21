@@ -1,14 +1,29 @@
 #pragma once
+#include "Animator.h"
 
+class SpriteGo;
+class TextGo;
+class AnimationTool;
 
 class SceneDev1 : public Scene
 {
 protected:
+	AnimationTool* aniTool;
+
 	std::vector<sf::Texture*> textures;
 	std::vector<sf::Sprite*> sprites;
 
+	TextGo* loadFile;
+	TextGo* saveFile;
+	TextGo* resetFile;
+
 	sf::FloatRect spriteBound;
 	sf::RenderTexture renderTexture;
+	sf::RenderWindow window;
+
+	sf::RectangleShape loadShape;
+	sf::RectangleShape saveShape;
+	sf::RectangleShape resetShape;
 
 	Animator animator;
 
@@ -23,6 +38,7 @@ protected:
 	int sheetHeight = 0;
 	sf::Vector2f spritePos = { 0.f,0.f };
 
+	bool fileLoad = false;
 public:
 	SceneDev1(SceneIds id);
 	virtual ~SceneDev1();
