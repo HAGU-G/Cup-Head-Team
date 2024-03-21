@@ -213,10 +213,29 @@ void SceneDev1::SaveSpriteSheet()
 {
 	const sf::Texture& texture = renderTexture.getTexture();
 	sf::Image image = texture.copyToImage();
-	renderTextureName += ".png";
-	image.saveToFile("resource/" + renderTextureName);
-	std::cout << "저장 완료" << std::endl;
-	std::cout << "Reset을 누를시 추가 작업이 가능합니다" << std::endl;
+	for (auto& texture : textures)
+	{
+		if (textures.size() != 0)
+		{
+			fileLoad = true;
+		}
+		else
+		{
+			fileLoad = false;
+		}
+	}
+	if (fileLoad)
+	{
+		renderTextureName += ".png";
+		image.saveToFile("resource/" + renderTextureName);
+		std::cout << "저장 완료" << std::endl;
+		std::cout << "Reset을 누를시 추가 작업이 가능합니다" << std::endl;
+	}
+	else if (fileLoad)
+	{
+		std::cout << "불러온 이미지가 없습니다 이미지를 로드해주세요" << std::endl;
+	}
+
 }
 
 void SceneDev1::Init()
