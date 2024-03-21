@@ -24,12 +24,12 @@ void AnimationTool::Release()
 void AnimationTool::Reset()
 {
 	SpriteGo::Reset();
+	//animator.Play("animations/peashotCreate.csv");
 }
 
 void AnimationTool::Update(float dt)
 {
 	animator.Update(dt);
-
 	SetPosition({ 0.f,0.f });
 	SpriteGo::Update(dt);
 }
@@ -37,5 +37,5 @@ void AnimationTool::Update(float dt)
 void AnimationTool::SetAnimationClipId(const std::string& id)
 {
 	exampleAni = id;
-	animator.Play("animations/" + exampleAni + ".csv");
+	animator.Play("animations/peashotCreate.csv");
 }

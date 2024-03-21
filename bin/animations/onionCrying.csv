@@ -1,0 +1,25 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+onionCrying,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/onionCrying.png,0,0,457,578,7
+resource/onionCrying.png,457,0,452,578,7
+resource/onionCrying.png,909,0,454,578,7
+resource/onionCrying.png,1363,0,454,578,7
+resource/onionCrying.png,1817,0,465,578,7
+resource/onionCrying.png,2282,0,458,578,7
+resource/onionCrying.png,2740,0,483,578,7
+resource/onionCrying.png,3223,0,479,578,7
+resource/onionCrying.png,3702,0,509,578,7
+resource/onionCrying.png,4211,0,479,578,7
+resource/onionCrying.png,4690,0,474,578,7
+resource/onionCrying.png,5164,0,466,578,7
+resource/onionCrying.png,5630,0,459,578,7
+resource/onionCrying.png,6089,0,450,578,7
+resource/onionCrying.png,6539,0,439,578,7
+resource/onionCrying.png,6978,0,440,578,7
+resource/onionCrying.png,7418,0,437,578,7
+resource/onionCrying.png,7855,0,437,578,7
+resource/onionCrying.png,8292,0,436,578,7
+resource/onionCrying.png,8728,0,436,578,7
+resource/onionCrying.png,9164,0,441,578,7
+resource/onionCrying.png,9605,0,437,578,7

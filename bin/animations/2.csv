@@ -1,0 +1,24 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+2,2,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/2.png,0,0,46,300,2
+resource/2.png,46,0,45,300,2
+resource/2.png,91,0,47,300,2
+resource/2.png,138,0,57,300,2
+resource/2.png,195,0,93,300,2
+resource/2.png,288,0,138,300,2
+resource/2.png,426,0,177,300,2
+resource/2.png,603,0,200,300,2
+resource/2.png,803,0,212,300,2
+resource/2.png,1015,0,229,300,2
+resource/2.png,1244,0,82,300,2
+resource/2.png,1326,0,107,300,2
+resource/2.png,1433,0,136,300,2
+resource/2.png,1569,0,171,300,2
+resource/2.png,1740,0,197,300,2
+resource/2.png,1937,0,211,300,2
+resource/2.png,2148,0,46,300,2
+resource/2.png,2194,0,45,300,2
+resource/2.png,2239,0,47,300,2
+resource/2.png,2286,0,79,300,2
+resource/2.png,2365,0,324,300,2

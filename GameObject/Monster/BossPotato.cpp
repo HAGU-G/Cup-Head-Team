@@ -11,16 +11,13 @@ BossPotato::BossPotato(const std::string& name)
 void BossPotato::Init()
 {
 	ObjectMonster::Init();
-
+	sprite.setScale(1.3f, 1.3f);
 
 	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
 	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");
 	RES_MGR_TEXTURE.Load("resource/potatoIntro.png");
 	RES_MGR_TEXTURE.Load("resource/potatoLeave.png");
 	RES_MGR_TEXTURE.Load("resource/potatoShoot.png");
-
-	//TODO 임시 코드 삭제 필요
-	SetPosition({ 600.f,0.f });
 }
 
 void BossPotato::Reset()

@@ -1,0 +1,19 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+onionDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/onionDeath.png,0,0,448,604,7
+resource/onionDeath.png,448,0,451,604,7
+resource/onionDeath.png,899,0,455,604,7
+resource/onionDeath.png,1354,0,479,604,7
+resource/onionDeath.png,1833,0,501,604,7
+resource/onionDeath.png,2334,0,507,604,7
+resource/onionDeath.png,2841,0,514,604,7
+resource/onionDeath.png,3355,0,568,604,7
+resource/onionDeath.png,3923,0,536,604,7
+resource/onionDeath.png,4459,0,526,604,7
+resource/onionDeath.png,4985,0,525,604,7
+resource/onionDeath.png,5510,0,499,604,7
+resource/onionDeath.png,6009,0,487,604,7
+resource/onionDeath.png,6496,0,476,604,7
+resource/onionDeath.png,6972,0,470,604,7
+resource/onionDeath.png,7442,0,459,604,7

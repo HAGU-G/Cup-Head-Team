@@ -2,9 +2,9 @@ uniform sampler2D texture;
 
 void main()
 {
-    vec2 offr = vec2(0.0,0.001);
-    vec2 offg = vec2(0.0,-0.001);
-    vec2 offb = vec2(-0.001,0.0);
+    vec2 offr = vec2(0.0,0.0015);
+    vec2 offg = vec2(0.0,-0.0015);
+    vec2 offb = vec2(-0.0015,0.0);
     vec2 offAntiX = vec2(0.0005, 0.0);
     vec2 offAntiY = vec2(0.0, 0.0005);
 
