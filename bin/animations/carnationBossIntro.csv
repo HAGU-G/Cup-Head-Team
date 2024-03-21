@@ -1,0 +1,23 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationBossIntro,15,1,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationBossIntro.png,0,0,292,721,8
+resource/carnationBossIntro.png,292,0,291,721,8
+resource/carnationBossIntro.png,583,0,294,721,8
+resource/carnationBossIntro.png,877,0,294,721,8
+resource/carnationBossIntro.png,1171,0,298,721,8
+resource/carnationBossIntro.png,1469,0,313,721,8
+resource/carnationBossIntro.png,1782,0,372,721,8
+resource/carnationBossIntro.png,2154,0,404,721,8
+resource/carnationBossIntro.png,2558,0,519,721,8
+resource/carnationBossIntro.png,3077,0,753,721,8
+resource/carnationBossIntro.png,3830,0,815,721,8
+resource/carnationBossIntro.png,4645,0,812,721,8
+resource/carnationBossIntro.png,5457,0,781,721,8
+resource/carnationBossIntro.png,6238,0,761,721,8
+resource/carnationBossIntro.png,6999,0,718,721,8
+resource/carnationBossIntro.png,7717,0,793,721,8
+resource/carnationBossIntro.png,8510,0,598,721,8
+resource/carnationBossIntro.png,9108,0,579,721,8
+resource/carnationBossIntro.png,9687,0,551,721,8
+resource/carnationBossIntro.png,10238,0,533,721,8
