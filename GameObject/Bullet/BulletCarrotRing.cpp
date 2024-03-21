@@ -18,7 +18,7 @@ void BulletCarrotRing::Init()
 {
 	ObjectBullet::Init();
 	animator.Play("animations/carrotRing.csv");
-	SetSpeed(555.f);
+	SetSpeed(650.f);
 	SetRange(1000.f);
 	type = Type::Straight;
 	ObjectBullet::Init();

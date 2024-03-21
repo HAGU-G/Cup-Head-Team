@@ -13,6 +13,7 @@ void BossCarrot::Init()
 {
 	ObjectMonster::Init();
 	sprite.setScale(1.3f, 1.3f);
+	shootEyes.setScale(1.3f, 1.3f);
 	RES_MGR_TEXTURE.Load("resource/carrotDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotIdle.png");
 	RES_MGR_TEXTURE.Load("resource/carrotIntro.png");
@@ -59,7 +60,7 @@ void BossCarrot::Update(float dt)
 	case State::Ring:
 		eyeAnimator.Update(dt);
 		patternTimer += dt;
-		shootEyes.setPosition(position + sf::Vector2f(0.f, -sprite.getGlobalBounds().getSize().y * 1.8f / 3.f));
+		shootEyes.setPosition(position + sf::Vector2f(-5.f, -sprite.getGlobalBounds().getSize().y * 1.8f / 3.f));
 		if (patternTimer >= patternInterval)
 		{
 			patternTimer = 0.f;
@@ -68,14 +69,14 @@ void BossCarrot::Update(float dt)
 		else if (RingTimer(dt))
 		{
 			ObjectEffect* oe = new ObjectEffect("EffectCarrotRingIntro");
-			oe->CreateInit(shootEyes.getPosition(), {1.f, 0.f}, scene);
+			oe->CreateInit(shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f), { 1.f, 0.f }, scene);
 			oe->GetAniamtor().Play("animations/carrotRingIntro.csv");
 			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame()-1, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame()-3, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame()-5, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame()-7, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame()-9, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 1, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 3, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 5, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 7, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 9, std::bind(&BossCarrot::ShootRing, this));
 		}
 		break;
 	default:
@@ -123,7 +124,7 @@ void BossCarrot::Ring()
 
 void BossCarrot::ShootRing()
 {
-	BulletCarrotRing::Create(shootEyes.getPosition(), { 1.f,1.f }, scene);
+	BulletCarrotRing::Create(shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f), { 1.f,1.f }, scene);
 }
 
 void BossCarrot::Death()
