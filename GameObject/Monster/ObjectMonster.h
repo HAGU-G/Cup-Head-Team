@@ -28,5 +28,7 @@ public:
 
 	inline int GetHp() const { return hp; }
 	inline int GetMaxHp() const { return hp; }
+
+	virtual sf::FloatRect GetCustomBounds() const = 0;
 };
 

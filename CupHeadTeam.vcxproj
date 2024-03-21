@@ -168,6 +168,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="Scene\SceneDev3.cpp" />
     <ClCompile Include="Scene\SceneDev.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\SceneDev2.cpp" />
@@ -207,6 +209,8 @@
     <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="Scene\SceneDev3.h" />
     <ClInclude Include="Scene\SceneDev.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\SceneDev2.h" />
