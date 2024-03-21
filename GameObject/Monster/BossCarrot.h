@@ -18,11 +18,12 @@ protected:
 	Animator eyeAnimator;
 
 	float patternTimer = 0.f;
-	float patternInterval = 3.0f;
+	float patternInterval = 15.0f;
 	float boomTimer = 0.f;
-	float boomInterval = 2.f;
-	float ringTimer = 0.f;
-	float ringInterval = 5.f;
+	float boomInterval = 4.f;
+	float ringTimer = 5.f;
+	float ringInterval = 5.1f;
+	int ringCount = 0;
 
 public:
 	BossCarrot(const std::string& name = "BossCarrot");
@@ -41,6 +42,7 @@ public:
 	void Intro();
 	void Pattern1();
 	void Ring();
+	void ShootRing();
 	void Death();
 	void OnDie();
 
@@ -50,6 +52,6 @@ public:
 
 	bool PatternTimer(float dt);
 	bool BoomTimer(float dt);
-	bool Ringimer(float dt);
+	bool RingTimer(float dt);
 };
 

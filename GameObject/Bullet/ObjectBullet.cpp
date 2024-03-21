@@ -13,6 +13,7 @@ ObjectBullet::~ObjectBullet()
 
 void ObjectBullet::Init()
 {
+	animator.SetTarget(&sprite);
 }
 
 void ObjectBullet::Release()

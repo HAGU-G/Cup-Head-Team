@@ -2,6 +2,7 @@
 #include "BulletPotatoShootPink.h"
 
 BulletPotatoShootPink::BulletPotatoShootPink(const std::string& name)
+	:ObjectBullet(name)
 {
 }
 
@@ -29,4 +30,5 @@ void BulletPotatoShootPink::OnCreate()
 
 void BulletPotatoShootPink::OnDie()
 {
+	ObjectBullet::OnDie();
 }

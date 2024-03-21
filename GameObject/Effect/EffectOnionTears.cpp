@@ -17,7 +17,6 @@ EffectOnionTears* EffectOnionTears::Create(const sf::Vector2f& pos, const sf::Ve
 	eot->animator.PlayQueue("animations/onionTearsLoop.csv");
 	eot->duration = duration;
 	eot->isDieByTime = true;
-	//eot->animator.AddEvent(eot->animator.GetCurrentCilpId(), eot->animator.GetCurrentClip()->GetTotalFrame(), std::bind(&EffectOnionTears::OnDie, eot));
 	eot->CreateInit(pos, direction, scene);
 
 	return eot;

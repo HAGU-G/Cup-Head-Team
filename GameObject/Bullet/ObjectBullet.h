@@ -31,7 +31,7 @@ protected:
 	sf::RectangleShape bound;			//충돌 검사용 bound였던 것. 2024-03-20 기준
 
 	virtual void Flip();				//이동 방향에 맞게 스프라이트 방향을 설정합니다.
-	virtual void Homing(float dt);		//추적할때 방향에 맞게 스프라이트를 회전합니다.
+	virtual void Homing(float dt);		//적을 추적하는 함수
 
 public:
 	ObjectBullet(const std::string& name = "Bullet");

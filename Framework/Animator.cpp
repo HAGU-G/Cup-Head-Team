@@ -93,7 +93,6 @@ void Animator::Update(float dt)
 		}
 	}
 
-	std::cout << currentClip->id << " " << currentFrame << std::endl;
 	SetFrame(currentClip->frames[currentFrame]);
 }
 
