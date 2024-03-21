@@ -17,7 +17,10 @@ protected:
 	float dashSpeed = 1000.0f;  
 	bool isDashing = false;     
 	float dashDuration = 0.2f; 
-	float dashTimer = 0.0f;    
+	float dashTimer = 0.f;    
+
+	float fireTimer = 0.f;
+	float fireIntervel = 0.2f;
 
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;

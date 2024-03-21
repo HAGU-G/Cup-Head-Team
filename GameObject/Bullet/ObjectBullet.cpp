@@ -23,6 +23,7 @@ void ObjectBullet::Release()
 void ObjectBullet::Reset()
 {
 	SpriteGo::Reset();
+
 }
 
 void ObjectBullet::Update(float dt)
@@ -42,7 +43,6 @@ void ObjectBullet::LateUpdate(float dt)
 	if (moveDistance >= range)
 	{
 		OnDie();
-		scene->RemoveGo(this);
 	}
 }
 
@@ -101,6 +101,7 @@ void ObjectBullet::OnCreate()
 
 void ObjectBullet::OnDie()
 {
+	scene->RemoveGo(this);
 }
 
 void ObjectBullet::SetPosition(const sf::Vector2f& position)

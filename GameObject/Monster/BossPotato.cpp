@@ -22,6 +22,8 @@ void BossPotato::Init()
 
 	//TODO 임시 코드 삭제 필요
 	SetPosition({ 600.f,0.f });
+
+	hasHitBox = true;
 }
 
 void BossPotato::Reset()
@@ -35,6 +37,13 @@ void BossPotato::Reset()
 void BossPotato::Update(float dt)
 {
 	ObjectMonster::Update(dt);
+	///////////////////////////////////////
+	auto bounds = sprite.getGlobalBounds();
+	float shrinkFactor = 0.4f;
+	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height);
+	//////////////////////////////////////
 	if (hp == 0 && state < State::None)
 	{
 		Death();

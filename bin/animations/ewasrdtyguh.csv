@@ -1,7 +1,0 @@
-ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-ewasrdtyguh,20,1,,
-TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
-resource/ewasrdtyguh.png,0,0,106,175,3
-resource/ewasrdtyguh.png,106,0,108,175,3
-resource/ewasrdtyguh.png,214,0,106,175,3
-resource/ewasrdtyguh.png,320,0,107,175,3

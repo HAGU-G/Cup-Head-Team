@@ -11,6 +11,8 @@ class BossPotato : public ObjectMonster
 	};
 
 protected:
+	sf::FloatRect customBounds;//////////////////////////////////
+
 	State state = State::None;
 	State preState = State::None;
 
@@ -45,5 +47,7 @@ public:
 	void SetState(State state);
 
 	bool CollisionCheck() override;
+
+	sf::FloatRect GetCustomBounds() const { return customBounds; }////////////////////////////////////////
 };
 

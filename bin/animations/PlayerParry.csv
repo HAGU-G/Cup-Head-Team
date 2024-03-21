@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerParry,15,0,,
+PlayerParry,10,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerParry.png,0,0,116,146,7
 resource/PlayerParry.png,116,0,113,146,7

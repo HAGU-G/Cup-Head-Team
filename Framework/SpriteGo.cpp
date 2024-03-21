@@ -128,22 +128,7 @@ void SpriteGo::Draw(sf::RenderWindow& window)
 		globalHitBox.setOutlineThickness(1.f);
 		globalHitBox.setFillColor(sf::Color::Transparent);
 
-		imageBox.setPosition(position);
-		imageBox.setOrigin(origin);
-		imageBox.setRotation(sprite.getRotation());
-		imageBox.setSize({ localBound.width, localBound.height });
-		imageBox.setOutlineColor(sf::Color::Green);
-		imageBox.setOutlineThickness(1.f);
-		imageBox.setFillColor(sf::Color::Transparent);
-
-		localHitBox.setPosition(localBound.left, localBound.top);
-		localHitBox.setSize({ localBound.width, localBound.height });
-		localHitBox.setOutlineColor(sf::Color::Blue);
-		localHitBox.setOutlineThickness(1.f);
-		localHitBox.setFillColor(sf::Color::Transparent);
-
 		window.draw(globalHitBox);
-		window.draw(imageBox);
-		window.draw(localHitBox);
+
 	}
 }

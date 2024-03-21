@@ -1,5 +1,7 @@
 #pragma once
 #include "SpriteGo.h"
+
+
 class ObjectBullet : public SpriteGo
 {
 protected:

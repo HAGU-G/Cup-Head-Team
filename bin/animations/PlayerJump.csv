@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerJump,15,0,,
+PlayerJump,10,1,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerJump.png,0,0,77,109,7
 resource/PlayerJump.png,77,0,77,109,7

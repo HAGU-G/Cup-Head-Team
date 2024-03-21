@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerDash,15,1,,
+PlayerDash,10,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerDash.png,0,0,102,163,7
 resource/PlayerDash.png,102,0,156,163,7
