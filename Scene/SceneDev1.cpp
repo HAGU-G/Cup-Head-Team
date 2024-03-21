@@ -235,7 +235,8 @@ void SceneDev1::SaveSpriteSheet()
 	{
 		std::cout << "불러온 이미지가 없습니다 이미지를 로드해주세요" << std::endl;
 	}
-
+	Reset();
+	std::cout << "Reset" << std::endl;
 }
 
 void SceneDev1::Init()
