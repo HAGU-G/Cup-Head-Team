@@ -36,6 +36,7 @@ public:
 	void Intro();
 	void Idle();
 	void Cry();
+	void Tears();
 	void Death();
 	void Leave();
 	void OnDie();

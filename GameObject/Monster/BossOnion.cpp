@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BossOnion.h"
+#include "Effect/EffectOnionTears.h"
 
 BossOnion::BossOnion(const std::string& name)
 	:ObjectMonster(name)
@@ -56,7 +57,7 @@ void BossOnion::LateUpdate(float dt)
 	ObjectMonster::LateUpdate(dt);
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
-		OnDamage(1);
+		OnDamage(10);
 	}
 }
 
@@ -79,12 +80,25 @@ void BossOnion::Cry()
 	SetState(State::Crying);
 }
 
+void BossOnion::Tears()
+{
+	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, - sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, 5.f);
+	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, - sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, 5.f);
+}
+
 void BossOnion::Death()
 {
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/onionDeath.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossOnion::Leave, this));
 }
 
 void BossOnion::Leave()
 {
+	SetState(State::None);
+	animator.Play("animations/onionLeave.csv");
+	animator.AddEvent("animations/onionLeave.csv", animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossOnion::OnDie, this));
 }
 
 void BossOnion::OnDie()
@@ -119,6 +133,7 @@ void BossOnion::SetState(State state)
 		}
 		animator.PlayQueue("animations/onionCrying.csv");
 		animator.AddEvent("animations/onionCrying.csv", 21, std::bind(&BossOnion::Cry, this));
+		animator.AddEvent("animations/onionCrying.csv", 11, std::bind(&BossOnion::Tears, this));
 		preState = State::Pattern1;
 		break;
 	case BossOnion::State::Crying:

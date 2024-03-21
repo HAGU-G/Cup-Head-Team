@@ -13,6 +13,10 @@ void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 	SetPosition(pos);
 	SetDirection(direction);
 	SetRotation(Utils::Angle360(direction));
+	if (direction.x < 0)
+	{
+		SetScale({ 1.f, -1.f });
+	}
 	this->scene = scene;
 	scene->AddGo(this);
 }
