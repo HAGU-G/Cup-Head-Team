@@ -4,7 +4,8 @@
 
 int main()
 {
-	FRAMEWORK.Init(1280,720,"Cuphead");
+	srand(time(NULL));
+	FRAMEWORK.Init(1600,900,"Cuphead");
 	FRAMEWORK.Do();
 	FRAMEWORK.Release();
 

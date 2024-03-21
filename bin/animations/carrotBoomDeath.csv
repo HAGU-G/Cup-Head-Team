@@ -1,0 +1,13 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotBoomDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotBoomDeath.png,0,0,120,395,4
+resource/carrotBoomDeath.png,120,0,160,395,4
+resource/carrotBoomDeath.png,280,0,218,395,4
+resource/carrotBoomDeath.png,498,0,242,395,4
+resource/carrotBoomDeath.png,740,0,291,395,4
+resource/carrotBoomDeath.png,1031,0,358,395,4
+resource/carrotBoomDeath.png,1389,0,437,395,4
+resource/carrotBoomDeath.png,1826,0,370,395,4
+resource/carrotBoomDeath.png,2196,0,367,395,4
+resource/carrotBoomDeath.png,2563,0,378,395,4

@@ -1,0 +1,9 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carrotShootEyes,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carrotShootEyes.png,0,0,111,92,4
+resource/carrotShootEyes.png,111,0,111,92,4
+resource/carrotShootEyes.png,222,0,111,92,4
+resource/carrotShootEyes.png,333,0,111,92,4
+resource/carrotShootEyes.png,444,0,111,92,4
+resource/carrotShootEyes.png,555,0,111,92,4

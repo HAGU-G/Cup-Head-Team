@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Monster\BossCarrot.cpp" />
     <ClCompile Include="GameObject\Monster\BossCarnation.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletOnionTear.cpp" />
     <ClCompile Include="GameObject\Effect\EffectOnionTearsOutro.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Monster\BossCarrot.h" />
     <ClInclude Include="GameObject\Monster\BossCarnation.h" />
     <ClInclude Include="GameObject\Bullet\BulletOnionTear.h" />
     <ClInclude Include="GameObject\Effect\EffectOnionTearsOutro.h" />
