@@ -2,12 +2,12 @@
 #include "BossRibby.h"
 #include "SceneGame.h"
 
-Ribby::Ribby(const std::string& name)
+BossRibby::BossRibby(const std::string& name)
     :ObjectMonster(name)
 {
 }
 
-void Ribby::Init()
+void BossRibby::Init()
 {
     ObjectMonster::Init();
 
@@ -21,7 +21,7 @@ void Ribby::Init()
     hasHitBox = true;
 }
 
-void Ribby::Reset()
+void BossRibby::Reset()
 {
     ObjectMonster::Reset();
     scene = SCENE_MGR.GetCurrentScene();
@@ -29,7 +29,7 @@ void Ribby::Reset()
     Intro();
 }
 
-void Ribby::Update(float dt)
+void BossRibby::Update(float dt)
 {
     ObjectMonster::Update(dt);
     if (hp == 0 )
@@ -38,13 +38,13 @@ void Ribby::Update(float dt)
     }
     switch (state)
     {
-    case Ribby::State::Idle:
+    case BossRibby::State::Idle:
         if (PatternTimer(dt))
         {
             SetState(State::Pattern1);
         }
         break;
-    case Ribby::State::Pattern1:
+    case BossRibby::State::Pattern1:
         if (hp <= maxHp * 0.70)
         {
             SetState(State::Roll);     //페이즈 변경
@@ -54,7 +54,7 @@ void Ribby::Update(float dt)
             SetState(State::Shoot);    // Pattern1공격 shoot 실행
         }
         break;
-    case Ribby::State::Pattern2:
+    case BossRibby::State::Pattern2:
         if (hp <= maxHp * 0.30)
         {
             SetState(State::Pattern2);
@@ -64,54 +64,64 @@ void Ribby::Update(float dt)
             SetState(State::ball);    // Pattern2공격 ball 실행
         }
         break;
-    case Ribby::State::Roll:           //2 패이즈를 위한 자리 이동
+    case BossRibby::State::Roll:           //2 패이즈를 위한 자리 이동
         break;
     }
+
+    auto bounds = sprite.getGlobalBounds();
+    float shrinkFactor = 0.1f;
+    float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+    float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+    customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
 }
 
-void Ribby::LateUpdate(float dt)
+void BossRibby::LateUpdate(float dt)
 {
     ObjectMonster::LateUpdate(dt);
 
 }
 
-void Ribby::Intro()
+void BossRibby::Intro()
+{
+    SetState(State::None);
+    animator.ClearEvent();
+    animator.Play("animations/RibbyIntro.csv");
+    animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossRibby::Idle, this));
+}
+
+void BossRibby::Idle()
 {
 }
 
-void Ribby::Idle()
+void BossRibby::Roll()
 {
 }
 
-void Ribby::Roll()
+void BossRibby::Shoot()
 {
 }
 
-void Ribby::Shoot()
+void BossRibby::ShootEnd()
 {
 }
 
-void Ribby::ShootEnd()
+void BossRibby::ball()
 {
 }
 
-void Ribby::ball()
+void BossRibby::ballEnd()
 {
 }
 
-void Ribby::ballEnd()
+void BossRibby::Death()
 {
 }
 
-void Ribby::Death()
+void BossRibby::OnDie()
 {
 }
 
-void Ribby::OnDie()
-{
-}
-
-bool Ribby::ShootTimer(float dt)
+bool BossRibby::ShootTimer(float dt)
 {
     shootTimer += dt;
     if (shootTimer >= shootInterval)
@@ -122,7 +132,7 @@ bool Ribby::ShootTimer(float dt)
     return false;
 }
 
-bool Ribby::PatternTimer(float dt)
+bool BossRibby::PatternTimer(float dt)
 {
     patternTimer += dt;
     if (patternTimer >= patternInterval)
@@ -133,31 +143,33 @@ bool Ribby::PatternTimer(float dt)
     return false;
 }
 
-void Ribby::SetState(State state)
+void BossRibby::SetState(State state)
 {
     this->state = state;
     switch (state)
     {
-    case Ribby::State::Idle:
+    case BossRibby::State::Idle:
+        animator.Play("animations/RibbyIdle.csv");
+        preState = State::Idle;
         break;
-    case Ribby::State::Pattern1:
+    case BossRibby::State::Pattern1:
         break;
-    case Ribby::State::Pattern2:
+    case BossRibby::State::Pattern2:
         break;
-    case Ribby::State::Roll:
+    case BossRibby::State::Roll:
         break;
-    case Ribby::State::Shoot:
+    case BossRibby::State::Shoot:
         break;
-    case Ribby::State::ball:
+    case BossRibby::State::ball:
         break;
-    case Ribby::State::None:
+    case BossRibby::State::None:
         break;
     default:
         break;
     }
 }
 
-sf::FloatRect Ribby::GetCustomBounds() const
+sf::FloatRect BossRibby::GetCustomBounds() const
 {
     return customBounds;
 }

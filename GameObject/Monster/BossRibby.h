@@ -1,7 +1,7 @@
 #pragma once
 #include "ObjectMonster.h"
 
-class Ribby : public ObjectMonster
+class BossRibby : public ObjectMonster
 {
 	enum class State
 	{
@@ -29,12 +29,12 @@ protected:
 	int patternCount = 0;
 
 public:
-	Ribby(const std::string& name = "Ribby");
-	~Ribby() override = default;
-	Ribby(const Ribby&) = delete;
-	Ribby(Ribby&&) = delete;
-	Ribby& operator=(const Ribby&) = delete;
-	Ribby& operator=(Ribby&&) = delete;
+	BossRibby(const std::string& name = "BossRibby");
+	~BossRibby() override = default;
+	BossRibby(const BossRibby&) = delete;
+	BossRibby(BossRibby&&) = delete;
+	BossRibby& operator=(const BossRibby&) = delete;
+	BossRibby& operator=(BossRibby&&) = delete;
 
 	void Init() override;
 	void Reset() override;
