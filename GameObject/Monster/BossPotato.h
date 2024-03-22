@@ -11,7 +11,7 @@ class BossPotato : public ObjectMonster
 	};
 
 protected:
-	sf::FloatRect customBounds;//////////////////////////////////
+	sf::FloatRect customBounds;//////////////////////////////////추가된 부분 입니다.
 
 	State state = State::None;
 	State preState = State::None;
@@ -21,6 +21,7 @@ protected:
 	float patternInterval = 2.0f;
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
+
 
 public:
 	BossPotato(const std::string& name = "BossPotato");
@@ -48,6 +49,6 @@ public:
 
 	bool CollisionCheck() override;
 
-	sf::FloatRect GetCustomBounds() const { return customBounds; }////////////////////////////////////////
+	sf::FloatRect GetCustomBounds() const override;//////////   추가된 부분 입니다.
 };
 

@@ -53,5 +53,7 @@ public:
 	bool PatternTimer(float dt);
 	bool BoomTimer(float dt);
 	bool RingTimer(float dt);
+
+	sf::FloatRect GetCustomBounds() const override;
 };
 

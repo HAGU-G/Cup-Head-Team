@@ -210,3 +210,8 @@ bool BossCarrot::RingTimer(float dt)
 	}
 	return false;
 }
+
+sf::FloatRect BossCarrot::GetCustomBounds() const
+{
+	return sf::FloatRect();
+}
