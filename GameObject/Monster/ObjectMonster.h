@@ -9,9 +9,11 @@ protected:
 	float hitEffectTimer = 0.f;
 	float hitEffectDuration = 0.1f;
 
+	bool isAlive = true; /////////////////////////추가된 부분 입니다.
+
 	sf::Shader shaderHit;
 
-	ObjectMonster(const std::string& name = "Monster");
+	ObjectMonster(const std::string& name = "Monster");			//상속받아서 새 클래스 만들어주세요.
 public:
 	~ObjectMonster() override = default;
 	ObjectMonster(const ObjectMonster&) = delete;
@@ -30,5 +32,6 @@ public:
 	inline int GetMaxHp() const { return hp; }
 
 	virtual sf::FloatRect GetCustomBounds() const = 0;
+	bool IsAlive() const { return isAlive; }/////////////////   추가된 부분 입니다.
 };
 

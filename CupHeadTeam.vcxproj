@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Bullet\BulletCarrotRing.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarrotBoom.cpp" />
     <ClCompile Include="GameObject\Monster\BossCarrot.cpp" />
     <ClCompile Include="GameObject\Monster\BossCarnation.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletOnionTear.cpp" />
@@ -169,13 +171,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneDev3.cpp" />
     <ClCompile Include="Scene\SceneDev.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarrotBoom.h" />
     <ClInclude Include="GameObject\Monster\BossCarrot.h" />
     <ClInclude Include="GameObject\Monster\BossCarnation.h" />
     <ClInclude Include="GameObject\Bullet\BulletOnionTear.h" />
@@ -211,7 +215,7 @@
     <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneDev3.h" />
     <ClInclude Include="Scene\SceneDev.h" />
     <ClInclude Include="Scene\SceneDev1.h" />

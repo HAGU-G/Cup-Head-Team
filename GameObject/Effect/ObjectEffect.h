@@ -9,8 +9,8 @@ protected:
 	
 	sf::Vector2f direction;
 
-	ObjectEffect(const std::string& name = "Effect");
 public:
+	ObjectEffect(const std::string& name = "Effect");
 	virtual ~ObjectEffect() = default;
 	ObjectEffect(const ObjectEffect&) = delete;
 	ObjectEffect(ObjectEffect&&) = delete;
@@ -25,6 +25,8 @@ public:
 	void Draw(sf::RenderTexture& window) override;
 
 	void SetDirection(const sf::Vector2f direction);
+
+	Animator& GetAniamtor() { return animator; }
 
 	virtual void OnDie();
 };

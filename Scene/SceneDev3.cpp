@@ -2,6 +2,7 @@
 #include "SceneDev3.h"
 #include "Player.h"
 #include "Monster/BossPotato.h"
+#include "Monster/BossOnion.h"
 
 SceneDev3::SceneDev3(SceneIds id)
 	:Scene(id)
@@ -21,12 +22,17 @@ void SceneDev3::Init()
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
-	AddGo(new Player());
+	auto bossOnion = new BossOnion("Boss");
+	bossOnion->SetPosition({ -300.f, 0.f });
+	AddGo(bossOnion);
+	BossList.push_back(bossOnion);
 
 	auto bossPotato = new BossPotato("Boss");
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
-	addMonster(bossPotato);
+	BossList.push_back(bossPotato);
+
+	AddGo(new Player());
 
 	Scene::Init();
 
@@ -50,17 +56,13 @@ void SceneDev3::Exit()
 void SceneDev3::Update(float dt)
 {
 	Scene::Update(dt);
+	BossList.erase(std::remove_if(BossList.begin(), BossList.end(),[](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
 
 }
 
 void SceneDev3::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
-}
-
-void SceneDev3::addMonster(ObjectMonster* monster)
-{
-	BossList.push_back(monster);
 }
 
 std::vector<ObjectMonster*> SceneDev3::getAllMonsters() const

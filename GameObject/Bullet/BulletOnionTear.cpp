@@ -2,6 +2,7 @@
 #include "BulletOnionTear.h"
 
 BulletOnionTear::BulletOnionTear(const std::string& name)
+	:ObjectBullet(name)
 {
 }
 
@@ -16,7 +17,6 @@ BulletOnionTear* BulletOnionTear::Create(const sf::Vector2f& pos, const sf::Vect
 void BulletOnionTear::Init()
 {
 	ObjectBullet::Init();
-	animator.SetTarget(&sprite);
 	if (isPink)
 	{
 		animator.Play("animations/onionTearPink.csv");
@@ -31,12 +31,9 @@ void BulletOnionTear::Init()
 	ObjectBullet::Init();
 }
 
-void BulletOnionTear::OnCreate()
-{
-}
-
 void BulletOnionTear::OnDie()
 {
+	ObjectBullet::OnDie();
 }
 
 void BulletOnionTear::SetRotation(float value)

@@ -2,15 +2,15 @@
 #include "Scene.h"
 #include "GameObject/Monster/ObjectMonster.h"
 
-class SceneDev3 : public Scene
+class SceneGame : public Scene
 {
 protected:
 	std::vector<ObjectMonster*> BossList;
 
 public:
 
-	SceneDev3(SceneIds id);
-	virtual ~SceneDev3();
+	SceneGame(SceneIds id);
+	virtual ~SceneGame();
 
 	void Init() override;
 	void Release() override;
@@ -20,7 +20,7 @@ public:
 
 	void Update(float dt) override;
 	void Draw(sf::RenderTexture& window) override;
-	
+
 	std::vector<ObjectMonster*> getAllMonsters() const;
 };
 

@@ -21,7 +21,11 @@ protected:
 	int tearSide = 1;
 	float cryingTimer = 0.f;
 	float cryingDuration = 1.f;
-
+	int patternCount = 0;
+	float patternTimer = 0.f;
+	float patternInterval = 2.0f;
+	float shootSpeed = 1.0f;
+	int shootCount = 0;
 public:
 	BossOnion(const std::string& name = "BossOnion");
 	~BossOnion() override = default;

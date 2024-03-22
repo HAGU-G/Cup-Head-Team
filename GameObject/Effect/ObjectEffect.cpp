@@ -23,6 +23,7 @@ void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 
 void ObjectEffect::Init()
 {
+	animator.SetTarget(&sprite);
 }
 
 void ObjectEffect::Update(float dt)

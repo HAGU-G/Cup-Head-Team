@@ -21,9 +21,9 @@ void SceneDev::Init()
 	worldView.setCenter(0.f, 0.f);
 
 	//TODO 보스 테스트코드 삭제해야함
-	//AddGo(new BossPotato())->SetPosition({300.f, 300.f});
-	//AddGo(new BossOnion())->SetPosition({0, 300.f});
-	AddGo(new BossCarrot())->SetPosition({0, 300.f});
+	AddGo(new BossPotato())->SetPosition({500.f, 300.f});
+	AddGo(new BossOnion())->SetPosition({0, 300.f});
+	AddGo(new BossCarrot())->SetPosition({-500, 300.f});
 
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);

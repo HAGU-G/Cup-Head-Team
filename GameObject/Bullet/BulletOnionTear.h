@@ -16,8 +16,6 @@ public:
 	static BulletOnionTear* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene, bool isPink = false);
 
 	void Init() override;
-
-	void OnCreate() override;
 	void OnDie() override;
 
 	void SetRotation(float value) override;
