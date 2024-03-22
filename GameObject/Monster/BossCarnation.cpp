@@ -106,6 +106,10 @@ void BossCarnation::Update(float dt)
 		{
 			FaLow();
 		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Num3))
+		{
+			Creating();
+		}
 	}
 
 	switch (state)
@@ -186,13 +190,21 @@ void BossCarnation::FaLow()
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 
+void BossCarnation::Creating()
+{
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/carnationBossCreating.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
+}
+
 void BossCarnation::Intro()
 {
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossIntro.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
-
+	
 }
 
 void BossCarnation::Idle()

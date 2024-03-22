@@ -51,6 +51,7 @@ public:
 
 	void FaHigh();
 	void FaLow();
+	void Creating();
 	void Intro();
 	void Idle();
 	void FinalIntro();

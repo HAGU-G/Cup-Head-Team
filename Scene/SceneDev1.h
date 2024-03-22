@@ -38,6 +38,7 @@ protected:
 	int sheetHeight = 0;
 	sf::Vector2f spritePos = { 0.f,0.f };
 
+	bool AddHeight = false;
 	bool fileLoad = false;
 public:
 	SceneDev1(SceneIds id);

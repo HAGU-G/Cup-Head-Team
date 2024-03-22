@@ -39,7 +39,7 @@ void Player::Reset()
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
 
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
 }
 
 void Player::Update(float dt)

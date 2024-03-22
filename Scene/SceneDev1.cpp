@@ -102,6 +102,9 @@ void SceneDev1::LoadImagesAndDisplay()
 
 	int maxHeight = 0;
 	int totalWidth = 0;
+	int totalHeight = 0;
+	int maxHeightInRow = 0;
+	int maxWidth = 16384;
 
 	sprites.clear();
 	textures.clear();
@@ -167,41 +170,68 @@ void SceneDev1::LoadImagesAndDisplay()
 				sprite->setOrigin(spriteBound.left, spriteBound.height);
 			}
 
-
-			sprites.push_back(sprite);
-
 			totalWidth += spriteWidth;
+
+			if (totalWidth > maxWidth)
+			{
+				totalWidth = maxWidth;
+				AddHeight = true;
+			}
+			else
+			{
+				totalHeight = maxHeight;
+			}
+			sprites.push_back(sprite);
 		}
 		else
 		{
 			std::wcerr << L"Failed to load image: " << std::endl;
 		}
 	}
-	if (!renderTexture.create(totalWidth, maxHeight))
+	if (AddHeight)
+	{
+		totalHeight += maxHeight;
+		AddHeight = false;
+	}
+	if (!renderTexture.create(totalWidth, totalHeight))
 	{
 		std::cerr << "Failed to create render texture" << std::endl;
 		return;
 	}
-
+	renderTexture.clear(sf::Color::Transparent);
 	for (const auto& sprite : sprites)
 	{
+		float spriteWidth = sprite->getGlobalBounds().width;
+		float spriteHeight = sprite->getGlobalBounds().height;
+
+		if (spriteHeight > maxHeight)
+		{
+			maxHeight = spriteHeight;
+			totalHeight = spriteHeight;
+		}
+
+
 		if (num == 1)
 		{
-			sprite->setPosition({ spritePos.x,0.f });
+			sprite->setPosition({ spritePos.x,spritePos.y });
 		}
 		else if (num == 2)
 		{
-			sprite->setPosition({ spritePos.x,(float)maxHeight / 2 });
+			sprite->setPosition({ spritePos.x,spritePos.y + maxHeight/ 2.f });
 		}
 		else if (num == 3)
 		{
-			sprite->setPosition({ spritePos.x,(float)maxHeight });
+			sprite->setPosition({ spritePos.x,spritePos.y + maxHeight });
 		}
 		spritePos.x += sprite->getGlobalBounds().width;
-
+		if (spritePos.x > maxWidth - sprite->getGlobalBounds().width)
+		{
+			spritePos.x = 0.f;
+			spritePos.y += maxHeight;
+		}
 		renderTexture.draw(*sprite);
 		file << "resource/" + renderTextureName + ".png" << ","
-			<< sprite->getPosition().x << "," << 0 << ","
+			<< sprite->getPosition().x << "," << spritePos.y << ","
 			<< sprite->getGlobalBounds().width << "," << maxHeight << "," << setOrigin << std::endl;
 	}
 
@@ -287,9 +317,6 @@ void SceneDev1::Init()
 	loadShape.setSize(loadFile->GetGlobalBounds().getSize() * 1.4f);
 	saveShape.setSize(saveFile->GetGlobalBounds().getSize() * 1.4f);
 	resetShape.setSize(loadFile->GetGlobalBounds().getSize() * 1.4f);
-
-	//aniTool = new AnimationTool("aniTool");
-	//AddGo(aniTool);
 
 	Scene::Init();
 }

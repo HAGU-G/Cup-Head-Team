@@ -22,7 +22,7 @@ void SceneDev2::Init()
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
-	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 650.f,50.f });
+	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 150.f,50.f });
 	Scene::Init();
 }
 

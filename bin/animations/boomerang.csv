@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+boomerang,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/boomerang.png,0,0,166,121,4
+resource/boomerang.png,166,0,211,108,4
+resource/boomerang.png,377,0,157,113,4
+resource/boomerang.png,534,0,169,89,4
+resource/boomerang.png,703,0,125,93,4
+resource/boomerang.png,828,0,197,90,4
+resource/boomerang.png,1025,0,156,97,4
+resource/boomerang.png,1181,0,176,118,4
