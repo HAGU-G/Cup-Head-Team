@@ -14,6 +14,12 @@ BulletCarrotBoom* BulletCarrotBoom::Create(const sf::Vector2f& pos, const sf::Ve
 	return bcb;
 }
 
+void BulletCarrotBoom::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
+}
+
 void BulletCarrotBoom::Init()
 {
 	ObjectBullet::Init();
@@ -39,6 +45,11 @@ void BulletCarrotBoom::SetRotation(float value)
 {
 	ObjectBullet::SetRotation(value);
 	sprite.setRotation(value - 90.f);
+}
+
+sf::FloatRect BulletCarrotBoom::GetCustomBounds() const
+{
+	return customBounds;
 }
 
 void BulletCarrotBoom::Flip()

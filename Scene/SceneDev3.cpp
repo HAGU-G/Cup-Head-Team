@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Monster/BossPotato.h"
 #include "Monster/BossOnion.h"
+#include "Bullet/BulletCarrotBoom.h"
 
 SceneDev3::SceneDev3(SceneIds id)
 	:Scene(id)
@@ -58,6 +59,12 @@ void SceneDev3::Update(float dt)
 	Scene::Update(dt);
 	BossList.erase(std::remove_if(BossList.begin(), BossList.end(),[](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
 
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	{
+		BossList.push_back(BulletCarrotBoom::Create({ 0.f,-300.f }, { 0.f,1.f }, this));
+
+	}
 }
 
 void SceneDev3::Draw(sf::RenderTexture& window)

@@ -173,11 +173,6 @@ void BossCarrot::SetState(State state)
 	}
 }
 
-bool BossCarrot::CollisionCheck()
-{
-	return true;
-}
-
 bool BossCarrot::PatternTimer(float dt)
 {
 	patternTimer += dt;
