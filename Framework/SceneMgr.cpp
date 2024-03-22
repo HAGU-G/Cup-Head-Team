@@ -46,6 +46,23 @@ void SceneMgr::ChangeScene(SceneIds id)
 
 }
 
+Scene* SceneMgr::GetScene(SceneIds id)
+{
+	auto getScene = scenes.begin();
+	while (getScene != scenes.end())
+	{
+		if ((*getScene)->GetId() == id)
+		{
+			return (*getScene);
+		}
+		else
+		{
+			getScene++;
+		}
+	}
+	return nullptr;
+}
+
 bool SceneMgr::Update(float dt)
 {
 	if (InputMgr::GetKey(sf::Keyboard::P) && InputMgr::GetKeyDown(sf::Keyboard::O))

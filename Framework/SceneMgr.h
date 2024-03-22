@@ -30,6 +30,7 @@ public:
 	void ChangeScene(SceneIds id);
 
 	Scene* GetCurrentScene() { return scenes[(int)currentScene]; }
+	Scene* GetScene(SceneIds id);
 	bool GetDeveloperMode() { return isDeveloperMode; }
 
 	bool Update(float dt);
