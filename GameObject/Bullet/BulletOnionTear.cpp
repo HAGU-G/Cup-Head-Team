@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletOnionTear.h"
+#include "SceneGame.h"
 
 BulletOnionTear::BulletOnionTear(const std::string& name)
 	:ObjectBullet(name)
@@ -11,6 +12,7 @@ BulletOnionTear* BulletOnionTear::Create(const sf::Vector2f& pos, const sf::Vect
 	BulletOnionTear* bot = new BulletOnionTear();
 	bot->isPink = isPink;
 	bot->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bot);
 	return bot;
 }
 

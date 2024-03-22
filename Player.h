@@ -6,6 +6,14 @@ class SceneGame;
 
 class Player : public SpriteGo
 {
+
+public:
+	enum class PlayerState {
+		Normal,
+		Dead
+	};
+
+	PlayerState state = PlayerState::Normal;
 protected:
 	SceneGame* sceneGame;
 	Animator animator;

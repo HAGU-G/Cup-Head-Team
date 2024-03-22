@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletPotatoShootPink.h"
+#include "SceneGame.h"
 
 BulletPotatoShootPink::BulletPotatoShootPink(const std::string& name)
 	:ObjectBullet(name)
@@ -10,6 +11,7 @@ BulletPotatoShootPink* BulletPotatoShootPink::Create(const sf::Vector2f& pos, co
 {
 	BulletPotatoShootPink* bps = new BulletPotatoShootPink();
 	bps->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
 	return bps;
 }
 

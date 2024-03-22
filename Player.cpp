@@ -36,6 +36,11 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
+	if (state == PlayerState::Dead)
+	{
+		return;
+	}
+
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
@@ -70,7 +75,7 @@ void Player::Update(float dt)
 		if (isGrounded)
 		{
 			isGrounded = false;
-			velocity.y = -500.f;
+			velocity.y = -700.f;
 		}
 	}
 
@@ -376,7 +381,7 @@ void Player::OnDamage()
 void Player::OnDie()
 {
 	animator.Play("animations/PlayerDie.csv");
-	speed = 0;
+	state = PlayerState::Dead;
 }
 
 void Player::LateUpdate(float dt)
@@ -388,7 +393,7 @@ void Player::LateUpdate(float dt)
 	{
 		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
 		{
-			if (isJumping && monster->GetPink())
+			if (isJumping && monster->GetPink()/* && InputMgr::GetKeyDown(sf::Keyboard::Z)*/)
 			{
 				//ÆÐ¸µ
 				if (!isParry)

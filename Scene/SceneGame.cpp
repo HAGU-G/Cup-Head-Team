@@ -26,7 +26,7 @@ void SceneGame::Init()
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
 	AddMonster(bossPotato);
-
+	
 	AddGo(new Player());
 
 	Scene::Init();
