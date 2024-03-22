@@ -2,9 +2,7 @@
 #include "SceneDev.h"
 #include "Bullet/BulletPeaShot.h"
 #include "Player.h"
-#include "Monster/BossPotato.h"
-#include "Monster/BossOnion.h"
-#include "Monster/BossCarrot.h"
+#include "Stage/Stage01.h"
 
 SceneDev::SceneDev(SceneIds id)
 	:Scene(id)
@@ -17,13 +15,15 @@ SceneDev::~SceneDev()
 
 void SceneDev::Init()
 {
-	worldView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
-	worldView.setCenter(0.f, 0.f);
+	worldView.setSize(1280.f/1.1f,720.f/1.1f);
+	worldView.setCenter(0.f, -250.f);
 
 	//TODO 보스 테스트코드 삭제해야함
-	AddGo(new BossPotato())->SetPosition({500.f, 300.f});
-	AddGo(new BossOnion())->SetPosition({0, 300.f});
-	AddGo(new BossCarrot())->SetPosition({-500, 300.f});
+	//AddGo(new BossPotato())->SetPosition({500.f, 300.f});
+	//AddGo(new BossOnion())->SetPosition({0, 300.f});
+	//AddGo(new BossCarrot())->SetPosition({-500, 300.f});
+	AddGo(new Stage01());
+	AddGo(new Player());
 
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);

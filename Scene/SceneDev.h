@@ -6,8 +6,6 @@ class SceneDev : public Scene
 protected:
 	sf::Music bgm;
 
-
-
 public:
 	SceneDev(SceneIds id);
 	virtual ~SceneDev();

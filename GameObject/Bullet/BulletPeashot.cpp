@@ -29,7 +29,7 @@ void BulletPeashot::Init()
 /// /////////////////////////////////////////////////////////////
 void BulletPeashot::Reset()
 {
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
 }
 
 void BulletPeashot::Update(float dt)

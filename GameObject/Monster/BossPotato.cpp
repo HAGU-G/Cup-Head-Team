@@ -11,7 +11,7 @@ BossPotato::BossPotato(const std::string& name)
 void BossPotato::Init()
 {
 	ObjectMonster::Init();
-	sprite.setScale(1.3f, 1.3f);
+	sprite.setScale(1.2f, 1.2f);
 
 	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
 	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");
