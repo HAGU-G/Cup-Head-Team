@@ -13,7 +13,7 @@ void BossCarrot::Init()
 {
 	ObjectMonster::Init();
 	sprite.setScale(1.3f, 1.3f);
-	shootEyes.setScale(1.3f, 1.3f);
+	shootEyes.setScale(sprite.getScale());
 	RES_MGR_TEXTURE.Load("resource/carrotDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotIdle.png");
 	RES_MGR_TEXTURE.Load("resource/carrotIntro.png");
