@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerDuckShoot,10,2,,
+PlayerDuckShoot,15,2,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerDuckShoot.png,0,0,178,81,7
 resource/PlayerDuckShoot.png,178,0,170,81,7

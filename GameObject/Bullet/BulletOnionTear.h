@@ -3,7 +3,7 @@
 class BulletOnionTear : public ObjectBullet
 {
 protected:
-	bool isPink = false;
+	
 
 public:
 	BulletOnionTear(const std::string& name = "BulletOnionTear");

@@ -25,7 +25,7 @@ protected:
 	float fireTimer = 0.f;
 	float fireIntervel = 0.2f;
 
-	float invincibilityDuration = 2.0f;
+	float invincibilityDuration = 0.5f;
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
 	
@@ -37,6 +37,8 @@ protected:
 	bool isFire = false;
 	bool isJumping = false;
 	bool isCKeyPressed;
+	bool isParry = false;
+	bool isDamaging = false;
 
 	int maxHp = 3;
 	int hp;

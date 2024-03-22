@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerIdle,10,2,,
+PlayerIdle,15,2,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerIdle.png,0,0,98,155,7
 resource/PlayerIdle.png,98,0,98,155,7

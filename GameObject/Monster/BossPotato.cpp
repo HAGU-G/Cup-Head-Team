@@ -103,8 +103,8 @@ void BossPotato::Shoot()
 	}
 	else
 	{
-		BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
-
+		auto bullet = BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+		dynamic_cast<SceneDev3*>(scene)->AddMonster(bullet);
 	}
 }
 

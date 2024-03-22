@@ -51,11 +51,12 @@ void Player::Update(float dt)
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 
-	if (isInvincible)                                      //무적 상태 o 
+	if (isInvincible)                                      //무적 상태 o
 	{
 		invincibilityTimer += dt;
 		if (invincibilityTimer >= invincibilityDuration) 
 		{
+			isDamaging = false;
 			isInvincible = false;                          //무적 상태 x
 			invincibilityTimer = 0.0f;
 		}
@@ -109,6 +110,7 @@ void Player::Update(float dt)
 		{
 			isGrounded = true;
 			isJumping = false;
+			isParry = false;
 			position.y = 0.f;
 			velocity.y = 0.f;
 		}
@@ -148,7 +150,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 
 	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
 
-	if (isCKeyPressed)
+	if (isCKeyPressed && !isDamaging)
 	{
 		if (horizontalInput > 0.f)
 		{
@@ -222,7 +224,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			currentDirection = Direction::Up;
 		}
 	}
-	else
+	else if (!isCKeyPressed && !isDamaging)
 	{
 		// C 키x, 방향은 변경o, 
 		if (InputMgr::GetKey(sf::Keyboard::X) && horizontalInput == 0)
@@ -373,6 +375,7 @@ void Player::Dash(float dt)
 
 void Player::OnDamage()
 {
+	
 	hp -= 1;
 	std::cout << "On" << std::endl;
 	if (hp == 0)
@@ -384,7 +387,6 @@ void Player::OnDamage()
 void Player::OnDie()
 {
 	/*사망 애니매이션 출력*/
-	isAlive = false;
 	speed = 0;
 }
 
@@ -397,15 +399,32 @@ void Player::LateUpdate(float dt)
 	{
 		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
 		{
-			if (!isInvincible)
+			if (isJumping && monster->GetPink())
 			{
+				//패링
+				if (!isParry)
+				{
+					animator.Play("animations/PlayerParry.csv");
+					animator.PlayQueue("animations/PlayerJump.csv");
+					isParry = true;
+					isGrounded = false;
+					velocity.y = -500.f;
+					std::cout << "Parry" << std::endl;
+				}
+			}
+			else if (!isInvincible)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+				{
+					animator.Play("animations/PlayerDamage.csv");
+				}
+				isDamaging = true;
 				isInvincible = true;
 				invincibilityTimer = 0.0f;
-				animator.Play("animations/PlayerDamage.csv");
 				OnDamage();
 			}
+			
 		}
-		if (isJumping)
 	}
 }
 

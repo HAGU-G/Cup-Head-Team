@@ -182,7 +182,7 @@ void SceneDev1::LoadImagesAndDisplay()
 		std::cerr << "Failed to create render texture" << std::endl;
 		return;
 	}
-
+	renderTexture.clear(sf::Color::Transparent);
 	for (const auto& sprite : sprites)
 	{
 		if (num == 1)
@@ -198,7 +198,7 @@ void SceneDev1::LoadImagesAndDisplay()
 			sprite->setPosition({ spritePos.x,(float)maxHeight });
 		}
 		spritePos.x += sprite->getGlobalBounds().width;
-
+		
 		renderTexture.draw(*sprite);
 		file << "resource/" + renderTextureName + ".png" << ","
 			<< sprite->getPosition().x << "," << 0 << ","

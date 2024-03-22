@@ -13,10 +13,14 @@ public:
 	BulletPotatoShootPink& operator=(BulletPotatoShootPink&&) = delete;
 
 	static BulletPotatoShootPink* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
-
+	
+	void Update(float dt) override;
 	void Init() override;
 
 	void OnCreate() override;
 	void OnDie() override;
+
+	sf::FloatRect GetCustomBounds() const override;
+
 };
 

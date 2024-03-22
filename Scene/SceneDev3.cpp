@@ -23,10 +23,10 @@ void SceneDev3::Init()
 	uiView.setSize(1280.f / 1.1f, 720.f / 1.1f);
 	uiView.setCenter(centerPos);
 
-	//auto bossOnion = new BossOnion("Boss");
-	//bossOnion->SetPosition({ -300.f, 0.f });
-	//AddGo(bossOnion);
-	//AddMonster(bossOnion);
+	/*auto bossOnion = new BossOnion("Boss");
+	bossOnion->SetPosition({ -300.f, 0.f });
+	AddGo(bossOnion);
+	AddMonster(bossOnion);*/
 
 	auto bossPotato = new BossPotato("Boss");
 	bossPotato->SetPosition({ 300.f, 0.f });
