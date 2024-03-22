@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Monster/BossPotato.h"
 #include "Monster/BossOnion.h"
+#include "Monster//BossCarnation.h"
 #include "Bullet/BulletCarrotBoom.h"
 
 SceneDev3::SceneDev3(SceneIds id)
@@ -32,6 +33,11 @@ void SceneDev3::Init()
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
 	BossList.push_back(bossPotato);
+
+	auto bossCarnation = new BossCarnation("Boss");
+	bossCarnation->SetPosition({ 0.f, 0.f });
+	AddGo(bossCarnation);
+	BossList.push_back(bossCarnation);
 
 	AddGo(new Player());
 

@@ -153,6 +153,12 @@ void BossCarnation::Update(float dt)
 
 	frontCloudBg->SetPosition(frontCloudPos);
 	frontCloudBg2->SetPosition(frontCloudPos2);
+
+	auto bounds = sprite.getGlobalBounds();
+	float shrinkFactor = 0.1f;
+	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
 }
 
 void BossCarnation::LateUpdate(float dt)
@@ -246,11 +252,6 @@ void BossCarnation::SetState(State state)
 	default:
 		break;
 	}
-}
-
-bool BossCarnation::CollisionCheck()
-{
-	return true;
 }
 
 sf::FloatRect BossCarnation::GetCustomBounds() const

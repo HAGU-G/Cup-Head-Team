@@ -61,7 +61,6 @@ public:
 	bool PatternTimer(float dt);
 	void SetState(State state);
 
-	bool CollisionCheck() override;
 	sf::FloatRect GetCustomBounds() const override;
 };
 
