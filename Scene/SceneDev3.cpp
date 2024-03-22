@@ -26,12 +26,12 @@ void SceneDev3::Init()
 	auto bossOnion = new BossOnion("Boss");
 	bossOnion->SetPosition({ -300.f, 0.f });
 	AddGo(bossOnion);
-	BossList.push_back(bossOnion);
+	AddMonster(bossOnion);
 
 	auto bossPotato = new BossPotato("Boss");
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
-	BossList.push_back(bossPotato);
+	AddMonster(bossPotato);
 
 	AddGo(new Player());
 
@@ -65,6 +65,11 @@ void SceneDev3::Update(float dt)
 void SceneDev3::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
+}
+
+void SceneDev3::AddMonster(ObjectMonster* monster)
+{
+	BossList.push_back(monster);
 }
 
 std::vector<ObjectMonster*> SceneDev3::getAllMonsters() const

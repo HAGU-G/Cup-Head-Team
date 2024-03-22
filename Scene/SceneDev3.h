@@ -20,7 +20,7 @@ public:
 
 	void Update(float dt) override;
 	void Draw(sf::RenderTexture& window) override;
-	
+	void AddMonster(ObjectMonster* monster);
 	std::vector<ObjectMonster*> getAllMonsters() const;
 };
 
