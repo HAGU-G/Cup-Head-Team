@@ -48,8 +48,6 @@ public:
 
 	void SetState(State state);
 
-	bool CollisionCheck() override;
-
 	bool PatternTimer(float dt);
 	bool BoomTimer(float dt);
 	bool RingTimer(float dt);

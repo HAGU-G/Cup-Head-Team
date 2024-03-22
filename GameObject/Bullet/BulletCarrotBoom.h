@@ -14,10 +14,13 @@ public:
 
 	static BulletCarrotBoom* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
+	void Update(float dt) override;
 	void Init() override;
 	void OnDie() override;
 
 	void SetRotation(float value) override;
+
+	sf::FloatRect GetCustomBounds() const override;
 
 	void Flip() override;
 };

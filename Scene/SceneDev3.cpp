@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Monster/BossPotato.h"
 #include "Monster/BossOnion.h"
+#include "Bullet/BulletCarrotBoom.h"
 
 SceneDev3::SceneDev3(SceneIds id)
 	:Scene(id)
@@ -18,7 +19,7 @@ void SceneDev3::Init()
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	sf::Vector2f centerPos = windowSize * 0.5f;
 	worldView.setSize(windowSize);
-	worldView.setCenter({ 0,-300 });
+	worldView.setCenter({ 0,0 });
 	uiView.setSize(windowSize);
 	uiView.setCenter(centerPos);
 
@@ -57,6 +58,7 @@ void SceneDev3::Update(float dt)
 {
 	Scene::Update(dt);
 	BossList.erase(std::remove_if(BossList.begin(), BossList.end(),[](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
+
 
 }
 

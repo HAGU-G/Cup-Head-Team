@@ -180,11 +180,6 @@ void BossOnion::SetState(State state)
 	}
 }
 
-bool BossOnion::CollisionCheck()
-{
-	return true;
-}
-
 sf::FloatRect BossOnion::GetCustomBounds() const
 {
 	return customBounds;

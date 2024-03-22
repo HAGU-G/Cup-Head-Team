@@ -1,8 +1,8 @@
 #pragma once
-#include "SpriteGo.h"
+#include "Monster/ObjectMonster.h"
 
 
-class ObjectBullet : public SpriteGo
+class ObjectBullet : public ObjectMonster
 {
 protected:
 	enum class Type
@@ -63,7 +63,7 @@ public:
 	virtual void OnCreate();	//CreateInit를 하면 자동으로 호출되는 함수 : 내용은 비어있습니다.
 	virtual void OnDie();		//씬에서 Remove 하고싶을 때 호출하시면 됩니다.
 
-
+	sf::FloatRect GetCustomBounds() const override;
 
 
 };
