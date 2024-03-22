@@ -15,6 +15,8 @@ protected:
 
 	sf::RenderWindow window;
 	sf::Vector2i windowSize;
+	sf::Vector2f stageViewSize = { 1280.f / 1.1f,720.f / 1.1f };
+	sf::Vector2f stageViewCenter = { 0.f, -250.f };
 	sf::RenderTexture preDraw;
 	sf::Shader shader;
 	float fixedUpdateTime = 1.f / 50.f;
@@ -40,6 +42,8 @@ public:
 	sf::RenderTexture& GetWindow() { return preDraw; }	// !!
 	sf::RenderWindow& GetWindowReal() { return window; }
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
+	const sf::Vector2f& GetStageViewSize() const { return stageViewSize; }
+	const sf::Vector2f& GetStageViewCenter() const { return stageViewCenter; }
 
 	float GetRealTime() const { return realTime.asSeconds(); }
 	float GetTime() const { return time.asSeconds(); }

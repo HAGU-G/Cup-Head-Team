@@ -17,17 +17,19 @@ void SceneGame::Init()
 {
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(windowSize);
-	worldView.setCenter({ 0,-300 });
-	uiView.setSize(windowSize);
+	worldView.setSize(1280.f / 1.1f, 720.f / 1.1f);
+	worldView.setCenter({ 0,-250 });
+	uiView.setSize(1280.f / 1.1f, 720.f / 1.1f);
 	uiView.setCenter(centerPos);
 
-	auto bossPotato = new BossPotato();
+	auto bossPotato = new BossPotato("Boss");
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
-	BossList.push_back(bossPotato);
-
+	AddMonster(bossPotato);
+	
 	AddGo(new Player());
+
+	Scene::Init();
 }
 
 void SceneGame::Release()
@@ -48,7 +50,7 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
-	BossList.erase(std::remove_if(BossList.begin(), BossList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
+	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
 }
 
 void SceneGame::Draw(sf::RenderTexture& window)
@@ -56,7 +58,12 @@ void SceneGame::Draw(sf::RenderTexture& window)
 	Scene::Draw(window);
 }
 
+void SceneGame::AddMonster(ObjectMonster* monster)
+{
+	MonsterList.push_back(monster);
+}
+
 std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
 {
-	return BossList;
+	return MonsterList;
 }

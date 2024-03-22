@@ -2,12 +2,20 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
-class SceneDev3;
+class SceneGame;
 
 class Player : public SpriteGo
 {
+
+public:
+	enum class PlayerState {
+		Normal,
+		Dead
+	};
+
+	PlayerState state = PlayerState::Normal;
 protected:
-	SceneDev3* sceneDev3;
+	SceneGame* sceneGame;
 	Animator animator;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
@@ -25,7 +33,7 @@ protected:
 	float fireTimer = 0.f;
 	float fireIntervel = 0.2f;
 
-	float invincibilityDuration = 2.0f;
+	float invincibilityDuration = 0.5f;
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
 	
@@ -37,6 +45,8 @@ protected:
 	bool isFire = false;
 	bool isJumping = false;
 	bool isCKeyPressed;
+	bool isParry = false;
+	bool isDamaging = false;
 
 	int maxHp = 3;
 	int hp;
@@ -49,7 +59,7 @@ public:
 	void Init() override;
 	void Reset() override;
 	void Update(float dt) override;
-
+	void LateUpdate(float dt) override;
 	void UpdateDirection(float horizontalInput, float dt);
 	void UpdateJumpingDirection(float horizontalInput, float verticalInput);
 

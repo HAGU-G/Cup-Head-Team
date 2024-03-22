@@ -65,6 +65,5 @@ public:
 
 	sf::FloatRect GetCustomBounds() const override;
 
-
 };
 

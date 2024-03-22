@@ -5,7 +5,7 @@
 class SceneGame : public Scene
 {
 protected:
-	std::vector<ObjectMonster*> BossList;
+	std::vector<ObjectMonster*> MonsterList;
 
 public:
 
@@ -20,7 +20,7 @@ public:
 
 	void Update(float dt) override;
 	void Draw(sf::RenderTexture& window) override;
-
+	void AddMonster(ObjectMonster* monster);
 	std::vector<ObjectMonster*> getAllMonsters() const;
 };
 
