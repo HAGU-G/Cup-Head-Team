@@ -37,12 +37,13 @@ void Stage01::Init()
 	RES_MGR_TEXTURE.Load("resource/carrotBoomDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotRingIntro.png");
 
-	SetBackground();
 
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);
 	viewSize = FRAMEWORK.GetStageViewSize();
 	playerPosCorrection = sf::Vector2f(viewSize.x * 0.5f * 0.75f, 0.f);
+
+	SetBackground();
 }
 
 void Stage01::Update(float dt)
@@ -237,8 +238,8 @@ void Stage01::SetBackground()
 	field11 = new SpriteGo();
 	sky = new SpriteGo();
 
-	frontFence->SetTexture("resource/Sprite/stage01/veggie_bg_0001.png");
-	frontFlower->SetTexture("resource/Sprite/stage01/veggie_bg_0002.png");
+	frontFence->SetTexture("resource/Sprite/stage01/veggie_bg_0002.png");
+	frontFlower->SetTexture("resource/Sprite/stage01/veggie_bg_0001.png");
 	ground->SetTexture("resource/Sprite/stage01/veggie_bg_0003.png");
 	field4->SetTexture("resource/Sprite/stage01/veggie_bg_0004.png");
 	field5->SetTexture("resource/Sprite/stage01/veggie_bg_0005.png");
@@ -264,20 +265,20 @@ void Stage01::SetBackground()
 	sky->SetOrigin(Origins::MC);
 
 	frontFence->SetScale({ 1.3f,1.3f });
-	frontFlower->SetScale({1.3f,1.3f});
-	ground->SetScale({1.3f,1.3f});
-	field4->SetScale({1.5f,1.5f});
-	field5->SetScale({1.5f,1.5f});
-	field6->SetScale({1.5f,1.5f});
-	field7->SetScale({1.5f,1.5f});
-	field8->SetScale({1.5f,1.5f});
-	field9->SetScale({1.5f,1.5f});
-	field10->SetScale({1.5f,1.5f});
-	field11->SetScale({1.5f,1.5f});
-	sky->SetScale({1.5f,1.5f});
+	frontFlower->SetScale({ 1.3f,1.3f });
+	ground->SetScale({ 1.3f,1.3f });
+	field4->SetScale({ 1.5f,1.5f });
+	field5->SetScale({ 1.5f,1.5f });
+	field6->SetScale({ 1.5f,1.5f });
+	field7->SetScale({ 1.5f,1.5f });
+	field8->SetScale({ 1.5f,1.5f });
+	field9->SetScale({ 1.5f,1.5f });
+	field10->SetScale({ 1.5f,1.5f });
+	field11->SetScale({ 1.5f,1.5f });
+	sky->SetScale({ 1.5f,1.5f });
 
-	frontFence->SetPosition({-viewSize.x,0.f});
-	frontFlower->SetPosition({ viewSize.x,viewSize.y*0.05f });
+	frontFence->SetPosition({ -viewSize.x * 0.45f,0.f });
+	frontFlower->SetPosition({ viewSize.x * 0.4f,viewSize.y * 0.007f });
 	ground->SetPosition({ 0.f,0.f });
 	field4->SetPosition({ 0.f,0.f });
 	field5->SetPosition({ 0.f,0.f });
