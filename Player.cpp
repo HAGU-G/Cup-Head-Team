@@ -70,10 +70,12 @@ void Player::Update(float dt)
 			{
 				isInvincible = true;
 				invincibilityTimer = 0.0f;
+				animator.Play("animations/PlayerDamage.csv");
 				OnDamage();
 			}
 		}
 	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing) 
 	{
 		animator.Play("animations/PlayerDash.csv");
@@ -386,7 +388,6 @@ void Player::Dash(float dt)
 
 void Player::OnDamage()
 {
-	/*데미지 애니메이션 출력*/
 	hp -= 1;
 	std::cout << "On" << std::endl;
 	if (hp == 0)
