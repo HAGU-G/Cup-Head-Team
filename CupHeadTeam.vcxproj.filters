@@ -1,240 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="GameObject\Bullet\BulletCarrotRing.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarrotBoom.cpp" />
+    <ClCompile Include="GameObject\Monster\BossCarrot.cpp" />
+    <ClCompile Include="GameObject\Monster\BossCarnation.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletOnionTear.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectOnionTearsOutro.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectOnionTears.cpp" />
+    <ClCompile Include="GameObject\Monster\BossOnion.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp" />
+    <ClCompile Include="AnimationTool.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="GameObject\Monster\BossPotato.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectPeashot.cpp" />
+    <ClCompile Include="Framework\Animator.cpp" />
+    <ClCompile Include="Framework\Framework.cpp" />
+    <ClCompile Include="Framework\GameObject.cpp" />
+    <ClCompile Include="Framework\InputMgr.cpp" />
+    <ClCompile Include="Framework\Scene.cpp" />
+    <ClCompile Include="Framework\SceneMgr.cpp" />
+    <ClCompile Include="Framework\SoundMgr.cpp" />
+    <ClCompile Include="Framework\SpriteGo.cpp" />
+    <ClCompile Include="Framework\TextGo.cpp" />
+    <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletPeashot.cpp" />
+    <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp" />
+    <ClCompile Include="GameObject\Effect\ObjectEffect.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameObject\Monster\ObjectMonster.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
+    <ClCompile Include="Scene\SceneDev3.cpp" />
+    <ClCompile Include="Scene\SceneDev.cpp" />
+    <ClCompile Include="Scene\SceneDev1.cpp" />
+    <ClCompile Include="Scene\SceneDev2.cpp" />
+    <ClCompile Include="GameObject\Monster\BossRibby.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Framework\Animator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\Framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\GameObject.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\Utils.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\InputMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\SceneMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\SoundMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\SpriteGo.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\TextGo.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Monster\BossPotato.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Effect\EffectPeashot.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\BulletPeashot.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Effect\ObjectEffect.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneDev.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneDev2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneDev1.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationTool.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Monster\ObjectMonster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\BulletPotatoShoot.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\BulletPotatoShootPink.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Monster\BossOnion.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Monster\BossCarnation.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\BulletOnionTear.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Effect\EffectOnionTearsOutro.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Effect\EffectOnionTears.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Monster\BossCarrot.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bullet\BulletCarrotBoom.cpp">
-    <ClCompile Include="Scene\SceneGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneDev3.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Framework\Animator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Defines.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\GameObject.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\InputManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\rapidcsv.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Utils.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\TextGo.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\InputMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\ResourceMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\SceneMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\Singleton.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\SoundMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework\SpriteGo.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Monster\BossPotato.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Effect\EffectPeashot.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\BulletPeashot.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\ObjectBullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Effect\ObjectEffect.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneDev.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneDev2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneDev1.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationTool.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Monster\ObjectMonster.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Monster\BossOnion.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Monster\BossCarnation.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\BulletOnionTear.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Effect\EffectOnionTearsOutro.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Effect\EffectOnionTears.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Monster\BossCarrot.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bullet\BulletCarrotBoom.h">
-    <ClInclude Include="Scene\SceneGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneDev3.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
+    <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarrotBoom.h" />
+    <ClInclude Include="GameObject\Monster\BossCarrot.h" />
+    <ClInclude Include="GameObject\Monster\BossCarnation.h" />
+    <ClInclude Include="GameObject\Bullet\BulletOnionTear.h" />
+    <ClInclude Include="GameObject\Effect\EffectOnionTearsOutro.h" />
+    <ClInclude Include="GameObject\Effect\EffectOnionTears.h" />
+    <ClInclude Include="GameObject\Monster\BossOnion.h" />
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShoot.h" />
+    <ClInclude Include="GameObject\Bullet\BulletPotatoShootPink.h" />
+    <ClInclude Include="AnimationTool.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="GameObject\Monster\BossPotato.h" />
+    <ClInclude Include="GameObject\Effect\EffectPeashot.h" />
+    <ClInclude Include="Framework\Animator.h" />
+    <ClInclude Include="Framework\Defines.h" />
+    <ClInclude Include="Framework\Framework.h" />
+    <ClInclude Include="Framework\GameObject.h" />
+    <ClInclude Include="Framework\InputManager.h" />
+    <ClInclude Include="Framework\InputMgr.h" />
+    <ClInclude Include="Framework\rapidcsv.h" />
+    <ClInclude Include="Framework\ResourceMgr.h" />
+    <ClInclude Include="Framework\Scene.h" />
+    <ClInclude Include="Framework\SceneMgr.h" />
+    <ClInclude Include="Framework\Singleton.h" />
+    <ClInclude Include="Framework\SoundMgr.h" />
+    <ClInclude Include="Framework\SpriteGo.h" />
+    <ClInclude Include="Framework\TextGo.h" />
+    <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObject\Bullet\BulletPeashot.h" />
+    <ClInclude Include="GameObject\Bullet\ObjectBullet.h" />
+    <ClInclude Include="GameObject\Effect\ObjectEffect.h" />
+    <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
+    <ClInclude Include="Scene\SceneDev3.h" />
+    <ClInclude Include="Scene\SceneDev.h" />
+    <ClInclude Include="Scene\SceneDev1.h" />
+    <ClInclude Include="Scene\SceneDev2.h" />
+    <ClInclude Include="GameObject\Monster\BossRibby.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

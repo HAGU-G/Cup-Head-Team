@@ -1,0 +1,28 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyRoll,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyRoll.png,0,0,502,302,7
+resource/RibbyRoll.png,502,0,345,302,7
+resource/RibbyRoll.png,847,0,355,302,7
+resource/RibbyRoll.png,1202,0,402,302,7
+resource/RibbyRoll.png,1604,0,407,302,7
+resource/RibbyRoll.png,2011,0,414,302,7
+resource/RibbyRoll.png,2425,0,410,302,7
+resource/RibbyRoll.png,2835,0,406,302,7
+resource/RibbyRoll.png,3241,0,414,302,7
+resource/RibbyRoll.png,3655,0,410,302,7
+resource/RibbyRoll.png,4065,0,406,302,7
+resource/RibbyRoll.png,4471,0,408,302,7
+resource/RibbyRoll.png,4879,0,401,302,7
+resource/RibbyRoll.png,5280,0,379,302,7
+resource/RibbyRoll.png,5659,0,338,302,7
+resource/RibbyRoll.png,5997,0,301,302,7
+resource/RibbyRoll.png,6298,0,275,302,7
+resource/RibbyRoll.png,6573,0,570,302,7
+resource/RibbyRoll.png,7143,0,617,302,7
+resource/RibbyRoll.png,7760,0,462,302,7
+resource/RibbyRoll.png,8222,0,466,302,7
+resource/RibbyRoll.png,8688,0,556,302,7
+resource/RibbyRoll.png,9244,0,588,302,7
+resource/RibbyRoll.png,9832,0,557,302,7
+resource/RibbyRoll.png,10389,0,467,302,7
