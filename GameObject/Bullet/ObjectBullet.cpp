@@ -14,6 +14,8 @@ ObjectBullet::~ObjectBullet()
 void ObjectBullet::Init()
 {
 	animator.SetTarget(&sprite);
+
+	hasHitBox = true;
 }
 
 void ObjectBullet::Release()
@@ -43,7 +45,14 @@ void ObjectBullet::LateUpdate(float dt)
 {
 	if (moveDistance >= range)
 	{
-		OnDie();
+		if (isAlive)
+		{
+			isAlive = false;
+		}
+		else
+		{
+			OnDie();
+		}
 	}
 }
 

@@ -23,6 +23,7 @@ public:
 	void Reset() override;
 
 	void Update(float dt) override;
+	void LateUpdate(float dt) override;
 
 	void OnCreate() override;
 	void OnDie() override;

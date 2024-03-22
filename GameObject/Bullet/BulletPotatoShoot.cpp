@@ -13,6 +13,12 @@ BulletPotatoShoot* BulletPotatoShoot::Create(const sf::Vector2f& pos, const sf::
 	return bps;
 }
 
+void BulletPotatoShoot::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
+}
+
 void BulletPotatoShoot::Init()
 {
 	ObjectBullet::Init();
@@ -30,5 +36,11 @@ void BulletPotatoShoot::OnCreate()
 
 void BulletPotatoShoot::OnDie()
 {
+	isAlive = false;
 	ObjectBullet::OnDie();
+}
+
+sf::FloatRect BulletPotatoShoot::GetCustomBounds() const
+{
+	return customBounds;
 }

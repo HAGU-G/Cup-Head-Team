@@ -39,7 +39,7 @@ void Player::Reset()
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
 
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
 }
 
 void Player::Update(float dt)
@@ -58,21 +58,6 @@ void Player::Update(float dt)
 		{
 			isInvincible = false;                          //무적 상태 x
 			invincibilityTimer = 0.0f;
-		}
-	}
-
-	auto monsters = sceneDev3->getAllMonsters();
-	for (auto& monster : monsters)
-	{
-		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
-		{
-			if (!isInvincible)
-			{
-				isInvincible = true;
-				invincibilityTimer = 0.0f;
-				animator.Play("animations/PlayerDamage.csv");
-				OnDamage();
-			}
 		}
 	}
 
@@ -401,6 +386,27 @@ void Player::OnDie()
 	/*사망 애니매이션 출력*/
 	isAlive = false;
 	speed = 0;
+}
+
+void Player::LateUpdate(float dt)
+{
+	SpriteGo::LateUpdate(dt);
+
+	auto monsters = sceneDev3->getAllMonsters();
+	for (auto& monster : monsters)
+	{
+		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+		{
+			if (!isInvincible)
+			{
+				isInvincible = true;
+				invincibilityTimer = 0.0f;
+				animator.Play("animations/PlayerDamage.csv");
+				OnDamage();
+			}
+		}
+		if (isJumping)
+	}
 }
 
 

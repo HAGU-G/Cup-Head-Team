@@ -49,7 +49,7 @@ public:
 	void Init() override;
 	void Reset() override;
 	void Update(float dt) override;
-
+	void LateUpdate(float dt) override;
 	void UpdateDirection(float horizontalInput, float dt);
 	void UpdateJumpingDirection(float horizontalInput, float verticalInput);
 

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BossPotato.h"
+#include "SceneDev3.h"
 #include "Bullet/BulletPotatoShoot.h"
 #include "Bullet/BulletPotatoShootPink.h"
 
@@ -28,6 +29,8 @@ void BossPotato::Reset()
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
 	Intro();
+
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
 }
 
 void BossPotato::Update(float dt)
@@ -95,7 +98,8 @@ void BossPotato::Shoot()
 {
 	if (++shootCount < 4)
 	{
-		BulletPotatoShoot::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+		auto bullet = BulletPotatoShoot::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+		dynamic_cast<SceneDev3*>(scene)->AddMonster(bullet);
 	}
 	else
 	{
@@ -111,7 +115,6 @@ void BossPotato::ShootEnd()
 
 void BossPotato::Death()
 {
-	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/potatoDeath.csv");
@@ -127,6 +130,7 @@ void BossPotato::Leave()
 
 void BossPotato::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(this);
 }
 

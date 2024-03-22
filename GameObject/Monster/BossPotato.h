@@ -1,5 +1,8 @@
 #pragma once
 #include "ObjectMonster.h"
+
+class SceneDev3;
+
 class BossPotato : public ObjectMonster
 {
 	enum class State
@@ -21,7 +24,7 @@ protected:
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
 
-
+	SceneDev3* sceneDev3;
 public:
 	BossPotato(const std::string& name = "BossPotato");
 	~BossPotato() override = default;

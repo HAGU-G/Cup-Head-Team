@@ -29,14 +29,21 @@ void BulletPeashot::Init()
 /// /////////////////////////////////////////////////////////////
 void BulletPeashot::Reset()
 {
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());
+	/*sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetCurrentScene());*/
+	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
 }
 
 void BulletPeashot::Update(float dt)
 {
 	ObjectBullet::Update(dt);
+
+
+}
+void BulletPeashot::LateUpdate(float dt)
+{
+	ObjectBullet::LateUpdate(dt);
 	auto monsters = sceneDev3->getAllMonsters();
-	for (auto& monster : monsters) 
+	for (auto& monster : monsters)
 	{
 		if (monster != nullptr)
 		{
@@ -47,7 +54,6 @@ void BulletPeashot::Update(float dt)
 			}
 		}
 	}
-
 }
 /// /////////////////////////////////////////////////////////////
 
