@@ -2,9 +2,12 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
+class SceneDev3;
+
 class Player : public SpriteGo
 {
 protected:
+	SceneDev3* sceneDev3;
 	Animator animator;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
@@ -14,14 +17,18 @@ protected:
 
 	float parryDamage = 100.f;
 
-	float dashSpeed = 1000.0f;  
 	bool isDashing = false;     
+	float dashSpeed = 1000.0f;  
 	float dashDuration = 0.2f; 
 	float dashTimer = 0.f;    
 
 	float fireTimer = 0.f;
 	float fireIntervel = 0.2f;
 
+	float invincibilityDuration = 2.0f;
+	float invincibilityTimer = 0.f;
+	bool isInvincible = false;
+	
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
 

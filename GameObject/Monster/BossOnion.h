@@ -11,6 +11,8 @@ class BossOnion : public ObjectMonster
 	};
 
 protected:
+	sf::FloatRect customBounds;//////////////////////////////////
+
 	State state = State::None;
 	State preState = State::None;
 
@@ -19,7 +21,6 @@ protected:
 	float patternInterval = 2.0f;
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
-
 public:
 	BossOnion(const std::string& name = "BossOnion");
 	~BossOnion() override = default;
@@ -45,5 +46,7 @@ public:
 	void SetState(State state);
 
 	bool CollisionCheck() override;
+
+	sf::FloatRect GetCustomBounds() const override;
 };
 
