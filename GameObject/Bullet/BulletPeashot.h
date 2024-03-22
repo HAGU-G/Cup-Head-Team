@@ -1,12 +1,12 @@
 #pragma once
 #include "ObjectBullet.h"
 
-class SceneDev3;
+class SceneGame;
 
 class BulletPeashot : public ObjectBullet
 {
 protected:
-	SceneDev3* sceneDev3;
+	SceneGame* sceneGame;
 
 public:
 	BulletPeashot(const std::string& name = "BulletPeashot");

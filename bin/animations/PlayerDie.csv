@@ -1,0 +1,27 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerDie,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerDie.png,0,0,140,208,7
+resource/PlayerDie.png,140,0,134,208,7
+resource/PlayerDie.png,274,0,131,208,7
+resource/PlayerDie.png,405,0,128,208,7
+resource/PlayerDie.png,533,0,128,208,7
+resource/PlayerDie.png,661,0,128,208,7
+resource/PlayerDie.png,789,0,134,208,7
+resource/PlayerDie.png,923,0,132,208,7
+resource/PlayerDie.png,1055,0,137,208,7
+resource/PlayerDie.png,1192,0,132,208,7
+resource/PlayerDie.png,1324,0,130,208,7
+resource/PlayerDie.png,1454,0,130,208,7
+resource/PlayerDie.png,1584,0,128,208,7
+resource/PlayerDie.png,1712,0,128,208,7
+resource/PlayerDie.png,1840,0,122,208,7
+resource/PlayerDie.png,1962,0,124,208,7
+resource/PlayerDie.png,2086,0,124,208,7
+resource/PlayerDie.png,2210,0,130,208,7
+resource/PlayerDie.png,2340,0,139,208,7
+resource/PlayerDie.png,2479,0,140,208,7
+resource/PlayerDie.png,2619,0,142,208,7
+resource/PlayerDie.png,2761,0,141,208,7
+resource/PlayerDie.png,2902,0,140,208,7
+resource/PlayerDie.png,3042,0,141,208,7

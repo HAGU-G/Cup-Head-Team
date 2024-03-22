@@ -2,12 +2,12 @@
 #include "SpriteGo.h"
 #include "Animator.h"
 
-class SceneDev3;
+class SceneGame;
 
 class Player : public SpriteGo
 {
 protected:
-	SceneDev3* sceneDev3;
+	SceneGame* sceneGame;
 	Animator animator;
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;

@@ -36,7 +36,6 @@ void BulletPotatoShoot::OnCreate()
 
 void BulletPotatoShoot::OnDie()
 {
-	isAlive = false;
 	ObjectBullet::OnDie();
 }
 

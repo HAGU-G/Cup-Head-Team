@@ -1,14 +1,7 @@
 #include "pch.h"
 #include "Player.h"
-#include "SceneDev2.h"
-#include "SceneDev3.h"
+#include "SceneGame.h"
 #include "Bullet/BulletPeashot.h"
-
-// 해야하는 일 
-// 플레이어 키 입력별 텍스쳐 변환 (완료)
-// z(점프) 상태에서 특정 텍스쳐와 겹치면 한번더 z(점프) 가능 (미완 : 현재 무한 점프 가능)
-// c키 : 이동 x, 조준 가능  (완료)
-// 공격 약간의 랜덤 추가 (완료)
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -23,10 +16,6 @@ void Player::Init()
 {
 	SpriteGo::Init(); 
 
-	/*SetTexture("resource/cuphead_idle_0001.png");
-	SetOrigin(Origins::BC);
-	SetPosition({0,0});*/
-
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
 
@@ -39,7 +28,7 @@ void Player::Reset()
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
 
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 }
 
 void Player::Update(float dt)
@@ -386,7 +375,7 @@ void Player::OnDamage()
 
 void Player::OnDie()
 {
-	/*사망 애니매이션 출력*/
+	animator.Play("animations/PlayerDie.csv");
 	speed = 0;
 }
 
@@ -394,7 +383,7 @@ void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
 
-	auto monsters = sceneDev3->getAllMonsters();
+	auto monsters = sceneGame->getAllMonsters();
 	for (auto& monster : monsters)
 	{
 		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
