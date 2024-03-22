@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerRun,10,1,,
+PlayerRun,15,1,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerRun.png,0,0,135,169,7
 resource/PlayerRun.png,135,0,122,169,7
@@ -17,5 +17,3 @@ resource/PlayerRun.png,1417,0,120,169,7
 resource/PlayerRun.png,1537,0,118,169,7
 resource/PlayerRun.png,1655,0,128,169,7
 resource/PlayerRun.png,1783,0,137,169,7
-resource/PlayerRun.png,1920,0,132,169,7
-resource/PlayerRun.png,2052,0,125,169,7

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BossOnion.h"
+#include "SceneGame.h"
 #include "Effect/EffectOnionTears.h"
 #include "Bullet/BulletOnionTear.h"
 

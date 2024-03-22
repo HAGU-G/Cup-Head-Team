@@ -4,6 +4,7 @@
 #include "Monster/BossOnion.h"
 #include "Monster/BossCarrot.h"
 #include "Player.h"
+#include "SceneGame.h"
 
 Stage01::Stage01(const std::string& name)
 	:GameObject(name)
@@ -36,35 +37,7 @@ void Stage01::Init()
 	RES_MGR_TEXTURE.Load("resource/carrotBoomDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotRingIntro.png");
 
-
-	frontFence.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0001.png"));
-	frontFlower.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0002.png"));
-	ground.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0003.png"));
-	field4.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0004.png"));
-	field5.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0005.png"));
-	field6.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0006.png"));
-	field7.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0007.png"));
-	field8.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0008.png"));
-	field9.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0009.png"));
-	field10.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0010.png"));
-	field11.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0011.png"));
-	sky.setTexture(RES_MGR_TEXTURE.Get("resource/Sprite/stage01/veggie_bg_0012.png"));
-
-	Utils::SetOrigin(frontFence, Origins::BC);
-	Utils::SetOrigin(frontFlower, Origins::BC);
-	Utils::SetOrigin(ground, Origins::BC);
-	Utils::SetOrigin(field4, Origins::BC);
-	Utils::SetOrigin(field5, Origins::BC);
-	Utils::SetOrigin(field6, Origins::BC);
-	Utils::SetOrigin(field7, Origins::BC);
-	Utils::SetOrigin(field8, Origins::BC);
-	Utils::SetOrigin(field9, Origins::BC);
-	Utils::SetOrigin(field10, Origins::BC);
-	Utils::SetOrigin(field11, Origins::BC);
-	Utils::SetOrigin(sky, Origins::BC);
-
-
-
+	SetBackground();
 
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);
@@ -75,32 +48,62 @@ void Stage01::Init()
 void Stage01::Update(float dt)
 {
 	GameObject::Update(dt);
+
+	if (swapping)
+	{
+		if (swapTimer >= swapTime)
+		{
+			swapping = false;
+			swapTimer = 0.f;
+
+			switch (phase)
+			{
+			case 2:
+				onion->SetActive(true);
+				sceneGame->AddMonster(onion);
+				break;
+			case 3:
+				carrot->SetActive(true);
+				sceneGame->AddMonster(carrot);
+				break;
+			default:
+				break;
+			}
+
+		}
+		{
+			swapTimer += dt;
+			return;
+		}
+	}
+
 	switch (phase)
 	{
 	case 0:
 		phase = 1;
+		potato->SetActive(true);
+		sceneGame->AddMonster(potato);
 		break;
 	case 1:
-		potato->Update(dt);
 		if (potato->GetHp() <= 0)
 		{
 			phase = 2;
+			swapping = true;
 		}
 		potatoHp = potato->GetHp();
 		break;
 	case 2:
-		onion->Update(dt);
 		if (onion->GetHp() <= 0)
 		{
 			phase = 3;
+			swapping = true;
 		}
 		onionHp = onion->GetHp();
 		break;
 	case 3:
-		carrot->Update(dt);
 		if (carrot->GetHp() <= 0)
 		{
-
+			sceneGame->Victory();
 		}
 		carrotHp = carrot->GetHp();
 		break;
@@ -121,13 +124,14 @@ void Stage01::LateUpdate(float dt)
 		float viewX = viewSize.x * 0.1f * (playerPos.x + playerPosCorrection.x) / (viewSize.x * 1.1f * 0.5f);
 		scene->GetWorldView().setCenter(viewX, scene->GetWorldView().getCenter().y);
 	}
+
 }
 
 void Stage01::Reset()
 {
 	bgm.stop();
-	scene = SCENE_MGR.GetCurrentScene();
-
+	scene = SCENE_MGR.GetScene(SceneIds::SceneGame);
+	sceneGame = dynamic_cast<SceneGame*>(scene);
 	if (player)
 	{
 		player->Release();
@@ -159,7 +163,18 @@ void Stage01::Reset()
 	onion = new BossOnion();
 	carrot = new BossCarrot();
 
+	potato->sortLayer = 0;
+	onion->sortLayer = 0;
+	player->sortLayer = 0;
+	carrot->sortLayer = -3;
+
 	scene->AddGo(player);
+	scene->AddGo(potato);
+	scene->AddGo(onion);
+	scene->AddGo(carrot);
+	potato->SetActive(false);
+	onion->SetActive(false);
+	carrot->SetActive(false);
 
 	player->Init();
 	potato->Init();
@@ -180,6 +195,20 @@ void Stage01::Reset()
 	totalMaxHp = potatoHp + onionHp + carrotHp;
 
 	bgm.play();
+
+
+	scene->AddGo(frontFence);
+	scene->AddGo(frontFlower);
+	scene->AddGo(ground);
+	scene->AddGo(field4);
+	scene->AddGo(field5);
+	scene->AddGo(field6);
+	scene->AddGo(field7);
+	scene->AddGo(field8);
+	scene->AddGo(field9);
+	scene->AddGo(field10);
+	scene->AddGo(field11);
+	scene->AddGo(sky);
 }
 
 void Stage01::Release()
@@ -190,39 +219,87 @@ void Stage01::Release()
 
 void Stage01::Draw(sf::RenderTexture& window)
 {
-
-	sf::View& view = scene->GetWorldView();
-	sf::View preView = window.getView();
-
-	window.setView(view);
-	window.draw(sky);
-	window.draw(field11);
-	window.draw(field10);
-	window.draw(field9);
-	window.draw(field8);
-	window.draw(field7);
-	window.draw(field6);
-	window.draw(field5);
-	if(phase == 3)
-	{
-		carrot->Draw(window);
-	}
-	
-	window.draw(field4);
-	window.draw(ground);
-	if (phase == 1)
-	{
-		potato->Draw(window);
-	}
-	else if (phase == 2)
-	{
-		onion->Draw(window);
-	}
-
-
-	window.draw(frontFlower);
-	window.draw(frontFence);
-	window.setView(preView);
-
 	GameObject::Draw(window);
+}
+
+void Stage01::SetBackground()
+{
+	frontFence = new SpriteGo();
+	frontFlower = new SpriteGo();
+	ground = new SpriteGo();
+	field4 = new SpriteGo();
+	field5 = new SpriteGo();
+	field6 = new SpriteGo();
+	field7 = new SpriteGo();
+	field8 = new SpriteGo();
+	field9 = new SpriteGo();
+	field10 = new SpriteGo();
+	field11 = new SpriteGo();
+	sky = new SpriteGo();
+
+	frontFence->SetTexture("resource/Sprite/stage01/veggie_bg_0001.png");
+	frontFlower->SetTexture("resource/Sprite/stage01/veggie_bg_0002.png");
+	ground->SetTexture("resource/Sprite/stage01/veggie_bg_0003.png");
+	field4->SetTexture("resource/Sprite/stage01/veggie_bg_0004.png");
+	field5->SetTexture("resource/Sprite/stage01/veggie_bg_0005.png");
+	field6->SetTexture("resource/Sprite/stage01/veggie_bg_0006.png");
+	field7->SetTexture("resource/Sprite/stage01/veggie_bg_0007.png");
+	field8->SetTexture("resource/Sprite/stage01/veggie_bg_0008.png");
+	field9->SetTexture("resource/Sprite/stage01/veggie_bg_0009.png");
+	field10->SetTexture("resource/Sprite/stage01/veggie_bg_0010.png");
+	field11->SetTexture("resource/Sprite/stage01/veggie_bg_0011.png");
+	sky->SetTexture("resource/Sprite/stage01/veggie_bg_0012.png");
+
+	frontFence->SetOrigin(Origins::MC);
+	frontFlower->SetOrigin(Origins::MC);
+	ground->SetOrigin(Origins::MC);
+	field4->SetOrigin(Origins::MC);
+	field5->SetOrigin(Origins::MC);
+	field6->SetOrigin(Origins::MC);
+	field7->SetOrigin(Origins::MC);
+	field8->SetOrigin(Origins::MC);
+	field9->SetOrigin(Origins::MC);
+	field10->SetOrigin(Origins::MC);
+	field11->SetOrigin(Origins::MC);
+	sky->SetOrigin(Origins::MC);
+
+	frontFence->SetScale({ 1.3f,1.3f });
+	frontFlower->SetScale({1.3f,1.3f});
+	ground->SetScale({1.3f,1.3f});
+	field4->SetScale({1.5f,1.5f});
+	field5->SetScale({1.5f,1.5f});
+	field6->SetScale({1.5f,1.5f});
+	field7->SetScale({1.5f,1.5f});
+	field8->SetScale({1.5f,1.5f});
+	field9->SetScale({1.5f,1.5f});
+	field10->SetScale({1.5f,1.5f});
+	field11->SetScale({1.5f,1.5f});
+	sky->SetScale({1.5f,1.5f});
+
+	frontFence->SetPosition({-viewSize.x,0.f});
+	frontFlower->SetPosition({ viewSize.x,viewSize.y*0.05f });
+	ground->SetPosition({ 0.f,0.f });
+	field4->SetPosition({ 0.f,0.f });
+	field5->SetPosition({ 0.f,0.f });
+	field6->SetPosition({ 0.f,0.f });
+	field7->SetPosition({ 0.f,0.f });
+	field8->SetPosition({ 0.f,0.f });
+	field9->SetPosition({ 0.f,0.f });
+	field10->SetPosition({ 0.f,0.f });
+	field11->SetPosition({ 0.f,0.f });
+	sky->SetPosition({ 0.f,0.f });
+
+	frontFence->sortLayer = 1;
+	frontFlower->sortLayer = 1;
+	ground->sortLayer = -1;
+	field4->sortLayer = -2;
+	field5->sortLayer = -4;
+	field6->sortLayer = -5;
+	field7->sortLayer = -6;
+	field8->sortLayer = -7;
+	field9->sortLayer = -8;
+	field10->sortLayer = -9;
+	field11->sortLayer = -10;
+	sky->sortLayer = -11;
+
 }

@@ -15,6 +15,8 @@ protected:
 	sf::Shader shaderHit;
 
 	ObjectMonster(const std::string& name = "Monster");			//상속받아서 새 클래스 만들어주세요.
+	bool isPink = false;
+
 public:
 	~ObjectMonster() override = default;
 	ObjectMonster(const ObjectMonster&) = delete;
@@ -33,5 +35,7 @@ public:
 
 	virtual sf::FloatRect GetCustomBounds() const = 0;
 	bool IsAlive() const { return isAlive; }/////////////////   추가된 부분 입니다.
+	bool GetPink() { return isPink; }
+
 };
 

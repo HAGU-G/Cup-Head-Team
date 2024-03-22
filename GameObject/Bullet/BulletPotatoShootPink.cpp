@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletPotatoShootPink.h"
+#include "SceneGame.h"
 
 BulletPotatoShootPink::BulletPotatoShootPink(const std::string& name)
 	:ObjectBullet(name)
@@ -10,7 +11,14 @@ BulletPotatoShootPink* BulletPotatoShootPink::Create(const sf::Vector2f& pos, co
 {
 	BulletPotatoShootPink* bps = new BulletPotatoShootPink();
 	bps->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
 	return bps;
+}
+
+void BulletPotatoShootPink::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
 }
 
 void BulletPotatoShootPink::Init()
@@ -21,7 +29,7 @@ void BulletPotatoShootPink::Init()
 	SetSpeed(600.f);
 	SetRange(1200.f);
 	type = Type::Straight;
-	ObjectBullet::Init();
+	isPink = true;
 }
 
 void BulletPotatoShootPink::OnCreate()
@@ -31,4 +39,9 @@ void BulletPotatoShootPink::OnCreate()
 void BulletPotatoShootPink::OnDie()
 {
 	ObjectBullet::OnDie();
+}
+
+sf::FloatRect BulletPotatoShootPink::GetCustomBounds() const
+{
+	return customBounds;
 }

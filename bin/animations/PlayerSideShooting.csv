@@ -1,8 +1,6 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
 PlayerSideShooting,15,1,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
-resource/PlayerSideShooting.png,0,0,142,171,7
-resource/PlayerSideShooting.png,142,0,143,171,7
 resource/PlayerSideShooting.png,285,0,142,171,7
 resource/PlayerSideShooting.png,427,0,137,171,7
 resource/PlayerSideShooting.png,564,0,133,171,7

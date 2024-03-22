@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BulletPeashot.h"
 #include "Effect/EffectPeashot.h"
-#include "SceneDev3.h"                                                  /////////////////////////////////////
+#include "SceneGame.h"                                                  /////////////////////////////////////
 
 BulletPeashot::BulletPeashot(const std::string& name)
 	:ObjectBullet(name)
@@ -26,17 +26,23 @@ void BulletPeashot::Init()
 	type = Type::Straight;
 	ObjectBullet::Init();
 }
-/// /////////////////////////////////////////////////////////////
+
 void BulletPeashot::Reset()
 {
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 }
 
 void BulletPeashot::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	auto monsters = sceneDev3->getAllMonsters();
-	for (auto& monster : monsters) 
+
+
+}
+void BulletPeashot::LateUpdate(float dt)
+{
+	ObjectBullet::LateUpdate(dt);
+	auto monsters = sceneGame->getAllMonsters();
+	for (auto& monster : monsters)
 	{
 		if (monster != nullptr)
 		{
@@ -47,9 +53,8 @@ void BulletPeashot::Update(float dt)
 			}
 		}
 	}
-
 }
-/// /////////////////////////////////////////////////////////////
+
 
 void BulletPeashot::OnCreate()
 {

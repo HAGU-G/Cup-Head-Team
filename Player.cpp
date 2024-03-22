@@ -1,14 +1,7 @@
 #include "pch.h"
 #include "Player.h"
-#include "SceneDev2.h"
-#include "SceneDev3.h"
+#include "SceneGame.h"
 #include "Bullet/BulletPeashot.h"
-
-// 해야하는 일 
-// 플레이어 키 입력별 텍스쳐 변환 (완료)
-// z(점프) 상태에서 특정 텍스쳐와 겹치면 한번더 z(점프) 가능 (미완 : 현재 무한 점프 가능)
-// c키 : 이동 x, 조준 가능  (완료)
-// 공격 약간의 랜덤 추가 (완료)
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -23,10 +16,6 @@ void Player::Init()
 {
 	SpriteGo::Init(); 
 
-	/*SetTexture("resource/cuphead_idle_0001.png");
-	SetOrigin(Origins::BC);
-	SetPosition({0,0});*/
-
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
 
@@ -39,7 +28,7 @@ void Player::Reset()
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
 
-	sceneDev3 = dynamic_cast<SceneDev3*>(SCENE_MGR.GetScene(SceneIds::SceneDev3));
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 }
 
 void Player::Update(float dt)
@@ -47,32 +36,23 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
+	if (state == PlayerState::Dead)
+	{
+		return;
+	}
+
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 
-	if (isInvincible)                                      //무적 상태 o 
+	if (isInvincible)                                      //무적 상태 o
 	{
 		invincibilityTimer += dt;
 		if (invincibilityTimer >= invincibilityDuration) 
 		{
+			isDamaging = false;
 			isInvincible = false;                          //무적 상태 x
 			invincibilityTimer = 0.0f;
-		}
-	}
-
-	auto monsters = sceneDev3->getAllMonsters();
-	for (auto& monster : monsters)
-	{
-		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
-		{
-			if (!isInvincible)
-			{
-				isInvincible = true;
-				invincibilityTimer = 0.0f;
-				animator.Play("animations/PlayerDamage.csv");
-				OnDamage();
-			}
 		}
 	}
 
@@ -95,7 +75,7 @@ void Player::Update(float dt)
 		if (isGrounded)
 		{
 			isGrounded = false;
-			velocity.y = -500.f;
+			velocity.y = -700.f;
 		}
 	}
 
@@ -124,6 +104,7 @@ void Player::Update(float dt)
 		{
 			isGrounded = true;
 			isJumping = false;
+			isParry = false;
 			position.y = 0.f;
 			velocity.y = 0.f;
 		}
@@ -163,7 +144,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 
 	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
 
-	if (isCKeyPressed)
+	if (isCKeyPressed && !isDamaging)
 	{
 		if (horizontalInput > 0.f)
 		{
@@ -237,7 +218,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			currentDirection = Direction::Up;
 		}
 	}
-	else
+	else if (!isCKeyPressed && !isDamaging)
 	{
 		// C 키x, 방향은 변경o, 
 		if (InputMgr::GetKey(sf::Keyboard::X) && horizontalInput == 0)
@@ -388,6 +369,7 @@ void Player::Dash(float dt)
 
 void Player::OnDamage()
 {
+	
 	hp -= 1;
 	std::cout << "On" << std::endl;
 	if (hp == 0)
@@ -398,9 +380,46 @@ void Player::OnDamage()
 
 void Player::OnDie()
 {
-	/*사망 애니매이션 출력*/
-	isAlive = false;
-	speed = 0;
+	animator.Play("animations/PlayerDie.csv");
+	state = PlayerState::Dead;
+}
+
+void Player::LateUpdate(float dt)
+{
+	SpriteGo::LateUpdate(dt);
+
+	auto monsters = sceneGame->getAllMonsters();
+	for (auto& monster : monsters)
+	{
+		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+		{
+			if (isJumping && monster->GetPink()/* && InputMgr::GetKeyDown(sf::Keyboard::Z)*/)
+			{
+				//패링
+				if (!isParry)
+				{
+					animator.Play("animations/PlayerParry.csv");
+					animator.PlayQueue("animations/PlayerJump.csv");
+					isParry = true;
+					isGrounded = false;
+					velocity.y = -500.f;
+					std::cout << "Parry" << std::endl;
+				}
+			}
+			else if (!isInvincible)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+				{
+					animator.Play("animations/PlayerDamage.csv");
+				}
+				isDamaging = true;
+				isInvincible = true;
+				invincibilityTimer = 0.0f;
+				OnDamage();
+			}
+			
+		}
+	}
 }
 
 

@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerDamage,10,2,,
+PlayerDamage,15,2,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerDamage.png,0,0,117,221,7
 resource/PlayerDamage.png,117,0,125,221,7

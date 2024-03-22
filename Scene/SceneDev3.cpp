@@ -18,20 +18,20 @@ void SceneDev3::Init()
 {
 	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
 	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(windowSize);
-	worldView.setCenter({ 0,-300 });
-	uiView.setSize(windowSize);
+	worldView.setSize(1280.f/1.1f,720.f/1.1f);
+	worldView.setCenter({ 0,-250 });
+	uiView.setSize(1280.f / 1.1f, 720.f / 1.1f);
 	uiView.setCenter(centerPos);
 
-	auto bossOnion = new BossOnion("Boss");
+	/*auto bossOnion = new BossOnion("Boss");
 	bossOnion->SetPosition({ -300.f, 0.f });
 	AddGo(bossOnion);
-	BossList.push_back(bossOnion);
+	AddMonster(bossOnion);*/
 
 	auto bossPotato = new BossPotato("Boss");
 	bossPotato->SetPosition({ 300.f, 0.f });
 	AddGo(bossPotato);
-	BossList.push_back(bossPotato);
+	AddMonster(bossPotato);
 
 	AddGo(new Player());
 
@@ -58,13 +58,16 @@ void SceneDev3::Update(float dt)
 {
 	Scene::Update(dt);
 	BossList.erase(std::remove_if(BossList.begin(), BossList.end(),[](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
-
-
 }
 
 void SceneDev3::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
+}
+
+void SceneDev3::AddMonster(ObjectMonster* monster)
+{
+	BossList.push_back(monster);
 }
 
 std::vector<ObjectMonster*> SceneDev3::getAllMonsters() const

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BossPotato.h"
+#include "SceneGame.h"
 #include "Bullet/BulletPotatoShoot.h"
 #include "Bullet/BulletPotatoShootPink.h"
 
@@ -24,6 +25,8 @@ void BossPotato::Reset()
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
 	Intro();
+
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 }
 
 void BossPotato::Update(float dt)
@@ -96,7 +99,6 @@ void BossPotato::Shoot()
 	else
 	{
 		BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
-
 	}
 }
 

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletPotatoShoot.h"
+#include "SceneGame.h"
 
 BulletPotatoShoot::BulletPotatoShoot(const std::string& name)
 	:ObjectBullet(name)
@@ -10,7 +11,14 @@ BulletPotatoShoot* BulletPotatoShoot::Create(const sf::Vector2f& pos, const sf::
 {
 	BulletPotatoShoot* bps = new BulletPotatoShoot();
 	bps->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
 	return bps;
+}
+
+void BulletPotatoShoot::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
 }
 
 void BulletPotatoShoot::Init()
@@ -31,4 +39,9 @@ void BulletPotatoShoot::OnCreate()
 void BulletPotatoShoot::OnDie()
 {
 	ObjectBullet::OnDie();
+}
+
+sf::FloatRect BulletPotatoShoot::GetCustomBounds() const
+{
+	return customBounds;
 }

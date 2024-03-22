@@ -1,20 +1,28 @@
 #pragma once
 #include "GameObject.h"
 
+
+class ObjectMonster;
 class BossPotato;
 class BossOnion;
 class BossCarrot;
 class Player;
+class SpriteGo;
+class SceneGame;
 
 class Stage01 : public GameObject
 {
 protected:
+
 	sf::Music bgm;
+	SceneGame* sceneGame;
 
 	BossPotato* potato = nullptr;
 	BossOnion* onion = nullptr;
 	BossCarrot* carrot = nullptr;
+
 	Player* player = nullptr;
+
 	int phase = 0;
 
 	int totalMaxHp = 0;
@@ -22,22 +30,26 @@ protected:
 	int onionHp = 0;
 	int carrotHp = 0;
 
-	sf::Sprite frontFence;
-	sf::Sprite frontFlower;
-	sf::Sprite ground;
-	sf::Sprite field4;
-	sf::Sprite field5;
-	sf::Sprite field6;
-	sf::Sprite field7;
-	sf::Sprite field8;
-	sf::Sprite field9;
-	sf::Sprite field10;
-	sf::Sprite field11;
-	sf::Sprite sky;
+	SpriteGo* frontFence;
+	SpriteGo* frontFlower;
+	SpriteGo* ground;
+	SpriteGo* field4;
+	SpriteGo* field5;
+	SpriteGo* field6;
+	SpriteGo* field7;
+	SpriteGo* field8;
+	SpriteGo* field9;
+	SpriteGo* field10;
+	SpriteGo* field11;
+	SpriteGo* sky;
 
 	sf::Vector2f playerPos;
 	sf::Vector2f playerPosCorrection;
 	sf::Vector2f viewSize;
+
+	bool swapping = false;
+	float swapTimer = 0.f;
+	float swapTime = 10.f;
 
 public:
 	Stage01(const std::string& name = "Stage01");
@@ -53,5 +65,7 @@ public:
 	void Reset() override;
 	void Release() override;
 	void Draw(sf::RenderTexture& window) override;
+
+	void SetBackground();
 };
 

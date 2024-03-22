@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerAxeParry,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerAxeParry.png,0,0,112,168,7
+resource/PlayerAxeParry.png,112,0,116,168,7
+resource/PlayerAxeParry.png,228,0,150,168,7
+resource/PlayerAxeParry.png,378,0,132,168,7
+resource/PlayerAxeParry.png,510,0,110,168,7
+resource/PlayerAxeParry.png,620,0,109,168,7
+resource/PlayerAxeParry.png,729,0,128,168,7
+resource/PlayerAxeParry.png,857,0,133,168,7

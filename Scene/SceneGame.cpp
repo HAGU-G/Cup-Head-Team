@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "SceneGame.h"
 #include "Player.h"
-#include "Monster/BossPotato.h"
-#include "Monster/BossOnion.h"
+#include "Stage/Stage01.h"
 
 SceneGame::SceneGame(SceneIds id)
 	:Scene(id)
@@ -15,19 +14,12 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
-	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
-	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(windowSize);
-	worldView.setCenter({ 0,-300 });
-	uiView.setSize(windowSize);
-	uiView.setCenter(centerPos);
+	worldView.setSize(FRAMEWORK.GetStageViewSize());
+	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
+	
+	AddGo(new Stage01());
 
-	auto bossPotato = new BossPotato();
-	bossPotato->SetPosition({ 300.f, 0.f });
-	AddGo(bossPotato);
-	BossList.push_back(bossPotato);
-
-	AddGo(new Player());
+	Scene::Init();
 }
 
 void SceneGame::Release()
@@ -48,7 +40,7 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
-	BossList.erase(std::remove_if(BossList.begin(), BossList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
+	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
 }
 
 void SceneGame::Draw(sf::RenderTexture& window)
@@ -56,7 +48,16 @@ void SceneGame::Draw(sf::RenderTexture& window)
 	Scene::Draw(window);
 }
 
+void SceneGame::AddMonster(ObjectMonster* monster)
+{
+	MonsterList.push_back(monster);
+}
+
 std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
 {
-	return BossList;
+	return MonsterList;
+}
+
+void SceneGame::Victory()
+{
 }
