@@ -11,7 +11,6 @@ class BossOnion : public ObjectMonster
 	};
 
 protected:
-	sf::FloatRect customBounds;//////////////////////////////////
 
 	State state = State::None;
 	State preState = State::None;

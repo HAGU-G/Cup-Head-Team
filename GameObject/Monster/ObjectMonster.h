@@ -9,7 +9,8 @@ protected:
 	float hitEffectTimer = 0.f;
 	float hitEffectDuration = 0.1f;
 
-	bool isAlive = true; /////////////////////////추가된 부분 입니다.
+	bool isAlive = true;
+	sf::FloatRect customBounds;
 
 	sf::Shader shaderHit;
 

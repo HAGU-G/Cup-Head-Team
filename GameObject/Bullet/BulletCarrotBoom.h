@@ -3,7 +3,6 @@
 class BulletCarrotBoom : public ObjectBullet
 {
 protected:
-	sf::FloatRect customBounds;
 
 public:
 	BulletCarrotBoom(const std::string& name = "BulletCarrotBoom");
