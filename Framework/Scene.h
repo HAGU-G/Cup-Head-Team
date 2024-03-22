@@ -58,6 +58,8 @@ public:
 	virtual void RemoveGo(GameObject* obj);
 	virtual void ResortGo(GameObject* obj);
 
+	SceneIds GetId() const { return id; }
+
 	Scene(const Scene&) = delete;
 	Scene(Scene&&) = delete;
 	Scene& operator=(const Scene&) = delete;
