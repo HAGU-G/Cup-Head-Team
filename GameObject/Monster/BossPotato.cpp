@@ -13,11 +13,7 @@ void BossPotato::Init()
 	ObjectMonster::Init();
 	sprite.setScale(1.2f, 1.2f);
 
-	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
-	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");
-	RES_MGR_TEXTURE.Load("resource/potatoIntro.png");
-	RES_MGR_TEXTURE.Load("resource/potatoLeave.png");
-	RES_MGR_TEXTURE.Load("resource/potatoShoot.png");
+
 
 	hasHitBox = true;
 }
