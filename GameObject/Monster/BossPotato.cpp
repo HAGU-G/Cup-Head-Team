@@ -181,11 +181,6 @@ void BossPotato::SetState(State state)
 	}
 }
 
-bool BossPotato::CollisionCheck()
-{
-	return true;
-}
-
 sf::FloatRect BossPotato::GetCustomBounds() const
 {
 	return customBounds;

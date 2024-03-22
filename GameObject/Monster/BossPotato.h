@@ -11,7 +11,6 @@ class BossPotato : public ObjectMonster
 	};
 
 protected:
-	sf::FloatRect customBounds;//////////////////////////////////추가된 부분 입니다.
 
 	State state = State::None;
 	State preState = State::None;
@@ -46,8 +45,6 @@ public:
 
 	bool PatternTimer(float dt);
 	void SetState(State state);
-
-	bool CollisionCheck() override;
 
 	sf::FloatRect GetCustomBounds() const override;//////////   추가된 부분 입니다.
 };

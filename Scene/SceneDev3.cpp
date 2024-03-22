@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Monster/BossPotato.h"
 #include "Monster/BossOnion.h"
+#include "Bullet/BulletCarrotBoom.h"
 
 SceneDev3::SceneDev3(SceneIds id)
 	:Scene(id)
@@ -57,6 +58,7 @@ void SceneDev3::Update(float dt)
 {
 	Scene::Update(dt);
 	BossList.erase(std::remove_if(BossList.begin(), BossList.end(),[](ObjectMonster* monster) { return !monster->IsAlive(); }), BossList.end());
+
 
 }
 

@@ -2,7 +2,7 @@
 #include "ObjectBullet.h"
 
 ObjectBullet::ObjectBullet(const std::string& name)
-	:SpriteGo(name)
+	:ObjectMonster(name)
 {
 }
 
@@ -23,13 +23,13 @@ void ObjectBullet::Release()
 
 void ObjectBullet::Reset()
 {
-	SpriteGo::Reset();
+	ObjectMonster::Reset();
 
 }
 
 void ObjectBullet::Update(float dt)
 {
-	SpriteGo::Update(dt);
+	ObjectMonster::Update(dt);
 	Translate(direction * speed * dt);
 	if (type == Type::Homing)
 	{
@@ -49,7 +49,7 @@ void ObjectBullet::LateUpdate(float dt)
 
 void ObjectBullet::Draw(sf::RenderTexture& window)
 {
-	SpriteGo::Draw(window);
+	ObjectMonster::Draw(window);
 }
 
 void ObjectBullet::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)
@@ -103,9 +103,14 @@ void ObjectBullet::OnDie()
 	scene->RemoveGo(this);
 }
 
+sf::FloatRect ObjectBullet::GetCustomBounds() const
+{
+	return sf::FloatRect();
+}
+
 void ObjectBullet::SetPosition(const sf::Vector2f& position)
 {
-	SpriteGo::SetPosition(position);
+	ObjectMonster::SetPosition(position);
 	bound.setPosition(position);
 
 	moveDistance += Utils::Distance(prePosition, position);

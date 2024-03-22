@@ -9,7 +9,8 @@ protected:
 	float hitEffectTimer = 0.f;
 	float hitEffectDuration = 0.1f;
 
-	bool isAlive = true; /////////////////////////추가된 부분 입니다.
+	bool isAlive = true;
+	sf::FloatRect customBounds;
 
 	sf::Shader shaderHit;
 
@@ -26,7 +27,6 @@ public:
 	void Reset() override;
 
 	virtual bool OnDamage(int damage);
-	virtual bool CollisionCheck() = 0;
 
 	inline int GetHp() const { return hp; }
 	inline int GetMaxHp() const { return hp; }
