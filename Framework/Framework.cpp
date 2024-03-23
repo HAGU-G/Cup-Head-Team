@@ -117,6 +117,7 @@ void Framework::LoadPostEffect()
 	preDraw.setSmooth(true);
 	shader.setUniform("texture", sf::Shader::CurrentTexture);
 	shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
+	//
 
 	for (int i = 0; i <= 126; i++)
 	{
