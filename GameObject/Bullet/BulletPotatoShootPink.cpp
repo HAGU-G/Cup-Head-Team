@@ -23,6 +23,7 @@ void BulletPotatoShootPink::Update(float dt)
 
 void BulletPotatoShootPink::Init()
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Init();
 	animator.SetTarget(&sprite);
 	animator.Play("animations/potatoShootPink.csv");

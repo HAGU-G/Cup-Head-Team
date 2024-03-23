@@ -18,6 +18,7 @@ BulletOnionTear* BulletOnionTear::Create(const sf::Vector2f& pos, const sf::Vect
 
 void BulletOnionTear::Init()
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Init();
 	if (isPink)
 	{

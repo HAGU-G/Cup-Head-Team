@@ -11,17 +11,18 @@ BulletCarrotRing* BulletCarrotRing::Create(const sf::Vector2f& pos, const sf::Ve
 {
 	BulletCarrotRing* bcr = new BulletCarrotRing();
 	bcr->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
 	return bcr;
 }
 
 void BulletCarrotRing::Init()
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Init();
 	animator.Play("animations/carrotRing.csv");
 	SetSpeed(650.f);
 	SetRange(1000.f);
 	type = Type::Straight;
-	ObjectBullet::Init();
 }
 
 void BulletCarrotRing::OnDie()

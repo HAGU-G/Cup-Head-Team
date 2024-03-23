@@ -37,11 +37,13 @@ void Stage01::Init()
 	RES_MGR_TEXTURE.Load("resource/carrotBoomDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotRingIntro.png");
 
-
 	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
 	bgm.setLoop(true);
 	viewSize = FRAMEWORK.GetStageViewSize();
-	playerPosCorrection = sf::Vector2f(viewSize.x * 0.5f * 0.75f, 0.f);
+	playerPosCorrection = sf::Vector2f(viewSize.x * 0.5f * 0.545f, 0.f);
+
+	scene = SCENE_MGR.GetScene(SceneIds::SceneGame);
+	sceneGame = dynamic_cast<SceneGame*>(scene);
 
 	SetBackground();
 }
@@ -49,7 +51,7 @@ void Stage01::Init()
 void Stage01::Update(float dt)
 {
 	GameObject::Update(dt);
-
+	std::cout << playerPos.x << std::endl;
 	if (swapping)
 	{
 		if (swapTimer >= swapTime)
@@ -120,19 +122,30 @@ void Stage01::LateUpdate(float dt)
 	if (player) { playerPos = player->GetPosition(); }
 	else { playerPos = { 0.f, 0.f }; }
 
-	if (player)
+	if (player && playerPos.x >= -550.f && playerPos.x <= 0.f)
 	{
-		float viewX = viewSize.x * 0.1f * (playerPos.x + playerPosCorrection.x) / (viewSize.x * 1.1f * 0.5f);
+		float viewX = (playerPos.x + playerPosCorrection.x) * 0.05f;
+		float playerPosDeltaX = playerPos.x - playerPrePos.x;
 		scene->GetWorldView().setCenter(viewX, scene->GetWorldView().getCenter().y);
+		frontFence->SetPosition(frontFence->GetPosition() + sf::Vector2f(playerPosDeltaX * -0.03f, 0.f));
+		frontFlower->SetPosition(frontFlower->GetPosition() + sf::Vector2f(playerPosDeltaX * -0.03f, 0.f));
+		int count = 0;
+		for (auto ptr : backgrounds)
+		{
+			if (ptr == frontFence || ptr == frontFlower)
+			{
+				continue;
+			}
+			ptr->SetPosition(ptr->GetPosition() + sf::Vector2f(playerPosDeltaX * -(0.011f - 0.001 * count), 0.f));
+			count++;
+		}
 	}
-
+	playerPrePos = playerPos;
 }
 
 void Stage01::Reset()
 {
 	bgm.stop();
-	scene = SCENE_MGR.GetScene(SceneIds::SceneGame);
-	sceneGame = dynamic_cast<SceneGame*>(scene);
 	if (player)
 	{
 		player->Release();
@@ -159,14 +172,14 @@ void Stage01::Reset()
 		potato = nullptr;
 	}
 
-	player = new Player();
+	player = new Player("Player");
 	potato = new BossPotato();
 	onion = new BossOnion();
 	carrot = new BossCarrot();
 
 	potato->sortLayer = 0;
 	onion->sortLayer = 0;
-	player->sortLayer = 0;
+	player->sortLayer = 1;
 	carrot->sortLayer = -3;
 
 	scene->AddGo(player);
@@ -187,29 +200,30 @@ void Stage01::Reset()
 	onion->Reset();
 	carrot->Reset();
 
-	potato->SetPosition({ FRAMEWORK.GetStageViewSize().x * 0.5f * 0.52f, 0.f });
+	potato->SetPosition({ viewSize.x * 0.5f * 0.663f, 0.f });
+	carrot->SetPosition({ 0.f , -viewSize.y * 0.10f });
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
+	playerPrePos = playerPos;
 
 	potatoHp = potato->GetMaxHp();
 	onionHp = onion->GetMaxHp();
 	carrotHp = carrot->GetMaxHp();
 	totalMaxHp = potatoHp + onionHp + carrotHp;
 
+	frontFence->SetPosition({ -viewSize.x * 0.37f, 0.f });
+	frontFlower->SetPosition({ viewSize.x * 0.32f, viewSize.y * 0.025f });
+	ground->SetPosition({ 0.f, -viewSize.y * 0.08f });
+	field4->SetPosition({ 0.f, -viewSize.y * 0.23f });
+	field5->SetPosition({ 0.f, -viewSize.y * 0.28f });
+	field6->SetPosition({ 0.f, -viewSize.y * 0.31f });
+	field7->SetPosition({ 0.f, -viewSize.y * 0.34f });
+	field8->SetPosition({ 0.f, -viewSize.y * 0.37f });
+	field9->SetPosition({ 0.f, -viewSize.y * 0.345f });
+	field10->SetPosition({ 0.f, -viewSize.y * 0.615f });
+	field11->SetPosition({ 0.f, -viewSize.y * 0.43f });
+	sky->SetPosition({ 0.f, -viewSize.y * 0.50f });
+
 	bgm.play();
-
-
-	scene->AddGo(frontFence);
-	scene->AddGo(frontFlower);
-	scene->AddGo(ground);
-	scene->AddGo(field4);
-	scene->AddGo(field5);
-	scene->AddGo(field6);
-	scene->AddGo(field7);
-	scene->AddGo(field8);
-	scene->AddGo(field9);
-	scene->AddGo(field10);
-	scene->AddGo(field11);
-	scene->AddGo(sky);
 }
 
 void Stage01::Release()
@@ -251,47 +265,27 @@ void Stage01::SetBackground()
 	field11->SetTexture("resource/Sprite/stage01/veggie_bg_0011.png");
 	sky->SetTexture("resource/Sprite/stage01/veggie_bg_0012.png");
 
-	frontFence->SetOrigin(Origins::MC);
-	frontFlower->SetOrigin(Origins::MC);
-	ground->SetOrigin(Origins::MC);
-	field4->SetOrigin(Origins::MC);
-	field5->SetOrigin(Origins::MC);
-	field6->SetOrigin(Origins::MC);
-	field7->SetOrigin(Origins::MC);
-	field8->SetOrigin(Origins::MC);
-	field9->SetOrigin(Origins::MC);
-	field10->SetOrigin(Origins::MC);
-	field11->SetOrigin(Origins::MC);
-	sky->SetOrigin(Origins::MC);
+	backgrounds.push_back(frontFence);
+	backgrounds.push_back(frontFlower);
+	backgrounds.push_back(ground);
+	backgrounds.push_back(field4);
+	backgrounds.push_back(field5);
+	backgrounds.push_back(field6);
+	backgrounds.push_back(field7);
+	backgrounds.push_back(field8);
+	backgrounds.push_back(field9);
+	backgrounds.push_back(field10);
+	backgrounds.push_back(field11);
+	backgrounds.push_back(sky);
 
-	frontFence->SetScale({ 1.3f,1.3f });
-	frontFlower->SetScale({ 1.3f,1.3f });
-	ground->SetScale({ 1.3f,1.3f });
-	field4->SetScale({ 1.5f,1.5f });
-	field5->SetScale({ 1.5f,1.5f });
-	field6->SetScale({ 1.5f,1.5f });
-	field7->SetScale({ 1.5f,1.5f });
-	field8->SetScale({ 1.5f,1.5f });
-	field9->SetScale({ 1.5f,1.5f });
-	field10->SetScale({ 1.5f,1.5f });
-	field11->SetScale({ 1.5f,1.5f });
-	sky->SetScale({ 1.5f,1.5f });
+	for (auto ptr : backgrounds)
+	{
+		ptr->SetOrigin(Origins::MC);
+		ptr->SetScale({ 1.3f, 1.3f });
+	}
 
-	frontFence->SetPosition({ -viewSize.x * 0.45f,0.f });
-	frontFlower->SetPosition({ viewSize.x * 0.4f,viewSize.y * 0.007f });
-	ground->SetPosition({ 0.f,0.f });
-	field4->SetPosition({ 0.f,0.f });
-	field5->SetPosition({ 0.f,0.f });
-	field6->SetPosition({ 0.f,0.f });
-	field7->SetPosition({ 0.f,0.f });
-	field8->SetPosition({ 0.f,0.f });
-	field9->SetPosition({ 0.f,0.f });
-	field10->SetPosition({ 0.f,0.f });
-	field11->SetPosition({ 0.f,0.f });
-	sky->SetPosition({ 0.f,0.f });
-
-	frontFence->sortLayer = 1;
-	frontFlower->sortLayer = 1;
+	frontFence->sortLayer = 2;
+	frontFlower->sortLayer = 2;
 	ground->sortLayer = -1;
 	field4->sortLayer = -2;
 	field5->sortLayer = -4;
@@ -302,5 +296,12 @@ void Stage01::SetBackground()
 	field10->sortLayer = -9;
 	field11->sortLayer = -10;
 	sky->sortLayer = -11;
+
+	for (auto ptr : backgrounds)
+	{
+		scene->AddGo(ptr);
+	}
+
+	//TODO Å¸ÀÌ¾î
 
 }

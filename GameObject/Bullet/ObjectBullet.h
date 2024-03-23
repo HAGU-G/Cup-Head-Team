@@ -27,6 +27,7 @@ protected:
 	float range = 0.f;
 	float moveDistance = 0.f;
 	bool doHoming = true;
+	GameObject* target = nullptr;
 
 	sf::RectangleShape bound;			//충돌 검사용 bound였던 것. 2024-03-20 기준
 
@@ -59,6 +60,7 @@ public:
 	void SetDirection(const sf::Vector2f& direction, bool isConversed = false);			//방향 설정 : direction만 인자로 넘겨주면 됩니다.
 	void SetPosition(const sf::Vector2f& position) override;							//위치 설정
 	void SetTargetPosition(const sf::Vector2f position);								//목표 좌표 설정
+	void SetTarget(GameObject* targetPtr);
 
 	virtual void OnCreate();	//CreateInit를 하면 자동으로 호출되는 함수 : 내용은 비어있습니다.
 	virtual void OnDie();		//씬에서 Remove 하고싶을 때 호출하시면 됩니다.
