@@ -15,8 +15,10 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
-	worldView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
-	uiView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
+	sf::Vector2f windowSize = sf::Vector2f(FRAMEWORK.GetWindowSize());
+	worldView.setSize(windowSize);
+	uiView.setSize(windowSize);
+	textSize = 50 * windowSize.y / 1080;
 
 	//배경음악
 	bgm.setVolume(50.f);
@@ -43,7 +45,14 @@ void SceneTitle::Init()
 	option->SetString(L"옵션");
 	exit->SetString(L"종료");
 
+	start->SetCharacterSize(textSize);
+	option->SetCharacterSize(textSize);
+	exit->SetCharacterSize(textSize);
+
 	start->SetFunction([this]() {
+		Stage01* stage01 = new Stage01();
+		stage01->Init();
+		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
 		SCENE_MGR.ChangeScene(SceneIds::SceneGame);
 		return start;
 		});
@@ -55,12 +64,12 @@ void SceneTitle::Init()
 		return exit;
 		});
 
-	sf::Vector2f buttonPosY = { 0.f, float(-fontSize * 3) };
-	start->SetPosition(uiView.getCenter() + buttonPosY);
-	buttonPosY.y += fontSize;
-	option->SetPosition(uiView.getCenter() + buttonPosY);
-	buttonPosY.y += fontSize;
-	exit->SetPosition(uiView.getCenter() + buttonPosY);
+	sf::Vector2f buttonPos = { float(-textSize), float(-textSize * 3) };
+	start->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+	option->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+	exit->SetPosition(uiView.getCenter() + buttonPos);
 
 	AddGo(start, Ui);
 	AddGo(option, Ui);
@@ -68,6 +77,7 @@ void SceneTitle::Init()
 
 	//Init
 	Scene::Init();
+
 
 }
 
@@ -147,30 +157,30 @@ void SceneTitle::Update(float dt)
 
 
 
-	if (selectNum <= 0) { return; }
-	switch (selectNum)
-	{
-	case 1:
-	{
-		Stage01* stage01 = new Stage01();
-		stage01->Init();
-		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
-	}
-	break;
-	case 2:
-	{
-		//SceneGame에서 사용할 오브젝트들 넣어주세요
-	}
-	break;
-	case 3:
-	{
-		//SceneGame에서 사용할 오브젝트들 넣어주세요
-	}
-	break;
-	default:
-		break;
-	}
-	selectNum = -1;
+	//if (selectNum <= 0) { return; }
+	//switch (selectNum)
+	//{
+	//case 1:
+	//{
+	//	Stage01* stage01 = new Stage01();
+	//	stage01->Init();
+	//	SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
+	//}
+	//break;
+	//case 2:
+	//{
+	//	//SceneGame에서 사용할 오브젝트들 넣어주세요
+	//}
+	//break;
+	//case 3:
+	//{
+	//	//SceneGame에서 사용할 오브젝트들 넣어주세요
+	//}
+	//break;
+	//default:
+	//	break;
+	//}
+	//selectNum = -1;
 
 }
 

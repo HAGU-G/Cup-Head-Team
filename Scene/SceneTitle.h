@@ -15,7 +15,7 @@ protected:
 	ObjectButton* start = nullptr;
 	ObjectButton* option = nullptr;
 	ObjectButton* exit = nullptr;
-	int fontSize = 50;
+	int textSize = 50;
 
 public:
 	SceneTitle(SceneIds id);

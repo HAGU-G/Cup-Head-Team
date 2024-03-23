@@ -19,6 +19,7 @@ public:
 	void SetFont(const sf::Font& texture);
 
 	void SetOutline(const sf::Color& color, float thick);
+	inline void SetCharacterSize(int size) { text.setCharacterSize(size); }
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void Translate(const sf::Vector2f& delta) override;

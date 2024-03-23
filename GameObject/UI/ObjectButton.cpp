@@ -10,7 +10,6 @@ void ObjectButton::Init()
 {
 	TextGo::Init();
 	text.setFont(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"));
-	text.setCharacterSize(50);
 	text.setFillColor(colorUnSelect);
 }
 
