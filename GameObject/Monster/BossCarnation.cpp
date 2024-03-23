@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BossCarnation.h"
-#include "Effect/EffectOnionTears.h"
+#include "Effect/EffectCarnationCreating.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -15,6 +15,7 @@ void BossCarnation::Init()
 	RES_MGR_TEXTURE.Load("resource/carnationBossIdle.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossFa_High.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossFa_Low.png");
+	RES_MGR_TEXTURE.Load("resource/carntionBossFireSeed.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIntro.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIdle.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossDie.png");
@@ -110,6 +111,10 @@ void BossCarnation::Update(float dt)
 		{
 			Creating();
 		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Num4))
+		{
+			FireSeed();
+		}
 	}
 
 	switch (state)
@@ -195,6 +200,22 @@ void BossCarnation::Creating()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossCreating.csv");
+	animator.AddEvent("animations/carnationBossCreating.csv", 20, std::bind(&BossCarnation::CreatingEffect, this));
+	animator.AddEvent("animations/carnationBossCreating.csv", 54, std::bind(&BossCarnation::CreatingEffect, this));
+	animator.AddEvent("animations/carnationBossCreating.csv", 86, std::bind(&BossCarnation::CreatingEffect, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
+}
+
+void BossCarnation::CreatingEffect()
+{
+	EffectCarnationCreating::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.8f,sprite.getPosition().y - sprite.getGlobalBounds().height*0.5f}, {1.f, 0.f}, scene);
+}
+
+void BossCarnation::FireSeed()
+{
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/carntionBossFireSeed.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 

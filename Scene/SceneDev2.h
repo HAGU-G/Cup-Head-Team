@@ -20,6 +20,5 @@ public:
 
 	void Update(float dt) override;
 	void Draw(sf::RenderTexture& window) override;
-
 };
 

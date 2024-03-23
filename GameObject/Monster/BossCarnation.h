@@ -52,6 +52,8 @@ public:
 	void FaHigh();
 	void FaLow();
 	void Creating();
+	void CreatingEffect();
+	void FireSeed();
 	void Intro();
 	void Idle();
 	void FinalIntro();
