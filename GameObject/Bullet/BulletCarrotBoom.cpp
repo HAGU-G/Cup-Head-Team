@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BulletCarrotBoom.h"
 #include "Effect/ObjectEffect.h"
+#include <SceneGame.h>
 
 BulletCarrotBoom::BulletCarrotBoom(const std::string& name)
 	:ObjectBullet(name)
@@ -11,6 +12,7 @@ BulletCarrotBoom* BulletCarrotBoom::Create(const sf::Vector2f& pos, const sf::Ve
 {
 	BulletCarrotBoom* bcb = new BulletCarrotBoom();
 	bcb->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bcb);
 	return bcb;
 }
 
@@ -22,14 +24,15 @@ void BulletCarrotBoom::Update(float dt)
 
 void BulletCarrotBoom::Init()
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Init();
 	animator.Play("animations/carrotBoom.csv");
-	SetSpeed(100.f);
+	SetSpeed(150.f);
 	SetRange(1500.f);
 	type = Type::Homing;
 	SetRotateSpeed(180.f);
-	SetTargetPosition({ 0.f, 300.f });
-	ObjectBullet::Init();
+	maxHp = 30;
+	hp = 30;
 }
 
 void BulletCarrotBoom::OnDie()

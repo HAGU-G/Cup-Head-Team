@@ -30,26 +30,29 @@ protected:
 	int onionHp = 0;
 	int carrotHp = 0;
 
-	SpriteGo* frontFence;
-	SpriteGo* frontFlower;
-	SpriteGo* ground;
-	SpriteGo* field4;
-	SpriteGo* field5;
-	SpriteGo* field6;
-	SpriteGo* field7;
-	SpriteGo* field8;
-	SpriteGo* field9;
-	SpriteGo* field10;
-	SpriteGo* field11;
-	SpriteGo* sky;
+	SpriteGo* frontFence = nullptr;
+	SpriteGo* frontFlower = nullptr;
+	SpriteGo* ground = nullptr;
+	SpriteGo* field4 = nullptr;
+	SpriteGo* field5 = nullptr;
+	SpriteGo* field6 = nullptr;
+	SpriteGo* field7 = nullptr;
+	SpriteGo* field8 = nullptr;
+	SpriteGo* field9 = nullptr;
+	SpriteGo* field10 = nullptr;
+	SpriteGo* field11 = nullptr;
+	SpriteGo* sky = nullptr;
+
+	std::list<SpriteGo*> backgrounds;
 
 	sf::Vector2f playerPos;
+	sf::Vector2f playerPrePos;
 	sf::Vector2f playerPosCorrection;
 	sf::Vector2f viewSize;
 
 	bool swapping = false;
 	float swapTimer = 0.f;
-	float swapTime = 10.f;
+	float swapTime = 5.f;
 
 public:
 	Stage01(const std::string& name = "Stage01");
