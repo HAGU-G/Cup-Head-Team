@@ -226,10 +226,11 @@
     <ClInclude Include="Scene\SceneDev2.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\resource\Shader\Smooth.frag" />
     <None Include="bin\resource\Shader\Hit.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="bin\resource\Shader\RGB.frag" />
+    <Text Include="bin\resource\Shader\Bleeding.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -86,8 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />
+    <None Include="bin\resource\Shader\Smooth.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="bin\resource\Shader\RGB.frag" />
+    <Text Include="bin\resource\Shader\Bleeding.frag" />
   </ItemGroup>
 </Project>

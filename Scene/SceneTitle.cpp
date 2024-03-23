@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneTitle.h"
 #include "Stage/Stage01.h"
+#include "SpriteGo.h"
 
 SceneTitle::SceneTitle(SceneIds id)
 	:Scene(id)
@@ -13,21 +14,35 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
+	worldView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
+	uiView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
+	bg = new SpriteGo("Background");
+	bg->SetTexture("resource/Menu/cuphead_secondary_title_screen.png");
+	float scale = std::max(worldView.getSize().x/bg->GetSize().x, worldView.getSize().y / bg->GetSize().y);
+	bg->SetScale({ scale, scale });
+	bg->SetOrigin(Origins::MC);
+	bg->SetPosition(worldView.getCenter());
+	AddGo(bg);
 	Scene::Init();
 }
 
 void SceneTitle::Release()
 {
+	bgm.stop();
 	Scene::Release();
 }
 
 void SceneTitle::Enter()
 {
 	Scene::Enter();
+	bgm.stop();
+	bgm.openFromFile("resource/Menu/MUS_Intro_DontDealWithDevil_Vocal.wav");
+	bgm.play();
 }
 
 void SceneTitle::Exit()
 {
+	bgm.stop();
 	Scene::Exit();
 }
 
@@ -40,18 +55,38 @@ void SceneTitle::Update(float dt)
 {
 	Scene::Update(dt);
 
-	if (InputMgr::GetKeyUp(sf::Keyboard::Num1))
+	if (bgm.getStatus() == sf::Sound::Status::Stopped)
 	{
-		selectNum = 1;
+		bgm.openFromFile("resource/Menu/MUS_Intro_DontDealWithDevil.wav");
+		bgm.setLoop(true);
+		bgm.play();
 	}
-	else if (InputMgr::GetKeyUp(sf::Keyboard::Num2))
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Down))
 	{
-		selectNum = 2;
+		selectButton++;
+		if (selectButton > 3)
+		{
+			selectButton = 1;
+		}
 	}
-	else if (InputMgr::GetKeyUp(sf::Keyboard::Num3))
+	else if (InputMgr::GetKeyDown(sf::Keyboard::Up))
 	{
-		selectNum = 3;
+		selectButton--;
+		if (selectButton < 1)
+		{
+			selectButton = 3;
+		}
 	}
+
+
+
+
+
+
+
+
+
 
 
 	if (selectNum <= 0) { return; }

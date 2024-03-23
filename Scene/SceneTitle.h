@@ -1,10 +1,16 @@
 #pragma once
 #include "Scene.h"
+
+class SpriteGo;
+
 class SceneTitle : public Scene
 {
 protected:
 	int selectNum = -1;
+	int selectButton = 1;
 
+	sf::Music bgm;
+	SpriteGo* bg;
 
 public:
 	SceneTitle(SceneIds id);

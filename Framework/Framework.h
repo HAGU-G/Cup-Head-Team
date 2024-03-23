@@ -18,11 +18,18 @@ protected:
 	sf::Vector2i windowSize;
 	sf::Vector2f stageViewSize = { 1280.f / 1.1f,720.f / 1.1f };
 	sf::Vector2f stageViewCenter = { 0.f, -250.f };
-	sf::RenderTexture preDraw;
-	sf::Shader shader;
+	sf::RenderTexture pass1;
+	sf::RenderTexture pass2;
+	sf::RenderStates renderStates;
+	float scale = 2.f;
+	sf::Shader bleeding;
+	sf::Shader smooth;
 
 	sf::Sprite filmGrain;
-	int filmNum = 0;
+	int filmNum = -1;
+	int filmNumReverse = 127;
+	float filmInterval = 0.05f;
+	float filmTimer = filmInterval;
 	std::string left = "resource/Film/cuphead_screen_fx_";
 	std::string middle;
 	std::string right = ".png";
@@ -47,7 +54,7 @@ protected:
 	int fps = 0;
 
 public:
-	sf::RenderTexture& GetWindow() { return preDraw; }	// !!
+	sf::RenderTexture& GetWindow() { return pass1; }	// !!
 	sf::RenderWindow& GetWindowReal() { return window; }
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
 	const sf::Vector2f& GetStageViewSize() const { return stageViewSize; }
@@ -70,7 +77,7 @@ public:
 	virtual void Release();
 	
 	void LoadPostEffect();
-
+	void Pass2(float dt);
 };
 
 #define FRAMEWORK (Singleton<Framework>::Instance())
