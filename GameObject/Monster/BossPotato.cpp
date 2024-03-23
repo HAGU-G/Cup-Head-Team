@@ -12,13 +12,9 @@ BossPotato::BossPotato(const std::string& name)
 void BossPotato::Init()
 {
 	ObjectMonster::Init();
-	sprite.setScale(1.3f, 1.3f);
+	sprite.setScale(1.2f, 1.2f);
 
-	RES_MGR_TEXTURE.Load("resource/potatoDeath.png");
-	RES_MGR_TEXTURE.Load("resource/potatoIdle.png");
-	RES_MGR_TEXTURE.Load("resource/potatoIntro.png");
-	RES_MGR_TEXTURE.Load("resource/potatoLeave.png");
-	RES_MGR_TEXTURE.Load("resource/potatoShoot.png");
+
 
 	hasHitBox = true;
 }
@@ -113,6 +109,7 @@ void BossPotato::ShootEnd()
 
 void BossPotato::Death()
 {
+	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/potatoDeath.csv");
@@ -128,7 +125,6 @@ void BossPotato::Leave()
 
 void BossPotato::OnDie()
 {
-	isAlive = false;
 	scene->RemoveGo(this);
 }
 

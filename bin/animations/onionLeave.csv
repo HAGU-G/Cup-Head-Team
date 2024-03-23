@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-onionLeave,15,0,,
+onionLeave,20,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/onionLeave.png,0,0,449,604,7
 resource/onionLeave.png,449,0,452,604,7

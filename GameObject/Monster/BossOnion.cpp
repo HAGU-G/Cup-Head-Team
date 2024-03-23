@@ -12,13 +12,7 @@ BossOnion::BossOnion(const std::string& name)
 void BossOnion::Init()
 {
 	ObjectMonster::Init();
-
-	RES_MGR_TEXTURE.Load("resource/onionDeath.png");
-	RES_MGR_TEXTURE.Load("resource/onionIdle.png");
-	RES_MGR_TEXTURE.Load("resource/onionIntro.png");
-	RES_MGR_TEXTURE.Load("resource/onionLeave.png");
-	RES_MGR_TEXTURE.Load("resource/onionCry.png");
-	RES_MGR_TEXTURE.Load("resource/onionCrying.png");
+	sprite.setScale(1.f/1.1f, 1.f/1.1f);
 	hasHitBox = true;
 }
 

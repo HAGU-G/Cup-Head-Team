@@ -14,16 +14,6 @@ void BossCarrot::Init()
 	ObjectMonster::Init();
 	sprite.setScale(1.3f, 1.3f);
 	shootEyes.setScale(sprite.getScale());
-	RES_MGR_TEXTURE.Load("resource/carrotDeath.png");
-	RES_MGR_TEXTURE.Load("resource/carrotIdle.png");
-	RES_MGR_TEXTURE.Load("resource/carrotIntro.png");
-	RES_MGR_TEXTURE.Load("resource/carrotShootBody.png");
-	RES_MGR_TEXTURE.Load("resource/carrotShootEyes.png");
-	RES_MGR_TEXTURE.Load("resource/carrotRing.png");
-	RES_MGR_TEXTURE.Load("resource/carrotBoom.png");
-	RES_MGR_TEXTURE.Load("resource/carrotRingDeath.png");
-	RES_MGR_TEXTURE.Load("resource/carrotBoomDeath.png");
-	RES_MGR_TEXTURE.Load("resource/carrotRingIntro.png");
 }
 
 void BossCarrot::Reset()

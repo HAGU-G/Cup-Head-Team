@@ -26,10 +26,10 @@ void BulletPeashot::Init()
 	type = Type::Straight;
 	ObjectBullet::Init();
 }
-/// /////////////////////////////////////////////////////////////
+
 void BulletPeashot::Reset()
 {
-	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 }
 
 void BulletPeashot::Update(float dt)
@@ -54,7 +54,7 @@ void BulletPeashot::LateUpdate(float dt)
 		}
 	}
 }
-/// /////////////////////////////////////////////////////////////
+
 
 void BulletPeashot::OnCreate()
 {

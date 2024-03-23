@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-onionTearsOutro,15,0,,
+onionTearsOutro,20,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/onionTearsOutro.png,0,0,650,383,2
 resource/onionTearsOutro.png,650,0,610,383,2
