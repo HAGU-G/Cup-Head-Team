@@ -22,7 +22,6 @@ void SceneDev::Init()
 	//AddGo(new BossPotato())->SetPosition({500.f, 300.f});
 	//AddGo(new BossOnion())->SetPosition({0, 300.f});
 	//AddGo(new BossCarrot())->SetPosition({-500, 300.f});
-	AddGo(new Stage01());
 	
 	Scene::Init();
 }

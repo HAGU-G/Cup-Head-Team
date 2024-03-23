@@ -12,7 +12,7 @@ BossCarrot::BossCarrot(const std::string& name)
 void BossCarrot::Init()
 {
 	ObjectMonster::Init();
-	sprite.setScale(1.3f, 1.3f);
+	sprite.setScale(1.15f, 1.15f);
 	shootEyes.setScale(sprite.getScale());
 }
 
@@ -22,6 +22,7 @@ void BossCarrot::Reset()
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
 	eyeAnimator.SetTarget(&shootEyes);
+	eyeAnimator.Play("animations/carrotShootEyes.csv");
 	Intro();
 }
 
@@ -44,7 +45,7 @@ void BossCarrot::Update(float dt)
 		}
 		else if (BoomTimer(dt))
 		{
-			BulletCarrotBoom::Create(position + sf::Vector2f((rand() % 3 - 1) * FRAMEWORK.GetWindowSize().x / 4.f, -1.5f * GetGlobalBounds().height), { 0.f, 1.f }, scene);
+			BulletCarrotBoom::Create(position + sf::Vector2f((rand() % 3 - 1) * FRAMEWORK.GetWindowSize().x / 4.f, -1.0f * GetGlobalBounds().height), { 0.f, 1.f }, scene);
 		}
 		break;
 	case State::Ring:
@@ -61,12 +62,13 @@ void BossCarrot::Update(float dt)
 			ObjectEffect* oe = new ObjectEffect("EffectCarrotRingIntro");
 			oe->CreateInit(shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f), { 1.f, 0.f }, scene);
 			oe->GetAniamtor().Play("animations/carrotRingIntro.csv");
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 1, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 3, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 5, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 7, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 10, std::bind(&BossCarrot::SetTargetDirection, this));
 			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 9, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 7, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 5, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 3, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 1, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		}
 		break;
 	default:
@@ -77,6 +79,12 @@ void BossCarrot::Update(float dt)
 void BossCarrot::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
+	customBounds.width = shootEyes.getGlobalBounds().width * 0.5f;
+	customBounds.height = shootEyes.getGlobalBounds().height * 0.01f;
+	customBounds.left = sprite.getGlobalBounds().left + (sprite.getGlobalBounds().width - customBounds.width) * 0.5f;
+	customBounds.top = sprite.getGlobalBounds().top + (sprite.getGlobalBounds().height - customBounds.height) * 0.55f;
+
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		OnDamage(10);
@@ -114,11 +122,22 @@ void BossCarrot::Ring()
 
 void BossCarrot::ShootRing()
 {
-	BulletCarrotRing::Create(shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f), { 1.f,1.f }, scene);
+	BulletCarrotRing::Create(ringCreatePos, targetDirection, scene);
+}
+
+void BossCarrot::SetTargetDirection()
+{
+	ringCreatePos = shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f);
+	GameObject* player = scene->FindGo("Player");
+	if (player)
+	{
+		targetDirection = player->GetPosition() - ringCreatePos;
+	}
 }
 
 void BossCarrot::Death()
 {
+	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carrotDeath.csv");
@@ -198,5 +217,5 @@ bool BossCarrot::RingTimer(float dt)
 
 sf::FloatRect BossCarrot::GetCustomBounds() const
 {
-	return sf::FloatRect();
+	return customBounds;
 }
