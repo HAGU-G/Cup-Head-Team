@@ -51,7 +51,6 @@ void Stage01::Init()
 void Stage01::Update(float dt)
 {
 	GameObject::Update(dt);
-	std::cout << playerPos.x << std::endl;
 	if (swapping)
 	{
 		if (swapTimer >= swapTime)

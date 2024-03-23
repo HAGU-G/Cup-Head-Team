@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include <string>
 
 // 1. 초기화 / 메인루프 / 정리
 // 2. 시간 관련 기능 / 윈도우 정보
@@ -19,6 +20,13 @@ protected:
 	sf::Vector2f stageViewCenter = { 0.f, -250.f };
 	sf::RenderTexture preDraw;
 	sf::Shader shader;
+
+	sf::Sprite filmGrain;
+	int filmNum = 0;
+	std::string left = "resource/Film/cuphead_screen_fx_";
+	std::string middle;
+	std::string right = ".png";
+
 	float fixedUpdateTime = 1.f / 50.f;
 
 	bool useShader = true;
@@ -60,6 +68,8 @@ public:
 	virtual void Init(int width, int height, const std::string& name = "Game");
 	virtual void Do();
 	virtual void Release();
+	
+	void LoadPostEffect();
 
 };
 
