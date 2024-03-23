@@ -9,10 +9,7 @@ void Framework::Init(int width, int height, const std::string& name)
 	windowSize.y = height;
 
 	window.create(sf::VideoMode(windowSize.x, windowSize.y), name);
-	preDraw.create(windowSize.x * 2, windowSize.y * 2);
-	preDraw.setSmooth(true);
-	shader.setUniform("texture", sf::Shader::CurrentTexture);
-	shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
+	LoadPostEffect();
 
 	InputMgr::Init();
 	SOUND_MGR.Init();
@@ -72,13 +69,29 @@ void Framework::Do()
 		preDraw.display();
 
 		sf::Sprite postEffect(preDraw.getTexture());
-		postEffect.setScale(1.f/2.f, 1.f/2.f);
+		postEffect.setScale(1.f / 2.f, 1.f / 2.f);
 
 		//ÈÄÃ³¸®
 		window.clear();
 		if (useShader)
 		{
+			/*filmNum++;
+			if (filmNum > 126) { filmNum = 0; }
+			if (filmNum >= 100)
+			{
+				middle = "0" + std::to_string(filmNum);
+			}
+			else if (filmNum >= 10)
+			{
+				middle = "00" + std::to_string(filmNum);
+			}
+			else
+			{
+				middle = "000" + std::to_string(filmNum);
+			}
+			filmGrain.setTexture(RES_MGR_TEXTURE.Get(left + middle + right));*/
 			window.draw(postEffect, &shader);
+			/*window.draw(filmGrain);*/
 		}
 		else
 		{
@@ -96,4 +109,29 @@ void Framework::Release()
 	RES_MGR_TEXTURE.UnloadAll();
 	RES_MGR_FONT.UnloadAll();
 	RES_MGR_SOUND_BUFFER.UnloadAll();
+}
+
+void Framework::LoadPostEffect()
+{
+	preDraw.create(windowSize.x * 2, windowSize.y * 2);
+	preDraw.setSmooth(true);
+	shader.setUniform("texture", sf::Shader::CurrentTexture);
+	shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
+
+	for (int i = 0; i <= 126; i++)
+	{
+		if (i >= 100)
+		{
+			middle = "0" + std::to_string(i);
+		}
+		else if (i >= 10)
+		{
+			middle = "00" + std::to_string(i);
+		}
+		else
+		{
+			middle = "000" + std::to_string(i);
+		}
+		RES_MGR_TEXTURE.Load(left + middle + right);
+	}
 }
