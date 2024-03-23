@@ -25,6 +25,9 @@ protected:
 	int shootCount = 0;
 	int patternCount = 0;
 
+	bool isMovingLeft = false;
+	bool isMovingRight = false;
+
 	sf::Vector2f moveLeft = sf::Vector2f(-1, 0);
 	sf::Vector2f moveRight = sf::Vector2f(1, 0);
 public:
@@ -41,8 +44,11 @@ public:
 	void LateUpdate(float dt) override;
 
 	void Intro();
+	void Intro2();
 	void Idle();
 	void Roll();
+	void MoveToLeft(float dt);
+	void MoveToRight(float dt);
 	void Shoot();
 	void ShootEnd();
 	void Ball();

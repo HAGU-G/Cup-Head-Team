@@ -29,9 +29,9 @@ void SceneDev3::Init()
 	AddGo(bossOnion);
 	AddMonster(bossOnion);*/
 
-	auto bossPotato = new BossRibby("Boss");
-	bossPotato->SetPosition({ 300.f, 0.f });
-	AddGo(bossPotato);
+	auto bossRibby = new BossRibby("Boss");
+	bossRibby->SetPosition({ 300.f, 0.f });
+	AddGo(bossRibby);
 
 
 	AddGo(new Player());

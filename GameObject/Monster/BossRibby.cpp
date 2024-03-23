@@ -38,7 +38,18 @@ void BossRibby::Update(float dt)
     if (hp == 0 )
     {
         Death();
+    }   
+
+    if (isMovingRight)
+    {
+        MoveToRight(dt);
     }
+
+    if (isMovingLeft)
+    {
+        MoveToLeft(dt);
+    }
+
     switch (state)
     {
     case BossRibby::State::Idle:
@@ -50,7 +61,7 @@ void BossRibby::Update(float dt)
     case BossRibby::State::Pattern1:
         if (hp <= maxHp * 0.60 && state != State::Roll)
         {
-            SetState(State::Roll);     //페이즈 변경 -> 자리 이동
+            SetState(State::Roll); 
         }
         if (state == State::Pattern1 && shootCount >= 7)
         {
@@ -60,16 +71,17 @@ void BossRibby::Update(float dt)
 
         break;
     case BossRibby::State::Pattern2:
-        if (hp <= maxHp * 0.30)
+        Intro2();
+        if (hp <= maxHp * 0.30 && state != State::Roll)
         {
             SetState(State::Roll);
         }
         break;
-    case BossRibby::State::Roll:           //2 패이즈를 위한 자리 이동
-        //if (/*개구리의 위치가 왼쪽으로 이동하면*/)
-        {
-            SetState(State::Pattern2);
-        }
+    case BossRibby::State::Roll:
+        //if (/*왼쪽 화면으로 나가면*/)
+        //{
+        //    SetState(State::Pattern2);
+        //}
         break;
     }
 
@@ -85,7 +97,7 @@ void BossRibby::LateUpdate(float dt)
     ObjectMonster::LateUpdate(dt);
     if (InputMgr::GetKeyDown(sf::Keyboard::Space))
     {
-        OnDamage(10);
+        SetState(State::Pattern2);
     }
 }
 
@@ -97,6 +109,14 @@ void BossRibby::Intro()
     animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossRibby::Idle, this));
 }
 
+void BossRibby::Intro2()
+{
+    SetState(State::None);
+    animator.ClearEvent();
+    animator.Play("animations/RibbyIntro2.csv");
+    animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossRibby::Idle, this));
+}
+
 void BossRibby::Idle()
 {
     SetState(State::Idle);
@@ -105,6 +125,18 @@ void BossRibby::Idle()
 void BossRibby::Roll()
 {
     SetState(State::Roll);
+}
+
+void BossRibby::MoveToLeft(float dt)
+{
+    sf::Vector2f newPosition = position - sf::Vector2f(moveSpeed * dt, 0);
+    SetPosition(newPosition);
+}
+
+void BossRibby::MoveToRight(float dt)
+{
+    sf::Vector2f newPosition = position + sf::Vector2f(moveSpeed * dt, 0);
+    SetPosition(newPosition);
 }
 
 void BossRibby::Shoot()
@@ -132,7 +164,6 @@ void BossRibby::Death()
     SetState(State::None);
     animator.ClearEvent();
     animator.Play("animations/RibbyDeath.csv");
-    ///
 }
 
 void BossRibby::OnDie()
@@ -164,62 +195,66 @@ bool BossRibby::PatternTimer(float dt)
 
 void BossRibby::SetState(State state)
 {
-    this->state = state;
-    switch (state)
-    {
-    case BossRibby::State::Idle:
-        if (preState == State::Pattern1)
-        {
-            animator.Play("animations/RibbyShootEnd.csv");
-            animator.PlayQueue("animations/RibbyIdle.csv");
-        }
-        else if (preState == State::Pattern2)
-        {
-           /* animator.Play("animations/RibbyShootEnd.csv");
-            animator.PlayQueue("animations/RibbyIdle.csv");*/
-        }
-        else
-        {
-            animator.PlayQueue("animations/RibbyIdle.csv");
-        }
-        preState = State::Idle;
-        break;
-    case BossRibby::State::Pattern1:
-        if (shootCount < 7)
-        {
-            animator.Play("animations/RibbyShoot.csv");
-            animator.PlayQueue("animations/RibbyShooting.csv");
-        }
-        else if (shootCount >= 7)
-        {
-            animator.Play("animations/RibbyShootEnd.csv");
-        }
-        animator.ClearEvent();
-        animator.AddEvent("animations/RibbyShooting.csv", 4, std::bind(&BossRibby::Shoot, this));
-        animator.AddEvent("animations/RibbyShooting.csv", 8, std::bind(&BossRibby::Shoot, this));
-        preState = State::Pattern1;
-        break;
-    case BossRibby::State::Pattern2:
 
-        preState = State::Pattern2;
-        break;
-    case BossRibby::State::Roll:
-        if (preState == State::Pattern1)
+    if (state != this->state)
+    {
+        preState = this->state;
+        this->state = state;
+
+        switch (state)
         {
+        case BossRibby::State::Idle:
+            if (preState == State::Pattern1)
+            {
+                animator.Play("animations/RibbyShootEnd.csv");
+                animator.PlayQueue("animations/RibbyIdle.csv");
+            }
+            else if (preState == State::Pattern2)
+            {
+            }
+            else
+            {
+                animator.PlayQueue("animations/RibbyIdle.csv");
+            }
+            preState = State::Idle;
+            break;
+        case BossRibby::State::Pattern1:
+            if (shootCount < 7)
+            {
+                animator.Play("animations/RibbyShoot.csv");
+                animator.PlayQueue("animations/RibbyShooting.csv");
+            }
+            else if (shootCount >= 7)
+            {
+                animator.Play("animations/RibbyShootEnd.csv");
+            }
+            animator.ClearEvent();
+            animator.AddEvent("animations/RibbyShooting.csv", 4, std::bind(&BossRibby::Shoot, this));
+            animator.AddEvent("animations/RibbyShooting.csv", 8, std::bind(&BossRibby::Shoot, this));
+            preState = State::Pattern1;
+            break;
+        case BossRibby::State::Pattern2:
+
+            preState = State::Pattern2;
+            break;
+        case BossRibby::State::Roll:
             animator.Play("animations/RibbyRoll.csv");
             animator.PlayQueue("animations/RibbyRolling.csv");
-            /*우에서 좌로 이동*/
+            if (preState == State::Pattern1) 
+            {
+                isMovingLeft = true;
+            }
+            else if (preState == State::Pattern2) 
+            {
+                isMovingRight = true;
+            }
+            preState = State::Roll;
+            break;
+        case BossRibby::State::None:
+            break;
+        default:
+            break;
         }
-        else if (preState == State::Pattern2)
-        {
-            /*좌에서 우로 이동*/
-        }
-        preState = State::Roll;
-        break;
-    case BossRibby::State::None:
-        break;
-    default:
-        break;
     }
 }
 
