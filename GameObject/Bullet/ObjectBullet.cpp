@@ -14,13 +14,17 @@ ObjectBullet::~ObjectBullet()
 void ObjectBullet::Init()
 {
 	animator.SetTarget(&sprite);
-
+	if (owner == Owner::Enemy)
+	{
+		SetTarget(scene->FindGo("Player"));
+	}
 	hasHitBox = true;
+	ObjectMonster::Init();
 }
 
 void ObjectBullet::Release()
 {
-
+	ObjectMonster::Release();
 }
 
 void ObjectBullet::Reset()
@@ -35,15 +39,18 @@ void ObjectBullet::Update(float dt)
 	Translate(direction * speed * dt);
 	if (type == Type::Homing)
 	{
+		if (!target) { doHoming = false; }
+		else { SetTargetPosition(target->GetPosition()); }
+
 		if (doHoming) { Homing(dt); }
 		Flip();
 	}
-
 }
 
 void ObjectBullet::LateUpdate(float dt)
 {
-	if (moveDistance >= range)
+	ObjectMonster::LateUpdate(dt);
+	if (moveDistance >= range || position.y > 0.f || hp <= 0)
 	{
 		if (isAlive)
 		{
@@ -63,6 +70,7 @@ void ObjectBullet::Draw(sf::RenderTexture& window)
 
 void ObjectBullet::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)
 {
+	this->scene = scene;
 	Init();
 	Reset();
 	prePosition = pos;
@@ -70,7 +78,6 @@ void ObjectBullet::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 	SetDirection(direction);
 	SetRotation(Utils::Angle360(direction));
 	Flip();
-	this->scene = scene;
 	scene->AddGo(this);
 	OnCreate();
 }
@@ -114,7 +121,7 @@ void ObjectBullet::OnDie()
 
 sf::FloatRect ObjectBullet::GetCustomBounds() const
 {
-	return sf::FloatRect();
+	return customBounds;
 }
 
 void ObjectBullet::SetPosition(const sf::Vector2f& position)
@@ -130,4 +137,9 @@ void ObjectBullet::SetPosition(const sf::Vector2f& position)
 void ObjectBullet::SetTargetPosition(const sf::Vector2f position)
 {
 	targetPosition = position;
+}
+
+void ObjectBullet::SetTarget(GameObject* targetPtr)
+{
+	target = targetPtr;
 }

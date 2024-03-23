@@ -10,7 +10,7 @@ BulletPeashot::BulletPeashot(const std::string& name)
 
 void BulletPeashot::Init()
 {
-	animator.SetTarget(&sprite);
+	ObjectBullet::Init();
 	if (rand() % 2 == 0)
 	{
 		animator.SetCurrentCilp("animations/peashotIntroA.csv");
@@ -24,7 +24,6 @@ void BulletPeashot::Init()
 	SetSpeed(1200.f);
 	SetRange(3000.f);
 	type = Type::Straight;
-	ObjectBullet::Init();
 }
 
 void BulletPeashot::Reset()

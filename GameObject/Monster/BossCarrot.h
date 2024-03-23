@@ -16,7 +16,8 @@ protected:
 
 	sf::Sprite shootEyes;
 	Animator eyeAnimator;
-
+	sf::Vector2f ringCreatePos = { 0.f, 0.f };
+	sf::Vector2f targetDirection = { 0.f, 1.f };
 	float patternTimer = 0.f;
 	float patternInterval = 15.0f;
 	float boomTimer = 0.f;
@@ -43,6 +44,7 @@ public:
 	void Pattern1();
 	void Ring();
 	void ShootRing();
+	void SetTargetDirection();
 	void Death();
 	void OnDie();
 
