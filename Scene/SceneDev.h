@@ -1,12 +1,11 @@
 #pragma once
 #include "Scene.h"
 #include "Animator.h"
+class Player;
+
 class SceneDev : public Scene
 {
 protected:
-	sf::Music bgm;
-
-
 
 public:
 	SceneDev(SceneIds id);
@@ -27,5 +26,6 @@ public:
 
 	void Draw(sf::RenderTexture& window) override;
 	void Update(float dt) override;
+	void LateUpdate(float dt) override;
 };
 
