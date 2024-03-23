@@ -179,7 +179,7 @@ void Stage01::Reset()
 
 	potato->sortLayer = 0;
 	onion->sortLayer = 0;
-	player->sortLayer = 0;
+	player->sortLayer = 1;
 	carrot->sortLayer = -3;
 
 	scene->AddGo(player);
@@ -284,8 +284,8 @@ void Stage01::SetBackground()
 		ptr->SetScale({ 1.3f, 1.3f });
 	}
 
-	frontFence->sortLayer = 1;
-	frontFlower->sortLayer = 1;
+	frontFence->sortLayer = 2;
+	frontFlower->sortLayer = 2;
 	ground->sortLayer = -1;
 	field4->sortLayer = -2;
 	field5->sortLayer = -4;
