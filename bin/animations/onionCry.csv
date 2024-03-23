@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-onionCry,15,1,,
+onionCry,20,1,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/onionCry.png,0,0,437,455,7
 resource/onionCry.png,437,0,436,455,7

@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "SceneGame.h"
 #include "Player.h"
-#include "Monster/BossPotato.h"
-#include "Monster/BossOnion.h"
+#include "Stage/Stage01.h"
 
 SceneGame::SceneGame(SceneIds id)
 	:Scene(id)
@@ -15,19 +14,8 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
-	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
-	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(1280.f / 1.1f, 720.f / 1.1f);
-	worldView.setCenter({ 0,-250 });
-	uiView.setSize(1280.f / 1.1f, 720.f / 1.1f);
-	uiView.setCenter(centerPos);
-
-	auto bossPotato = new BossPotato("Boss");
-	bossPotato->SetPosition({ 300.f, 0.f });
-	AddGo(bossPotato);
-	AddMonster(bossPotato);
-	
-	AddGo(new Player());
+	worldView.setSize(FRAMEWORK.GetStageViewSize());
+	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
 
 	Scene::Init();
 }
@@ -66,4 +54,8 @@ void SceneGame::AddMonster(ObjectMonster* monster)
 std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
 {
 	return MonsterList;
+}
+
+void SceneGame::Victory()
+{
 }

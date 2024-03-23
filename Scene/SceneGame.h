@@ -22,5 +22,7 @@ public:
 	void Draw(sf::RenderTexture& window) override;
 	void AddMonster(ObjectMonster* monster);
 	std::vector<ObjectMonster*> getAllMonsters() const;
+
+	void Victory();
 };
 

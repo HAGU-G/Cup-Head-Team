@@ -166,12 +166,14 @@
     <ClCompile Include="GameObject\Bullet\BulletPeashot.cpp" />
     <ClCompile Include="GameObject\Bullet\ObjectBullet.cpp" />
     <ClCompile Include="GameObject\Effect\ObjectEffect.cpp" />
+    <ClCompile Include="GameObject\Stage\Stage01.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\Monster\ObjectMonster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene\SceneTitle.cpp" />
     <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneDev3.cpp" />
     <ClCompile Include="Scene\SceneDev.cpp" />
@@ -215,8 +217,10 @@
     <ClInclude Include="GameObject\Bullet\ObjectBullet.h" />
     <ClInclude Include="GameObject\Effect\ObjectEffect.h" />
     <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
+    <ClInclude Include="GameObject\Stage\Stage01.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene\SceneTitle.h" />
     <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneDev3.h" />
     <ClInclude Include="Scene\SceneDev.h" />

@@ -38,6 +38,8 @@
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\SceneDev2.cpp" />
     <ClCompile Include="GameObject\Monster\BossRibby.cpp" />
+    <ClCompile Include="GameObject\Stage\Stage01.cpp" />
+    <ClCompile Include="Scene\SceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -81,6 +83,8 @@
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\SceneDev2.h" />
     <ClInclude Include="GameObject\Monster\BossRibby.h" />
+    <ClInclude Include="GameObject\Stage\Stage01.h" />
+    <ClInclude Include="Scene\SceneTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

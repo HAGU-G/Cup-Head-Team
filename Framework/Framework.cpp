@@ -72,7 +72,7 @@ void Framework::Do()
 		preDraw.display();
 
 		sf::Sprite postEffect(preDraw.getTexture());
-		postEffect.setScale(0.5f, 0.5f);
+		postEffect.setScale(1.f/2.f, 1.f/2.f);
 
 		//ÈÄÃ³¸®
 		window.clear();
