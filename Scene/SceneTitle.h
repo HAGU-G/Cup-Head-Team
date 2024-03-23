@@ -2,15 +2,20 @@
 #include "Scene.h"
 
 class SpriteGo;
-
+class ObjectButton;
 class SceneTitle : public Scene
 {
 protected:
-	int selectNum = -1;
+	int selectNum = 1;
 	int selectButton = 1;
 
 	sf::Music bgm;
-	SpriteGo* bg;
+	SpriteGo* bg = nullptr;
+
+	ObjectButton* start = nullptr;
+	ObjectButton* option = nullptr;
+	ObjectButton* exit = nullptr;
+	int fontSize = 50;
 
 public:
 	SceneTitle(SceneIds id);
@@ -30,5 +35,8 @@ public:
 	void Draw(sf::RenderTexture& window) override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
+
+	void ButtonSelect();
+	void ButtonPress();
 };
 

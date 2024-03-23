@@ -39,6 +39,7 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
     <ClCompile Include="GameObject\Stage\Stage01.cpp" />
     <ClCompile Include="Scene\SceneTitle.cpp" />
+    <ClCompile Include="GameObject\UI\ObjectButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -83,6 +84,7 @@
     <ClInclude Include="Scene\SceneDev2.h" />
     <ClInclude Include="GameObject\Stage\Stage01.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
+    <ClInclude Include="GameObject\UI\ObjectButton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

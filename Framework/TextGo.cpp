@@ -16,7 +16,7 @@ sf::FloatRect TextGo::GetGlobalBounds()
 	return text.getGlobalBounds();
 }
 
-void TextGo::SetString(const std::string& str)
+void TextGo::SetString(const  sf::String& str)
 {
 	text.setString(str);
 	SetOrigin(originPreset);
