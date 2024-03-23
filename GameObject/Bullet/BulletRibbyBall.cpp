@@ -22,6 +22,13 @@ void BulletRibbyBall::Update(float dt)
 	ObjectBullet::Update(dt);
 	customBounds = sprite.getGlobalBounds();
 	//천장, 바닥 과 충돌 처리 충돌시 y축 값 반전
+	float upperBound = -600.0f; // 상단 경계
+	float lowerBound = -20.f;
+	if (position.y <= upperBound || position.y >= lowerBound)
+	{
+		direction.y = -direction.y; // y축 방향 반전
+		SetDirection(direction, true); // 방향 업데이트
+	}
 }
 
 void BulletRibbyBall::Init()

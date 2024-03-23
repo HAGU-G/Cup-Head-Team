@@ -190,11 +190,11 @@ void BossRibby::Ball()
     sf::Vector2f ballDirection;
     if (ballCount == 0 || ballCount == 2)
     {
-        ballDirection = {-1,1};
+        ballDirection = {-1,2};
     }
     else
     {
-        ballDirection = { -1,-1 };
+        ballDirection = { -1,-2 };
     }
     BulletRibbyBall::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.3f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), ballDirection, scene);
     std::cout << ballCount << std::endl;
