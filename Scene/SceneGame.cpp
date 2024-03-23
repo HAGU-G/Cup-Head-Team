@@ -16,8 +16,6 @@ void SceneGame::Init()
 {
 	worldView.setSize(FRAMEWORK.GetStageViewSize());
 	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
-	
-	AddGo(new Stage01());
 
 	Scene::Init();
 }
