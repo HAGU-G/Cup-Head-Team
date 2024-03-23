@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-RibbyIdle,15,1,,
+RibbyIdle,15,2,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/RibbyIdle.png,0,0,324,350,7
 resource/RibbyIdle.png,324,0,339,350,7

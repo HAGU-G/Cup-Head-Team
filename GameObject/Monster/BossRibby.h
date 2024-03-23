@@ -9,8 +9,6 @@ class BossRibby : public ObjectMonster
 		Pattern1,
 		Pattern2,
 		Roll,
-		Shoot,
-		ball,
 		None
 	};
 protected:
@@ -19,15 +17,16 @@ protected:
 	State preState = State::None;
 
 	float shootTimer = 0.f;
-	float shootInterval = 0.5f;
+	float shootInterval = 3.0f;
 	float patternTimer = 0.f;
 	float patternInterval = 2.0f;
+	float moveSpeed = 100.f;
 
-	float shootSpeed = 1.0f;
 	int shootCount = 0;
-
 	int patternCount = 0;
 
+	sf::Vector2f moveLeft = sf::Vector2f(-1, 0);
+	sf::Vector2f moveRight = sf::Vector2f(1, 0);
 public:
 	BossRibby(const std::string& name = "BossRibby");
 	~BossRibby() override = default;
@@ -46,7 +45,7 @@ public:
 	void Roll();
 	void Shoot();
 	void ShootEnd();
-	void ball();
+	void Ball();
 	void ballEnd();
 	void Death();
 	void OnDie();
