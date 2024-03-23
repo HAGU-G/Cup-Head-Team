@@ -14,6 +14,7 @@ void BossRibby::Init()
     RES_MGR_TEXTURE.Load("resource/RibbyDeath.png");
     RES_MGR_TEXTURE.Load("resource/RibbyIdle.png");
     RES_MGR_TEXTURE.Load("resource/RibbyIntro.png");
+    RES_MGR_TEXTURE.Load("resource/RibbyIntro2.png");
     RES_MGR_TEXTURE.Load("resource/RibbyRoll.png");
     RES_MGR_TEXTURE.Load("resource/RibbyRolling.png");
     RES_MGR_TEXTURE.Load("resource/RibbyShoot.png");
@@ -53,9 +54,13 @@ void BossRibby::Update(float dt)
     switch (state)
     {
     case BossRibby::State::Idle:
-        if (PatternTimer(dt))
+        if (PatternTimer(dt) && hp > maxHp * 0.60)
         {
             SetState(State::Pattern1);
+        }
+        if (PatternTimer(dt) && hp <= maxHp * 0.60)
+        {
+            SetState(State::Pattern2);
         }
         break;
     case BossRibby::State::Pattern1:
@@ -71,16 +76,20 @@ void BossRibby::Update(float dt)
 
         break;
     case BossRibby::State::Pattern2:
-        Intro2();
         if (hp <= maxHp * 0.30 && state != State::Roll)
         {
             SetState(State::Roll);
+        }
+        if (state == State::Pattern2 && ballCount > 2)
+        {
+            ballCount = 0;
+            SetState(State::Idle);
         }
         break;
     case BossRibby::State::Roll:
         //if (/*왼쪽 화면으로 나가면*/)
         //{
-        //    SetState(State::Pattern2);
+        //    isMovingLeft = false;
         //}
         break;
     }
@@ -97,6 +106,7 @@ void BossRibby::LateUpdate(float dt)
     ObjectMonster::LateUpdate(dt);
     if (InputMgr::GetKeyDown(sf::Keyboard::Space))
     {
+        hp = maxHp * 0.50f;
         SetState(State::Pattern2);
     }
 }
@@ -143,7 +153,6 @@ void BossRibby::Shoot()
 {
     std::cout << "주먹 발사" << std::endl;
     shootCount++;
-
 }
 
 void BossRibby::ShootEnd()
@@ -152,6 +161,8 @@ void BossRibby::ShootEnd()
 
 void BossRibby::Ball()
 {
+    std::cout << ballCount << std::endl;
+    ballCount++;
 }
 
 void BossRibby::ballEnd()
@@ -211,6 +222,7 @@ void BossRibby::SetState(State state)
             }
             else if (preState == State::Pattern2)
             {
+                animator.PlayQueue("animations/RibbyIdle.csv");
             }
             else
             {
@@ -234,7 +246,17 @@ void BossRibby::SetState(State state)
             preState = State::Pattern1;
             break;
         case BossRibby::State::Pattern2:
+            if (preState == State::Roll)
+            {
+                Intro2();
+            }
 
+            if (ballCount < 3)
+            {
+                animator.PlayQueue("animations/RibbyBall.csv");
+            }
+            animator.ClearEvent();
+            animator.AddEvent("animations/RibbyBall.csv", 17, std::bind(&BossRibby::Ball, this));
             preState = State::Pattern2;
             break;
         case BossRibby::State::Roll:

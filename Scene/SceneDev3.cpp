@@ -34,7 +34,7 @@ void SceneDev3::Init()
 	AddGo(bossRibby);
 
 
-	AddGo(new Player());
+	//AddGo(new Player());
 
 	Scene::Init();
 

@@ -23,6 +23,7 @@ protected:
 	float moveSpeed = 100.f;
 
 	int shootCount = 0;
+	int ballCount = 0;
 	int patternCount = 0;
 
 	bool isMovingLeft = false;
