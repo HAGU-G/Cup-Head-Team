@@ -15,14 +15,13 @@ SceneDev2::~SceneDev2()
 
 void SceneDev2::Init()
 {
-	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
-	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(windowSize);
-	worldView.setCenter({0,-300.f});
-	uiView.setSize(windowSize);
-	uiView.setCenter(centerPos);
+	worldView.setSize(FRAMEWORK.GetStageViewSize());
+	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
 
-	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 150.f,50.f });
+	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 390.f,80.f });
+	player = new Player();
+	AddGo(player);
+
 	Scene::Init();
 }
 

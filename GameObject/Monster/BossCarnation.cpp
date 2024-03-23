@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BossCarnation.h"
 #include "Effect/EffectCarnationCreating.h"
+#include "Effect//EffectCarnationFireSeed.h"
+#include "Bullet/BulletCarnationBoomerang.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -22,52 +24,61 @@ void BossCarnation::Init()
 
 	mainBg = new SpriteGo("mainBg");
 	mainBg->SetTexture("resource/Sprite/stage02/flower_bg_main1.png");
-	mainBg->SetPosition({ 0.f,150.f });
+	mainBg->SetPosition({ 0.f,140.f });
 	mainBg->SetOrigin(Origins::BC);
 	mainBg->sortLayer = -1;
+	mainBg->SetScale({ 0.8f,0.8f });
 
 	skyBg = new SpriteGo("skyBg");
 	skyBg->SetTexture("resource/Sprite/stage02/flower_bg_sky.png");
-	skyBg->SetPosition({ 0.f,-290.f });
+	skyBg->SetPosition({ 0.f,-190.f });
 	skyBg->SetOrigin(Origins::BC);
 	skyBg->sortLayer = -2;
+	skyBg->SetScale({ 0.8f,0.8f });
 
 	cloudBg = new SpriteGo("cloudBg");
 	cloudBg->SetTexture("resource/Sprite/stage02/flower_bg_clouds_b.png");
-	cloudBg->SetPosition({ 0.f,-290.f });
+	cloudBg->SetPosition({ 0.f,-190.f });
 	cloudBg->SetOrigin(Origins::BC);
 	cloudBg->sortLayer = -2;
+	cloudBg->SetScale({ 0.8f,0.8f });
 
 	frontCloudBg = new SpriteGo("frontCloudBg");
 	frontCloudBg->SetTexture("resource/Sprite/stage02/flower_bg_clouds_a.png");
-	frontCloudBg->SetPosition({ 0.f,-290.f });
+	frontCloudBg->SetPosition({ 0.f,-190.f });
 	frontCloudBg->SetOrigin(Origins::BC);
 	frontCloudBg->sortLayer =-2;
+	frontCloudBg->SetScale({ 0.8f,0.8f });
 
 	cloudBg2 = new SpriteGo("cloudBg2");
 	cloudBg2->SetTexture("resource/Sprite/stage02/flower_bg_clouds_b.png");
-	cloudBg2->SetPosition({ cloudBg->GetGlobalBounds().width,-290.f});
+	cloudBg2->SetPosition({ cloudBg->GetGlobalBounds().width,-190.f});
 	cloudBg2->SetOrigin(Origins::BC);
 	cloudBg2->sortLayer = -2;
+	cloudBg2->SetScale({ 0.8f,0.8f });
 
 	frontCloudBg2 = new SpriteGo("frontCloudBg2");
 	frontCloudBg2->SetTexture("resource/Sprite/stage02/flower_bg_clouds_a.png");
-	frontCloudBg2->SetPosition({ frontCloudBg->GetGlobalBounds().width,-290.f});
+	frontCloudBg2->SetPosition({ frontCloudBg->GetGlobalBounds().width,-190.f});
 	frontCloudBg2->SetOrigin(Origins::BC);
 	frontCloudBg2->sortLayer = -2;
+	frontCloudBg2->SetScale({ 0.8f,0.8f });
 
 	frontBush = new SpriteGo("frontBush");
 	frontBush->SetTexture("resource/Sprite/stage02/flower_bg_fg-bush.png");
-	frontBush->SetPosition({ 310.f,140.f });
+	frontBush->SetPosition({ 310.f,80.f });
 	frontBush->SetOrigin(Origins::BL);
 	frontBush->sortLayer = 1;
+	frontBush->SetScale({ 0.8f,0.8f });
 
 	frontBg = new SpriteGo("frontBg");
 	frontBg->SetTexture("resource/Sprite/stage02/flower_bg_fg.png");
-	frontBg->SetPosition({ 0.f,220.f });
+	frontBg->SetPosition({ 0.f,150.f });
 	frontBg->SetOrigin(Origins::BC);
-	frontBg->SetScale({ 1.5f,1.f });
 	frontBg->sortLayer = 2;
+	frontBg->SetScale({ 0.8f,0.8f });
+
+	defaultPos = GetPosition();
 }
 
 void BossCarnation::Reset()
@@ -120,6 +131,7 @@ void BossCarnation::Update(float dt)
 	switch (state)
 	{
 	case BossCarnation::State::Idle:
+		SetPosition(defaultPos);
 		break;
 	case BossCarnation::State::FinalIdle:
 		break;
@@ -183,7 +195,10 @@ void BossCarnation::FaHigh()
 {
 	SetState(State::None);
 	animator.ClearEvent();
+	sf::Vector2f Pos = GetPosition();
+	SetPosition({ Pos.x + 160.f,Pos.y });
 	animator.Play("animations/carnationBossFa_High.csv");
+
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 
@@ -191,6 +206,8 @@ void BossCarnation::FaLow()
 {
 	SetState(State::None);
 	animator.ClearEvent();
+	sf::Vector2f Pos = GetPosition();
+	SetPosition({ Pos.x + 160.f,Pos.y + 20.f });
 	animator.Play("animations/carnationBossFa_Low.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
@@ -208,7 +225,17 @@ void BossCarnation::Creating()
 
 void BossCarnation::CreatingEffect()
 {
-	EffectCarnationCreating::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.8f,sprite.getPosition().y - sprite.getGlobalBounds().height*0.5f}, {1.f, 0.f}, scene);
+	EffectCarnationCreating::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height*0.5f}, {1.f, 0.f}, scene);
+	int random = Utils::RandomRange(1,100);
+	if (random < 100)
+	{
+		BulletCarnationBoomerang::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f }, { -1.f,0.f }, scene);
+	}
+}
+
+void BossCarnation::FireSeedEffect()
+{
+	EffectCarnationFireSeed::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.1f -10.f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.9f }, { 1.f,0.f }, scene);
 }
 
 void BossCarnation::FireSeed()
@@ -216,6 +243,13 @@ void BossCarnation::FireSeed()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carntionBossFireSeed.csv");
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 6, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 16, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 26, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 36, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 46, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 56, std::bind(&BossCarnation::FireSeedEffect, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 66, std::bind(&BossCarnation::FireSeedEffect, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 
@@ -223,6 +257,8 @@ void BossCarnation::Intro()
 {
 	SetState(State::None);
 	animator.ClearEvent();
+	sf::Vector2f Pos = GetPosition();
+	SetPosition({ Pos.x + 155.f,Pos.y });
 	animator.Play("animations/carnationBossIntro.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 	

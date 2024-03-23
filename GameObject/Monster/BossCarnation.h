@@ -26,6 +26,7 @@ protected:
 	SpriteGo* cloudBg2;
 	SpriteGo* frontCloudBg2;
 
+	sf::Vector2f defaultPos;
 
 	float cloudSpeed = -50.f;
 	float frontCloudSpeed = -40.f;
@@ -53,6 +54,7 @@ public:
 	void FaLow();
 	void Creating();
 	void CreatingEffect();
+	void FireSeedEffect();
 	void FireSeed();
 	void Intro();
 	void Idle();

@@ -15,7 +15,7 @@ class SceneMgr : public Singleton<SceneMgr>
 protected:
 	std::vector<Scene*> scenes;
 
-	SceneIds startScene = SceneIds::SceneTitle;
+	SceneIds startScene = SceneIds::SceneDev2;
 	SceneIds currentScene = startScene;
 	SceneIds nextScene = SceneIds::None;
 	bool isDeveloperMode = false;

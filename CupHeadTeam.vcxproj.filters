@@ -39,6 +39,9 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
     <ClCompile Include="GameObject\Stage\Stage01.cpp" />
     <ClCompile Include="Scene\SceneTitle.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationCreating.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationFireSeed.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarnationBoomerang.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -83,6 +86,9 @@
     <ClInclude Include="Scene\SceneDev2.h" />
     <ClInclude Include="GameObject\Stage\Stage01.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationCreating.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationFireSeed.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarnationBoomerang.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

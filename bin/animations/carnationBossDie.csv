@@ -1,15 +1,15 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
 carnationBossDie,15,1,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
-resource/carnationBossDie.png,0,0,453,634,8
-resource/carnationBossDie.png,453,0,456,634,8
-resource/carnationBossDie.png,909,0,458,634,8
-resource/carnationBossDie.png,1367,0,462,634,8
-resource/carnationBossDie.png,1829,0,466,634,8
-resource/carnationBossDie.png,2295,0,476,634,8
-resource/carnationBossDie.png,2771,0,479,634,8
-resource/carnationBossDie.png,3250,0,490,634,8
-resource/carnationBossDie.png,3740,0,475,634,8
-resource/carnationBossDie.png,4215,0,468,634,8
-resource/carnationBossDie.png,4683,0,491,634,8
-resource/carnationBossDie.png,5174,0,461,634,8
+resource/carnationBossDie.png,0,0,453,634,7
+resource/carnationBossDie.png,453,0,456,634,7
+resource/carnationBossDie.png,909,0,458,634,7
+resource/carnationBossDie.png,1367,0,462,634,7
+resource/carnationBossDie.png,1829,0,466,634,7
+resource/carnationBossDie.png,2295,0,476,634,7
+resource/carnationBossDie.png,2771,0,479,634,7
+resource/carnationBossDie.png,3250,0,490,634,7
+resource/carnationBossDie.png,3740,0,475,634,7
+resource/carnationBossDie.png,4215,0,468,634,7
+resource/carnationBossDie.png,4683,0,491,634,7
+resource/carnationBossDie.png,5174,0,461,634,7
