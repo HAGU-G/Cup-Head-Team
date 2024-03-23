@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BossRibby.h"
 #include "SceneGame.h"
+#include "Bullet/BulletRibbyShoot.h"
+#include "Bullet/BulletRibbyBall.h"
 
 BossRibby::BossRibby(const std::string& name)
     :ObjectMonster(name)
@@ -151,8 +153,32 @@ void BossRibby::MoveToRight(float dt)
 
 void BossRibby::Shoot()
 {
-    std::cout << "주먹 발사" << std::endl;
+    float yOffset;
+    if (shootCount == 0 || shootCount == 4) 
+    {
+        yOffset = sprite.getGlobalBounds().height * 1.f / 8.f;
+    }
+    else if (shootCount == 1 || shootCount == 3 || shootCount == 5) 
+    {
+        yOffset = sprite.getGlobalBounds().height * 4.f / 8.f;
+    }
+    else 
+    {
+        yOffset = sprite.getGlobalBounds().height * 7.f / 8.f;
+    }
+
+    sf::Vector2f bulletPosition = sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + yOffset);
+
+    if (shootCount < 7)
+    {
+        BulletRibbyShoot::Create(bulletPosition, { -1.f, 0.f }, scene);
+    }
     shootCount++;
+    if (shootCount >= 7) 
+    {
+        shootCount = 0;
+        SetState(State::Idle);
+    }
 }
 
 void BossRibby::ShootEnd()
@@ -161,6 +187,16 @@ void BossRibby::ShootEnd()
 
 void BossRibby::Ball()
 {
+    sf::Vector2f ballDirection;
+    if (ballCount == 0 || ballCount == 2)
+    {
+        ballDirection = {-1,1};
+    }
+    else
+    {
+        ballDirection = { -1,-1 };
+    }
+    BulletRibbyBall::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.3f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), ballDirection, scene);
     std::cout << ballCount << std::endl;
     ballCount++;
 }
@@ -242,7 +278,6 @@ void BossRibby::SetState(State state)
             }
             animator.ClearEvent();
             animator.AddEvent("animations/RibbyShooting.csv", 4, std::bind(&BossRibby::Shoot, this));
-            animator.AddEvent("animations/RibbyShooting.csv", 8, std::bind(&BossRibby::Shoot, this));
             preState = State::Pattern1;
             break;
         case BossRibby::State::Pattern2:
@@ -256,10 +291,10 @@ void BossRibby::SetState(State state)
                 animator.PlayQueue("animations/RibbyBall.csv");
             }
             animator.ClearEvent();
-            animator.AddEvent("animations/RibbyBall.csv", 17, std::bind(&BossRibby::Ball, this));
+            animator.AddEvent("animations/RibbyBall.csv", 15, std::bind(&BossRibby::Ball, this));
             preState = State::Pattern2;
             break;
-        case BossRibby::State::Roll:
+        case BossRibby::State::Roll:  //수정이 필요함 (화면 경계 검사 :  밖에 나가면 )
             animator.Play("animations/RibbyRoll.csv");
             animator.PlayQueue("animations/RibbyRolling.csv");
             if (preState == State::Pattern1) 

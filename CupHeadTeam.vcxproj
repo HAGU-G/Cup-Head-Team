@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Bullet\BulletRibbyBall.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletRibbyShoot.cpp" />
     <ClCompile Include="GameObject\Monster\BossRibby.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarrotRing.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarrotBoom.cpp" />
@@ -181,6 +183,8 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Bullet\BulletRibbyBall.h" />
+    <ClInclude Include="GameObject\Bullet\BulletRibbyShoot.h" />
     <ClInclude Include="GameObject\Monster\BossRibby.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarrotBoom.h" />
