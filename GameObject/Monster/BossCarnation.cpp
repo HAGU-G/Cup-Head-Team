@@ -129,6 +129,13 @@ void BossCarnation::Update(float dt)
 			FireSeed();
 		}
 	}
+	else if (state == State::FinalIdle)
+	{
+		if (InputMgr::GetKeyDown(sf::Keyboard::Num5))
+		{
+			FinalFiringPollen();
+		}
+	}
 
 	switch (state)
 	{
@@ -136,6 +143,7 @@ void BossCarnation::Update(float dt)
 		SetPosition(defaultPos);
 		break;
 	case BossCarnation::State::FinalIdle:
+		SetPosition(defaultPos);
 		break;
 	default:
 		break;
@@ -313,6 +321,16 @@ void BossCarnation::FinalIdle()
 	SetState(State::FinalIdle);
 }
 
+void BossCarnation::FinalFiringPollen()
+{
+	SetState(State::None);
+	animator.ClearEvent();
+	sf::Vector2f Pos = GetPosition();
+	SetPosition({ Pos.x - 50.f,Pos.y });
+	animator.Play("animations/carnationFiringPollen.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
+}
+
 void BossCarnation::Death()
 {
 	SetState(State::None);
@@ -346,7 +364,7 @@ void BossCarnation::SetState(State state)
 		preState = State::Idle;
 		break;
 	case BossCarnation::State::FinalIdle:
-		animator.Play("animations/carnationBossFinalIdle.csv");
+		animator.Play("animations/carnationFinalIdle.csv");
 		preState = State::FinalIdle;
 		break;
 	default:

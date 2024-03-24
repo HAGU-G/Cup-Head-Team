@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletCarnationFireSeed.h"
+#include "BulletCarnationAcon.h"
 
 BulletCarnationFireSeed::BulletCarnationFireSeed(const std::string& name)
 	:ObjectBullet(name)
@@ -85,4 +86,12 @@ void BulletCarnationFireSeed::SetRotation(float value)
 void BulletCarnationFireSeed::Vine()
 {
 	animator.Play("animations/carnationSeedVine.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::VineReturn, this));
+}
+
+void BulletCarnationFireSeed::VineReturn()
+{
+	BulletCarnationAcon::Create({ position.x + sprite.getGlobalBounds().width/2,position.y - sprite.getGlobalBounds().height}, {1.f,1.f}, scene);//test
+	animator.Play("animations/carnationSeedVineReturn.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
 }

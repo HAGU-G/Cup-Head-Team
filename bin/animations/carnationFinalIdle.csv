@@ -1,0 +1,21 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationFinalIdle,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationFinalIdle.png,0,0,548,722,7
+resource/carnationFinalIdle.png,548,0,548,722,7
+resource/carnationFinalIdle.png,1096,0,548,722,7
+resource/carnationFinalIdle.png,1644,0,548,722,7
+resource/carnationFinalIdle.png,2192,0,548,722,7
+resource/carnationFinalIdle.png,2740,0,548,722,7
+resource/carnationFinalIdle.png,3288,0,548,722,7
+resource/carnationFinalIdle.png,3836,0,548,722,7
+resource/carnationFinalIdle.png,4384,0,548,722,7
+resource/carnationFinalIdle.png,4932,0,548,722,7
+resource/carnationFinalIdle.png,5480,0,548,722,7
+resource/carnationFinalIdle.png,6028,0,548,722,7
+resource/carnationFinalIdle.png,6576,0,548,722,7
+resource/carnationFinalIdle.png,7124,0,548,722,7
+resource/carnationFinalIdle.png,7672,0,548,722,7
+resource/carnationFinalIdle.png,8220,0,548,722,7
+resource/carnationFinalIdle.png,8768,0,548,722,7
+resource/carnationFinalIdle.png,9316,0,548,722,7

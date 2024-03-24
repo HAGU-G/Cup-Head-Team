@@ -61,6 +61,7 @@ public:
 	void Idle();
 	void FinalIntro();
 	void FinalIdle();
+	void FinalFiringPollen();
 	void Death();
 	void OnDie();
 

@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-carnationSeedVine,15,0,,
+carnationSeedVine,15,0,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/carnationSeedVine.png,0,0,49,332,7
 resource/carnationSeedVine.png,49,0,49,332,7

@@ -26,5 +26,6 @@ public:
 
 	void SetRotation(float value) override;
 	void Vine();
+	void VineReturn();
 };
 
