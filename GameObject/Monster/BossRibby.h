@@ -28,6 +28,7 @@ protected:
 
 	bool isMovingLeft = false;
 	bool isMovingRight = false;
+	bool isRolling = false;
 
 	sf::Vector2f moveLeft = sf::Vector2f(-1, 0);
 	sf::Vector2f moveRight = sf::Vector2f(1, 0);

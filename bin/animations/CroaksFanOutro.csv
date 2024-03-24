@@ -1,0 +1,17 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksFanOutro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksFanOutro.png,0,0,351,603,7
+resource/CroaksFanOutro.png,351,0,346,603,7
+resource/CroaksFanOutro.png,697,0,342,603,7
+resource/CroaksFanOutro.png,1039,0,349,603,7
+resource/CroaksFanOutro.png,1388,0,389,603,7
+resource/CroaksFanOutro.png,1777,0,399,603,7
+resource/CroaksFanOutro.png,2176,0,389,603,7
+resource/CroaksFanOutro.png,2565,0,398,603,7
+resource/CroaksFanOutro.png,2963,0,420,603,7
+resource/CroaksFanOutro.png,3383,0,429,603,7
+resource/CroaksFanOutro.png,3812,0,434,603,7
+resource/CroaksFanOutro.png,4246,0,470,603,7
+resource/CroaksFanOutro.png,4716,0,450,603,7
+resource/CroaksFanOutro.png,5166,0,443,603,7

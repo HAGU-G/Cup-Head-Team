@@ -60,7 +60,7 @@ void BossRibby::Update(float dt)
         {
             SetState(State::Pattern1);
         }
-        if (PatternTimer(dt) && hp <= maxHp * 0.60)
+        if (PatternTimer(dt) && hp <= maxHp * 0.40)
         {
             SetState(State::Pattern2);
         }
@@ -89,10 +89,17 @@ void BossRibby::Update(float dt)
         }
         break;
     case BossRibby::State::Roll:
-        //if (/*왼쪽 화면으로 나가면*/)
-        //{
-        //    isMovingLeft = false;
-        //}
+        if (isRolling) 
+        {
+            if (isMovingRight) 
+            {
+                MoveToRight(dt);
+            }
+            if (isMovingLeft) 
+            {
+                MoveToLeft(dt);
+            }
+        }
         break;
     }
 
@@ -108,9 +115,13 @@ void BossRibby::LateUpdate(float dt)
     ObjectMonster::LateUpdate(dt);
     if (InputMgr::GetKeyDown(sf::Keyboard::Space))
     {
-        hp = maxHp * 0.50f;
         SetState(State::Pattern2);
     }
+    if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+    {
+        SetState(State::Pattern1);
+    }
+
 }
 
 void BossRibby::Intro()
@@ -136,7 +147,15 @@ void BossRibby::Idle()
 
 void BossRibby::Roll()
 {
+    isRolling = false;
     SetState(State::Roll);
+    animator.Play("animations/RibbyRoll.csv"); // Roll 애니메이션 재생
+    animator.AddEvent("animations/RibbyRoll.csv", animator.GetCurrentClip()->GetTotalFrame(), [this]() 
+        {
+        // Roll 애니메이션이 끝나면 Rolling 애니메이션 시작
+        animator.Play("animations/RibbyRolling.csv");
+        isRolling = true;
+        });
 }
 
 void BossRibby::MoveToLeft(float dt)
@@ -291,19 +310,20 @@ void BossRibby::SetState(State state)
                 animator.PlayQueue("animations/RibbyBall.csv");
             }
             animator.ClearEvent();
-            animator.AddEvent("animations/RibbyBall.csv", 15, std::bind(&BossRibby::Ball, this));
+            animator.AddEvent("animations/RibbyBall.csv", 23, std::bind(&BossRibby::Ball, this));
             preState = State::Pattern2;
             break;
-        case BossRibby::State::Roll:  //수정이 필요함 (화면 경계 검사 :  밖에 나가면 )
-            animator.Play("animations/RibbyRoll.csv");
-            animator.PlayQueue("animations/RibbyRolling.csv");
+        case BossRibby::State::Roll:  //수정이 필요함 (화면 경계 검사 :  밖에 나가면 다음 intro2실행)
+            Roll();
             if (preState == State::Pattern1) 
             {
                 isMovingLeft = true;
+                isMovingRight = false;
             }
             else if (preState == State::Pattern2) 
             {
                 isMovingRight = true;
+                isMovingLeft = false;
             }
             preState = State::Roll;
             break;
