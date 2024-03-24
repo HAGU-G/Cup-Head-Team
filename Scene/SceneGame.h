@@ -30,7 +30,7 @@ protected:
 	std::string fightTextMiddle;
 	std::string fightTextRight = ".png";
 
-
+	bool pauseWorld = false;
 
 
 public:
@@ -51,5 +51,8 @@ public:
 
 	void SetStatus(Status status);
 	inline Status GetStatus() const { return status; }
+
+	inline void Pause() { pauseWorld = true; }
+	inline void Play() { pauseWorld = false; }
 };
 

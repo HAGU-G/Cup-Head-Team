@@ -65,7 +65,7 @@ void SceneGame::Exit()
 
 void SceneGame::Update(float dt)
 {
-	Scene::Update(dt);
+	Scene::Update2(dt, pauseWorld);
 	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
 
 	switch (status)
@@ -141,15 +141,17 @@ void SceneGame::SetStatus(Status status)
 	}
 	case SceneGame::Status::Victory:
 	{
+		Pause();
 		SOUND_MGR.PlaySfx("resource/Menu/sfx_level_announcer_knockout_0004.wav");
 		SOUND_MGR.PlaySfx("resource/Menu/sfx_level_knockout_bell.wav");
 		ObjectEffect* oe = new ObjectEffect("FightText");
 		oe->SetScale({ uiView.getSize().x / 512.f,uiView.getSize().x / 512.f });
 		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
 		oe->GetAniamtor().Play("animations/fightVictory.csv");
+		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 23, std::bind(&SceneGame::Play,this));
 		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		timer = 0.f;
-		timeLimit = 3.f;
+		timeLimit = 10.f;
 		break;
 	}
 	case SceneGame::Status::Defeat:

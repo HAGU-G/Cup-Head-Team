@@ -44,6 +44,7 @@ public:
 	virtual void Exit();
 
 	virtual void Update(float dt);
+	virtual void Update2(float dt, bool pauseWorld = false);
 	virtual void LateUpdate(float dt);
 	virtual void FixedUpdate(float dt);
 	virtual void Draw(sf::RenderTexture& window);
