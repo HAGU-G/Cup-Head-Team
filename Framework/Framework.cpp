@@ -142,14 +142,20 @@ void Framework::LoadPostEffect()
 
 void Framework::Pass2(float dt)
 {
+	static int flimCount = 0;
 	filmTimer += dt;
 	if (filmTimer >= filmInterval)
 	{
 		filmTimer = 0.f;
-		filmNum++;
-		filmNumReverse--;
+		flimCount++;
+		if (flimCount >= 33)
+		{
+			flimCount = 0;
+			filmDirection = 1 + -2 * Utils::RandomRange(0, 2);
+		}
+		filmNum += filmDirection;
 		if (filmNum > 126) { filmNum = 0; }
-		if (filmNumReverse < 0) { filmNumReverse = 126; }
+		if (filmNum < 0) { filmNum = 126; }
 	}
 	if (filmNum >= 100)
 	{

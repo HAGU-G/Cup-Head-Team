@@ -27,7 +27,7 @@ protected:
 
 	sf::Sprite filmGrain;
 	int filmNum = -1;
-	int filmNumReverse = 127;
+	int filmDirection = 1;
 	float filmInterval = 0.05f;
 	float filmTimer = filmInterval;
 	std::string left = "resource/Film/cuphead_screen_fx_";

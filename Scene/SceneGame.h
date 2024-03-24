@@ -18,11 +18,21 @@ public:
 protected:
 	std::vector<ObjectMonster*> MonsterList;
 
-
-
 	Status status = Status::None;
 	float timer = 0.f;
 	float timeLimit = 2.f;
+
+	std::string announcerLeft = "resource/Menu/sfx_level_announcer_000";
+	std::string announcerRight = ".wav";
+
+	std::string readyLeft = "resource/FightText/FightText_GetReady_";
+	std::string victoryLeft = "resource/FightText/FightText_KO_";
+	std::string fightTextMiddle;
+	std::string fightTextRight = ".png";
+
+
+
+
 public:
 
 	SceneGame(SceneIds id);
