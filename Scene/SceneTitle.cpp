@@ -295,6 +295,7 @@ void SceneTitle::ShowStageCard(bool value)
 	{
 		hint.stop();
 		bgm.setVolume(50.f);
+		stageCardNotReady->SetActive(value);
 	}
 
 	isShowStageCard = value;
