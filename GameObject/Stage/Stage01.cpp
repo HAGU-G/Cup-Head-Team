@@ -105,7 +105,8 @@ void Stage01::Update(float dt)
 	case 3:
 		if (carrot->GetHp() <= 0)
 		{
-			sceneGame->Victory();
+			sceneGame->SetStatus(SceneGame::Status::Victory);
+			phase = -1;
 		}
 		carrotHp = carrot->GetHp();
 		break;

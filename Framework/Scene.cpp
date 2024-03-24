@@ -56,6 +56,7 @@ void Scene::Release()
 
 	gameObjects.clear();
 	uiGameObjects.clear();
+	removeGameObjects.clear();
 }
 
 void Scene::Enter()
@@ -84,11 +85,16 @@ void Scene::Exit()
 
 void Scene::Update(float dt)
 {
+	Update2(dt);
+}
+
+void Scene::Update2(float dt, bool pauseWorld)
+{
 	for (auto obj : gameObjects)
 	{
 		if (obj->GetActive())
 		{
-			obj->Update(dt);
+			obj->Update(pauseWorld ? 0.f : dt);
 		}
 	}
 

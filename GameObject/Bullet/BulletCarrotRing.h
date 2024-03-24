@@ -15,7 +15,7 @@ public:
 	static BulletCarrotRing* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 	void Init() override;
-
+	void Update(float dt) override;
 	void OnDie() override;
 };
 
