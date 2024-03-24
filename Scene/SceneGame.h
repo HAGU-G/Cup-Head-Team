@@ -4,9 +4,25 @@
 
 class SceneGame : public Scene
 {
+public:
+	enum class Status
+	{
+		None = -1,
+		Intro,
+		Fight,
+		Victory,
+		Defeat,
+		Exit,
+	};
+
 protected:
 	std::vector<ObjectMonster*> MonsterList;
 
+
+
+	Status status = Status::None;
+	float timer = 0.f;
+	float timeLimit = 2.f;
 public:
 
 	SceneGame(SceneIds id);
@@ -23,6 +39,7 @@ public:
 	void AddMonster(ObjectMonster* monster);
 	std::vector<ObjectMonster*> getAllMonsters() const;
 
-	void Victory();
+	void SetStatus(Status status);
+	inline Status GetStatus() const { return status; }
 };
 

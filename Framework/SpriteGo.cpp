@@ -91,6 +91,13 @@ void SpriteGo::SetFlipY(bool filp)
 	SetScale(scale);
 }
 
+void SpriteGo::SetAlpha(sf::Uint8 alpha)
+{
+	sf::Color color = sprite.getColor();
+	color.a = alpha;
+	sprite.setColor(color);
+}
+
 void SpriteGo::Update(float dt)
 {
 	GameObject::Update(dt);

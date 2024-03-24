@@ -56,6 +56,7 @@ void Scene::Release()
 
 	gameObjects.clear();
 	uiGameObjects.clear();
+	removeGameObjects.clear();
 }
 
 void Scene::Enter()

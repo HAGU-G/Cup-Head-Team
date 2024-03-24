@@ -29,10 +29,14 @@ public:
 	void SetScale(const sf::Vector2f& scale) override;
 	void SetFlipX(bool filp) override;
 	void SetFlipY(bool filp) override;
-	
+	void SetAlpha(sf::Uint8 alpha);
+
 	void Update(float dt) override;
 	void Reset() override;
 	void Draw(sf::RenderTexture& window) override;
+
+	inline void UseRenderStates(bool value) { useRenderStates = value; }
+	inline sf::RenderStates& GetRenderStates() { return renderStates; }
 
 };
 
