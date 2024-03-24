@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BulletCarrotRing.h"
 #include <Effect/ObjectEffect.h>
+#include "SceneGame.h"
 
 BulletCarrotRing::BulletCarrotRing(const std::string& name)
 	:ObjectBullet(name)
@@ -11,7 +12,7 @@ BulletCarrotRing* BulletCarrotRing::Create(const sf::Vector2f& pos, const sf::Ve
 {
 	BulletCarrotRing* bcr = new BulletCarrotRing();
 	bcr->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bcr);
 	return bcr;
 }
 

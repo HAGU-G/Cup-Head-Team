@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Bullet\BulletCarnationFireSeed.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarnationAcon.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationBoomerang.cpp" />
     <ClCompile Include="GameObject\Effect\EffectCarnationFireSeed.cpp" />
     <ClCompile Include="GameObject\Effect\EffectCarnationCreating.cpp" />
@@ -183,6 +185,8 @@
     <ClCompile Include="Scene\SceneDev2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Bullet\BulletCarnationFireSeed.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarnationAcon.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationBoomerang.h" />
     <ClInclude Include="GameObject\Effect\EffectCarnationFireSeed.h" />
     <ClInclude Include="GameObject\Effect\EffectCarnationCreating.h" />

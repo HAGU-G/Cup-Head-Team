@@ -56,6 +56,7 @@ public:
 	void CreatingEffect();
 	void FireSeedEffect();
 	void FireSeed();
+	void AddSeed();
 	void Intro();
 	void Idle();
 	void FinalIntro();

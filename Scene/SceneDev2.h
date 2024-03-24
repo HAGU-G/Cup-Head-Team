@@ -7,7 +7,6 @@ class Player;
 class SceneDev2 : public Scene
 {
 protected:
-	sf::CircleShape circle;
 	SpriteGo* background = nullptr;
 	Player* player = nullptr;
 public:

@@ -3,6 +3,8 @@
 #include "Effect/EffectCarnationCreating.h"
 #include "Effect//EffectCarnationFireSeed.h"
 #include "Bullet/BulletCarnationBoomerang.h"
+#include "Bullet/BulletCarnationAcon.h"
+#include "Bullet/BulletCarnationFireSeed.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -226,8 +228,14 @@ void BossCarnation::Creating()
 void BossCarnation::CreatingEffect()
 {
 	EffectCarnationCreating::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height*0.5f}, {1.f, 0.f}, scene);
-	int random = Utils::RandomRange(1,100);
-	if (random < 100)
+
+	if (Utils::RandomRange(0, 100) < 50)
+	{
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f - 100.f }, { -1.f,0.f }, scene);
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f }, { -1.f,0.f }, scene);
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f + 100.f }, { -1.f,0.f }, scene);
+	}
+	else
 	{
 		BulletCarnationBoomerang::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f }, { -1.f,0.f }, scene);
 	}
@@ -250,7 +258,30 @@ void BossCarnation::FireSeed()
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 46, std::bind(&BossCarnation::FireSeedEffect, this));
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 56, std::bind(&BossCarnation::FireSeedEffect, this));
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 66, std::bind(&BossCarnation::FireSeedEffect, this));
+
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 26, std::bind(&BossCarnation::AddSeed, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 36, std::bind(&BossCarnation::AddSeed, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 46, std::bind(&BossCarnation::AddSeed, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 56, std::bind(&BossCarnation::AddSeed, this));
+	animator.AddEvent("animations/carntionBossFireSeed.csv", 66, std::bind(&BossCarnation::AddSeed, this));
+
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
+}
+
+void BossCarnation::AddSeed()
+{
+	if (Utils::RandomRange(0, 100) <= 33)
+	{
+		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f,800.f)-200, position.y - 800 }, { 0.f , 1.f }, scene, 1);
+	}
+	else if (Utils::RandomRange(0, 100) <= 66)
+	{
+		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 2);
+	}
+	else if(Utils::RandomRange(0,100) <= 100)
+	{
+		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 0);
+	}
 }
 
 void BossCarnation::Intro()

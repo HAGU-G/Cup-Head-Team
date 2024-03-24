@@ -43,11 +43,9 @@ void SceneDev2::Exit()
 void SceneDev2::Update(float dt)
 {
 	Scene::Update(dt);
-
 }
 
 void SceneDev2::Draw(sf::RenderTexture& window)
 {
-	window.draw(circle);
 	Scene::Draw(window);
 }

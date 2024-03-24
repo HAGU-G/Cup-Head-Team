@@ -1,0 +1,36 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationSeedPink,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationSeedPink.png,0,0,43,59,7
+resource/carnationSeedPink.png,43,0,42,59,7
+resource/carnationSeedPink.png,85,0,43,59,7
+resource/carnationSeedPink.png,128,0,43,59,7
+resource/carnationSeedPink.png,171,0,44,59,7
+resource/carnationSeedPink.png,215,0,44,59,7
+resource/carnationSeedPink.png,259,0,43,59,7
+resource/carnationSeedPink.png,302,0,44,59,7
+resource/carnationSeedPink.png,346,0,41,59,7
+resource/carnationSeedPink.png,387,0,43,59,7
+resource/carnationSeedPink.png,430,0,43,59,7
+resource/carnationSeedPink.png,473,0,43,59,7
+resource/carnationSeedPink.png,516,0,40,59,7
+resource/carnationSeedPink.png,556,0,40,59,7
+resource/carnationSeedPink.png,596,0,40,59,7
+resource/carnationSeedPink.png,636,0,40,59,7
+resource/carnationSeedPink.png,676,0,41,59,7
+resource/carnationSeedPink.png,717,0,40,59,7
+resource/carnationSeedPink.png,757,0,39,59,7
+resource/carnationSeedPink.png,796,0,39,59,7
+resource/carnationSeedPink.png,835,0,39,59,7
+resource/carnationSeedPink.png,874,0,39,59,7
+resource/carnationSeedPink.png,913,0,40,59,7
+resource/carnationSeedPink.png,953,0,39,59,7
+resource/carnationSeedPink.png,992,0,42,59,7
+resource/carnationSeedPink.png,1034,0,38,59,7
+resource/carnationSeedPink.png,1072,0,41,59,7
+resource/carnationSeedPink.png,1113,0,39,59,7
+resource/carnationSeedPink.png,1152,0,41,59,7
+resource/carnationSeedPink.png,1193,0,41,59,7
+resource/carnationSeedPink.png,1234,0,39,59,7
+resource/carnationSeedPink.png,1273,0,39,59,7
+resource/carnationSeedPink.png,1312,0,41,59,7
