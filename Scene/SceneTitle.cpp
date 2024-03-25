@@ -4,7 +4,7 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 #include "UI/ObjectButton.h"
-#include "Stage/Stage03.h"
+#include "UI/ObjectOption.h"
 
 SceneTitle::SceneTitle(SceneIds id)
 	:Scene(id)
@@ -126,160 +126,15 @@ void SceneTitle::Init()
 	AddGo(stageCardTitle, Ui);
 	AddGo(stageCardNotReady, Ui);
 
-	//옵션
-	optionBack = new SpriteGo("Option");
-	optionAudio = new ObjectButton("Option");
-	optionVisual = new ObjectButton("Option");
-	optionEscape = new ObjectButton("Option");
-
-	optionAudio->SetNextButton(optionVisual);
-	optionVisual->SetNextButton(optionEscape);
-	optionEscape->SetNextButton(optionAudio);
-
-	optionBack->SetTexture("resource/Menu/pause_menu.png");
-	optionBack->SetOrigin(Origins::MC);
-
-	optionAudio->SetCharacterSize(textSize);
-	optionVisual->SetCharacterSize(textSize);
-	optionEscape->SetCharacterSize(textSize);
-
-	optionAudio->SetString(L"오디오");
-	optionVisual->SetString(L"비주얼");
-	optionEscape->SetString(L"이전");
-
-	optionBack->SetPosition(uiView.getCenter());
-	buttonPos = { 0.f, float(-textSize * 2) };
-	optionAudio->SetPosition(uiView.getCenter() + buttonPos + sf::Vector2f(textSize * 0.05f, 0.f));
-	buttonPos.y += textSize;
-	optionVisual->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize * 2.f;
-	optionEscape->SetPosition(uiView.getCenter() + buttonPos);
-
-	optionBack->SetScale(scaleVec);
-	sf::Color colorSelect = { 200,50,50,255 };
-	optionAudio->SetColorSelect(colorSelect);
-	optionVisual->SetColorSelect(colorSelect);
-	optionEscape->SetColorSelect(colorSelect);
-
-	optionBack->SetActive(false);
-	optionAudio->SetActive(false);
-	optionVisual->SetActive(false);
-	optionEscape->SetActive(false);
-
-	optionAudio->SetFunction([this]() {
-		ShowOptionAudio();
-		return optionAudio;
-		});
-	optionVisual->SetFunction([this]() {
-		ShowOptionVisual();
-		return optionVisual;
-		});
-	optionEscape->SetFunction([this]() {
-		SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
-		if (isOptionSelect)
-		{
-			if (audioText->GetActive()) { ShowOptionAudio(false); }
-			if (visualText->GetActive()) { ShowOptionVisual(false); }
-		}
-		else
-		{
-			ShowOption(false);
-		}
-
-		return optionEscape;
-		});
-
-	AddGo(optionBack, Ui);
-	AddGo(optionAudio, Ui);
-	AddGo(optionVisual, Ui);
-	AddGo(optionEscape, Ui);
-
-	//오디오 설정
-	audioText = new TextGo("OptionAudio");
-	audioMaster = new ObjectButton("OptionAudio");
-	audioSfx = new ObjectButton("OptionAudio");
-	audioBgm = new ObjectButton("OptionAudio");
-
-	audioMaster->SetNextButton(audioSfx);
-	audioSfx->SetNextButton(audioBgm);
-	audioBgm->SetNextButton(optionEscape, false);
-
-	audioText->SetCharacterSize(textSize);
-	audioMaster->SetCharacterSize(textSize);
-	audioSfx->SetCharacterSize(textSize);
-	audioBgm->SetCharacterSize(textSize);
-
-	audioText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"마스터 볼륨: \n  SFX 볼륨: \n  음악 볼륨: ", textSize, { 70, 70, 70, 255 });
-	audioMaster->SetString("----------l");
-	audioSfx->SetString("----------l");
-	audioBgm->SetString("----------l");
-
-	audioMaster->SetColorSelect(colorSelect);
-	audioSfx->SetColorSelect(colorSelect);
-	audioBgm->SetColorSelect(colorSelect);
-
-	audioText->SetActive(false);
-	audioMaster->SetActive(false);
-	audioSfx->SetActive(false);
-	audioBgm->SetActive(false);
-
-	buttonPos = { 0.f, float(-textSize * 3) };
-	audioText->SetPosition(uiView.getCenter() + buttonPos);
-	audioMaster->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize;
-	audioSfx->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize;
-	audioBgm->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize;
-
-	AddGo(audioText, Ui);
-	AddGo(audioMaster, Ui);
-	AddGo(audioSfx, Ui);
-	AddGo(audioBgm, Ui);
-
-	//그래픽 설정
-	visualText = new TextGo("OptionVisual");
-	visualBleeding = new ObjectButton("OptionVisual");
-
-	visualBleeding->SetNextButton(optionEscape, false);
-
-	visualText->SetCharacterSize(textSize);
-	visualBleeding->SetCharacterSize(textSize);
-
-	visualText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"색 번짐: ", textSize, { 70, 70, 70, 255 });
-	visualBleeding->SetString("-----l-----");
-
-	visualBleeding->SetColorSelect(colorSelect);
-
-	visualText->SetActive(false);
-	visualBleeding->SetActive(false);
-
-	buttonPos = { 0.f, float(-textSize * 3) };
-	visualText->SetPosition(uiView.getCenter() + buttonPos);
-	visualBleeding->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize;
-
-	AddGo(visualText, Ui);
-	AddGo(visualBleeding, Ui);
-
 	//Init
 	Scene::Init();
 
-	optionAudio->SetOrigin(Origins::TC);
-	optionVisual->SetOrigin(Origins::TC);
-	optionEscape->SetOrigin(Origins::TC);
-
-	audioMaster->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
-	audioSfx->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
-	audioBgm->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
-	audioText->SetOrigin(Origins::TR);
-	audioMaster->SetOrigin(Origins::TL);
-	audioSfx->SetOrigin(Origins::TL);
-	audioBgm->SetOrigin(Origins::TL);
-
-	visualBleeding->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
-	visualText->SetOrigin(Origins::TR);
-	visualBleeding->SetOrigin(Origins::TL);
+	//옵션 버튼
+	optionCard = dynamic_cast<ObjectOption*>(AddGo(new ObjectOption("OptionCard")));
+	optionCard->SetScene(this);
+	optionCard->Init();
+	optionCard->Reset();
+	optionCard->SetActive(false);
 
 	titleReady = true;
 }
@@ -302,8 +157,6 @@ void SceneTitle::Enter()
 	option->UnSelect();
 	exit->UnSelect();
 	currentButton = start;
-
-	ShowStageCard(false);
 
 	titleReady = true;
 }
@@ -328,6 +181,11 @@ void SceneTitle::Update(float dt)
 	if (!SOUND_MGR.IsBgmPlaying())
 	{
 		SOUND_MGR.PlayBgm("resource/Menu/MUS_Intro_DontDealWithDevil.wav", false, true);
+	}
+
+	if (isShowOption)
+	{
+		return;
 	}
 
 	if (isShowStageCard)
@@ -378,54 +236,13 @@ void SceneTitle::Update(float dt)
 		}
 
 		//버튼 클릭
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !optionCard->GetActive())
 		{
 			ButtonPress();
 		}
-
-		if (isOptionSelect && InputMgr::GetKeyDown(sf::Keyboard::Escape))
+		if (!isShowOption && optionCard->GetActive())
 		{
-			optionEscape->Press();
-		}
-
-		if (isShowOption)
-		{
-			if (InputMgr::GetKeyDown(sf::Keyboard::Left))
-			{
-				std::string indicator = currentButton->GetText().getString();
-				float value = 10.f;
-				if ((value *= indicator.find('l')) > 0.f)
-				{
-					indicator.erase(indicator.begin());
-					indicator.push_back('-');
-					currentButton->SetString(indicator);
-					if (currentButton == audioMaster) { sf::Listener::setGlobalVolume(value - 10.f); }
-					else if (currentButton == audioSfx) { SOUND_MGR.SetSfxVolume(value - 10.f); }
-					else if (currentButton == audioBgm) { SOUND_MGR.SetBgmVolume(value - 10.f); }
-					else if (currentButton == visualBleeding) { FRAMEWORK.SetBleedingValue((value - 10.f) / 100.f); }
-					SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
-				}
-			}
-			else if (InputMgr::GetKeyDown(sf::Keyboard::Right))
-			{
-				std::string indicator = currentButton->GetText().getString();
-				float value = 10.f;
-				if ((value *= indicator.find('l')) < 100.f)
-				{
-					indicator.pop_back();
-					indicator.insert(indicator.begin(), '-');
-					currentButton->SetString(indicator);
-					if (currentButton == audioMaster) { sf::Listener::setGlobalVolume(value + 10.f); }
-					else if (currentButton == audioSfx) { SOUND_MGR.SetSfxVolume(value + 10.f); }
-					else if (currentButton == audioBgm) { SOUND_MGR.SetBgmVolume(value + 10.f); }
-					else if (currentButton == visualBleeding) { FRAMEWORK.SetBleedingValue((value + 10.f) / 100.f); }
-					SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
-				}
-			}
-			if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
-			{
-				optionEscape->Press();
-			}
+			optionCard->SetActive(false);
 		}
 	}
 }
@@ -450,6 +267,7 @@ void SceneTitle::ShowStageCard(bool value)
 	if (value)
 	{
 		SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_DiffucultySettings_Appear.wav");
+		bgmVolume = SOUND_MGR.GetBgmVolume();
 		SOUND_MGR.SetBgmVolume(SOUND_MGR.GetBgmVolume() / 5.f);
 	}
 	else
@@ -550,104 +368,25 @@ void SceneTitle::StartGame()
 		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
 		break;
 	}
-	case 3:
-	{
-		Stage03* stage03 = new Stage03();
-		stage03->Init();
-		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage03);
-		break;
-	}
 	default:
-	
 		return;
 	}
 
 	SCENE_MGR.ChangeScene(SceneIds::SceneGame);
+	ShowStageCard(false);
 }
 
 void SceneTitle::ShowOption(bool value)
 {
 	if (value)
 	{
-		optionAudio->Select(false);
-		optionVisual->UnSelect();
-		optionEscape->UnSelect();
-		currentButton = optionAudio;
+		optionCard->SetActive(true);
+		optionCard->ShowOption(true);
 	}
-	else
-	{
-		currentButton = option;
-	}
-
 	isShowOption = value;
 
 	start->SetActive(!value);
 	option->SetActive(!value);
 	exit->SetActive(!value);
 
-	optionBack->SetActive(value);
-	optionAudio->SetActive(value);
-	optionVisual->SetActive(value);
-	optionEscape->SetActive(value);
-
-}
-
-void SceneTitle::ShowOptionAudio(bool value)
-{
-	if (value)
-	{
-		audioMaster->Select(false);
-		audioSfx->UnSelect();
-		audioBgm->UnSelect();
-		currentButton = audioMaster;
-
-		audioBgm->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(audioMaster);
-	}
-	else
-	{
-		currentButton = optionAudio;
-
-		optionEscape->UnSelect();
-		optionVisual->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(optionAudio);
-	}
-
-	isOptionSelect = value;
-
-	optionAudio->SetActive(!value);
-	optionVisual->SetActive(!value);
-
-	audioText->SetActive(value);
-	audioMaster->SetActive(value);
-	audioSfx->SetActive(value);
-	audioBgm->SetActive(value);
-}
-
-void SceneTitle::ShowOptionVisual(bool value)
-{
-	if (value)
-	{
-		visualBleeding->Select(false);
-		currentButton = visualBleeding;
-
-		visualBleeding->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(visualBleeding);
-	}
-	else
-	{
-		currentButton = optionVisual;
-
-		optionEscape->UnSelect();
-		optionVisual->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(optionAudio);
-	}
-
-	isOptionSelect = value;
-
-	optionAudio->SetActive(!value);
-	optionVisual->SetActive(!value);
-
-	visualText->SetActive(value);
-	visualBleeding->SetActive(value);
 }

@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "GameObject/Monster/ObjectMonster.h"
 
-class Player;
+class ObjectOption;
 
 class SceneGame : public Scene
 {
@@ -10,17 +10,21 @@ public:
 	enum class Status
 	{
 		None = -1,
+
 		Intro,
+		FightIntro,
 		Fight,
 		Victory,
 		Defeat,
 		Exit,
+
+		Option,
+		GoTitle,
+		Reset,
 	};
 
 protected:
 	std::vector<ObjectMonster*> MonsterList;
-
-	Player* player = nullptr;
 
 	Status status = Status::None;
 	float timer = 0.f;
@@ -36,6 +40,7 @@ protected:
 
 	bool pauseWorld = false;
 
+	ObjectOption* option = nullptr;
 
 public:
 

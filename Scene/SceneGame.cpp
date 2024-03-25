@@ -3,7 +3,8 @@
 #include "Player.h"
 #include "Stage/Stage01.h"
 #include "Effect/ObjectEffect.h"
-#include "Monster//BossCarnation.h"
+#include "UI/ObjectOption.h"
+#include "SceneTitle.h"
 
 SceneGame::SceneGame(SceneIds id)
 	:Scene(id)
@@ -52,11 +53,17 @@ void SceneGame::Init()
 void SceneGame::Release()
 {
 	Scene::Release();
+	MonsterList.clear();
 }
 
 void SceneGame::Enter()
 {
 	Scene::Enter();
+	option = dynamic_cast<ObjectOption*>(AddGo(new ObjectOption("Option"), Ui));
+	option->SetScene(this);
+	option->Init();
+	option->Reset();
+	option->SetActive(false);
 }
 
 void SceneGame::Exit()
@@ -67,6 +74,7 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update2(dt, pauseWorld);
+
 	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
 
 	switch (status)
@@ -79,10 +87,19 @@ void SceneGame::Update(float dt)
 		if (timer >= timeLimit)
 		{
 			timer = 0.f;
-			SetStatus(Status::Fight);
+			SetStatus(Status::FightIntro);
 		}
 		break;
+	case SceneGame::Status::FightIntro:
+		break;
 	case SceneGame::Status::Fight:
+		if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+		{
+			Pause();
+			option->SetActive(true);
+			option->ShowOption();
+			SetStatus(Status::Option);
+		}
 		break;
 	case SceneGame::Status::Victory:
 		timer += dt;
@@ -94,7 +111,17 @@ void SceneGame::Update(float dt)
 		break;
 	case SceneGame::Status::Defeat:
 		break;
-	default:
+	case SceneGame::Status::Option:
+		if (!option->GetActive())
+		{
+			SetStatus(Status::Fight);
+		}
+		break;
+	case SceneGame::Status::GoTitle:
+			SetStatus(Status::Exit);
+		break;
+	case SceneGame::Status::Reset:
+		SetStatus(Status::Reset);
 		break;
 	}
 }
@@ -116,7 +143,10 @@ std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
 
 void SceneGame::SetStatus(Status status)
 {
-	this->status = status;
+	if (status != Status::Reset)
+	{
+		this->status = status;
+	}
 	switch (status)
 	{
 	case SceneGame::Status::None:
@@ -126,20 +156,27 @@ void SceneGame::SetStatus(Status status)
 		timer = 0.f;
 		timeLimit = 1.f;
 		break;
-	case SceneGame::Status::Fight:
+	case SceneGame::Status::FightIntro:
 	{
 		ObjectEffect* oe = new ObjectEffect("FightText");
 		oe->SetScale({ uiView.getSize().x / 512.f,uiView.getSize().x / 512.f });
 		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
 		oe->GetAniamtor().Play("animations/fightReady.csv");
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 20,
 			[this]()
 			{
 				SOUND_MGR.PlaySfx(announcerLeft + "2_" + (char)Utils::RandomRange(97, 102) + announcerRight);
 			});
+		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(),
+			[oe,this]()
+			{
+				oe->OnDie();
+				this->SetStatus(Status::Fight);
+			});
 		break;
 	}
+	case SceneGame::Status::Fight:
+		break;
 	case SceneGame::Status::Victory:
 	{
 		Pause();
@@ -162,7 +199,18 @@ void SceneGame::SetStatus(Status status)
 		Release();
 		SetStatus(Status::None);
 		break;
-	default:
+	case SceneGame::Status::Reset:
+		if (this->status == Status::Reset)
+		{
+			Release();
+			SetStatus(Status::None);
+			dynamic_cast<SceneTitle*>(SCENE_MGR.GetScene(SceneIds::SceneTitle))->StartGame();
+		}
+		else
+		{
+			this->status = status;
+		}
 		break;
 	}
+
 }

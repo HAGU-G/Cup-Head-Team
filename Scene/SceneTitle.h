@@ -4,6 +4,8 @@
 class SpriteGo;
 class TextGo;
 class ObjectButton;
+class ObjectOption;
+
 
 class SceneTitle : public Scene
 {
@@ -31,18 +33,7 @@ protected:
 	SpriteGo* stageCardNotReady = nullptr;
 
 	bool isShowOption = false;
-	SpriteGo* optionBack = nullptr;
-	ObjectButton* optionAudio = nullptr;
-	ObjectButton* optionVisual = nullptr;
-	ObjectButton* optionEscape = nullptr;
-
-	bool isOptionSelect = false;
-	TextGo* audioText = nullptr;
-	ObjectButton* audioMaster = nullptr;
-	ObjectButton* audioBgm = nullptr;
-	ObjectButton* audioSfx = nullptr;
-	TextGo* visualText = nullptr;
-	ObjectButton* visualBleeding = nullptr;
+	ObjectOption* optionCard = nullptr;
 
 public:
 	SceneTitle(SceneIds id);
@@ -75,7 +66,5 @@ public:
 	void StartGame();
 
 	void ShowOption(bool value = true);
-	void ShowOptionAudio(bool value = true);
-	void ShowOptionVisual(bool value = true);
 };
 
