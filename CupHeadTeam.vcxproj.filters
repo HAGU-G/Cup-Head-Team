@@ -45,6 +45,7 @@
     <ClCompile Include="GameObject\Monster\BossCroaks.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCroaksFirefly.cpp" />
     <ClCompile Include="GameObject\UI\ObjectButton.cpp" />
+    <ClCompile Include="GameObject\Stage\Stage02.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -95,6 +96,7 @@
     <ClInclude Include="GameObject\Monster\BossCroaks.h" />
     <ClInclude Include="GameObject\Bullet\BulletCroaksFirefly.h" />
     <ClInclude Include="GameObject\UI\ObjectButton.h" />
+    <ClInclude Include="GameObject\Stage\Stage02.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

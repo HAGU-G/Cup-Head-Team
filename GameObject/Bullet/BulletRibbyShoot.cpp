@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "BulletRibbyShoot.h"
-#include "SceneDev3.h"
-//#include "SceneGame.h"    테스트 하기위해 잠시 SceneDev3 추가 및 SceneGame 주석처리 하였음
+#include "SceneGame.h" 
 
 BulletRibbyShoot::BulletRibbyShoot(const std::string& name)
 	:ObjectBullet(name)
@@ -12,15 +11,19 @@ BulletRibbyShoot* BulletRibbyShoot::Create(const sf::Vector2f& pos, const sf::Ve
 {
 	BulletRibbyShoot* brs = new BulletRibbyShoot();
 	brs->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneDev3*>(scene)->AddMonster(brs);
-	//dynamic_cast<SceneGame*>(scene)->AddMonster(brs);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(brs);
 	return brs;
 }
 
 void BulletRibbyShoot::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+
+	auto bounds = sprite.getGlobalBounds();
+	float shrinkFactor = 0.5f;
+	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
 }
 
 void BulletRibbyShoot::Init()

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "BossCroaks.h"
+#include "SceneGame.h"
+#include "Bullet/BulletCroaksFirefly.h"
 
 BossCroaks::BossCroaks(const std::string& name)
 	:ObjectMonster(name)
@@ -10,13 +12,6 @@ void BossCroaks::Init()
 {
 	ObjectMonster::Init();
 
-	RES_MGR_TEXTURE.Load("resource/CroaksIdle.png");
-	RES_MGR_TEXTURE.Load("resource/CroaksIntro.png");
-	RES_MGR_TEXTURE.Load("resource/CroaksShoot.png");
-	RES_MGR_TEXTURE.Load("resource/CroaksFanIntro.png");
-	RES_MGR_TEXTURE.Load("resource/CroaksFanLoop.png");
-	RES_MGR_TEXTURE.Load("resource/CroaksFanOutro.png");
-
 	hasHitBox = true;
 }
 
@@ -25,15 +20,16 @@ void BossCroaks::Reset()
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
+	SetPosition({300,0});
 	Intro();
 }
 
 void BossCroaks::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0)
+	if (hp == 0 && state < State::None)
 	{
-		OnDie();
+		Death();
 	}
 
 	switch (state)
@@ -45,7 +41,7 @@ void BossCroaks::Update(float dt)
 			{
 				SetState(State::Pattern1);
 			}
-			else if (hp <= maxHp * 0.40)
+			else if (hp <= maxHp * 0.60)
 			{
 				SetState(State::Pattern2);
 			}
@@ -83,12 +79,10 @@ void BossCroaks::Update(float dt)
 			}
 		}
 		break;
-	default:
-		break;
 	}
 
 	auto bounds = sprite.getGlobalBounds();
-	float shrinkFactor = 0.1f;
+	float shrinkFactor = 0.6f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
 	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
@@ -97,6 +91,7 @@ void BossCroaks::Update(float dt)
 void BossCroaks::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		SetState(State::Pattern2);
@@ -135,8 +130,7 @@ void BossCroaks::Shoot()
 	if (shootCount < 3)
 	{
 		shootCount++;
-		std::cout << "발사 1" << std::endl;
-		std::cout << "발사 2" << std::endl;
+		BulletCroaksFirefly::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), { -1.f , 0.f }, scene);
 	}
 	else
 	{
@@ -153,6 +147,10 @@ void BossCroaks::ShootEnd()
 void BossCroaks::Death()
 {
 	isAlive = false;
+	SetState(State::None);
+	animator.ClearEvent();
+	animator.Play("animations/CroaksDeath.csv");
+
 }
 
 void BossCroaks::OnDie()
@@ -240,5 +238,5 @@ void BossCroaks::SetState(State state)
 
 sf::FloatRect BossCroaks::GetCustomBounds() const
 {
-	return sf::FloatRect();
+	return customBounds;
 }

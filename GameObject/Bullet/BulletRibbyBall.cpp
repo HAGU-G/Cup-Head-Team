@@ -12,23 +12,28 @@ BulletRibbyBall* BulletRibbyBall::Create(const sf::Vector2f& pos, const sf::Vect
 {
 	BulletRibbyBall* brb = new BulletRibbyBall();
 	brb->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneDev3*>(scene)->AddMonster(brb);
-	//dynamic_cast<SceneGame*>(scene)->AddMonster(brb);
+	//dynamic_cast<SceneDev3*>(scene)->AddMonster(brb);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(brb);
 	return brb;
 }
 
 void BulletRibbyBall::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
-	//천장, 바닥 과 충돌 처리 충돌시 y축 값 반전
-	float upperBound = -600.0f; // 상단 경계
+	float upperBound = -600.0f; 
 	float lowerBound = -20.f;
 	if (position.y <= upperBound || position.y >= lowerBound)
 	{
-		direction.y = -direction.y; // y축 방향 반전
-		SetDirection(direction, true); // 방향 업데이트
+		direction.y = -direction.y; 
+		SetDirection(direction, true); 
 	}
+
+	auto bounds = sprite.getGlobalBounds();
+	float shrinkFactor = 0.4f;
+	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+
 }
 
 void BulletRibbyBall::Init()

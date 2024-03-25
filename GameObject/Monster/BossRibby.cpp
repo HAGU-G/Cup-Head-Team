@@ -13,17 +13,6 @@ void BossRibby::Init()
 {
     ObjectMonster::Init();
 
-    RES_MGR_TEXTURE.Load("resource/RibbyDeath.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyIdle.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyIntro.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyIntro2.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyRoll.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyRolling.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyShoot.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyShooting.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyShootEnd.png");
-    RES_MGR_TEXTURE.Load("resource/RibbyBall.png");
-
     hasHitBox = true;
 }
 
@@ -32,13 +21,14 @@ void BossRibby::Reset()
     ObjectMonster::Reset();
     scene = SCENE_MGR.GetCurrentScene();
     animator.SetTarget(&sprite);
+    SetPosition({ 300,0 });
     Intro();
 }
 
 void BossRibby::Update(float dt)
 {
     ObjectMonster::Update(dt);
-    if (hp == 0 )
+    if (hp == 0 && state < State::None)
     {
         Death();
     }   
@@ -53,6 +43,15 @@ void BossRibby::Update(float dt)
         MoveToLeft(dt);
     }
 
+    sf::Vector2f currentPosition = position;
+    float leftBoundary = -500;
+
+    if (currentPosition.x < leftBoundary && state < State::None)
+    {
+        Intro2();
+    }
+
+
     switch (state)
     {
     case BossRibby::State::Idle:
@@ -60,7 +59,7 @@ void BossRibby::Update(float dt)
         {
             SetState(State::Pattern1);
         }
-        if (PatternTimer(dt) && hp <= maxHp * 0.40)
+        if (PatternTimer(dt) && hp <= maxHp * 0.50 && state == preState)
         {
             SetState(State::Pattern2);
         }
@@ -78,10 +77,6 @@ void BossRibby::Update(float dt)
 
         break;
     case BossRibby::State::Pattern2:
-        if (hp <= maxHp * 0.30 && state != State::Roll)
-        {
-            SetState(State::Roll);
-        }
         if (state == State::Pattern2 && ballCount > 2)
         {
             ballCount = 0;
@@ -104,7 +99,7 @@ void BossRibby::Update(float dt)
     }
 
     auto bounds = sprite.getGlobalBounds();
-    float shrinkFactor = 0.1f;
+    float shrinkFactor = 0.7f;
     float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
     float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
     customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
@@ -113,6 +108,7 @@ void BossRibby::Update(float dt)
 void BossRibby::LateUpdate(float dt)
 {
     ObjectMonster::LateUpdate(dt);
+
     if (InputMgr::GetKeyDown(sf::Keyboard::Space))
     {
         SetState(State::Pattern2);
@@ -134,10 +130,21 @@ void BossRibby::Intro()
 
 void BossRibby::Intro2()
 {
+    isMovingRight = false;
+    isMovingLeft = false;
+
     SetState(State::None);
     animator.ClearEvent();
-    animator.Play("animations/RibbyIntro2.csv");
-    animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossRibby::Idle, this));
+    animator.AddEvent("animations/RibbyRolling.csv", animator.GetCurrentClip()->GetLastFrame(), [this]() {
+        animator.Play("animations/RibbyIntro2.csv");
+        animator.AddEvent("animations/RibbyIntro2.csv", animator.GetCurrentClip()->GetTotalFrame(),
+            [this]()
+            {
+                SetScale({-1.f,1.f});
+                Idle();
+            });
+        });
+    SetPosition({ -400, 0 });
 }
 
 void BossRibby::Idle()
@@ -149,10 +156,9 @@ void BossRibby::Roll()
 {
     isRolling = false;
     SetState(State::Roll);
-    animator.Play("animations/RibbyRoll.csv"); // Roll 애니메이션 재생
+    animator.Play("animations/RibbyRoll.csv");
     animator.AddEvent("animations/RibbyRoll.csv", animator.GetCurrentClip()->GetTotalFrame(), [this]() 
         {
-        // Roll 애니메이션이 끝나면 Rolling 애니메이션 시작
         animator.Play("animations/RibbyRolling.csv");
         isRolling = true;
         });
@@ -209,14 +215,13 @@ void BossRibby::Ball()
     sf::Vector2f ballDirection;
     if (ballCount == 0 || ballCount == 2)
     {
-        ballDirection = {-1,2};
+        ballDirection = {1,2};
     }
     else
     {
-        ballDirection = { -1,-2 };
+        ballDirection = {1,-2};
     }
-    BulletRibbyBall::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.3f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), ballDirection, scene);
-    std::cout << ballCount << std::endl;
+    BulletRibbyBall::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.7f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), ballDirection, scene);
     ballCount++;
 }
 
@@ -277,11 +282,11 @@ void BossRibby::SetState(State state)
             }
             else if (preState == State::Pattern2)
             {
-                animator.PlayQueue("animations/RibbyIdle.csv");
+                animator.Play("animations/RibbyIdle.csv");
             }
             else
             {
-                animator.PlayQueue("animations/RibbyIdle.csv");
+                animator.Play("animations/RibbyIdle.csv");
             }
             preState = State::Idle;
             break;
@@ -300,11 +305,6 @@ void BossRibby::SetState(State state)
             preState = State::Pattern1;
             break;
         case BossRibby::State::Pattern2:
-            if (preState == State::Roll)
-            {
-                Intro2();
-            }
-
             if (ballCount < 3)
             {
                 animator.PlayQueue("animations/RibbyBall.csv");
@@ -313,17 +313,12 @@ void BossRibby::SetState(State state)
             animator.AddEvent("animations/RibbyBall.csv", 23, std::bind(&BossRibby::Ball, this));
             preState = State::Pattern2;
             break;
-        case BossRibby::State::Roll:  //수정이 필요함 (화면 경계 검사 :  밖에 나가면 다음 intro2실행)
+        case BossRibby::State::Roll:
             Roll();
             if (preState == State::Pattern1) 
             {
                 isMovingLeft = true;
                 isMovingRight = false;
-            }
-            else if (preState == State::Pattern2) 
-            {
-                isMovingRight = true;
-                isMovingLeft = false;
             }
             preState = State::Roll;
             break;
