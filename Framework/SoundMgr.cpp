@@ -10,6 +10,34 @@ SoundMgr::~SoundMgr()
 	Release();
 }
 
+void SoundMgr::SetSfxVolume(float v)
+{
+	sfxVolume = v;
+	for (auto ptr : playing)
+	{
+		ptr->setVolume(sfxVolume);
+	}
+	for (auto ptr : waiting)
+	{
+		ptr->setVolume(sfxVolume);
+	}
+}
+
+void SoundMgr::SetBgmVolume(float v)
+{
+
+	if (isFading)
+	{
+		bgm[frontBgmIndex].setVolume(bgm[frontBgmIndex].getVolume() / bgmVolume * v);
+		bgmVolume = v;
+	}
+	else
+	{
+		bgmVolume = v;
+		bgm[frontBgmIndex].setVolume(bgmVolume);
+	}
+}
+
 void SoundMgr::Init(int totalChannels)
 {
 	Release();
@@ -86,7 +114,7 @@ void SoundMgr::Update(float dt)
 	}
 }
 
-void SoundMgr::PlayBgm(std::string id, bool crossFade)
+void SoundMgr::PlayBgm(std::string id, bool crossFade, bool loop)
 {
 	frontBgmIndex = (frontBgmIndex + 1) % 2;
 	int backBgmIndex = (frontBgmIndex == 1) ? 0 : 1;
@@ -104,7 +132,7 @@ void SoundMgr::PlayBgm(std::string id, bool crossFade)
 		bgm[frontBgmIndex].setVolume(bgmVolume);
 	}
 
-	bgm[frontBgmIndex].setLoop(true);
+	bgm[frontBgmIndex].setLoop(loop);
 	bgm[frontBgmIndex].play();
 }
 

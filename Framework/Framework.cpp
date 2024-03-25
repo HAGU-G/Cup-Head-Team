@@ -108,11 +108,12 @@ void Framework::LoadPostEffect()
 	pass2.create(pass1.getSize().x, pass1.getSize().y);
 	pass2.setSmooth(true);
 
-	bleeding.setUniform("texture", sf::Shader::CurrentTexture);
 	bleeding.loadFromFile("resource/Shader/Bleeding.frag", sf::Shader::Fragment);
+	bleeding.setUniform("texture", sf::Shader::CurrentTexture);
+	SetBleedingValue(bleedingValue);
 
-	smooth.setUniform("texture", sf::Shader::CurrentTexture);
 	smooth.loadFromFile("resource/Shader/Smooth.frag", sf::Shader::Fragment);
+	smooth.setUniform("texture", sf::Shader::CurrentTexture);
 
 	renderStates.blendMode = sf::BlendMode(sf::BlendMode::DstAlpha,sf::BlendMode::One, sf::BlendMode::Min);
 	renderStates.shader = &bleeding;
@@ -172,4 +173,10 @@ void Framework::Pass2(float dt)
 	filmGrain.setTexture(RES_MGR_TEXTURE.Get(left + middle + right));
 
 	pass2.draw(filmGrain);
+}
+
+inline void Framework::SetBleedingValue(float value)
+{
+	bleedingValue = Utils::Clamp(value, 0.f, 1.f);
+	bleeding.setUniform("bleedingValue", bleedingValue);
 }

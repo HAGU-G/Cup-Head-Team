@@ -22,8 +22,11 @@ protected:
 	sf::RenderTexture pass2;
 	sf::RenderStates renderStates;
 	float scale = 2.f;
+
 	sf::Shader bleeding;
+	float bleedingValue = 0.5f;
 	sf::Shader smooth;
+
 
 	sf::Sprite filmGrain;
 	int filmNum = -1;
@@ -78,6 +81,7 @@ public:
 	
 	void LoadPostEffect();
 	void Pass2(float dt);
+	inline void SetBleedingValue(float value);
 };
 
 #define FRAMEWORK (Singleton<Framework>::Instance())

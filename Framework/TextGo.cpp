@@ -23,7 +23,7 @@ void TextGo::SetString(const  sf::String& str)
 }
 
 void TextGo::Set(const sf::Font& texture,
-	const std::string& str,
+	const sf::String& str,
 	int size,
 	const sf::Color& color)
 {
