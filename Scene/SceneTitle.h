@@ -12,7 +12,7 @@ protected:
 
 	ObjectButton* currentButton = nullptr;
 
-	sf::Music bgm;
+	float bgmVolume = SOUND_MGR.GetBgmVolume();
 	sf::Sound hint;
 	SpriteGo* bg = nullptr;
 
@@ -37,6 +37,12 @@ protected:
 	ObjectButton* optionEscape = nullptr;
 
 	bool isOptionSelect = false;
+	TextGo* audioText = nullptr;
+	ObjectButton* audioMaster = nullptr;
+	ObjectButton* audioBgm = nullptr;
+	ObjectButton* audioSfx = nullptr;
+	TextGo* visualText = nullptr;
+	ObjectButton* visualBleeding = nullptr;
 
 public:
 	SceneTitle(SceneIds id);
@@ -69,5 +75,7 @@ public:
 	void StartGame();
 
 	void ShowOption(bool value = true);
+	void ShowOptionAudio(bool value = true);
+	void ShowOptionVisual(bool value = true);
 };
 

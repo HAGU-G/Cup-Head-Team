@@ -24,8 +24,8 @@ void SceneTitle::Init()
 	textSize = 50 * windowSize.y / 1080;
 
 	//배경음악
-	bgm.setVolume(50.f);
-	hint.setVolume(25.f);
+	SOUND_MGR.SetBgmVolume(50.f);
+	hint.setVolume(SOUND_MGR.GetBgmVolume() * 0.5f);
 	hint.setLoop(true);
 
 	//배경
@@ -151,7 +151,7 @@ void SceneTitle::Init()
 	optionAudio->SetPosition(uiView.getCenter() + buttonPos + sf::Vector2f(textSize * 0.05f, 0.f));
 	buttonPos.y += textSize;
 	optionVisual->SetPosition(uiView.getCenter() + buttonPos);
-	buttonPos.y += textSize;
+	buttonPos.y += textSize * 2.f;
 	optionEscape->SetPosition(uiView.getCenter() + buttonPos);
 
 	optionBack->SetScale(scaleVec);
@@ -166,17 +166,25 @@ void SceneTitle::Init()
 	optionEscape->SetActive(false);
 
 	optionAudio->SetFunction([this]() {
-		ChangeStageCard();
-		ShowStageCard();
+		ShowOptionAudio();
 		return optionAudio;
 		});
 	optionVisual->SetFunction([this]() {
-		ShowOption();
+		ShowOptionVisual();
 		return optionVisual;
 		});
 	optionEscape->SetFunction([this]() {
 		SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
-		ShowOption(false);
+		if (isOptionSelect)
+		{
+			if (audioText->GetActive()) { ShowOptionAudio(false); }
+			if (visualText->GetActive()) { ShowOptionVisual(false); }
+		}
+		else
+		{
+			ShowOption(false);
+		}
+
 		return optionEscape;
 		});
 
@@ -185,6 +193,74 @@ void SceneTitle::Init()
 	AddGo(optionVisual, Ui);
 	AddGo(optionEscape, Ui);
 
+	//오디오 설정
+	audioText = new TextGo("OptionAudio");
+	audioMaster = new ObjectButton("OptionAudio");
+	audioSfx = new ObjectButton("OptionAudio");
+	audioBgm = new ObjectButton("OptionAudio");
+
+	audioMaster->SetNextButton(audioSfx);
+	audioSfx->SetNextButton(audioBgm);
+	audioBgm->SetNextButton(optionEscape, false);
+
+	audioText->SetCharacterSize(textSize);
+	audioMaster->SetCharacterSize(textSize);
+	audioSfx->SetCharacterSize(textSize);
+	audioBgm->SetCharacterSize(textSize);
+
+	audioText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"마스터 볼륨: \n  SFX 볼륨: \n  음악 볼륨: ", textSize, { 70, 70, 70, 255 });
+	audioMaster->SetString("----------l");
+	audioSfx->SetString("----------l");
+	audioBgm->SetString("----------l");
+
+	audioMaster->SetColorSelect(colorSelect);
+	audioSfx->SetColorSelect(colorSelect);
+	audioBgm->SetColorSelect(colorSelect);
+
+	audioText->SetActive(false);
+	audioMaster->SetActive(false);
+	audioSfx->SetActive(false);
+	audioBgm->SetActive(false);
+
+	buttonPos = { 0.f, float(-textSize * 3) };
+	audioText->SetPosition(uiView.getCenter() + buttonPos);
+	audioMaster->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+	audioSfx->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+	audioBgm->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+
+	AddGo(audioText, Ui);
+	AddGo(audioMaster, Ui);
+	AddGo(audioSfx, Ui);
+	AddGo(audioBgm, Ui);
+
+	//그래픽 설정
+	visualText = new TextGo("OptionVisual");
+	visualBleeding = new ObjectButton("OptionVisual");
+
+	visualBleeding->SetNextButton(optionEscape, false);
+
+	visualText->SetCharacterSize(textSize);
+	visualBleeding->SetCharacterSize(textSize);
+
+	visualText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"t색 번짐: ", textSize, { 70, 70, 70, 255 });
+	visualBleeding->SetString("-----l-----");
+
+	visualBleeding->SetColorSelect(colorSelect);
+
+	visualText->SetActive(false);
+	visualBleeding->SetActive(false);
+
+	buttonPos = { 0.f, float(-textSize * 3) };
+	visualText->SetPosition(uiView.getCenter() + buttonPos);
+	visualBleeding->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+
+	AddGo(visualText, Ui);
+	AddGo(visualBleeding, Ui);
+
 	//Init
 	Scene::Init();
 
@@ -192,12 +268,24 @@ void SceneTitle::Init()
 	optionVisual->SetOrigin(Origins::TC);
 	optionEscape->SetOrigin(Origins::TC);
 
+	audioMaster->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	audioSfx->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	audioBgm->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	audioText->SetOrigin(Origins::TR);
+	audioMaster->SetOrigin(Origins::TL);
+	audioSfx->SetOrigin(Origins::TL);
+	audioBgm->SetOrigin(Origins::TL);
+
+	visualBleeding->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	visualText->SetOrigin(Origins::TR);
+	visualBleeding->SetOrigin(Origins::TL);
+
 	titleReady = true;
 }
 
 void SceneTitle::Release()
 {
-	bgm.stop();
+	SOUND_MGR.StopBgm();
 	Scene::Release();
 }
 
@@ -206,9 +294,8 @@ void SceneTitle::Enter()
 	titleReady = false;
 
 	Scene::Enter();
-	bgm.stop();
-	bgm.openFromFile("resource/Menu/MUS_Intro_DontDealWithDevil_Vocal.wav");
-	bgm.play();
+	SOUND_MGR.StopBgm();
+	SOUND_MGR.PlayBgm("resource/Menu/MUS_Intro_DontDealWithDevil_Vocal.wav", true, false);
 
 	start->Select(false);
 	option->UnSelect();
@@ -222,7 +309,7 @@ void SceneTitle::Enter()
 
 void SceneTitle::Exit()
 {
-	bgm.stop();
+	SOUND_MGR.StopBgm();
 	hint.stop();
 	Scene::Exit();
 }
@@ -237,10 +324,9 @@ void SceneTitle::Update(float dt)
 	Scene::Update(dt);
 
 	//배경음악2 반복재생
-	if (bgm.getStatus() == sf::Sound::Status::Stopped)
+	if (!SOUND_MGR.IsBgmPlaying())
 	{
-		bgm.openFromFile("resource/Menu/MUS_Intro_DontDealWithDevil.wav");
-		bgm.play();
+		SOUND_MGR.PlayBgm("resource/Menu/MUS_Intro_DontDealWithDevil.wav", false, true);
 	}
 
 	if (isShowStageCard)
@@ -278,28 +364,6 @@ void SceneTitle::Update(float dt)
 			StartGame();
 		}
 	}
-	else if (isShowOption)
-	{
-		//옵션 선택
-		if (InputMgr::GetKeyDown(sf::Keyboard::Down))
-		{
-			ButtonSelect();
-		}
-		else if (InputMgr::GetKeyDown(sf::Keyboard::Up))
-		{
-			ButtonSelect(false);
-		}
-
-		//버튼 클릭
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
-		{
-			ButtonPress();
-		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
-		{
-			optionEscape->Press();
-		}
-	}
 	else
 	{
 		//버튼 선택
@@ -316,6 +380,51 @@ void SceneTitle::Update(float dt)
 		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
 		{
 			ButtonPress();
+		}
+
+		if (isOptionSelect && InputMgr::GetKeyDown(sf::Keyboard::Escape))
+		{
+			optionEscape->Press();
+		}
+
+		if (isShowOption)
+		{
+			if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+			{
+				std::string indicator = currentButton->GetText().getString();
+				float value = 10.f;
+				if ((value *= indicator.find('l')) > 0.f)
+				{
+					indicator.erase(indicator.begin());
+					indicator.push_back('-');
+					currentButton->SetString(indicator);
+					if (currentButton == audioMaster) { sf::Listener::setGlobalVolume(value - 10.f); }
+					else if (currentButton == audioSfx) { SOUND_MGR.SetSfxVolume(value - 10.f); }
+					else if (currentButton == audioBgm) { SOUND_MGR.SetBgmVolume(value - 10.f); }
+					else if (currentButton == visualBleeding) { FRAMEWORK.SetBleedingValue((value - 10.f) / 100.f); }
+					SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
+				}
+			}
+			else if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+			{
+				std::string indicator = currentButton->GetText().getString();
+				float value = 10.f;
+				if ((value *= indicator.find('l')) < 100.f)
+				{
+					indicator.pop_back();
+					indicator.insert(indicator.begin(), '-');
+					currentButton->SetString(indicator);
+					if (currentButton == audioMaster) { sf::Listener::setGlobalVolume(value + 10.f); }
+					else if (currentButton == audioSfx) { SOUND_MGR.SetSfxVolume(value + 10.f); }
+					else if (currentButton == audioBgm) { SOUND_MGR.SetBgmVolume(value + 10.f); }
+					else if (currentButton == visualBleeding) { FRAMEWORK.SetBleedingValue((value + 10.f) / 100.f); }
+					SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
+				}
+			}
+			if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+			{
+				optionEscape->Press();
+			}
 		}
 	}
 }
@@ -340,12 +449,12 @@ void SceneTitle::ShowStageCard(bool value)
 	if (value)
 	{
 		SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_DiffucultySettings_Appear.wav");
-		bgm.setVolume(10.f);
+		SOUND_MGR.SetBgmVolume(SOUND_MGR.GetBgmVolume() / 5.f);
 	}
 	else
 	{
 		hint.stop();
-		bgm.setVolume(50.f);
+		SOUND_MGR.SetBgmVolume(bgmVolume);
 		stageCardNotReady->SetActive(value);
 	}
 
@@ -430,7 +539,7 @@ void SceneTitle::ChangeStageCard()
 void SceneTitle::StartGame()
 {
 	SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_StartLevel.wav");
-
+	SOUND_MGR.SetBgmVolume(bgmVolume);
 	switch (stageNum)
 	{
 	case 1:
@@ -451,13 +560,14 @@ void SceneTitle::ShowOption(bool value)
 {
 	if (value)
 	{
-		bgm.setVolume(10.f);
+		optionAudio->Select(false);
+		optionVisual->UnSelect();
+		optionEscape->UnSelect();
+		currentButton = optionAudio;
 	}
 	else
 	{
 		currentButton = option;
-		//TODO 버튼 전환 오류 고쳐라
-		bgm.setVolume(50.f);
 	}
 
 	isShowOption = value;
@@ -471,8 +581,64 @@ void SceneTitle::ShowOption(bool value)
 	optionVisual->SetActive(value);
 	optionEscape->SetActive(value);
 
-	optionAudio->Select(false);
-	optionVisual->UnSelect();
-	optionEscape->UnSelect();
-	currentButton = optionAudio;
+}
+
+void SceneTitle::ShowOptionAudio(bool value)
+{
+	if (value)
+	{
+		audioMaster->Select(false);
+		audioSfx->UnSelect();
+		audioBgm->UnSelect();
+		currentButton = audioMaster;
+
+		audioBgm->SetNextButton(optionEscape);
+		optionEscape->SetNextButton(audioMaster);
+	}
+	else
+	{
+		currentButton = optionAudio;
+
+		optionEscape->UnSelect();
+		optionVisual->SetNextButton(optionEscape);
+		optionEscape->SetNextButton(optionAudio);
+	}
+
+	isOptionSelect = value;
+
+	optionAudio->SetActive(!value);
+	optionVisual->SetActive(!value);
+
+	audioText->SetActive(value);
+	audioMaster->SetActive(value);
+	audioSfx->SetActive(value);
+	audioBgm->SetActive(value);
+}
+
+void SceneTitle::ShowOptionVisual(bool value)
+{
+	if (value)
+	{
+		visualBleeding->Select(false);
+		currentButton = visualBleeding;
+
+		visualBleeding->SetNextButton(optionEscape);
+		optionEscape->SetNextButton(visualBleeding);
+	}
+	else
+	{
+		currentButton = optionVisual;
+
+		optionEscape->UnSelect();
+		optionVisual->SetNextButton(optionEscape);
+		optionEscape->SetNextButton(optionAudio);
+	}
+
+	isOptionSelect = value;
+
+	optionAudio->SetActive(!value);
+	optionVisual->SetActive(!value);
+
+	visualText->SetActive(value);
+	visualBleeding->SetActive(value);
 }
