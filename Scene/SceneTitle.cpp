@@ -43,6 +43,10 @@ void SceneTitle::Init()
 	option = new ObjectButton("Option");
 	exit = new ObjectButton("Exit");
 
+	start->SetNextButton(option);
+	option->SetNextButton(exit);
+	exit->SetNextButton(start);
+
 	start->SetOrigin(Origins::BC);
 	option->SetOrigin(Origins::BC);
 	exit->SetOrigin(Origins::BC);
@@ -61,7 +65,7 @@ void SceneTitle::Init()
 		return start;
 		});
 	option->SetFunction([this]() {
-
+		ShowOption();
 		return option;
 		});
 	exit->SetFunction([this]() {
@@ -101,6 +105,8 @@ void SceneTitle::Init()
 	stageCardGlow->SetPosition(uiView.getCenter());
 	stageCardNotReady->SetPosition(uiView.getCenter());
 
+	stageCardBack->SetScale(scaleVec * 1.1f);
+	stageCardGlow->SetScale(scaleVec * 1.1f);
 	stageCardName->SetScale(scaleVec * 0.375f);
 	stageCardTitle->SetScale(scaleVec * 0.375f);
 	stageCardNotReady->SetScale(scaleVec * 3.f);
@@ -112,15 +118,79 @@ void SceneTitle::Init()
 	stageCardTitle->SetActive(false);
 	stageCardNotReady->SetActive(false);
 
-	AddGo(stageCardBack);
-	AddGo(stageCardGlow);
-	AddGo(stageCardX);
-	AddGo(stageCardName);
-	AddGo(stageCardTitle);
-	AddGo(stageCardNotReady);
+	AddGo(stageCardBack, Ui);
+	AddGo(stageCardGlow, Ui);
+	AddGo(stageCardX, Ui);
+	AddGo(stageCardName, Ui);
+	AddGo(stageCardTitle, Ui);
+	AddGo(stageCardNotReady, Ui);
+
+	//옵션
+	optionBack = new SpriteGo("Option");
+	optionAudio = new ObjectButton("Option");
+	optionVisual = new ObjectButton("Option");
+	optionEscape = new ObjectButton("Option");
+
+	optionAudio->SetNextButton(optionVisual);
+	optionVisual->SetNextButton(optionEscape);
+	optionEscape->SetNextButton(optionAudio);
+
+	optionBack->SetTexture("resource/Menu/pause_menu.png");
+	optionBack->SetOrigin(Origins::MC);
+
+	optionAudio->SetCharacterSize(textSize);
+	optionVisual->SetCharacterSize(textSize);
+	optionEscape->SetCharacterSize(textSize);
+
+	optionAudio->SetString(L"오디오");
+	optionVisual->SetString(L"비주얼");
+	optionEscape->SetString(L"이전");
+
+	optionBack->SetPosition(uiView.getCenter());
+	buttonPos = { 0.f, float(-textSize * 2) };
+	optionAudio->SetPosition(uiView.getCenter() + buttonPos + sf::Vector2f(textSize * 0.05f, 0.f));
+	buttonPos.y += textSize;
+	optionVisual->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
+	optionEscape->SetPosition(uiView.getCenter() + buttonPos);
+
+	optionBack->SetScale(scaleVec);
+	sf::Color colorSelect = { 200,50,50,255 };
+	optionAudio->SetColorSelect(colorSelect);
+	optionVisual->SetColorSelect(colorSelect);
+	optionEscape->SetColorSelect(colorSelect);
+
+	optionBack->SetActive(false);
+	optionAudio->SetActive(false);
+	optionVisual->SetActive(false);
+	optionEscape->SetActive(false);
+
+	optionAudio->SetFunction([this]() {
+		ChangeStageCard();
+		ShowStageCard();
+		return optionAudio;
+		});
+	optionVisual->SetFunction([this]() {
+		ShowOption();
+		return optionVisual;
+		});
+	optionEscape->SetFunction([this]() {
+		SOUND_MGR.PlaySfx("resource/Menu/Menu_Category_Select.wav");
+		ShowOption(false);
+		return optionEscape;
+		});
+
+	AddGo(optionBack, Ui);
+	AddGo(optionAudio, Ui);
+	AddGo(optionVisual, Ui);
+	AddGo(optionEscape, Ui);
 
 	//Init
 	Scene::Init();
+
+	optionAudio->SetOrigin(Origins::TC);
+	optionVisual->SetOrigin(Origins::TC);
+	optionEscape->SetOrigin(Origins::TC);
 
 	titleReady = true;
 }
@@ -140,9 +210,10 @@ void SceneTitle::Enter()
 	bgm.openFromFile("resource/Menu/MUS_Intro_DontDealWithDevil_Vocal.wav");
 	bgm.play();
 
-	start->Select();
+	start->Select(false);
 	option->UnSelect();
 	exit->UnSelect();
+	currentButton = start;
 
 	ShowStageCard(false);
 
@@ -172,35 +243,7 @@ void SceneTitle::Update(float dt)
 		bgm.play();
 	}
 
-	if (!isShowStageCard)
-	{
-		//버튼 선택
-		if (InputMgr::GetKeyDown(sf::Keyboard::Down))
-		{
-			selectButton++;
-			if (selectButton > 3)
-			{
-				selectButton = 1;
-			}
-			ButtonSelect();
-		}
-		else if (InputMgr::GetKeyDown(sf::Keyboard::Up))
-		{
-			selectButton--;
-			if (selectButton < 1)
-			{
-				selectButton = 3;
-			}
-			ButtonSelect();
-		}
-
-		//버튼 클릭
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
-		{
-			ButtonPress();
-		}
-	}
-	else
+	if (isShowStageCard)
 	{
 		//카드 선택
 		if (InputMgr::GetKeyDown(sf::Keyboard::Right))
@@ -235,6 +278,46 @@ void SceneTitle::Update(float dt)
 			StartGame();
 		}
 	}
+	else if (isShowOption)
+	{
+		//옵션 선택
+		if (InputMgr::GetKeyDown(sf::Keyboard::Down))
+		{
+			ButtonSelect();
+		}
+		else if (InputMgr::GetKeyDown(sf::Keyboard::Up))
+		{
+			ButtonSelect(false);
+		}
+
+		//버튼 클릭
+		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		{
+			ButtonPress();
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+		{
+			optionEscape->Press();
+		}
+	}
+	else
+	{
+		//버튼 선택
+		if (InputMgr::GetKeyDown(sf::Keyboard::Down))
+		{
+			ButtonSelect();
+		}
+		else if (InputMgr::GetKeyDown(sf::Keyboard::Up))
+		{
+			ButtonSelect(false);
+		}
+
+		//버튼 클릭
+		if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		{
+			ButtonPress();
+		}
+	}
 }
 
 void SceneTitle::LateUpdate(float dt)
@@ -242,46 +325,14 @@ void SceneTitle::LateUpdate(float dt)
 	Scene::LateUpdate(dt);
 }
 
-void SceneTitle::ButtonSelect()
+void SceneTitle::ButtonSelect(bool direction)
 {
-	switch (selectButton)
-	{
-	case 1:
-		start->Select();
-		option->UnSelect();
-		exit->UnSelect();
-		break;
-	case 2:
-		start->UnSelect();
-		option->Select();
-		exit->UnSelect();
-		break;
-	case 3:
-		start->UnSelect();
-		option->UnSelect();
-		exit->Select();
-		break;
-	default:
-		break;
-	}
+	currentButton = currentButton->ButtonMove(direction);
 }
 
 void SceneTitle::ButtonPress()
 {
-	switch (selectButton)
-	{
-	case 1:
-		start->Press();
-		break;
-	case 2:
-		option->Press();
-		break;
-	case 3:
-		exit->Press();
-		break;
-	default:
-		break;
-	}
+	currentButton->Press();
 }
 
 void SceneTitle::ShowStageCard(bool value)
@@ -394,4 +445,34 @@ void SceneTitle::StartGame()
 	}
 
 	SCENE_MGR.ChangeScene(SceneIds::SceneGame);
+}
+
+void SceneTitle::ShowOption(bool value)
+{
+	if (value)
+	{
+		bgm.setVolume(10.f);
+	}
+	else
+	{
+		currentButton = option;
+		//TODO 버튼 전환 오류 고쳐라
+		bgm.setVolume(50.f);
+	}
+
+	isShowOption = value;
+
+	start->SetActive(!value);
+	option->SetActive(!value);
+	exit->SetActive(!value);
+
+	optionBack->SetActive(value);
+	optionAudio->SetActive(value);
+	optionVisual->SetActive(value);
+	optionEscape->SetActive(value);
+
+	optionAudio->Select(false);
+	optionVisual->UnSelect();
+	optionEscape->UnSelect();
+	currentButton = optionAudio;
 }

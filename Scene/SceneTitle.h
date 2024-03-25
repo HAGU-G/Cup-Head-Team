@@ -10,25 +10,33 @@ class SceneTitle : public Scene
 protected:
 	bool titleReady = false;
 
-	int selectButton = 1;
-	int stageNum = 1;
+	ObjectButton* currentButton = nullptr;
 
 	sf::Music bgm;
 	sf::Sound hint;
 	SpriteGo* bg = nullptr;
 
+	int textSize = 50;
 	ObjectButton* start = nullptr;
 	ObjectButton* option = nullptr;
 	ObjectButton* exit = nullptr;
-	int textSize = 50;
 
 	bool isShowStageCard = false;
+	int stageNum = 1;
 	SpriteGo* stageCardBack = nullptr;
 	SpriteGo* stageCardGlow = nullptr;
 	TextGo* stageCardX = nullptr;
 	SpriteGo* stageCardName = nullptr;
 	SpriteGo* stageCardTitle = nullptr;
 	SpriteGo* stageCardNotReady = nullptr;
+
+	bool isShowOption = false;
+	SpriteGo* optionBack = nullptr;
+	ObjectButton* optionAudio = nullptr;
+	ObjectButton* optionVisual = nullptr;
+	ObjectButton* optionEscape = nullptr;
+
+	bool isOptionSelect = false;
 
 public:
 	SceneTitle(SceneIds id);
@@ -49,11 +57,17 @@ public:
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
 
-	void ButtonSelect();
+	/// <summary>
+	/// 버튼 선택
+	/// </summary>
+	/// <param name="direction">true : 다음 버튼, false: 이전 버튼</param>
+	void ButtonSelect(bool direction = true);
 	void ButtonPress();
 
 	void ShowStageCard(bool value = true);
 	void ChangeStageCard();
 	void StartGame();
+
+	void ShowOption(bool value = true);
 };
 

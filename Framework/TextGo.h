@@ -30,6 +30,8 @@ public:
 	void SetFlipX(bool filp) override;
 	void SetFlipY(bool filp) override;
 
+	sf::Text& GetText() { return text; }
+
 	void Draw(sf::RenderTexture& window) override;
 };
 
