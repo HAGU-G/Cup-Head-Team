@@ -89,6 +89,8 @@ public:
 	virtual void FixedUpdate(float dt);
 	virtual void Draw(sf::RenderTexture& window);
 
+	inline void SetScene(Scene* scene) { this->scene = scene; }
+
 	std::string name = "";
 	int sortLayer = 0;
 	int sortOrder = 0;

@@ -2,17 +2,25 @@
 #include "Scene.h"
 #include "GameObject/Monster/ObjectMonster.h"
 
+class ObjectOption;
+
 class SceneGame : public Scene
 {
 public:
 	enum class Status
 	{
 		None = -1,
+
 		Intro,
+		FightIntro,
 		Fight,
 		Victory,
 		Defeat,
 		Exit,
+
+		Option,
+		GoTitle,
+		Reset,
 	};
 
 protected:
@@ -32,6 +40,7 @@ protected:
 
 	bool pauseWorld = false;
 
+	ObjectOption* option = nullptr;
 
 public:
 
