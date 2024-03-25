@@ -133,10 +133,10 @@ void Player::Update(float dt)
 	
 
 	auto bounds = sprite.getGlobalBounds();
-	float shrinkFactor = 0.6f;
+	float shrinkFactor = 0.7f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
 
 }
 
