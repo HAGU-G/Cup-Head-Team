@@ -14,7 +14,6 @@ class Stage01 : public GameObject
 {
 protected:
 
-	sf::Music bgm;
 	SceneGame* sceneGame;
 
 	BossPotato* potato = nullptr;

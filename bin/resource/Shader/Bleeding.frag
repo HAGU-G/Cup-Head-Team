@@ -1,10 +1,11 @@
 uniform sampler2D texture;
+uniform float bleedingValue;
 
 void main()
 {
-    vec2 offr = vec2(0.0,0.0015);
-    vec2 offg = vec2(0.0,-0.0015);
-    vec2 offb = vec2(-0.0015,0.0);
+    vec2 offr = vec2(0.0,bleedingValue*0.0030);
+    vec2 offg = vec2(0.0,-bleedingValue*0.0030);
+    vec2 offb = vec2(-bleedingValue*0.0030,0.0);
 
 
     vec4 r = texture2D(texture, gl_TexCoord[0].xy + offr);
