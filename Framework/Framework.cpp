@@ -64,38 +64,28 @@ void Framework::Do()
 
 
 		//1차 렌더링
-		preDraw.clear();
-		SCENE_MGR.Draw(preDraw);
-		preDraw.display();
+		pass1.clear(sf::Color::Transparent);
+		SCENE_MGR.Draw(pass1);
+		pass1.display();
 
-		sf::Sprite postEffect(preDraw.getTexture());
-		postEffect.setScale(1.f / 2.f, 1.f / 2.f);
+		sf::Sprite postEffect;
+		postEffect.setScale(1.f / scale, 1.f / scale);
 
 		//후처리
-		window.clear();
+		window.clear(sf::Color::White);
 		if (useShader)
 		{
-			/*filmNum++;
-			if (filmNum > 126) { filmNum = 0; }
-			if (filmNum >= 100)
-			{
-				middle = "0" + std::to_string(filmNum);
-			}
-			else if (filmNum >= 10)
-			{
-				middle = "00" + std::to_string(filmNum);
-			}
-			else
-			{
-				middle = "000" + std::to_string(filmNum);
-			}
-			filmGrain.setTexture(RES_MGR_TEXTURE.Get(left + middle + right));*/
-			window.draw(postEffect, &shader);
-			/*window.draw(filmGrain);*/
+			pass2.clear(sf::Color::Transparent);
+			Pass2(GetDT());
+			pass2.draw(sf::Sprite(pass1.getTexture()),renderStates);
+			pass2.display();
+			postEffect.setTexture(pass2.getTexture());
+			window.draw(postEffect,&smooth);
 		}
 		else
 		{
-			window.draw(postEffect);
+			postEffect.setTexture(pass1.getTexture());
+			window.draw(postEffect, &smooth);
 		}
 		window.display();
 	}
@@ -113,11 +103,24 @@ void Framework::Release()
 
 void Framework::LoadPostEffect()
 {
-	preDraw.create(windowSize.x * 2, windowSize.y * 2);
-	preDraw.setSmooth(true);
-	shader.setUniform("texture", sf::Shader::CurrentTexture);
-	shader.loadFromFile("resource/Shader/RGB.frag", sf::Shader::Fragment);
-	//
+	pass1.create(windowSize.x * scale, windowSize.y * scale);
+	pass1.setSmooth(true);
+	pass2.create(pass1.getSize().x, pass1.getSize().y);
+	pass2.setSmooth(true);
+
+	bleeding.setUniform("texture", sf::Shader::CurrentTexture);
+	bleeding.loadFromFile("resource/Shader/Bleeding.frag", sf::Shader::Fragment);
+
+	smooth.setUniform("texture", sf::Shader::CurrentTexture);
+	smooth.loadFromFile("resource/Shader/Smooth.frag", sf::Shader::Fragment);
+
+	renderStates.blendMode = sf::BlendMode(sf::BlendMode::DstAlpha,sf::BlendMode::One, sf::BlendMode::Min);
+	renderStates.shader = &bleeding;
+
+	float filmScale = std::max(pass1.getSize().x / 1024.f, pass1.getSize().y / 512.f);
+	filmGrain.setScale(filmScale, filmScale);
+	filmGrain.setPosition(sf::Vector2f(pass1.getSize()) * 0.5f);
+	filmGrain.setOrigin(512, 256);
 
 	for (int i = 0; i <= 126; i++)
 	{
@@ -135,4 +138,38 @@ void Framework::LoadPostEffect()
 		}
 		RES_MGR_TEXTURE.Load(left + middle + right);
 	}
+}
+
+void Framework::Pass2(float dt)
+{
+	static int flimCount = 0;
+	filmTimer += dt;
+	if (filmTimer >= filmInterval)
+	{
+		filmTimer = 0.f;
+		flimCount++;
+		if (flimCount >= 33)
+		{
+			flimCount = 0;
+			filmDirection = 1 + -2 * Utils::RandomRange(0, 2);
+		}
+		filmNum += filmDirection;
+		if (filmNum > 126) { filmNum = 0; }
+		if (filmNum < 0) { filmNum = 126; }
+	}
+	if (filmNum >= 100)
+	{
+		middle = "0" + std::to_string(filmNum);
+	}
+	else if (filmNum >= 10)
+	{
+		middle = "00" + std::to_string(filmNum);
+	}
+	else
+	{
+		middle = "000" + std::to_string(filmNum);
+	}
+	filmGrain.setTexture(RES_MGR_TEXTURE.Get(left + middle + right));
+
+	pass2.draw(filmGrain);
 }

@@ -8,6 +8,11 @@ ObjectEffect::ObjectEffect(const std::string& name)
 
 void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)
 {
+	CreateInit(pos, direction, scene, Scene::World);
+}
+
+void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene, Scene::Layers layer)
+{
 	Init();
 	Reset();
 	SetPosition(pos);
@@ -18,7 +23,7 @@ void ObjectEffect::CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direc
 		SetScale({ 1.f, -1.f });
 	}
 	this->scene = scene;
-	scene->AddGo(this);
+	scene->AddGo(this, layer);
 }
 
 void ObjectEffect::Init()

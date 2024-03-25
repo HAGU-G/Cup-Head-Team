@@ -26,6 +26,12 @@ void BulletCarrotRing::Init()
 	type = Type::Straight;
 }
 
+void BulletCarrotRing::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
+}
+
 void BulletCarrotRing::OnDie()
 {
 	ObjectEffect* oe = new ObjectEffect("EffectCarrotRing");
