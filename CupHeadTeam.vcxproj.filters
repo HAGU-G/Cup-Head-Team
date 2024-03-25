@@ -50,7 +50,7 @@
     <ClCompile Include="GameObject\Bullet\BulletCarnationPurpleSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationBlueSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationPinkSeed.cpp" />
-    <ClCompile Include="BulletCarnationPinkCreaterAttack.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -106,7 +106,7 @@
     <ClInclude Include="GameObject\Bullet\BulletCarnationPurpleSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationBlueSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPinkSeed.h" />
-    <ClInclude Include="BulletCarnationPinkCreaterAttack.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

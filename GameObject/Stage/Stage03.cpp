@@ -123,6 +123,8 @@ void Stage03::Update(float dt)
 
 	frontCloudBg->SetPosition(frontCloudPos);
 	frontCloudBg2->SetPosition(frontCloudPos2);
+
+	carnationHp = carnation->GetHp();
 }
 
 void Stage03::LateUpdate(float dt)
@@ -164,16 +166,13 @@ void Stage03::Reset()
 	carnation->sortLayer = 0;
 	player->sortLayer = 1;
 
-
-	scene->AddGo(player);
-	scene->AddGo(carnation);
-
 	player->Init();
 	carnation->Init();
 
 	player->Reset();
 	carnation->Reset();
 
+	carnationMaxHp = carnation->GetMaxHp();
 
 	carnation->SetPosition({ viewSize.x * 0.5f * 0.663f, 100.f });
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
@@ -187,6 +186,9 @@ void Stage03::Reset()
 	scene->AddGo(frontCloudBg2);
 	scene->AddGo(frontBush);
 	scene->AddGo(frontBg);
+
+	scene->AddGo(player);
+	sceneGame->AddGo(carnation);
 }
 
 void Stage03::Release()

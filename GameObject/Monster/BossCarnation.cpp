@@ -85,9 +85,6 @@ void BossCarnation::Update(float dt)
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
 	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
-
-	GameObject* player = scene->FindGo("Player");
-	setDirection = sf::Vector2f({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f, sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f });
 }
 
 void BossCarnation::LateUpdate(float dt)
@@ -225,7 +222,7 @@ void BossCarnation::FinalFiringPollen()
 	SetState(State::None);
 	animator.ClearEvent();
 	sf::Vector2f Pos = GetPosition();
-	SetPosition({ Pos.x - 50.f,Pos.y });
+	SetPosition({ Pos.x - 20.f,Pos.y - 20.f });
 	animator.Play("animations/carnationFiringPollen.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
 }
@@ -276,10 +273,3 @@ sf::FloatRect BossCarnation::GetCustomBounds() const
 {
 	return customBounds;
 }
-
-//
-//void BossCarnation::Draw(sf::RenderTexture& window)
-//{
-//	ObjectMonster::Draw(window);
-//	
-//}

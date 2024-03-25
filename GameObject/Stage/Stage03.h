@@ -17,7 +17,8 @@ protected:
 
 	int phase = 0;
 
-	int carnationHp;
+	int carnationHp = 0;
+	int carnationMaxHp = 0;
 
 	SpriteGo* mainBg;
 	SpriteGo* skyBg;

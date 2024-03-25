@@ -6,6 +6,11 @@ class BulletCarnationPinkSeed : public ObjectBullet
 protected:
 	bool right = false;
 	bool left = false;
+
+	float moveSpeed = 0.f;
+	float attackTimer = 0.f;
+
+	bool timerStart = false;
 public:
 	BulletCarnationPinkSeed(const std::string& name = "BulletCarnationPinkSeed");
 	~BulletCarnationPinkSeed() override = default;
@@ -20,11 +25,12 @@ public:
 	void Init() override;
 	void OnDie() override;
 
-	void SetRotation(float value) override;
-
 	void Move();
+	void Stop();
+	void Attack();
+	void TimerStart() { timerStart = true; }
 	void Flip() override;
-	void Frie();
 	sf::FloatRect GetCustomBounds() const;
+	void SetRotation(float value)override;
 };
 
