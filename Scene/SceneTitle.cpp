@@ -4,6 +4,7 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 #include "UI/ObjectButton.h"
+#include "Stage/Stage03.h"
 
 SceneTitle::SceneTitle(SceneIds id)
 	:Scene(id)
@@ -389,7 +390,15 @@ void SceneTitle::StartGame()
 		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
 		break;
 	}
+	case 3:
+	{
+		Stage03* stage03 = new Stage03();
+		stage03->Init();
+		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage03);
+		break;
+	}
 	default:
+	
 		return;
 	}
 

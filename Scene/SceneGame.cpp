@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Stage/Stage01.h"
 #include "Effect/ObjectEffect.h"
+#include "Monster//BossCarnation.h"
 
 SceneGame::SceneGame(SceneIds id)
 	:Scene(id)

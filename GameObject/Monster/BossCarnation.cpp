@@ -5,6 +5,7 @@
 #include "Bullet/BulletCarnationBoomerang.h"
 #include "Bullet/BulletCarnationAcon.h"
 #include "Bullet/BulletCarnationFireSeed.h"
+#include "SceneGame.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -15,87 +16,17 @@ void BossCarnation::Init()
 {
 	ObjectMonster::Init();
 
-	RES_MGR_TEXTURE.Load("resource/carnationBossIntro.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossIdle.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossFa_High.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossFa_Low.png");
-	RES_MGR_TEXTURE.Load("resource/carntionBossFireSeed.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIntro.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIdle.png");
-	RES_MGR_TEXTURE.Load("resource/carnationBossDie.png");
-
-	mainBg = new SpriteGo("mainBg");
-	mainBg->SetTexture("resource/Sprite/stage02/flower_bg_main1.png");
-	mainBg->SetPosition({ 0.f,140.f });
-	mainBg->SetOrigin(Origins::BC);
-	mainBg->sortLayer = -1;
-	mainBg->SetScale({ 0.8f,0.8f });
-
-	skyBg = new SpriteGo("skyBg");
-	skyBg->SetTexture("resource/Sprite/stage02/flower_bg_sky.png");
-	skyBg->SetPosition({ 0.f,-190.f });
-	skyBg->SetOrigin(Origins::BC);
-	skyBg->sortLayer = -2;
-	skyBg->SetScale({ 0.8f,0.8f });
-
-	cloudBg = new SpriteGo("cloudBg");
-	cloudBg->SetTexture("resource/Sprite/stage02/flower_bg_clouds_b.png");
-	cloudBg->SetPosition({ 0.f,-190.f });
-	cloudBg->SetOrigin(Origins::BC);
-	cloudBg->sortLayer = -2;
-	cloudBg->SetScale({ 0.8f,0.8f });
-
-	frontCloudBg = new SpriteGo("frontCloudBg");
-	frontCloudBg->SetTexture("resource/Sprite/stage02/flower_bg_clouds_a.png");
-	frontCloudBg->SetPosition({ 0.f,-190.f });
-	frontCloudBg->SetOrigin(Origins::BC);
-	frontCloudBg->sortLayer =-2;
-	frontCloudBg->SetScale({ 0.8f,0.8f });
-
-	cloudBg2 = new SpriteGo("cloudBg2");
-	cloudBg2->SetTexture("resource/Sprite/stage02/flower_bg_clouds_b.png");
-	cloudBg2->SetPosition({ cloudBg->GetGlobalBounds().width,-190.f});
-	cloudBg2->SetOrigin(Origins::BC);
-	cloudBg2->sortLayer = -2;
-	cloudBg2->SetScale({ 0.8f,0.8f });
-
-	frontCloudBg2 = new SpriteGo("frontCloudBg2");
-	frontCloudBg2->SetTexture("resource/Sprite/stage02/flower_bg_clouds_a.png");
-	frontCloudBg2->SetPosition({ frontCloudBg->GetGlobalBounds().width,-190.f});
-	frontCloudBg2->SetOrigin(Origins::BC);
-	frontCloudBg2->sortLayer = -2;
-	frontCloudBg2->SetScale({ 0.8f,0.8f });
-
-	frontBush = new SpriteGo("frontBush");
-	frontBush->SetTexture("resource/Sprite/stage02/flower_bg_fg-bush.png");
-	frontBush->SetPosition({ 310.f,80.f });
-	frontBush->SetOrigin(Origins::BL);
-	frontBush->sortLayer = 1;
-	frontBush->SetScale({ 0.8f,0.8f });
-
-	frontBg = new SpriteGo("frontBg");
-	frontBg->SetTexture("resource/Sprite/stage02/flower_bg_fg.png");
-	frontBg->SetPosition({ 0.f,150.f });
-	frontBg->SetOrigin(Origins::BC);
-	frontBg->sortLayer = 2;
-	frontBg->SetScale({ 0.8f,0.8f });
-
-	defaultPos = GetPosition();
+	viewSize = FRAMEWORK.GetStageViewSize();
+	defaultPos = { viewSize.x * 0.5f * 0.663f, 100.f };
 }
 
 void BossCarnation::Reset()
 {
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
-	SCENE_MGR.GetCurrentScene()->AddGo(mainBg);
-	SCENE_MGR.GetCurrentScene()->AddGo(skyBg);
-	SCENE_MGR.GetCurrentScene()->AddGo(cloudBg);
-	SCENE_MGR.GetCurrentScene()->AddGo(frontCloudBg);
-	SCENE_MGR.GetCurrentScene()->AddGo(cloudBg2);
-	SCENE_MGR.GetCurrentScene()->AddGo(frontCloudBg2);
-	SCENE_MGR.GetCurrentScene()->AddGo(frontBush);
-	SCENE_MGR.GetCurrentScene()->AddGo(frontBg);
+
 	Intro();
 }
 
@@ -149,47 +80,14 @@ void BossCarnation::Update(float dt)
 		break;
 	}
 
-	sf::Vector2f cloudPos = cloudBg->GetPosition();
-	sf::Vector2f cloudPos2 = cloudBg2->GetPosition();
-
-	sf::Vector2f frontCloudPos = frontCloudBg->GetPosition();
-	sf::Vector2f frontCloudPos2 = frontCloudBg2->GetPosition();
-
-	cloudPos.x += cloudSpeed * dt;
-	cloudPos2.x += cloudSpeed * dt;
-
-	frontCloudPos.x += frontCloudSpeed * dt;
-	frontCloudPos2.x += frontCloudSpeed * dt;
-
-	if (cloudPos.x + cloudBg->GetGlobalBounds().width < 0)
-	{
-		cloudPos.x = cloudPos2.x + cloudBg->GetGlobalBounds().width;
-	}
-	else if (cloudPos2.x + cloudBg->GetGlobalBounds().width < 0)
-	{
-		cloudPos2.x = cloudPos.x + cloudBg->GetGlobalBounds().width;
-	}
-
-	if (frontCloudPos.x + frontCloudBg->GetGlobalBounds().width < 0)
-	{
-		frontCloudPos.x = frontCloudPos2.x + frontCloudBg->GetGlobalBounds().width;
-	}
-	else if (frontCloudPos2.x + frontCloudBg->GetGlobalBounds().width < 0)
-	{
-		frontCloudPos2.x = frontCloudPos.x + frontCloudBg->GetGlobalBounds().width;
-	}
-
-	cloudBg->SetPosition(cloudPos);
-	cloudBg2->SetPosition(cloudPos2);
-
-	frontCloudBg->SetPosition(frontCloudPos);
-	frontCloudBg2->SetPosition(frontCloudPos2);
-
 	auto bounds = sprite.getGlobalBounds();
 	float shrinkFactor = 0.1f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
 	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+
+	GameObject* player = scene->FindGo("Player");
+	setDirection = sf::Vector2f({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f, sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f });
 }
 
 void BossCarnation::LateUpdate(float dt)
@@ -239,9 +137,9 @@ void BossCarnation::CreatingEffect()
 
 	if (Utils::RandomRange(0, 100) < 50)
 	{
-		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f - 100.f }, { -1.f,0.f }, scene);
-		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f }, { -1.f,0.f }, scene);
-		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f + 100.f }, { -1.f,0.f }, scene);
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f - 100.f }, { -1.f,0.f }, scene, 1.f);
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f }, { -1.f,0.f }, scene, 1.5f);
+		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f + 100.f }, { -1.f,0.f }, scene, 2.f);
 	}
 	else
 	{
@@ -278,17 +176,18 @@ void BossCarnation::FireSeed()
 
 void BossCarnation::AddSeed()
 {
-	if (Utils::RandomRange(0, 100) <= 33)
+	int rnadom = Utils::RandomRange(0, 101);
+	if (rnadom <= 33)
 	{
 		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f,800.f)-200, position.y - 800 }, { 0.f , 1.f }, scene, 1);
 	}
-	else if (Utils::RandomRange(0, 100) <= 66)
-	{
-		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 2);
-	}
-	else if(Utils::RandomRange(0,100) <= 100)
+	else if (rnadom <= 66)
 	{
 		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 0);
+	}
+	else if(rnadom <= 100)
+	{
+		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 2);
 	}
 }
 
@@ -333,6 +232,7 @@ void BossCarnation::FinalFiringPollen()
 
 void BossCarnation::Death()
 {
+	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossDie.csv");
@@ -377,9 +277,9 @@ sf::FloatRect BossCarnation::GetCustomBounds() const
 	return customBounds;
 }
 
-
-void BossCarnation::Draw(sf::RenderTexture& window)
-{
-	ObjectMonster::Draw(window);
-	
-}
+//
+//void BossCarnation::Draw(sf::RenderTexture& window)
+//{
+//	ObjectMonster::Draw(window);
+//	
+//}

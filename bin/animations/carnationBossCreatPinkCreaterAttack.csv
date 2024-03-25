@@ -1,0 +1,20 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationBossCreatPinkCreaterAttack,15,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationBossCreatPinkCreaterAttack.png,0,0,102,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,102,0,125,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,227,0,144,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,371,0,166,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,537,0,161,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,698,0,163,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,861,0,158,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1019,0,159,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1178,0,156,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1334,0,161,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1495,0,162,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1657,0,153,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1810,0,148,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,1958,0,137,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,2095,0,152,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,2247,0,160,132,4
+resource/carnationBossCreatPinkCreaterAttack.png,2407,0,149,132,4

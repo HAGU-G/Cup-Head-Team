@@ -27,5 +27,10 @@ public:
 	void SetRotation(float value) override;
 	void Vine();
 	void VineReturn();
+	void PurpleVine();
+	void PinkVine();
+	void PinkVineReturn();
+	void CreatePinkMonster();
+	void CreatePurpleMonster();
 };
 

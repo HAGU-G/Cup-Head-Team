@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "GameObject/Monster/ObjectMonster.h"
 
+class Player;
+
 class SceneGame : public Scene
 {
 public:
@@ -17,6 +19,8 @@ public:
 
 protected:
 	std::vector<ObjectMonster*> MonsterList;
+
+	Player* player = nullptr;
 
 	Status status = Status::None;
 	float timer = 0.f;

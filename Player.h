@@ -48,7 +48,7 @@ protected:
 	bool isParry = false;
 	bool isDamaging = false;
 
-	int maxHp = 3;
+	int maxHp = 100;
 	int hp;
 
 	float horizontalInput;

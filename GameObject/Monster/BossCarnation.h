@@ -2,6 +2,7 @@
 #include "ObjectMonster.h"
 
 class SpriteGo;
+class SceneGame;
 
 class BossCarnation : public ObjectMonster
 {
@@ -13,23 +14,16 @@ class BossCarnation : public ObjectMonster
 	};
 
 protected:
+	SceneGame* sceneGame;
+
 	sf::FloatRect customBounds;//////////////////////////////////
 	State state = State::None;
 	State preState = State::None;
 
-	SpriteGo* mainBg;
-	SpriteGo* skyBg;
-	SpriteGo* frontBush;
-	SpriteGo* frontBg;
-	SpriteGo* cloudBg;
-	SpriteGo* frontCloudBg;
-	SpriteGo* cloudBg2;
-	SpriteGo* frontCloudBg2;
-
 	sf::Vector2f defaultPos;
+	sf::Vector2f viewSize;
+	sf::Vector2f setDirection;
 
-	float cloudSpeed = -50.f;
-	float frontCloudSpeed = -40.f;
 	int patternCount = 0;
 	float patternTimer = 0.f;
 	float patternInterval = 2.0f;
@@ -48,7 +42,6 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
-	void Draw(sf::RenderTexture& window) override;
 
 	void FaHigh();
 	void FaLow();
@@ -68,6 +61,7 @@ public:
 	bool PatternTimer(float dt);
 	void SetState(State state);
 
+	State GetState() { return state; }
 	sf::FloatRect GetCustomBounds() const override;
 };
 

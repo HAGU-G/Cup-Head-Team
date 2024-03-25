@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "BulletCarnationFireSeed.h"
 #include "BulletCarnationAcon.h"
+#include "BulletCarnationPurpleSeed.h"
+#include "BulletCarnationBlueSeed.h"
+#include "BulletCarnationPinkSeed.h"
+#include "SceneGame.h"
 
 BulletCarnationFireSeed::BulletCarnationFireSeed(const std::string& name)
 	:ObjectBullet(name)
@@ -10,13 +14,15 @@ BulletCarnationFireSeed::BulletCarnationFireSeed(const std::string& name)
 BulletCarnationFireSeed* BulletCarnationFireSeed::Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene, int i)
 {
 	BulletCarnationFireSeed* bcf = new BulletCarnationFireSeed();
-	bcf->CreateInit(pos, direction, scene);
 	bcf->SetColor(i);
+	bcf->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bcf);
 	return bcf;
 }
 
 void BulletCarnationFireSeed::Update(float dt)
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
 	customBounds = sprite.getGlobalBounds();
 	if (sprite.getPosition().y >= -10)
@@ -31,11 +37,13 @@ void BulletCarnationFireSeed::Update(float dt)
 		{
 			SetSpeed(0.f);
 			animator.Play("animations/carnationSeedPurpleGround.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::PurpleVine, this));
 		}
 		else if (animator.GetCurrentCilpId() == "animations/carnationSeedPink.csv")
 		{
 			SetSpeed(0.f);
 			animator.Play("animations/carnationSeedPinkGround.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::PinkVine, this));
 		}
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Delete))
@@ -53,11 +61,11 @@ void BulletCarnationFireSeed::Init()
 	}
 	else if (i == 1)
 	{
+		isPink = true;
 		animator.Play("animations/carnationSeedPink.csv");
 	}
 	else if( i == 2)
 	{
-
 		animator.Play("animations/carnationSeedPurple.csv");
 	}
 	SetSpeed(400.f);
@@ -71,6 +79,7 @@ void BulletCarnationFireSeed::Init()
 void BulletCarnationFireSeed::OnDie()
 {
 	ObjectBullet::OnDie();
+	isAlive = false;
 }
 
 sf::FloatRect BulletCarnationFireSeed::GetCustomBounds() const
@@ -91,7 +100,37 @@ void BulletCarnationFireSeed::Vine()
 
 void BulletCarnationFireSeed::VineReturn()
 {
-	BulletCarnationAcon::Create({ position.x + sprite.getGlobalBounds().width/2,position.y - sprite.getGlobalBounds().height}, {1.f,1.f}, scene);//test
+	BulletCarnationBlueSeed::Create({ position.x ,position.y - sprite.getGlobalBounds().height }, { 1.f,1.f }, scene);
 	animator.Play("animations/carnationSeedVineReturn.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
+}
+
+void BulletCarnationFireSeed::PurpleVine()
+{
+	animator.Play("animations/carnationFireSeedPurpleVine.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), 4, std::bind(&BulletCarnationFireSeed::CreatePurpleMonster, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
+}
+
+void BulletCarnationFireSeed::CreatePurpleMonster()
+{
+	BulletCarnationPurpleSeed::Create({ position.x ,position.y }, { 1.f,1.f }, scene);
+}
+
+void BulletCarnationFireSeed::PinkVine()
+{
+	animator.Play("animations/carnationSeedPinkVine.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-3, std::bind(&BulletCarnationFireSeed::CreatePinkMonster, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::PinkVineReturn, this));
+}
+
+void BulletCarnationFireSeed::PinkVineReturn()
+{
+	animator.Play("animations/carnationSeedPinkVineReturn.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
+}
+
+void BulletCarnationFireSeed::CreatePinkMonster()
+{
+	BulletCarnationPinkSeed::Create({ position.x ,position.y - sprite.getGlobalBounds().height + 30 }, { 0.f,-1.f }, scene);
 }

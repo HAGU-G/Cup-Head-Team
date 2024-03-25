@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletCarnationBoomerang.h"
+#include "SceneGame.h"
 
 BulletCarnationBoomerang::BulletCarnationBoomerang(const std::string& name)
 	:ObjectBullet(name)
@@ -10,11 +11,13 @@ BulletCarnationBoomerang* BulletCarnationBoomerang::Create(const sf::Vector2f& p
 {
 	BulletCarnationBoomerang* bcb = new BulletCarnationBoomerang();
 	bcb->CreateInit(pos, direction, scene);
+	dynamic_cast<SceneGame*>(scene)->AddMonster(bcb);
 	return bcb;
 }
 
 void BulletCarnationBoomerang::Update(float dt)
 {
+	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
 	customBounds = sprite.getGlobalBounds();
 	if (sprite.getPosition().x <= -800)
