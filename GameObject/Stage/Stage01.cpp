@@ -37,8 +37,6 @@ void Stage01::Init()
 	RES_MGR_TEXTURE.Load("resource/carrotBoomDeath.png");
 	RES_MGR_TEXTURE.Load("resource/carrotRingIntro.png");
 
-	bgm.openFromFile("resource/Sprite/stage01/bgm_level_veggies.wav");
-	bgm.setLoop(true);
 	viewSize = FRAMEWORK.GetStageViewSize();
 	playerPosCorrection = sf::Vector2f(viewSize.x * 0.5f * 0.545f, 0.f);
 
@@ -145,7 +143,7 @@ void Stage01::LateUpdate(float dt)
 
 void Stage01::Reset()
 {
-	bgm.stop();
+	SOUND_MGR.StopBgm();
 	if (player)
 	{
 		player->Release();
@@ -223,12 +221,12 @@ void Stage01::Reset()
 	field11->SetPosition({ 0.f, -viewSize.y * 0.43f });
 	sky->SetPosition({ 0.f, -viewSize.y * 0.50f });
 
-	bgm.play();
+	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav");
 }
 
 void Stage01::Release()
 {
-	bgm.stop();
+	SOUND_MGR.StopBgm();
 	GameObject::Release();
 }
 
