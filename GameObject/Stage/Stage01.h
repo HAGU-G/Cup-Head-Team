@@ -14,7 +14,7 @@ class Stage01 : public GameObject
 {
 protected:
 
-	SceneGame* sceneGame;
+	SceneGame* sceneGame = nullptr;
 
 	BossPotato* potato = nullptr;
 	BossOnion* onion = nullptr;
