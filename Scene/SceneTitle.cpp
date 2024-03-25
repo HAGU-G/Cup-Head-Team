@@ -245,7 +245,7 @@ void SceneTitle::Init()
 	visualText->SetCharacterSize(textSize);
 	visualBleeding->SetCharacterSize(textSize);
 
-	visualText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"t»ö ¹øÁü: ", textSize, { 70, 70, 70, 255 });
+	visualText->Set(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"), L"»ö ¹øÁü: ", textSize, { 70, 70, 70, 255 });
 	visualBleeding->SetString("-----l-----");
 
 	visualBleeding->SetColorSelect(colorSelect);
