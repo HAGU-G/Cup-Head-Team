@@ -20,6 +20,7 @@ void SpriteGo::SetTexture(const std::string& textureId, bool resetRect)
 {
 	this->textureId = textureId;
 	sprite.setTexture(RES_MGR_TEXTURE.Get(textureId), resetRect);
+	size = sf::Vector2f(sprite.getTextureRect().getSize());
 }
 
 void SpriteGo::SetPosition(const sf::Vector2f& pos)
@@ -88,6 +89,13 @@ void SpriteGo::SetFlipY(bool filp)
 
 	isFlipY = filp;
 	SetScale(scale);
+}
+
+void SpriteGo::SetAlpha(sf::Uint8 alpha)
+{
+	sf::Color color = sprite.getColor();
+	color.a = alpha;
+	sprite.setColor(color);
 }
 
 void SpriteGo::Update(float dt)

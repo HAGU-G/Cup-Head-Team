@@ -173,6 +173,7 @@
     <ClCompile Include="GameObject\Stage\Stage01.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\Monster\ObjectMonster.cpp" />
+    <ClCompile Include="GameObject\UI\ObjectButton.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -226,6 +227,7 @@
     <ClInclude Include="GameObject\Effect\ObjectEffect.h" />
     <ClInclude Include="GameObject\Monster\ObjectMonster.h" />
     <ClInclude Include="GameObject\Stage\Stage01.h" />
+    <ClInclude Include="GameObject\UI\ObjectButton.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
@@ -236,10 +238,11 @@
     <ClInclude Include="Scene\SceneDev2.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\resource\Shader\Smooth.frag" />
     <None Include="bin\resource\Shader\Hit.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="bin\resource\Shader\RGB.frag" />
+    <Text Include="bin\resource\Shader\Bleeding.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

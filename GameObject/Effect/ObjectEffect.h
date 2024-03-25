@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteGo.h"
+
 class ObjectEffect : public SpriteGo
 {
 protected:
@@ -18,6 +19,7 @@ public:
 	ObjectEffect& operator=(ObjectEffect&&) = delete;
 
 	void CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
+	void CreateInit(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene, Scene::Layers layer);
 
 	void Init() override;
 	void Update(float dt) override;

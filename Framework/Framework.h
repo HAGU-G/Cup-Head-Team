@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include <string>
 
 // 1. 초기화 / 메인루프 / 정리
 // 2. 시간 관련 기능 / 윈도우 정보
@@ -17,8 +18,22 @@ protected:
 	sf::Vector2i windowSize;
 	sf::Vector2f stageViewSize = { 1280.f / 1.1f,720.f / 1.1f };
 	sf::Vector2f stageViewCenter = { 0.f, -250.f };
-	sf::RenderTexture preDraw;
-	sf::Shader shader;
+	sf::RenderTexture pass1;
+	sf::RenderTexture pass2;
+	sf::RenderStates renderStates;
+	float scale = 2.f;
+	sf::Shader bleeding;
+	sf::Shader smooth;
+
+	sf::Sprite filmGrain;
+	int filmNum = -1;
+	int filmDirection = 1;
+	float filmInterval = 0.05f;
+	float filmTimer = filmInterval;
+	std::string left = "resource/Film/cuphead_screen_fx_";
+	std::string middle;
+	std::string right = ".png";
+
 	float fixedUpdateTime = 1.f / 50.f;
 
 	bool useShader = true;
@@ -39,7 +54,7 @@ protected:
 	int fps = 0;
 
 public:
-	sf::RenderTexture& GetWindow() { return preDraw; }	// !!
+	sf::RenderTexture& GetWindow() { return pass1; }	// !!
 	sf::RenderWindow& GetWindowReal() { return window; }
 	const sf::Vector2i& GetWindowSize() const { return windowSize; }
 	const sf::Vector2f& GetStageViewSize() const { return stageViewSize; }
@@ -60,7 +75,9 @@ public:
 	virtual void Init(int width, int height, const std::string& name = "Game");
 	virtual void Do();
 	virtual void Release();
-
+	
+	void LoadPostEffect();
+	void Pass2(float dt);
 };
 
 #define FRAMEWORK (Singleton<Framework>::Instance())

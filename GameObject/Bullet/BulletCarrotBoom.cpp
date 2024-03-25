@@ -50,11 +50,6 @@ void BulletCarrotBoom::SetRotation(float value)
 	sprite.setRotation(value - 90.f);
 }
 
-sf::FloatRect BulletCarrotBoom::GetCustomBounds() const
-{
-	return customBounds;
-}
-
 void BulletCarrotBoom::Flip()
 {
 	if (direction.y != 0.f)

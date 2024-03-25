@@ -20,8 +20,6 @@ public:
 
 	void SetRotation(float value) override;
 
-	sf::FloatRect GetCustomBounds() const override;
-
 	void Flip() override;
 };
 

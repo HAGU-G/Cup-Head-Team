@@ -34,6 +34,12 @@ void BulletOnionTear::Init()
 	ObjectBullet::Init();
 }
 
+void BulletOnionTear::Update(float dt)
+{
+	ObjectBullet::Update(dt);
+	customBounds = sprite.getGlobalBounds();
+
+}
 void BulletOnionTear::OnDie()
 {
 	ObjectBullet::OnDie();

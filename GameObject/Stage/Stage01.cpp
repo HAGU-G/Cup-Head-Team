@@ -51,7 +51,6 @@ void Stage01::Init()
 void Stage01::Update(float dt)
 {
 	GameObject::Update(dt);
-	std::cout << playerPos.x << std::endl;
 	if (swapping)
 	{
 		if (swapTimer >= swapTime)
@@ -106,7 +105,8 @@ void Stage01::Update(float dt)
 	case 3:
 		if (carrot->GetHp() <= 0)
 		{
-			sceneGame->Victory();
+			sceneGame->SetStatus(SceneGame::Status::Victory);
+			phase = -1;
 		}
 		carrotHp = carrot->GetHp();
 		break;
