@@ -136,6 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\Bullet\BulletCarnationPollen.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarnationFinalVine.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationPinkSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationBlueSeed.cpp" />
@@ -193,6 +195,8 @@
     <ClCompile Include="GameObject\Stage\Stage03.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\Bullet\BulletCarnationPollen.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarnationFinalVine.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPinkSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationBlueSeed.h" />

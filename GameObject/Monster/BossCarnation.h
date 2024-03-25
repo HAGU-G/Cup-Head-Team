@@ -53,6 +53,8 @@ public:
 	void Intro();
 	void Idle();
 	void FinalIntro();
+	void CreateFinalVine();
+	void FirePollen();
 	void FinalIdle();
 	void FinalFiringPollen();
 	void Death();

@@ -6,6 +6,8 @@
 #include "Bullet/BulletCarnationAcon.h"
 #include "Bullet/BulletCarnationFireSeed.h"
 #include "SceneGame.h"
+#include "Bullet/BulletCarnationFinalVine.h"
+#include "Bullet/BulletCarnationPollen.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -209,7 +211,27 @@ void BossCarnation::FinalIntro()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossFinalIntro.csv");
+
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-7, std::bind(&BossCarnation::CreateFinalVine, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
+}
+
+void BossCarnation::CreateFinalVine()
+{
+	BulletCarnationFinalVine::Create({ position.x - sprite.getGlobalBounds().width + 250.f, 0}, {1.f , 0.f}, scene);
+}
+
+void BossCarnation::FirePollen()
+{
+	int rnadom = Utils::RandomRange(0, 101);
+	if (rnadom <= 20)
+	{
+		BulletCarnationPollen::Create({ position.x + sprite.getGlobalBounds().width * 0.1f - 250.f, position.y - sprite.getGlobalBounds().height * 0.6f}, {-1.f , 1.f}, scene, 1);
+	}
+	else
+	{
+		BulletCarnationPollen::Create({ position.x + sprite.getGlobalBounds().width* 0.1f - 250.f, position.y - sprite.getGlobalBounds().height * 0.6f }, { -1.f , 1.f }, scene, 0);
+	}
 }
 
 void BossCarnation::FinalIdle()
@@ -224,6 +246,8 @@ void BossCarnation::FinalFiringPollen()
 	sf::Vector2f Pos = GetPosition();
 	SetPosition({ Pos.x - 20.f,Pos.y - 20.f });
 	animator.Play("animations/carnationFiringPollen.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), 12, std::bind(&BossCarnation::FirePollen, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), 34, std::bind(&BossCarnation::FirePollen, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
 }
 

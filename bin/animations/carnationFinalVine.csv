@@ -1,0 +1,26 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationFinalVine,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationFinalVine.png,0,0,110,221,8
+resource/carnationFinalVine.png,110,0,134,221,8
+resource/carnationFinalVine.png,244,0,198,221,8
+resource/carnationFinalVine.png,442,0,246,221,8
+resource/carnationFinalVine.png,688,0,292,221,8
+resource/carnationFinalVine.png,980,0,362,221,8
+resource/carnationFinalVine.png,1342,0,429,221,8
+resource/carnationFinalVine.png,1771,0,509,221,8
+resource/carnationFinalVine.png,2280,0,573,221,8
+resource/carnationFinalVine.png,2853,0,635,221,8
+resource/carnationFinalVine.png,3488,0,687,221,8
+resource/carnationFinalVine.png,4175,0,759,221,8
+resource/carnationFinalVine.png,4934,0,812,221,8
+resource/carnationFinalVine.png,5746,0,837,221,8
+resource/carnationFinalVine.png,6583,0,866,221,8
+resource/carnationFinalVine.png,7449,0,891,221,8
+resource/carnationFinalVine.png,8340,0,904,221,8
+resource/carnationFinalVine.png,9244,0,926,221,8
+resource/carnationFinalVine.png,10170,0,936,221,8
+resource/carnationFinalVine.png,11106,0,940,221,8
+resource/carnationFinalVine.png,12046,0,944,221,8
+resource/carnationFinalVine.png,12990,0,946,221,8
+resource/carnationFinalVine.png,13936,0,946,221,8
