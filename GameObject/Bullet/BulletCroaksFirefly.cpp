@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BulletCroaksFirefly.h"
+#include "Effect/ObjectEffect.h"
 #include <SceneGame.h>
 
 
@@ -74,5 +75,9 @@ void BulletCroaksFirefly::Init()
 
 void BulletCroaksFirefly::OnDie()
 {
+	ObjectEffect* oe = new ObjectEffect("EffectFireFly");
+	oe->CreateInit(position, direction, scene);
+	oe->GetAniamtor().Play("animations/CroaksFireFlyDeath.csv");
+	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }

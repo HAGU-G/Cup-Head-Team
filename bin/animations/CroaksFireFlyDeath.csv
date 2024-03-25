@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksFireFlyDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksFireFlyDeath.png,0,0,150,182,7
+resource/CroaksFireFlyDeath.png,150,0,150,182,7
+resource/CroaksFireFlyDeath.png,300,0,150,182,7
+resource/CroaksFireFlyDeath.png,450,0,150,182,7
+resource/CroaksFireFlyDeath.png,600,0,150,182,7
+resource/CroaksFireFlyDeath.png,750,0,160,182,7
+resource/CroaksFireFlyDeath.png,910,0,170,182,7
+resource/CroaksFireFlyDeath.png,1080,0,180,182,7
+resource/CroaksFireFlyDeath.png,1260,0,180,182,7
