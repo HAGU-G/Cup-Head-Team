@@ -16,6 +16,11 @@ sf::FloatRect SpriteGo::GetGlobalBounds()
 	return sprite.getGlobalBounds();
 }
 
+sf::FloatRect SpriteGo::GetCustomBounds()
+{
+	return customBounds;
+}
+
 void SpriteGo::SetTexture(const std::string& textureId, bool resetRect)
 {
 	this->textureId = textureId;
@@ -138,5 +143,12 @@ void SpriteGo::Draw(sf::RenderTexture& window)
 
 		window.draw(globalHitBox);
 
+		sf::FloatRect custombound = GetCustomBounds();
+		sf::RectangleShape outline(sf::Vector2f(custombound.width, custombound.height));
+		outline.setPosition(custombound.left, custombound.top);
+		outline.setFillColor(sf::Color::Transparent);
+		outline.setOutlineThickness(1.f);
+		outline.setOutlineColor(sf::Color::Blue);
+		window.draw(outline);
 	}
 }
