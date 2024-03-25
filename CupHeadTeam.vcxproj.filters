@@ -43,6 +43,7 @@
     <ClCompile Include="GameObject\Bullet\BulletRibbyBall.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletRibbyShoot.cpp" />
     <ClCompile Include="GameObject\Monster\BossCroaks.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCroaksFirefly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="GameObject\Bullet\BulletRibbyBall.h" />
     <ClInclude Include="GameObject\Bullet\BulletRibbyShoot.h" />
     <ClInclude Include="GameObject\Monster\BossCroaks.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCroaksFirefly.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />
