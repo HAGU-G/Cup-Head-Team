@@ -437,14 +437,27 @@ void ObjectOption::ShowOptionAudio(bool value)
 		currentButton = optionAudio;
 
 		optionEscape->UnSelect();
-		optionVisual->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(optionAudio);
+		if (reStart)
+		{
+			goTitle->SetNextButton(optionEscape);
+			optionEscape->SetNextButton(reStart);
+		}
+		else
+		{
+			optionVisual->SetNextButton(optionEscape);
+			optionEscape->SetNextButton(optionAudio);
+		}
 	}
 
 	isOptionSelect = value;
 
 	optionAudio->SetActive(!value);
 	optionVisual->SetActive(!value);
+	if (reStart)
+	{
+		reStart->SetActive(!value);
+		goTitle->SetActive(!value);
+	}
 
 	audioText->SetActive(value);
 	audioMaster->SetActive(value);
@@ -465,16 +478,29 @@ void ObjectOption::ShowOptionVisual(bool value)
 	else
 	{
 		currentButton = optionVisual;
-
 		optionEscape->UnSelect();
-		optionVisual->SetNextButton(optionEscape);
-		optionEscape->SetNextButton(optionAudio);
+
+		if (reStart)
+		{
+			goTitle->SetNextButton(optionEscape);
+			optionEscape->SetNextButton(reStart);
+		}
+		else
+		{
+			optionVisual->SetNextButton(optionEscape);
+			optionEscape->SetNextButton(optionAudio);
+		}
 	}
 
 	isOptionSelect = value;
 
 	optionAudio->SetActive(!value);
 	optionVisual->SetActive(!value);
+	if (reStart)
+	{
+		reStart->SetActive(!value);
+		goTitle->SetActive(!value);
+	}
 
 	visualText->SetActive(value);
 	visualBleeding->SetActive(value);
