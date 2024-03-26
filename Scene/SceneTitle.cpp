@@ -219,7 +219,7 @@ void SceneTitle::Update(float dt)
 		{
 			ShowStageCard(false);
 		}
-		else if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		else if (InputMgr::GetKeyDown(sf::Keyboard::Z) || InputMgr::GetKeyDown(sf::Keyboard::Enter))
 		{
 			StartGame();
 		}
@@ -237,7 +237,7 @@ void SceneTitle::Update(float dt)
 		}
 
 		//버튼 클릭
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !optionCard->GetActive())
+		if ((InputMgr::GetKeyDown(sf::Keyboard::Z) || InputMgr::GetKeyDown(sf::Keyboard::Enter)) && !optionCard->GetActive())
 		{
 			ButtonPress();
 		}
