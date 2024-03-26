@@ -24,7 +24,7 @@ public:
 	void OnCreate() override;
 	void OnDie() override;
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 
 };
 

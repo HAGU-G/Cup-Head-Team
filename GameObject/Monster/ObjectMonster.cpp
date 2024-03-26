@@ -43,3 +43,9 @@ bool ObjectMonster::OnDamage(int damage)
 	}
 	return false;
 }
+
+void ObjectMonster::SetCustomBounds(float ratioX, float ratioY, Origins origin)
+{
+	customBounds.setSize({ sprite.getGlobalBounds().getSize().x * ratioX, sprite.getGlobalBounds().getSize().y * ratioY });
+	Utils::SetOrigin(customBounds, origin);
+}

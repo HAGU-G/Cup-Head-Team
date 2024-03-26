@@ -59,8 +59,8 @@ public:
 
 	void SetState(State state);
 
-	sf::FloatRect GetCustomBounds() const override;
-
 	bool GetFanState() { return state == State::Fan; }
+	sf::RectangleShape GetCustomBounds() const override;
+
 };
 

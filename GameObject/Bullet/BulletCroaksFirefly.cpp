@@ -31,7 +31,8 @@ BulletCroaksFirefly* BulletCroaksFirefly::Create(const sf::Vector2f& pos, const 
 void BulletCroaksFirefly::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	customBounds.setSize(sprite.getGlobalBounds().getSize());
+	customBounds.setPosition(sprite.getGlobalBounds().getPosition());
 
 	HomingTimer += dt;
 	if (HomingTimer > HomingInterval && HomingTimer < 2)
@@ -49,7 +50,9 @@ void BulletCroaksFirefly::Update(float dt)
 	float shrinkFactor = 0.7f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	//customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	SetCustomBounds(shrinkFactor, shrinkFactor, Origins::TL);
+	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 }
 
 void BulletCroaksFirefly::Init()

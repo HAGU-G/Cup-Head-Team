@@ -1,0 +1,5 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+hud_hp_1,3,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/hud_hp_1.png,0,0,78,32,6
+resource/hud_hp_1.png,78,0,78,32,6

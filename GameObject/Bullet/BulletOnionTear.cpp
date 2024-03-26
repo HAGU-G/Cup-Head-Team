@@ -28,6 +28,7 @@ void BulletOnionTear::Init()
 	{
 		animator.Play("animations/onionTear.csv");
 	}
+	SetCustomBounds(0.8f, 0.8f, Origins::MC);
 	SetSpeed(600.f);
 	SetRange(1200.f);
 	type = Type::Straight;
@@ -37,7 +38,7 @@ void BulletOnionTear::Init()
 void BulletOnionTear::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	customBounds.setPosition(position);
 
 }
 void BulletOnionTear::OnDie()

@@ -65,7 +65,7 @@ public:
 	virtual void OnCreate();	//CreateInit를 하면 자동으로 호출되는 함수 : 내용은 비어있습니다.
 	virtual void OnDie();		//씬에서 Remove 하고싶을 때 호출하시면 됩니다.
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 	void SetTyep(Type t) { type = t; }
 };
 

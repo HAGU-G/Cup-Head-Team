@@ -29,7 +29,8 @@ void BulletCarrotRing::Init()
 void BulletCarrotRing::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(0.7f, 0.7f, Origins::MC);
+	customBounds.setPosition(position);
 }
 
 void BulletCarrotRing::OnDie()
