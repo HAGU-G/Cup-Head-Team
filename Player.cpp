@@ -25,10 +25,19 @@ void Player::Reset()
 {
 	scene = SCENE_MGR.GetCurrentScene();
 	hp = maxHp;
-	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
-	prePosition = position;
+	Intro();
 	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
+}
+
+void Player::Intro()
+{
+	animator.ClearEvent();
+	animator.Play("animations/PlayerIntro.csv");
+	state = PlayerState::Intro;
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), [this] {
+		state = PlayerState::Normal;
+		});
 }
 
 void Player::Update(float dt)
@@ -36,8 +45,7 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
-
-	if (state == PlayerState::Dead)
+	if (state != PlayerState::Normal)
 	{
 		return;
 	}
@@ -45,6 +53,7 @@ void Player::Update(float dt)
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
 	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
+	isXKeyPressed = InputMgr::GetKey(sf::Keyboard::X);
 
 	if (isInvincible)                                      //무적 상태 o
 	{
@@ -119,14 +128,13 @@ void Player::Update(float dt)
 		}
 
 		fireTimer += dt;
-		if (InputMgr::GetKey(sf::Keyboard::X) && fireTimer > fireIntervel)
+		if (isXKeyPressed && fireTimer > fireIntervel)
 		{
 			isFire = true;
 			fireTimer = 0.f;
 			Fire(currentDirection);
 		}
-
-		if (InputMgr::GetKeyUp(sf::Keyboard::X))
+		if (!isXKeyPressed)
 		{
 			isFire = false;
 		}
@@ -140,6 +148,8 @@ void Player::Update(float dt)
 	customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
 	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 
+	currentDirection = PreDirection;
+	
 	MoveDirection = position - prePosition;
 	prePosition = position;
 }
@@ -157,82 +167,206 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 
 	if (isCKeyPressed && !isDamaging)
 	{
-		if (horizontalInput > 0.f)
+		if (isXKeyPressed && isCKeyPressed)
 		{
-			if (verticalInput > 0.f)
+			if (verticalInput < 0.f && horizontalInput == 0)
 			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
+				if (animator.GetCurrentCilpId() != "animations/PlayerShootUp.csv")
 				{
-					animator.Play("animations/PlayerAimSideDown.csv");
+					animator.Play("animations/PlayerShootUp.csv");
 				}
-				currentDirection = Direction::RightDown;
+				currentDirection = Direction::Up;
 			}
-			else if (verticalInput < 0.f)
+			else if (horizontalInput == 0 && verticalInput == 0)
 			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
+				if (animator.GetCurrentCilpId() != "animations/PlayerShootStraight.csv")
 				{
-					animator.Play("animations/PlayerAimSideUp.csv");
+					animator.Play("animations/PlayerShootStraight.csv");
 				}
-				currentDirection = Direction::RightUp;
+				if (currentDirection == Direction::Right)
+				{
+					PreDirection = Direction::Right;
+				}
+				else if (currentDirection == Direction::Left)
+				{
+					PreDirection = Direction::Left;
+				}
 			}
-			else
+			else if (horizontalInput > 0.f)
+			{
+				if (verticalInput > 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerSideDown.csv")
+					{
+						animator.Play("animations/PlayerSideDown.csv");
+					}
+					currentDirection = Direction::RightDown;
+				}
+				else if (verticalInput < 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerSideUp.csv")
+					{
+						animator.Play("animations/PlayerSideUp.csv");
+					}
+					currentDirection = Direction::RightUp;
+				}
+				else
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerShootStraight.csv")
+					{
+						animator.Play("animations/PlayerShootStraight.csv");
+					}
+					PreDirection = Direction::Right;
+				}
+			}
+			else if (horizontalInput < 0.f)
+			{
+				if (verticalInput > 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerSideDown.csv")
+					{
+						animator.Play("animations/PlayerSideDown.csv");
+					}
+					currentDirection = Direction::LeftDown;
+				}
+				else if (verticalInput < 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerSideUp.csv")
+					{
+						animator.Play("animations/PlayerSideUp.csv");
+					}
+					currentDirection = Direction::LeftUp;
+				}
+				else
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerShootStraight.csv")
+					{
+						animator.Play("animations/PlayerShootStraight.csv");
+					}
+					PreDirection = Direction::Left;
+				}
+			}
+			else if (verticalInput < 0.f && horizontalInput == 0)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerShootUp.csv")
+				{
+					animator.Play("animations/PlayerShootUp.csv");
+				}
+				currentDirection = Direction::Up;
+			}
+			else if (verticalInput > 0.f && horizontalInput == 0)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerShootDown.csv")
+				{
+					animator.Play("animations/PlayerShootDown.csv");
+				}
+				currentDirection = Direction::Down;
+			}
+		}
+		if(!isXKeyPressed && isCKeyPressed)
+		{
+			if (verticalInput < 0.f && horizontalInput == 0)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerAimUp.csv")
+				{
+					animator.Play("animations/PlayerAimUp.csv");
+				}
+				currentDirection = Direction::Up;
+			}
+			else if (horizontalInput == 0 && verticalInput == 0)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimStraight.csv")
 				{
 					animator.Play("animations/PlayerAimStraight.csv");
 				}
-				currentDirection = Direction::Right;
 			}
-		}
-		else if (horizontalInput < 0.f)
-		{
-			if (verticalInput > 0.f)
+			if (horizontalInput > 0.f)
 			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
+				if (verticalInput > 0.f)
 				{
-					animator.Play("animations/PlayerAimSideDown.csv");
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
+					{
+						animator.Play("animations/PlayerAimSideDown.csv");
+					}
+					currentDirection = Direction::RightDown;
 				}
-				currentDirection = Direction::LeftDown;
-			}
-			else if (verticalInput < 0.f)
-			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
+				else if (verticalInput < 0.f)
 				{
-					animator.Play("animations/PlayerAimSideUp.csv");
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
+					{
+						animator.Play("animations/PlayerAimSideUp.csv");
+					}
+					currentDirection = Direction::RightUp;
 				}
-				currentDirection = Direction::LeftUp;
-			}
-			else
-			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerAimStraight.csv")
+				else
 				{
-					animator.Play("animations/PlayerAimStraight.csv");
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimStraight.csv")
+					{
+						animator.Play("animations/PlayerAimStraight.csv");
+					}
+					PreDirection = Direction::Right;
+					currentDirection = PreDirection;
 				}
-				currentDirection = Direction::Left;
 			}
-		}
-		else if (verticalInput > 0.f)
-		{
-			if (animator.GetCurrentCilpId() != "animations/PlayerAimDown.csv")
+			else if (horizontalInput < 0.f)
 			{
-				animator.Play("animations/PlayerAimDown.csv");
+				if (verticalInput > 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
+					{
+						animator.Play("animations/PlayerAimSideDown.csv");
+					}
+					currentDirection = Direction::LeftDown;
+				}
+				else if (verticalInput < 0.f)
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
+					{
+						animator.Play("animations/PlayerAimSideUp.csv");
+					}
+					currentDirection = Direction::LeftUp;
+				}
+				else
+				{
+					if (animator.GetCurrentCilpId() != "animations/PlayerAimStraight.csv")
+					{
+						animator.Play("animations/PlayerAimStraight.csv");
+					}
+					PreDirection = Direction::Left;
+					currentDirection = PreDirection;
+				}
 			}
+			else if (verticalInput > 0.f)
+			{
+				if (animator.GetCurrentCilpId() != "animations/PlayerAimDown.csv")
+				{
+					animator.Play("animations/PlayerAimDown.csv");
+				}
 
-			currentDirection = Direction::Down;
-		}
-		else if (verticalInput < 0.f)
-		{
-			if (animator.GetCurrentCilpId() != "animations/PlayerAimUp.csv")
+				currentDirection = Direction::Down;
+			}
+			else if (verticalInput < 0.f)
 			{
-				animator.Play("animations/PlayerAimUp.csv");
+				if (animator.GetCurrentCilpId() != "animations/PlayerAimUp.csv")
+				{
+					animator.Play("animations/PlayerAimUp.csv");
+				}
+				currentDirection = Direction::Up;
+			}
+		}
+	}
+	if (!isCKeyPressed && !isDamaging)
+	{
+		// C 키x, 방향은 변경o, 
+		if (InputMgr::GetKey(sf::Keyboard::X) &&  verticalInput < 0.f && horizontalInput == 0)
+		{
+			if (animator.GetCurrentCilpId() != "animations/PlayerShootUp.csv")
+			{
+				animator.Play("animations/PlayerShootUp.csv");
 			}
 			currentDirection = Direction::Up;
 		}
-	}
-	else if (!isCKeyPressed && !isDamaging)
-	{
-		// C 키x, 방향은 변경o, 
-		if (InputMgr::GetKey(sf::Keyboard::X) && horizontalInput == 0)
+		else if (InputMgr::GetKey(sf::Keyboard::X) && horizontalInput == 0 && verticalInput == 0)
 		{
 			if (animator.GetCurrentCilpId() != "animations/PlayerShootStraight.csv")
 			{
@@ -254,6 +388,10 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				animator.Play("animations/playersideshooting.csv");
 			}
+			if (currentDirection == Direction::Right)
+			{
+				PreDirection = Direction::Right;
+			}
 		}
 		else if (horizontalInput < 0.f)
 		{
@@ -269,6 +407,10 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			else if (animator.GetCurrentCilpId() != "animations/playersideshooting.csv" && isFire && !isCKeyPressed && (currentDirection == Direction::RightUp || currentDirection == Direction::LeftUp) && !isJumping)
 			{
 				animator.Play("animations/playersideshooting.csv");
+			}
+			if (currentDirection == Direction::Left)
+			{
+				PreDirection = Direction::Left;
 			}
 		}
 		else
@@ -297,10 +439,20 @@ void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput)
 	if (horizontalInput > 0.f)
 	{
 		currentDirection = verticalInput > 0.f ? Direction::RightDown : verticalInput < 0.f ? Direction::RightUp : Direction::Right;
+		if (currentDirection == Direction::Right)
+		{
+			PreDirection = Direction::Right;
+		}
+
 	}
 	else if (horizontalInput < 0.f)
 	{
 		currentDirection = verticalInput > 0.f ? Direction::LeftDown : verticalInput < 0.f ? Direction::LeftUp : Direction::Left;
+		if (currentDirection == Direction::Left)
+		{
+			PreDirection = Direction::Left;
+		}
+
 	}
 	else
 	{
@@ -319,10 +471,12 @@ void Player::Fire(Direction dir)
 	case Direction::Right:
 		pos.x += 50.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
+		PreDirection = Direction::Right;
 		break;
 	case Direction::Left:
 		pos.x -= 50.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
+		PreDirection = Direction::Left;
 		break;
 	case Direction::Up:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
@@ -331,22 +485,6 @@ void Player::Fire(Direction dir)
 	case Direction::Down:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
 		pos.y += 60.f;
-		break;
-	case Direction::RightUp:
-		pos.x += (temp % static_cast<int>(random * 2 + 1)) - random + 30;
-		pos.y += (temp % static_cast<int>(random * 2 + 1)) - random - 30;
-		break;
-	case Direction::LeftDown:
-		pos.x += (temp % static_cast<int>(random * 2 + 1)) - random - 30;
-		pos.y += (temp % static_cast<int>(random * 2 + 1)) - random + 30;
-		break;
-	case Direction::LeftUp:
-		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random - 30;
-		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random - 30;
-		break;
-	case Direction::RightDown:
-		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random + 30;
-		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 30;
 		break;
 	}
 	pos.y -= 100;
@@ -362,9 +500,11 @@ void Player::Dash(float dt)
 		{
 		case Direction::Right:
 			dashDirection = sf::Vector2f(1, 0);
+			PreDirection = Direction::Right;
 			break;
 		case Direction::Left:
 			dashDirection = sf::Vector2f(-1, 0);
+			PreDirection = Direction::Left;
 			break;
 
 		}
@@ -380,9 +520,7 @@ void Player::Dash(float dt)
 
 void Player::OnDamage()
 {
-
 	hp -= 1;
-	std::cout << "On" << std::endl;
 	if (hp == 0)
 	{
 		OnDie();

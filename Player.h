@@ -9,8 +9,10 @@ class Player : public SpriteGo
 
 public:
 	enum class PlayerState {
+		Intro,
 		Normal,
-		Dead
+		Dead,
+		None,
 	};
 
 	PlayerState state = PlayerState::Normal;
@@ -18,7 +20,7 @@ protected:
 	SceneGame* sceneGame;
 	Animator animator;
 	Direction currentDirection = Direction::Right;
-	Direction PreDirection = Direction::Right;
+	Direction PreDirection;
 
 	float gravity = 3500.f;
 	float speed = 500.f;
@@ -48,9 +50,11 @@ protected:
 	bool isCKeyPressed;
 	bool isParry = false;
 	bool isDamaging = false;
+	bool isIntro = true;
+	bool isXKeyPressed;
 	bool onPlatForm = false;
+	int maxHp = 3;
 
-	int maxHp = 100;
 	int hp;
 
 	float horizontalInput;
@@ -60,6 +64,7 @@ public:
 
 	void Init() override;
 	void Reset() override;
+	void Intro();
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
 	void UpdateDirection(float horizontalInput, float dt);

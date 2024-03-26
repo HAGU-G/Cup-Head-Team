@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerShootDown,15,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerShootDown.png,0,0,101,169,7
+resource/PlayerShootDown.png,101,0,96,169,7
+resource/PlayerShootDown.png,197,0,98,169,7
