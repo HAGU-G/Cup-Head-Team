@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-PlayerAimDown,15,1,,
+PlayerAimDown,15,2,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/PlayerAimDown.png,0,0,99,168,7
 resource/PlayerAimDown.png,99,0,98,168,7

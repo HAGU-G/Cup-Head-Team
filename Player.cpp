@@ -66,17 +66,17 @@ void Player::Update(float dt)
 		}
 	}
 
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing)
 	{
 		animator.Play("animations/PlayerDash.csv");
 		isDashing = true;
 		dashTimer = dashDuration;
+		velocity.x = (PreDirection == Direction::Right ? 1 : -1) * dashSpeed;
+		velocity.y = 0;
 	}
-	if (InputMgr::GetKeyUp(sf::Keyboard::LShift))
-	{
-		animator.Play("animations/PlayerIdle.csv");
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping)
 	{
 		animator.Play("animations/PlayerJump.csv");
 
@@ -307,6 +307,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					PreDirection = Direction::Right;
 					currentDirection = PreDirection;
 				}
+				PreDirection = Direction::Right;
 			}
 			else if (horizontalInput < 0.f)
 			{
@@ -335,6 +336,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					PreDirection = Direction::Left;
 					currentDirection = PreDirection;
 				}
+				PreDirection = Direction::Left;
 			}
 			else if (verticalInput > 0.f)
 			{
@@ -493,28 +495,38 @@ void Player::Fire(Direction dir)
 
 void Player::Dash(float dt)
 {
-	if (dashTimer > 0)
+	dashTimer -= dt;
+
+	if (PreDirection == Direction::Right) 
 	{
-		sf::Vector2f dashDirection;
-		switch (currentDirection)
-		{
-		case Direction::Right:
-			dashDirection = sf::Vector2f(1, 0);
-			PreDirection = Direction::Right;
-			break;
-		case Direction::Left:
-			dashDirection = sf::Vector2f(-1, 0);
-			PreDirection = Direction::Left;
-			break;
+		velocity.x = dashSpeed;
+	}
+	else if (PreDirection == Direction::Left) 
+	{
+		velocity.x = -dashSpeed;
+	}
 
-		}
+	velocity.y = 0;
 
-		SetPosition(position + dashDirection * dashSpeed * dt);
-		dashTimer -= dt;
+	if (dashTimer <= 0)
+	{
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DashEnd, this));
+	}
+
+	position += velocity * dt;
+	SetPosition(position);
+}
+
+void Player::DashEnd()
+{
+	isDashing = false;
+	if (isJumping)
+	{
+		animator.Play("animations/PlayerJump.csv");
 	}
 	else
 	{
-		isDashing = false;
+		animator.Play("animations/PlayerIdle.csv");
 	}
 }
 

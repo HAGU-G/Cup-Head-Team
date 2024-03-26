@@ -241,6 +241,7 @@ void BossRibby::Death()
 
 void BossRibby::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(this);
 }
 
