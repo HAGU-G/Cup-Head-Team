@@ -1,0 +1,9 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+onionTearPinkDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/onionTearPinkDeath.png,0,0,82,136,7
+resource/onionTearPinkDeath.png,82,0,107,136,7
+resource/onionTearPinkDeath.png,189,0,136,136,7
+resource/onionTearPinkDeath.png,325,0,171,136,7
+resource/onionTearPinkDeath.png,496,0,197,136,7
+resource/onionTearPinkDeath.png,693,0,211,136,7

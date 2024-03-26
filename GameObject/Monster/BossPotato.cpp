@@ -107,13 +107,21 @@ void BossPotato::Idle()
 
 void BossPotato::Shoot()
 {
+	ObjectEffect* oe = new ObjectEffect();
+	oe->CreateInit(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 6.7f / 8.f), { 1.f,0.f }, scene);
+	oe->GetAniamtor().Play("animations/potatoShootEffect.csv");
+	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	if (++shootCount < 4)
 	{
-		BulletPotatoShoot::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+		SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_Spit_00"
+			+std::to_string(Utils::RandomRange(1,4)) + ".wav");
+		BulletPotatoShoot::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 6.7f / 8.f), { -1.f, 0.f }, scene);
 	}
 	else
 	{
-		BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 7.f / 8.f), { -1.f, 0.f }, scene);
+		SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_Spit_Worm_0"
+			+ std::to_string(Utils::RandomRange(1, 3)) + ".wav");
+		BulletPotatoShootPink::Create(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 6.7f / 8.f), { -1.f, 0.f }, scene);
 	}
 }
 

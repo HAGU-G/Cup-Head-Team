@@ -10,7 +10,7 @@ EffectOnionTears::EffectOnionTears(const std::string& name)
 
 EffectOnionTears* EffectOnionTears::Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene, float duration)
 {
-	EffectOnionTears* eot = new EffectOnionTears();
+	EffectOnionTears* eot = new EffectOnionTears("OnionTears");
 
 	eot->animator.SetTarget(&eot->sprite);
 	eot->animator.Play("animations/onionTearsIntro.csv");

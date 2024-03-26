@@ -59,10 +59,14 @@ void Stage01::Update(float dt)
 			switch (phase)
 			{
 			case 2:
+				scene->AddGo(onion);
+				onion->Reset();
 				onion->SetActive(true);
 				sceneGame->AddMonster(onion);
 				break;
 			case 3:
+				scene->AddGo(carrot);
+				carrot->Reset();
 				carrot->SetActive(true);
 				sceneGame->AddMonster(carrot);
 				break;
@@ -81,14 +85,9 @@ void Stage01::Update(float dt)
 	{
 	case 0:
 		scene->AddGo(player);
-		scene->AddGo(potato);
-		scene->AddGo(onion);
-		scene->AddGo(carrot);
-
 		player->Reset();
+		scene->AddGo(potato);
 		potato->Reset();
-		onion->Reset();
-		carrot->Reset();
 
 		phase = 1;
 		potato->SetActive(true);

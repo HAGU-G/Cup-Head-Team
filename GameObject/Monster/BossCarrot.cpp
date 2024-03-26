@@ -106,9 +106,26 @@ void BossCarrot::Draw(sf::RenderTexture& window)
 void BossCarrot::Intro()
 {
 	SetState(State::None);
-	animator.ClearEvent();
-	animator.Play("animations/carrotIntro.csv");
-	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarrot::Pattern1, this));
+	ObjectEffect* front = new ObjectEffect("CarrotIntroBack");
+	front->sortLayer = -3;
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_RiseGround.wav");
+	front->SetScale({ 0.9f, 0.9f });
+	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
+	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
+	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+		[this, front]()
+		{
+			ObjectEffect* back = new ObjectEffect("CarrotIntroFront");
+			back->SetScale({ 1.1f, 1.1f });
+			back->sortLayer = -4;
+			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
+			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			animator.ClearEvent();
+			animator.Play("animations/carrotIntro.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarrot::Pattern1, this));
+			patternTimer = 2.f;
+		});
+
 
 }
 

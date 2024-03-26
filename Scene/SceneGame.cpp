@@ -160,7 +160,7 @@ void SceneGame::SetStatus(Status status)
 	case SceneGame::Status::Intro:
 		SOUND_MGR.PlaySfx(announcerLeft + "1_" + (char)Utils::RandomRange(97, 102) + announcerRight);
 		timer = 0.f;
-		timeLimit = 1.f;
+		timeLimit = 1.5f;
 		break;
 	case SceneGame::Status::FightIntro:
 	{

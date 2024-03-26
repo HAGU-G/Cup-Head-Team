@@ -51,7 +51,7 @@ protected:
 
 	bool swapping = false;
 	float swapTimer = 0.f;
-	float swapTime = 5.f;
+	float swapTime = 3.f;
 
 public:
 	Stage01(const std::string& name = "Stage01");

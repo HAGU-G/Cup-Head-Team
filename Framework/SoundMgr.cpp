@@ -181,3 +181,19 @@ void SoundMgr::StopAll()
 	}
 	playing.clear();
 }
+
+void SoundMgr::PlayAllSfx()
+{
+	for (auto ptr : playing)
+	{
+		ptr->play();
+	}
+}
+
+void SoundMgr::PauseAllSfx()
+{
+	for(auto ptr : playing)
+	{
+		ptr->pause();
+	}
+}

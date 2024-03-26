@@ -1,0 +1,18 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+potatoShootEffect,20,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/potatoShootEffect.png,0,0,84,404,5
+resource/potatoShootEffect.png,84,0,106,404,5
+resource/potatoShootEffect.png,190,0,148,404,5
+resource/potatoShootEffect.png,338,0,148,404,5
+resource/potatoShootEffect.png,486,0,198,404,5
+resource/potatoShootEffect.png,684,0,221,404,5
+resource/potatoShootEffect.png,905,0,235,404,5
+resource/potatoShootEffect.png,1140,0,130,404,5
+resource/potatoShootEffect.png,1270,0,139,404,5
+resource/potatoShootEffect.png,1409,0,175,404,5
+resource/potatoShootEffect.png,1584,0,171,404,5
+resource/potatoShootEffect.png,1755,0,178,404,5
+resource/potatoShootEffect.png,1933,0,191,404,5
+resource/potatoShootEffect.png,2124,0,195,404,5
+resource/potatoShootEffect.png,2319,0,193,404,5

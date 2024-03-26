@@ -14,6 +14,7 @@ void BossOnion::Init()
 	ObjectMonster::Init();
 	sprite.setScale(1.f / 1.1f, 1.f / 1.1f);
 	hasHitBox = true;
+	soundCrying.setBuffer(RES_MGR_SOUND_BUFFER.Get("resource/Sprite/stage01/onion/sfx_level_veggies_Onion_Crying.wav"));
 }
 
 void BossOnion::Reset()
@@ -26,11 +27,12 @@ void BossOnion::Reset()
 
 void BossOnion::Update(float dt)
 {
+	soundCrying.setVolume(SOUND_MGR.GetSfxVolume());
 	ObjectMonster::Update(dt);
 	if (hp == 0)
 	{
 		BossDieEffect(dt);
-		if (state < State::Crying)
+		if (state < State::None)
 		{
 			Death();
 		}
@@ -51,12 +53,12 @@ void BossOnion::Update(float dt)
 		{
 			if (rand() % 5 == 0)
 			{
-				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, FRAMEWORK.GetWindowSize().x * 0.5f),
+				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, scene->GetWorldView().getSize().x * 0.5f),
 					-2.f * sprite.getGlobalBounds().height), { 0.f , 1.f }, scene, true);
 			}
 			else
 			{
-				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, FRAMEWORK.GetWindowSize().x * 0.5f),
+				BulletOnionTear::Create(position + sf::Vector2f(tearSide * Utils::RandomRange(sprite.getGlobalBounds().width * 0.6f, scene->GetWorldView().getSize().x * 0.5f),
 					-2.f * sprite.getGlobalBounds().height), { 0.f , 1.f }, scene);
 			}
 			tearSide *= -1;
@@ -93,9 +95,24 @@ void BossOnion::LateUpdate(float dt)
 void BossOnion::Intro()
 {
 	SetState(State::None);
-	animator.ClearEvent();
-	animator.Play("animations/onionIntro.csv");
-	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossOnion::Idle, this));
+	ObjectEffect* front = new ObjectEffect("OnionIntroBack");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/onion/sfx_level_veggies_Onion_Rise.wav");
+	front->SetScale({ 1.1f, 1.1f });
+	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
+	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
+	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+		[this, front]()
+		{
+			ObjectEffect* back = new ObjectEffect("OnionIntroFront");
+			back->SetScale({ 1.1f, 1.1f });
+			back->sortLayer = -1;
+			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
+			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			animator.ClearEvent();
+			animator.Play("animations/onionIntro.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossOnion::Idle, this));
+			patternTimer = 2.f;
+		});
 
 }
 
@@ -111,13 +128,17 @@ void BossOnion::Cry()
 
 void BossOnion::Tears()
 {
+	soundCrying.play();
 	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, cryingDuration * 1.15f);
 	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, cryingDuration * 1.15f);
 }
 
 void BossOnion::Death()
 {
-	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
+	scene->RemoveGo(scene->FindGo("OnionTears"));
+	scene->RemoveGo(scene->FindGo("OnionTears"));
+	soundCrying.stop();
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/onion/sfx_level_veggies_Onion_Die.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
@@ -134,6 +155,8 @@ void BossOnion::Leave()
 
 void BossOnion::OnDie()
 {
+	scene->RemoveGo(scene->FindGo("OnionIntroBack"));
+	scene->RemoveGo(scene->FindGo("OnionIntroFront"));
 	scene->RemoveGo(this);
 }
 
@@ -143,6 +166,7 @@ bool BossOnion::TearTimer(float dt)
 	if (tearTimer >= tearInterval)
 	{
 		tearTimer = 0.f;
+		tearInterval = Utils::RandomRange(0.2f,0.6f);
 		return true;
 	}
 	return false;
@@ -158,16 +182,17 @@ void BossOnion::SetState(State state)
 		preState = State::Idle;
 		break;
 	case BossOnion::State::Pattern1:
+		animator.ClearEvent();
 		if (preState == State::Crying)
 		{
 			animator.Play("animations/onionCryingReverse.csv");
+			animator.AddEvent("animations/onionCryingReverse.csv", 11, [this]() { soundCrying.stop(); });
 			animator.PlayQueue("animations/onionCrying.csv");
 		}
 		else
 		{
 			animator.Play("animations/onionCrying.csv");
 		}
-		animator.ClearEvent();
 		animator.AddEvent("animations/onionCrying.csv", 21, std::bind(&BossOnion::Cry, this));
 		animator.AddEvent("animations/onionCrying.csv", 11, std::bind(&BossOnion::Tears, this));
 		preState = State::Pattern1;
