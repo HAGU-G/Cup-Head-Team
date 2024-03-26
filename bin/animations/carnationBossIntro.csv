@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-carnationBossIntro,15,1,,,
+carnationBossIntro,15,0,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/carnationBossIntro.png,0,0,292,721,8
 resource/carnationBossIntro.png,292,0,291,721,8

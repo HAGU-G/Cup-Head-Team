@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+spinAcon,15,1,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/spinAcon.png,0,0,68,67,4
+resource/spinAcon.png,68,0,62,67,4
+resource/spinAcon.png,130,0,62,67,4
+resource/spinAcon.png,192,0,60,67,4
+resource/spinAcon.png,252,0,67,67,4
+resource/spinAcon.png,319,0,62,67,4
+resource/spinAcon.png,381,0,60,67,4
+resource/spinAcon.png,441,0,60,67,4

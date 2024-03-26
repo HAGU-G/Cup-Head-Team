@@ -180,3 +180,4 @@ sf::RectangleShape BossOnion::GetCustomBounds() const
 {
 	return customBounds;
 }
+

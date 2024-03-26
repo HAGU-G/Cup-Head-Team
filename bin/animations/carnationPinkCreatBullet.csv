@@ -1,0 +1,7 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationPinkCreatBullet,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationPinkCreatBullet.png,0,0,31,43,4
+resource/carnationPinkCreatBullet.png,31,0,32,43,4
+resource/carnationPinkCreatBullet.png,63,0,31,43,4
+resource/carnationPinkCreatBullet.png,94,0,31,43,4

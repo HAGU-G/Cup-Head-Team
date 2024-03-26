@@ -1,0 +1,16 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationVinusMove,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationVinusMove.png,0,0,56,66,4
+resource/carnationVinusMove.png,56,0,60,66,4
+resource/carnationVinusMove.png,116,0,57,66,4
+resource/carnationVinusMove.png,173,0,66,66,4
+resource/carnationVinusMove.png,239,0,68,66,4
+resource/carnationVinusMove.png,307,0,62,66,4
+resource/carnationVinusMove.png,369,0,81,66,4
+resource/carnationVinusMove.png,450,0,76,66,4
+resource/carnationVinusMove.png,526,0,115,66,4
+resource/carnationVinusMove.png,641,0,101,66,4
+resource/carnationVinusMove.png,742,0,81,66,4
+resource/carnationVinusMove.png,823,0,98,66,4
+resource/carnationVinusMove.png,921,0,74,66,4

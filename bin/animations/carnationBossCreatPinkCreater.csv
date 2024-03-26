@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationBossCreatPinkCreater,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationBossCreatPinkCreater.png,0,0,34,62,7
+resource/carnationBossCreatPinkCreater.png,34,0,58,62,7
+resource/carnationBossCreatPinkCreater.png,92,0,78,62,7
+resource/carnationBossCreatPinkCreater.png,170,0,97,62,7
+resource/carnationBossCreatPinkCreater.png,267,0,103,62,7

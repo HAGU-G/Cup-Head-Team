@@ -108,6 +108,12 @@ void SpriteGo::SetAlpha(sf::Uint8 alpha)
 	sprite.setColor(color);
 }
 
+void SpriteGo::SetCustomBounds(float ratioX, float ratioY, Origins origin)
+{
+	customBounds.setSize({ sprite.getGlobalBounds().getSize().x * ratioX, sprite.getGlobalBounds().getSize().y * ratioY });
+	Utils::SetOrigin(customBounds, origin);
+}
+
 void SpriteGo::Update(float dt)
 {
 	GameObject::Update(dt);

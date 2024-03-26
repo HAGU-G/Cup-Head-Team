@@ -1,0 +1,19 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationPinkCreatureDie,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationPinkCreatureDie.png,0,0,182,431,4
+resource/carnationPinkCreatureDie.png,182,0,193,431,4
+resource/carnationPinkCreatureDie.png,375,0,130,431,4
+resource/carnationPinkCreatureDie.png,505,0,241,431,4
+resource/carnationPinkCreatureDie.png,746,0,292,431,4
+resource/carnationPinkCreatureDie.png,1038,0,337,431,4
+resource/carnationPinkCreatureDie.png,1375,0,373,431,4
+resource/carnationPinkCreatureDie.png,1748,0,384,431,4
+resource/carnationPinkCreatureDie.png,2132,0,416,431,4
+resource/carnationPinkCreatureDie.png,2548,0,186,431,4
+resource/carnationPinkCreatureDie.png,2734,0,168,431,4
+resource/carnationPinkCreatureDie.png,2902,0,152,431,4
+resource/carnationPinkCreatureDie.png,3054,0,150,431,4
+resource/carnationPinkCreatureDie.png,3204,0,148,431,4
+resource/carnationPinkCreatureDie.png,3352,0,130,431,4
+resource/carnationPinkCreatureDie.png,3482,0,121,431,4

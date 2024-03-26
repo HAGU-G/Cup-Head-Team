@@ -1,0 +1,13 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationSeedPurpleGround,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationSeedPurpleGround.png,0,0,50,61,7
+resource/carnationSeedPurpleGround.png,50,0,52,61,7
+resource/carnationSeedPurpleGround.png,102,0,52,61,7
+resource/carnationSeedPurpleGround.png,154,0,48,61,7
+resource/carnationSeedPurpleGround.png,202,0,49,61,7
+resource/carnationSeedPurpleGround.png,251,0,55,61,7
+resource/carnationSeedPurpleGround.png,306,0,59,61,7
+resource/carnationSeedPurpleGround.png,365,0,62,61,7
+resource/carnationSeedPurpleGround.png,427,0,12,61,7
+resource/carnationSeedPurpleGround.png,439,0,11,61,7

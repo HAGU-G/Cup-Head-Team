@@ -85,7 +85,7 @@ void Player::Update(float dt)
 		if (isGrounded)
 		{
 			isGrounded = false;
-			velocity.y = -700.f;
+			velocity.y = -1400.f;
 		}
 	}
 
@@ -530,6 +530,18 @@ void Player::OnDie()
 	state = PlayerState::Dead;
 }
 
+bool Player::OnPlatForm()
+{
+	if (onPlatForm)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
@@ -548,7 +560,8 @@ void Player::LateUpdate(float dt)
 					animator.PlayQueue("animations/PlayerJump.csv");
 					isParry = true;
 					isGrounded = false;
-					velocity.y = -500.f;
+					velocity.y = -1000.f;
+					std::cout << "Parry" << std::endl;
 				}
 			}
 			else if (!isInvincible)
@@ -574,22 +587,31 @@ void Player::LateUpdate(float dt)
 			toehold->onToehold = true;
 		}
 		if (toehold != nullptr && toehold->GetActive() && 
-			MoveDirection.y >= 0 && toehold->onToehold &&
+			toehold->onToehold &&
 			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width)&&
 			(toehold->GetCustomBoundsRect().left + toehold->GetCustomBoundsRect().width >= this->GetGlobalBounds().left))
 		{
-			if (this->GetGlobalBounds().intersects(toehold->GetCustomBoundsRect()))
+			if (MoveDirection.y >= 0)
 			{
-				
-				position.y = toehold->GetCustomBoundsRect().top;
-				velocity.y = 0;
-				isGrounded = true;
-				isJumping = false;
+				if (this->GetGlobalBounds().intersects(toehold->GetCustomBoundsRect()))
+				{
+
+					position.y = toehold->GetCustomBoundsRect().top;
+					velocity.y = 0;
+					isGrounded = true;
+					isJumping = false;
+					toehold->onPlatForm = true;
+				}
+			}
+			else if(isJumping)
+			{
+				toehold->onPlatForm = false;
 			}
 		}
 		if (position.y > toehold->GetCustomBoundsRect().top+gravity*dt)
 		{
 			toehold->onToehold = false;
+			toehold->onPlatForm = false;
 		}
 	}
 }

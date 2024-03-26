@@ -1,0 +1,31 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationBossFinalIntro,15,0,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationBossFinalIntro.png,0,0,378,660,7
+resource/carnationBossFinalIntro.png,378,0,440,660,7
+resource/carnationBossFinalIntro.png,818,0,393,660,7
+resource/carnationBossFinalIntro.png,1211,0,424,660,7
+resource/carnationBossFinalIntro.png,1635,0,442,660,7
+resource/carnationBossFinalIntro.png,2077,0,510,660,7
+resource/carnationBossFinalIntro.png,2587,0,535,660,7
+resource/carnationBossFinalIntro.png,3122,0,511,660,7
+resource/carnationBossFinalIntro.png,3633,0,663,660,7
+resource/carnationBossFinalIntro.png,4296,0,661,660,7
+resource/carnationBossFinalIntro.png,4957,0,603,660,7
+resource/carnationBossFinalIntro.png,5560,0,564,660,7
+resource/carnationBossFinalIntro.png,6124,0,534,660,7
+resource/carnationBossFinalIntro.png,6658,0,517,660,7
+resource/carnationBossFinalIntro.png,7175,0,494,660,7
+resource/carnationBossFinalIntro.png,7669,0,478,660,7
+resource/carnationBossFinalIntro.png,8147,0,362,660,7
+resource/carnationBossFinalIntro.png,8509,0,331,660,7
+resource/carnationBossFinalIntro.png,8840,0,314,660,7
+resource/carnationBossFinalIntro.png,9154,0,326,660,7
+resource/carnationBossFinalIntro.png,9480,0,327,660,7
+resource/carnationBossFinalIntro.png,9807,0,380,660,7
+resource/carnationBossFinalIntro.png,10187,0,372,660,7
+resource/carnationBossFinalIntro.png,10559,0,387,660,7
+resource/carnationBossFinalIntro.png,10946,0,382,660,7
+resource/carnationBossFinalIntro.png,11328,0,395,660,7
+resource/carnationBossFinalIntro.png,11723,0,406,660,7
+resource/carnationBossFinalIntro.png,12129,0,421,660,7
