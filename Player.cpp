@@ -471,22 +471,22 @@ void Player::Fire(Direction dir)
 	switch (dir)
 	{
 	case Direction::Right:
-		pos.x += 50.f;
+		pos.x += 60.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
 		PreDirection = Direction::Right;
 		break;
 	case Direction::Left:
-		pos.x -= 50.f;
+		pos.x -= 60.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
 		PreDirection = Direction::Left;
 		break;
 	case Direction::Up:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y -= 60.f;
+		pos.y -= 70.f;
 		break;
 	case Direction::Down:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y += 60.f;
+		pos.y += 70.f;
 		break;
 	}
 	pos.y -= 100;
@@ -560,6 +560,11 @@ bool Player::OnPlatForm()
 void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
+
+	if (state == PlayerState::Dead)
+	{
+		return;
+	}
 
 	auto monsters = sceneGame->getAllMonsters();
 	for (auto& monster : monsters)
