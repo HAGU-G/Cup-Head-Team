@@ -204,7 +204,7 @@ void Stage01::Reset()
 	carrot->Init();
 	
 	potato->SetPosition({ viewSize.x * 0.5f * 0.663f, 0.f });
-	carrot->SetPosition({ 0.f , -viewSize.y * 0.10f });
+	carrot->SetPosition({ 0.f , -viewSize.y * 0.15f });
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
 	playerPrePos = playerPos;
 

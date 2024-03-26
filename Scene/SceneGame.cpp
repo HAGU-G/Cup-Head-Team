@@ -54,6 +54,7 @@ void SceneGame::Release()
 {
 	Scene::Release();
 	MonsterList.clear();
+	toeholdList.clear();
 }
 
 void SceneGame::Enter()

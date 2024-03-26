@@ -21,11 +21,11 @@ protected:
 	sf::Vector2f ringCreatePos = { 0.f, 0.f };
 	sf::Vector2f targetDirection = { 0.f, 1.f };
 	float patternTimer = 0.f;
-	float patternInterval = 15.0f;
+	float patternInterval = 13.0f;
 	float boomTimer = 0.f;
-	float boomInterval = 4.f;
+	float boomInterval = 3.7f;
 	float ringTimer = 5.f;
-	float ringInterval = 5.1f;
+	float ringInterval = 4.1f;
 	int ringCount = 0;
 
 public:
