@@ -1,0 +1,15 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationFinalVineAttack,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationFinalVineAttack.png,0,0,121,487,7
+resource/carnationFinalVineAttack.png,121,0,122,487,7
+resource/carnationFinalVineAttack.png,243,0,126,487,7
+resource/carnationFinalVineAttack.png,369,0,127,487,7
+resource/carnationFinalVineAttack.png,496,0,129,487,7
+resource/carnationFinalVineAttack.png,625,0,142,487,7
+resource/carnationFinalVineAttack.png,767,0,143,487,7
+resource/carnationFinalVineAttack.png,910,0,164,487,7
+resource/carnationFinalVineAttack.png,1074,0,159,487,7
+resource/carnationFinalVineAttack.png,1233,0,160,487,7
+resource/carnationFinalVineAttack.png,1393,0,159,487,7
+resource/carnationFinalVineAttack.png,1552,0,162,487,7

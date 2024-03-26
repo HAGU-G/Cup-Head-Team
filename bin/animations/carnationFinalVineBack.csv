@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationFinalVineBack,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationFinalVineBack.png,0,0,58,168,7
+resource/carnationFinalVineBack.png,58,0,80,168,7
+resource/carnationFinalVineBack.png,138,0,102,168,7
+resource/carnationFinalVineBack.png,240,0,136,168,7
+resource/carnationFinalVineBack.png,376,0,148,168,7
+resource/carnationFinalVineBack.png,524,0,110,168,7
+resource/carnationFinalVineBack.png,634,0,107,168,7
+resource/carnationFinalVineBack.png,741,0,108,168,7
+resource/carnationFinalVineBack.png,849,0,108,168,7

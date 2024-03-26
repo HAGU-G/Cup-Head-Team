@@ -8,6 +8,7 @@ ObjectMonster::ObjectMonster(const std::string& name)
 
 void ObjectMonster::Init()
 {
+	hasHitBox = true;
 	shaderHit.setUniform("texture", sf::Shader::CurrentTexture);
 	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
 	renderStates.shader = &shaderHit;

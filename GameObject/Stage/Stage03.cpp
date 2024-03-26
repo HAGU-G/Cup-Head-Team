@@ -86,7 +86,6 @@ void Stage03::Init()
 void Stage03::Update(float dt)
 {
 	GameObject::Update(dt);
-	sceneGame->AddMonster(carnation);
 
 	sf::Vector2f cloudPos = cloudBg->GetPosition();
 	sf::Vector2f cloudPos2 = cloudBg2->GetPosition();
@@ -165,6 +164,8 @@ void Stage03::Reset()
 
 	carnation->sortLayer = 0;
 	player->sortLayer = 1;
+
+	sceneGame->AddMonster(carnation);
 
 	player->Init();
 	carnation->Init();

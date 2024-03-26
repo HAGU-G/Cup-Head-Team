@@ -16,7 +16,6 @@ class BossCarnation : public ObjectMonster
 protected:
 	SceneGame* sceneGame;
 
-	sf::FloatRect customBounds;//////////////////////////////////
 	State state = State::None;
 	State preState = State::None;
 
@@ -57,6 +56,7 @@ public:
 	void FirePollen();
 	void FinalIdle();
 	void FinalFiringPollen();
+	void FinalAttackPlayForm();
 	void Death();
 	void OnDie();
 

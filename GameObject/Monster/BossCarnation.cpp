@@ -8,6 +8,7 @@
 #include "SceneGame.h"
 #include "Bullet/BulletCarnationFinalVine.h"
 #include "Bullet/BulletCarnationPollen.h"
+#include "Bullet/BulletCarnationFinalPlatForm.h"
 
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
@@ -20,11 +21,11 @@ void BossCarnation::Init()
 
 	viewSize = FRAMEWORK.GetStageViewSize();
 	defaultPos = { viewSize.x * 0.5f * 0.663f, 100.f };
+	hasHitBox = true;
 }
 
 void BossCarnation::Reset()
 {
-	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
@@ -68,6 +69,10 @@ void BossCarnation::Update(float dt)
 		{
 			FinalFiringPollen();
 		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Num6))
+		{
+			FinalAttackPlayForm();
+		}
 	}
 
 	switch (state)
@@ -82,15 +87,15 @@ void BossCarnation::Update(float dt)
 		break;
 	}
 
-	auto bounds = sprite.getGlobalBounds();
-	float shrinkFactor = 0.1f;
-	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
-	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+
 }
 
 void BossCarnation::LateUpdate(float dt)
 {
+	customBounds.width = sprite.getGlobalBounds().width;
+	customBounds.height = sprite.getGlobalBounds().height * 0.5;
+	customBounds.left = sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.2f;
+	customBounds.top = sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.1;
 	ObjectMonster::LateUpdate(dt);
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
@@ -249,6 +254,11 @@ void BossCarnation::FinalFiringPollen()
 	animator.AddEvent(animator.GetCurrentCilpId(), 12, std::bind(&BossCarnation::FirePollen, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), 34, std::bind(&BossCarnation::FirePollen, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
+}
+
+void BossCarnation::FinalAttackPlayForm()
+{
+	BulletCarnationFinalPlatForm::Create({ viewSize.x * 0.2f, 0 }, { 0.f , -1.f }, scene);
 }
 
 void BossCarnation::Death()

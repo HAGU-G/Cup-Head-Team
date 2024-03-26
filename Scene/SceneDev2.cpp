@@ -17,8 +17,6 @@ void SceneDev2::Init()
 {
 	worldView.setSize(FRAMEWORK.GetStageViewSize());
 	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
-
-	AddGo(new BossCarnation("bossCarnation"))->SetPosition({ 390.f,80.f });
 	player = new Player();
 	AddGo(player);
 
