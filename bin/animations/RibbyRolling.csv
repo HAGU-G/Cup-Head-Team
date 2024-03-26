@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyRolling,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyRolling.png,0,0,570,259,7
+resource/RibbyRolling.png,570,0,617,259,7
+resource/RibbyRolling.png,1187,0,462,259,7
+resource/RibbyRolling.png,1649,0,466,259,7
+resource/RibbyRolling.png,2115,0,556,259,7
+resource/RibbyRolling.png,2671,0,588,259,7
+resource/RibbyRolling.png,3259,0,557,259,7
+resource/RibbyRolling.png,3816,0,467,259,7

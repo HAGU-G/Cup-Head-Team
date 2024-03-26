@@ -66,6 +66,6 @@ public:
 	virtual void OnDie();		//씬에서 Remove 하고싶을 때 호출하시면 됩니다.
 
 	sf::FloatRect GetCustomBounds() const override;
-
+	void SetTyep(Type t) { type = t; }
 };
 

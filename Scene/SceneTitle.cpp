@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneTitle.h"
 #include "Stage/Stage01.h"
+#include "Stage/Stage02.h"
 #include "SpriteGo.h"
 #include "TextGo.h"
 #include "UI/ObjectButton.h"
@@ -366,6 +367,13 @@ void SceneTitle::StartGame()
 		Stage01* stage01 = new Stage01();
 		stage01->Init();
 		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage01);
+		break;
+	}
+	case 2:
+	{
+		Stage02* stage02 = new Stage02();
+		stage02->Init();
+		SCENE_MGR.GetScene(SceneIds::SceneGame)->AddGo(stage02);
 		break;
 	}
 	default:
