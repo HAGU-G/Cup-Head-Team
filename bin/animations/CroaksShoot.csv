@@ -1,0 +1,31 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksShoot,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksShoot.png,0,0,438,668,7
+resource/CroaksShoot.png,438,0,467,668,7
+resource/CroaksShoot.png,905,0,498,668,7
+resource/CroaksShoot.png,1403,0,528,668,7
+resource/CroaksShoot.png,1931,0,528,668,7
+resource/CroaksShoot.png,2459,0,528,668,7
+resource/CroaksShoot.png,2987,0,530,668,7
+resource/CroaksShoot.png,3517,0,543,668,7
+resource/CroaksShoot.png,4060,0,536,668,7
+resource/CroaksShoot.png,4596,0,538,668,7
+resource/CroaksShoot.png,5134,0,538,668,7
+resource/CroaksShoot.png,5672,0,540,668,7
+resource/CroaksShoot.png,6212,0,425,668,7
+resource/CroaksShoot.png,6637,0,415,668,7
+resource/CroaksShoot.png,7052,0,417,668,7
+resource/CroaksShoot.png,7469,0,438,668,7
+resource/CroaksShoot.png,7907,0,472,668,7
+resource/CroaksShoot.png,8379,0,490,668,7
+resource/CroaksShoot.png,8869,0,486,668,7
+resource/CroaksShoot.png,9355,0,467,668,7
+resource/CroaksShoot.png,9822,0,446,668,7
+resource/CroaksShoot.png,10268,0,426,668,7
+resource/CroaksShoot.png,10694,0,435,668,7
+resource/CroaksShoot.png,11129,0,452,668,7
+resource/CroaksShoot.png,11581,0,491,668,7
+resource/CroaksShoot.png,12072,0,474,668,7
+resource/CroaksShoot.png,12546,0,358,668,7
+resource/CroaksShoot.png,12904,0,369,668,7

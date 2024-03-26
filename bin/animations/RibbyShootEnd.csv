@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyShootEnd,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyShootEnd.png,0,0,484,336,7
+resource/RibbyShootEnd.png,484,0,377,336,7
+resource/RibbyShootEnd.png,861,0,380,336,7
+resource/RibbyShootEnd.png,1241,0,363,336,7
+resource/RibbyShootEnd.png,1604,0,352,336,7
+resource/RibbyShootEnd.png,1956,0,343,336,7
+resource/RibbyShootEnd.png,2299,0,339,336,7
+resource/RibbyShootEnd.png,2638,0,337,336,7
+resource/RibbyShootEnd.png,2975,0,328,336,7

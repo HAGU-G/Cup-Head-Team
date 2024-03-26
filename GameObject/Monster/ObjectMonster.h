@@ -10,7 +10,7 @@ protected:
 	float hitEffectDuration = 0.1f;
 
 	bool isAlive = true;
-	sf::FloatRect customBounds;
+	
 
 	sf::Shader shaderHit;
 

@@ -1,0 +1,18 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyShoot1,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyShoot1.png,0,0,133,120,4
+resource/RibbyShoot1.png,133,0,159,120,4
+resource/RibbyShoot1.png,292,0,164,120,4
+resource/RibbyShoot1.png,456,0,172,120,4
+resource/RibbyShoot1.png,628,0,180,120,4
+resource/RibbyShoot1.png,808,0,182,120,4
+resource/RibbyShoot1.png,990,0,185,120,4
+resource/RibbyShoot1.png,1175,0,189,120,4
+resource/RibbyShoot1.png,1364,0,186,120,4
+resource/RibbyShoot1.png,1550,0,187,120,4
+resource/RibbyShoot1.png,1737,0,191,120,4
+resource/RibbyShoot1.png,1928,0,187,120,4
+resource/RibbyShoot1.png,2115,0,189,120,4
+resource/RibbyShoot1.png,2304,0,171,120,4
+resource/RibbyShoot1.png,2475,0,173,120,4

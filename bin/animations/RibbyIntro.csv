@@ -1,0 +1,18 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyIntro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyIntro.png,0,0,396,480,7
+resource/RibbyIntro.png,396,0,393,480,7
+resource/RibbyIntro.png,789,0,391,480,7
+resource/RibbyIntro.png,1180,0,386,480,7
+resource/RibbyIntro.png,1566,0,381,480,7
+resource/RibbyIntro.png,1947,0,424,480,7
+resource/RibbyIntro.png,2371,0,374,480,7
+resource/RibbyIntro.png,2745,0,365,480,7
+resource/RibbyIntro.png,3110,0,386,480,7
+resource/RibbyIntro.png,3496,0,441,480,7
+resource/RibbyIntro.png,3937,0,427,480,7
+resource/RibbyIntro.png,4364,0,433,480,7
+resource/RibbyIntro.png,4797,0,342,480,7
+resource/RibbyIntro.png,5139,0,356,480,7
+resource/RibbyIntro.png,5495,0,328,480,7
