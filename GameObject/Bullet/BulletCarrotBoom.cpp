@@ -19,7 +19,8 @@ BulletCarrotBoom* BulletCarrotBoom::Create(const sf::Vector2f& pos, const sf::Ve
 void BulletCarrotBoom::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(0.6f, 0.7f, Origins::MC);
+	customBounds.setPosition(position);
 }
 
 void BulletCarrotBoom::Init()

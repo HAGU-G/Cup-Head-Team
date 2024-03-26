@@ -8,6 +8,7 @@ ObjectMonster::ObjectMonster(const std::string& name)
 
 void ObjectMonster::Init()
 {
+	hasHitBox = true;
 	shaderHit.setUniform("texture", sf::Shader::CurrentTexture);
 	shaderHit.loadFromFile("resource/Shader/Hit.frag", sf::Shader::Fragment);
 	renderStates.shader = &shaderHit;
@@ -41,4 +42,10 @@ bool ObjectMonster::OnDamage(int damage)
 		return true;
 	}
 	return false;
+}
+
+void ObjectMonster::SetCustomBounds(float ratioX, float ratioY, Origins origin)
+{
+	customBounds.setSize({ sprite.getGlobalBounds().getSize().x * ratioX, sprite.getGlobalBounds().getSize().y * ratioY });
+	Utils::SetOrigin(customBounds, origin);
 }

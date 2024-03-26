@@ -73,7 +73,8 @@ void BossOnion::Update(float dt)
 	float shrinkFactor = 0.1f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+	SetCustomBounds(0.5f, 0.8f, Origins::BC);
+	customBounds.setPosition(position);
 }
 
 void BossOnion::LateUpdate(float dt)
@@ -175,7 +176,7 @@ void BossOnion::SetState(State state)
 	}
 }
 
-sf::FloatRect BossOnion::GetCustomBounds() const
+sf::RectangleShape BossOnion::GetCustomBounds() const
 {
 	return customBounds;
 }
