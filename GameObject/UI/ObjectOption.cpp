@@ -384,6 +384,7 @@ void ObjectOption::ShowOption(bool value)
 			goTitle->UnSelect();
 			optionEscape->UnSelect();
 			currentButton = reStart;
+			SOUND_MGR.PauseAllSfx();
 		}
 		else
 		{
@@ -399,11 +400,12 @@ void ObjectOption::ShowOption(bool value)
 		if (scene->GetId() == SceneIds::SceneGame)
 		{
 			SetActive(false);
+			SOUND_MGR.PlayAllSfx();
 			dynamic_cast<SceneGame*>(scene)->Play();
 		}
 		else if (scene->GetId() == SceneIds::SceneTitle)
 		{
-			dynamic_cast<SceneTitle*> (scene)->ShowOption(false);
+			dynamic_cast<SceneTitle*>(scene)->ShowOption(false);
 		}
 	}
 

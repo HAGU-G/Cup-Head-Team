@@ -27,7 +27,6 @@ void SceneTitle::Init()
 	textSize = 50 * windowSize.y / 1080;
 
 	//배경음악
-	SOUND_MGR.SetBgmVolume(50.f);
 	hint.setVolume(SOUND_MGR.GetBgmVolume() * 0.5f);
 	hint.setLoop(true);
 
@@ -178,7 +177,6 @@ void SceneTitle::Draw(sf::RenderTexture& window)
 void SceneTitle::Update(float dt)
 {
 	Scene::Update(dt);
-
 	//배경음악2 반복재생
 	if (!SOUND_MGR.IsBgmPlaying())
 	{
@@ -269,13 +267,12 @@ void SceneTitle::ShowStageCard(bool value)
 	if (value)
 	{
 		SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_DiffucultySettings_Appear.wav");
-		bgmVolume = SOUND_MGR.GetBgmVolume();
 		SOUND_MGR.SetBgmVolume(SOUND_MGR.GetBgmVolume() / 5.f);
 	}
 	else
 	{
 		hint.stop();
-		SOUND_MGR.SetBgmVolume(bgmVolume);
+		SOUND_MGR.SetBgmVolume(SOUND_MGR.GetBgmVolume() * 5.f);
 		stageCardNotReady->SetActive(value);
 	}
 

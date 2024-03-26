@@ -59,10 +59,14 @@ void Stage01::Update(float dt)
 			switch (phase)
 			{
 			case 2:
+				scene->AddGo(onion);
+				onion->Reset();
 				onion->SetActive(true);
 				sceneGame->AddMonster(onion);
 				break;
 			case 3:
+				scene->AddGo(carrot);
+				carrot->Reset();
 				carrot->SetActive(true);
 				sceneGame->AddMonster(carrot);
 				break;
@@ -80,6 +84,11 @@ void Stage01::Update(float dt)
 	switch (phase)
 	{
 	case 0:
+		scene->AddGo(player);
+		player->Reset();
+		scene->AddGo(potato);
+		potato->Reset();
+
 		phase = 1;
 		potato->SetActive(true);
 		sceneGame->AddMonster(potato);
@@ -130,11 +139,11 @@ void Stage01::LateUpdate(float dt)
 		int count = 0;
 		for (auto ptr : backgrounds)
 		{
-			if (ptr == frontFence || ptr == frontFlower)
+			if (ptr == frontFence || ptr == frontFlower || ptr == ground)
 			{
 				continue;
 			}
-			ptr->SetPosition(ptr->GetPosition() + sf::Vector2f(playerPosDeltaX * -(0.011f - 0.001 * count), 0.f));
+			ptr->SetPosition(ptr->GetPosition() + sf::Vector2f(playerPosDeltaX * +(0.001f + 0.001 * count), 0.f));
 			count++;
 		}
 	}
@@ -185,10 +194,6 @@ void Stage01::Reset()
 	player->sortLayer = 1;
 	carrot->sortLayer = -3;
 
-	scene->AddGo(player);
-	scene->AddGo(potato);
-	scene->AddGo(onion);
-	scene->AddGo(carrot);
 	potato->SetActive(false);
 	onion->SetActive(false);
 	carrot->SetActive(false);
@@ -197,14 +202,9 @@ void Stage01::Reset()
 	potato->Init();
 	onion->Init();
 	carrot->Init();
-
-	player->Reset();
-	potato->Reset();
-	onion->Reset();
-	carrot->Reset();
-
+	
 	potato->SetPosition({ viewSize.x * 0.5f * 0.663f, 0.f });
-	carrot->SetPosition({ 0.f , -viewSize.y * 0.10f });
+	carrot->SetPosition({ 0.f , -viewSize.y * 0.15f });
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
 	playerPrePos = playerPos;
 
@@ -226,7 +226,7 @@ void Stage01::Reset()
 	field11->SetPosition({ 0.f, -viewSize.y * 0.43f });
 	sky->SetPosition({ 0.f, -viewSize.y * 0.50f });
 
-	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav");
+	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav",false);
 }
 
 void Stage01::Release()

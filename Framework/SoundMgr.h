@@ -26,6 +26,7 @@ public:
 	void SetSfxVolume(float v);
 	void SetBgmVolume(float v);
 	inline float GetBgmVolume() const { return bgmVolume; }
+	inline float GetSfxVolume() const { return sfxVolume; }
 
 	void Init(int totalChannels = 64);
 	void Release();
@@ -39,6 +40,9 @@ public:
 	void PlaySfx(sf::SoundBuffer& buffer, bool loop = false);
 
 	void StopAll();
+
+	void PauseAllSfx();
+	void PlayAllSfx();
 };
 
 #define SOUND_MGR (Singleton<SoundMgr>::Instance())

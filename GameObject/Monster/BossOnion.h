@@ -12,11 +12,13 @@ class BossOnion : public ObjectMonster
 
 protected:
 
+	sf::Sound soundCrying;
+
 	State state = State::None;
 	State preState = State::None;
 
-	float tearTimer = 0.f;
-	float tearInterval = 0.25f;
+	float tearInterval = 0.6f;
+	float tearTimer = tearInterval;
 	int tearSide = 1;
 	float cryingTimer = 0.f;
 	float cryingDuration = 1.f;

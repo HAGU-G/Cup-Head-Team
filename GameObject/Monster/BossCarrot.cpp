@@ -14,6 +14,8 @@ void BossCarrot::Init()
 	ObjectMonster::Init();
 	sprite.setScale(1.15f, 1.15f);
 	shootEyes.setScale(sprite.getScale());
+	soundMindMeld.setBuffer(RES_MGR_SOUND_BUFFER.Get("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_MindMeld_Loop.wav"));
+	soundMindMeld.setLoop(true);
 }
 
 void BossCarrot::Reset()
@@ -28,10 +30,15 @@ void BossCarrot::Reset()
 
 void BossCarrot::Update(float dt)
 {
+	soundMindMeld.setVolume(SOUND_MGR.GetSfxVolume());
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
 
 	switch (state)
@@ -102,9 +109,26 @@ void BossCarrot::Draw(sf::RenderTexture& window)
 void BossCarrot::Intro()
 {
 	SetState(State::None);
-	animator.ClearEvent();
-	animator.Play("animations/carrotIntro.csv");
-	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarrot::Pattern1, this));
+	ObjectEffect* front = new ObjectEffect("CarrotIntroBack");
+	front->sortLayer = -3;
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Rise.wav");
+	front->SetScale({ 0.9f, 0.9f });
+	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
+	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
+	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+		[this, front]()
+		{
+			ObjectEffect* back = new ObjectEffect("CarrotIntroFront");
+			back->SetScale({ 1.1f, 1.1f });
+			back->sortLayer = -4;
+			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
+			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			animator.ClearEvent();
+			animator.Play("animations/carrotIntro.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarrot::Pattern1, this));
+			patternTimer = 2.f;
+		});
+
 
 }
 
@@ -135,6 +159,8 @@ void BossCarrot::SetTargetDirection()
 
 void BossCarrot::Death()
 {
+	soundMindMeld.stop();
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Die.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
@@ -153,7 +179,9 @@ void BossCarrot::SetState(State state)
 	{
 
 	case BossCarrot::State::Pattern1:
+		soundMindMeld.play();
 		animator.Play("animations/carrotIdle.csv");
+		SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_MindMeld_Start.wav");
 		preState = State::Pattern1;
 		break;
 	case BossCarrot::State::Pattern2:

@@ -14,7 +14,6 @@ protected:
 
 	ObjectButton* currentButton = nullptr;
 
-	float bgmVolume = SOUND_MGR.GetBgmVolume();
 	sf::Sound hint;
 	SpriteGo* bg = nullptr;
 
