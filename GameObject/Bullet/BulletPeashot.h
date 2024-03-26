@@ -6,7 +6,9 @@ class SceneGame;
 class BulletPeashot : public ObjectBullet
 {
 protected:
-	SceneGame* sceneGame;
+	SceneGame* sceneGame = nullptr;
+	Direction shootDirection = Direction::None;
+	static BulletPeashot* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 public:
 	BulletPeashot(const std::string& name = "BulletPeashot");
@@ -17,7 +19,6 @@ public:
 	BulletPeashot& operator=(BulletPeashot&&) = delete;
 
 	static BulletPeashot* Create(const sf::Vector2f& pos, Direction direction, Scene* scene);
-	static BulletPeashot* Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene);
 
 	void Init() override;
 	void Reset() override;

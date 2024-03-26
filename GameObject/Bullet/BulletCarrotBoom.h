@@ -18,6 +18,7 @@ public:
 	void Init() override;
 	void OnDie() override;
 
+
 	void SetRotation(float value) override;
 
 	void Flip() override;

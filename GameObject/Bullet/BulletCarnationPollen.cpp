@@ -12,7 +12,7 @@ BulletCarnationPollen* BulletCarnationPollen::Create(const sf::Vector2f& pos, co
 	BulletCarnationPollen* bcp = new BulletCarnationPollen();
 	bcp->SetColor(i);
 	bcp->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcp);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcp);
 	return bcp;
 }
 

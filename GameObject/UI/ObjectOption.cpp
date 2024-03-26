@@ -336,6 +336,15 @@ void ObjectOption::Reset()
 		reStart->Reset();
 		goTitle->Reset();
 	}
+
+	optionBack->SetTexture("resource/Menu/pause_menu.png");
+	audioText->SetFont(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"));
+	visualText->SetFont(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"));
+	audioMaster->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	audioSfx->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	audioBgm->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+	visualBleeding->SetFont("resource/Font/CupheadVogue-ExtraBold.ttf");
+
 }
 
 void ObjectOption::Release()

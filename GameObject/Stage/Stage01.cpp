@@ -5,6 +5,7 @@
 #include "Monster/BossCarrot.h"
 #include "Player.h"
 #include "SceneGame.h"
+#include "Bullet/BulletCloud.h"
 
 Stage01::Stage01(const std::string& name)
 	:GameObject(name)
@@ -202,7 +203,7 @@ void Stage01::Reset()
 	potato->Init();
 	onion->Init();
 	carrot->Init();
-	
+
 	potato->SetPosition({ viewSize.x * 0.5f * 0.663f, 0.f });
 	carrot->SetPosition({ 0.f , -viewSize.y * 0.15f });
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
@@ -226,11 +227,33 @@ void Stage01::Reset()
 	field11->SetPosition({ 0.f, -viewSize.y * 0.43f });
 	sky->SetPosition({ 0.f, -viewSize.y * 0.50f });
 
-	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav",false);
+	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav", false);
+	
+	float playerPosDeltaX = playerPos.x - playerPrePos.x;
+	int count = 0;
+	for (auto ptr : backgrounds)
+	{
+		if (ptr == frontFence || ptr == frontFlower || ptr == ground)
+		{
+			continue;
+		}
+		ptr->SetPosition(ptr->GetPosition() + sf::Vector2f(playerPosDeltaX * +(0.001f + 0.001 * count), 0.f));
+		count++;
+	}
 }
 
 void Stage01::Release()
 {
+	if (phase < 2 && onion)
+	{
+		delete onion;
+		onion = nullptr;
+	}
+	if (phase < 3 && carrot)
+	{
+		delete carrot;
+		carrot = nullptr;
+	}
 	SOUND_MGR.StopBgm();
 	GameObject::Release();
 }
@@ -298,12 +321,41 @@ void Stage01::SetBackground()
 	field9->sortLayer = -8;
 	field10->sortLayer = -9;
 	field11->sortLayer = -10;
-	sky->sortLayer = -11;
+	sky->sortLayer = -12;
 
 	for (auto ptr : backgrounds)
 	{
 		scene->AddGo(ptr);
 	}
+
+	sf::Vector2f viewTop = scene->GetWorldView().getCenter() + sf::Vector2f(0.f, -scene->GetWorldView().getSize().y * 0.55f);
+	BulletCloud* bc = BulletCloud::Create(viewTop, { -1.f, 0.f }, scene);
+	bc->SetSpeed(5.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0001.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(scene->GetWorldView().getSize().x * 0.4f, scene->GetWorldView().getSize().y * 0.38f), { -1.f, 0.f }, scene);
+	bc->SetSpeed(6.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0002.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(-scene->GetWorldView().getSize().x * 0.1f, scene->GetWorldView().getSize().y * 0.44f), { -1.f, 0.f }, scene);
+	bc->SetSpeed(7.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0003.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(-scene->GetWorldView().getSize().x * 0.3f, scene->GetWorldView().getSize().y * 0.33f), { -1.f, 0.f }, scene);
+	bc->SetSpeed(8.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0004.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(-scene->GetWorldView().getSize().x * 0.25f, scene->GetWorldView().getSize().y * 0.2f), { -1.f, 0.f }, scene);
+	bc->SetSpeed(9.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0005.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(-scene->GetWorldView().getSize().x * 0.21f, 0.f), { -1.f, 0.f }, scene);
+	bc->SetSpeed(10.f);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0006.png");
+	backgrounds.push_back(bc);
+	bc = BulletCloud::Create(viewTop + sf::Vector2f(-scene->GetWorldView().getSize().x * 0.55f, 0.f), { 1.f, 0.f }, scene);
+	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0007.png");
+	backgrounds.push_back(bc);
 
 	//TODO Å¸ÀÌ¾î
 

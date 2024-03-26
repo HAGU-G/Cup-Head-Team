@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Stage/Stage01.h"
 #include "Effect/ObjectEffect.h"
+#include "Bullet/ObjectBullet.h"
 #include "UI/ObjectOption.h"
 #include "SceneTitle.h"
 
@@ -17,6 +18,7 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
+	Pause();
 	worldView.setSize(FRAMEWORK.GetStageViewSize());
 	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
 	uiView.setSize(sf::Vector2f(FRAMEWORK.GetWindowSize()));
@@ -53,8 +55,9 @@ void SceneGame::Init()
 void SceneGame::Release()
 {
 	Scene::Release();
-	MonsterList.clear();
+	monsterList.clear();
 	toeholdList.clear();
+	enemyBulletList.clear();
 }
 
 void SceneGame::Enter()
@@ -69,19 +72,35 @@ void SceneGame::Enter()
 
 void SceneGame::Exit()
 {
+	Pause();
 	Scene::Exit();
 }
 
 void SceneGame::Update(float dt)
 {
+	if (isParryed)
+	{
+		parryEffectTimer = 0.0f;
+		isParryed = false;
+	}
+
+
+	if (parryEffectTimer >= parryEffectDuration)
+	{
+		Play();
+		parryEffectTimer = -1.f;
+	}
+	else if (parryEffectTimer >= 0.f)
+	{
+		parryEffectTimer += dt;
+	}
+
 	Scene::Update2(dt, pauseWorld);
-
-	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
-	toeholdList.erase(std::remove_if(toeholdList.begin(), toeholdList.end(), [](SpriteGo* toehold) { return !toehold->GetActive(); }), toeholdList.end());
-
+	
 	switch (status)
 	{
 	case SceneGame::Status::None:
+		Play();
 		SetStatus(Status::Intro);
 		break;
 	case SceneGame::Status::Intro:
@@ -134,6 +153,98 @@ void SceneGame::Update(float dt)
 	}
 }
 
+void SceneGame::LateUpdate(float dt)
+{
+	//Scene::LateUpdate
+	for (auto obj : gameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->LateUpdate(dt);
+		}
+	}
+
+	for (auto obj : uiGameObjects)
+	{
+		if (obj->GetActive())
+		{
+			obj->LateUpdate(dt);
+		}
+	}
+
+	//충돌검사용 리스트 갱신
+	auto itM = monsterList.begin();
+	while (itM != monsterList.end())
+	{
+		if (!(*itM)->IsAlive())
+		{
+			itM = monsterList.erase(itM);
+		}
+		else
+		{
+			itM++;
+		}
+	}
+	auto itT = toeholdList.begin();
+	while (itT != toeholdList.end())
+	{
+		if (!(*itT)->GetActive())
+		{
+			itT = toeholdList.erase(itT);
+		}
+		else
+		{
+			itT++;
+		}
+	}
+	auto itE = enemyBulletList.begin();
+	while (itE != enemyBulletList.end())
+	{
+		if (!(*itE)->IsAlive())
+		{
+			itE = enemyBulletList.erase(itE);
+		}
+		else
+		{
+			itE++;
+		}
+	}
+
+	//Scene::LateUpdate
+	for (auto obj : removeGameObjects)
+	{
+		gameObjects.remove(obj);
+		uiGameObjects.remove(obj);
+
+		delete obj;
+	}
+	removeGameObjects.clear();
+
+	for (auto obj : resortingGameObjects)
+	{
+		auto it = std::find(gameObjects.begin(), gameObjects.end(), obj);
+		if (it != gameObjects.end())
+		{
+			gameObjects.remove(obj);
+			AddGo(obj, Layers::World);
+			continue;
+		}
+
+		it = std::find(uiGameObjects.begin(), uiGameObjects.end(), obj);
+		if (it != uiGameObjects.end())
+		{
+			uiGameObjects.remove(obj);
+			AddGo(obj, Layers::Ui);
+			continue;
+		}
+	}
+
+
+	
+	//toeholdList.erase(std::remove_if(toeholdList.begin(), toeholdList.end(), [](SpriteGo* toehold) { return !toehold->GetActive(); }), toeholdList.end());
+
+}
+
 void SceneGame::Draw(sf::RenderTexture& window)
 {
 	Scene::Draw(window);
@@ -141,12 +252,12 @@ void SceneGame::Draw(sf::RenderTexture& window)
 
 void SceneGame::AddMonster(ObjectMonster* monster)
 {
-	MonsterList.push_back(monster);
+	monsterList.push_back(monster);
 }
 
-std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
+const std::list<ObjectMonster*>& SceneGame::GetAllMonsters() const
 {
-	return MonsterList;
+	return monsterList;
 }
 
 void SceneGame::Addtoehold(SpriteGo* toehold)
@@ -154,7 +265,7 @@ void SceneGame::Addtoehold(SpriteGo* toehold)
 	toeholdList.push_back(toehold);
 }
 
-std::vector<SpriteGo*> SceneGame::getAlltoehold() const
+const std::vector<SpriteGo*>& SceneGame::GetAlltoehold() const
 {
 	return toeholdList;
 }
@@ -224,6 +335,8 @@ void SceneGame::SetStatus(Status status)
 	}
 	case SceneGame::Status::Exit:
 		SCENE_MGR.ChangeScene(SceneIds::SceneTitle);
+		RES_MGR_SOUND_BUFFER.UnloadAll();
+		RES_MGR_TEXTURE.UnloadAll();
 		Release();
 		SetStatus(Status::None);
 		break;
@@ -241,4 +354,14 @@ void SceneGame::SetStatus(Status status)
 		break;
 	}
 
+}
+
+void SceneGame::AddEnemyBullet(ObjectBullet* enemyBullet)
+{
+	enemyBulletList.push_back(enemyBullet);
+}
+
+const std::deque<ObjectBullet*>& SceneGame::GetAllEnemyBullet() const
+{
+	return enemyBulletList;
 }

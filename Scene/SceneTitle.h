@@ -20,6 +20,7 @@ protected:
 	int textSize = 50;
 	ObjectButton* start = nullptr;
 	ObjectButton* option = nullptr;
+	ObjectButton* animationTool = nullptr;
 	ObjectButton* exit = nullptr;
 
 	bool isShowStageCard = false;

@@ -8,6 +8,7 @@ protected:
 
 public:
 	TextGo(const std::string& name = "");
+	~TextGo() override = default;
 
 	virtual sf::FloatRect GetLocalBounds() override;
 	virtual sf::FloatRect GetGlobalBounds() override;

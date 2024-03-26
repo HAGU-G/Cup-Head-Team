@@ -40,16 +40,42 @@ void BulletPeashot::Update(float dt)
 void BulletPeashot::LateUpdate(float dt)
 {
 	ObjectBullet::LateUpdate(dt);
-	auto monsters = sceneGame->getAllMonsters();
-	for (auto& monster : monsters)
+	switch (shootDirection)
 	{
-		if (monster != nullptr)
+	case Direction::Right:
+		SetCustomBounds(0.5f, 0.5f, Origins::MR);
+		break;
+	case Direction::RightUp:
+		SetCustomBounds(0.5f, 0.5f, Origins::TR);
+		break;
+	case Direction::Up:
+		SetCustomBounds(0.5f, 0.5f, Origins::TC);
+		break;
+	case Direction::LeftUp:
+		SetCustomBounds(0.5f, 0.5f, Origins::TL);
+		break;
+	case Direction::Left:
+		SetCustomBounds(0.5f, 0.5f, Origins::ML);
+		break;
+	case Direction::LeftDown:
+		SetCustomBounds(0.5f, 0.5f, Origins::BL);
+		break;
+	case Direction::Down:
+		SetCustomBounds(0.5f, 0.5f, Origins::BC);
+		break;
+	case Direction::RightDown:
+		SetCustomBounds(0.5f, 0.5f, Origins::BR);
+		break;
+	}
+	customBounds.setPosition(position);
+
+
+	for (auto& monster : sceneGame->GetAllMonsters())
+	{
+		if (monster->IsAlive() && this->customBounds.getGlobalBounds().intersects(monster->GetCustomBoundsRect()))
 		{
-			if (monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
-			{
-				monster->OnDamage(10);
-				OnDie();
-			}
+			monster->OnDamage(4);
+			OnDie();
 		}
 	}
 }
@@ -58,20 +84,20 @@ void BulletPeashot::LateUpdate(float dt)
 void BulletPeashot::OnCreate()
 {
 	EffectPeashot::Create(position, Utils::RandomOnUnitCircle(), scene, true);
-	
-
 }
 
 void BulletPeashot::OnDie()
 {
-	EffectPeashot::Create(bound.getPosition(), Utils::RandomOnUnitCircle(), scene, false);
+	EffectPeashot::Create(bound.getPosition(), direction, scene, false);
 	ObjectBullet::OnDie();
 }
 
 
 BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, Direction direction, Scene* scene)
 {
-	return Create(pos, Utils::DirectionConversion(direction), scene);
+	BulletPeashot* bp = Create(pos, Utils::DirectionConversion(direction), scene);
+	bp->shootDirection = direction;
+	return bp;
 }
 
 BulletPeashot* BulletPeashot::Create(const sf::Vector2f& pos, const sf::Vector2f& direction, Scene* scene)

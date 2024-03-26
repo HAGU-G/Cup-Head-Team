@@ -15,11 +15,11 @@ void ObjectButton::Init()
 
 void ObjectButton::Release()
 {
-	if (nextButton->preButton == this)
+	if (nextButton && nextButton->preButton == this)
 	{
 		nextButton->preButton = nullptr;
 	}
-	if (preButton->nextButton == this)
+	if (preButton && preButton->nextButton == this)
 	{
 		preButton->nextButton = nullptr;
 	}
