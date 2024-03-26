@@ -1,5 +1,8 @@
 #pragma once
 #include "ObjectMonster.h"
+
+class Player;
+
 class BossCroaks : public ObjectMonster
 {
 	enum class State
@@ -12,6 +15,7 @@ class BossCroaks : public ObjectMonster
 		None
 	};
 protected:
+	Player* player;
 
 	State state = State::None;
 	State preState = State::None;
@@ -21,11 +25,15 @@ protected:
 
 	float fanTimer = 0.f;
 	float fanInterval = 8.f;
+	float fanBackwardSpeed = 300.f;
+	float deltatime;
 
 	int shootCount = 0;
 	int fireFlyCount = 0;
 	int patternCount = 0;
 
+	sf::Vector2f playerPos;
+	sf::Vector2f direction;
 public:
 
 	BossCroaks(const std::string& name = "BossCroaks");
@@ -54,7 +62,7 @@ public:
 	bool FanTimer(float dt);
 
 	void SetState(State state);
-
 	sf::RectangleShape GetCustomBounds() const override;
+
 };
 

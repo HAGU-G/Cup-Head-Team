@@ -76,6 +76,7 @@ void SceneGame::Update(float dt)
 	Scene::Update2(dt, pauseWorld);
 
 	MonsterList.erase(std::remove_if(MonsterList.begin(), MonsterList.end(), [](ObjectMonster* monster) { return !monster->IsAlive(); }), MonsterList.end());
+	toeholdList.erase(std::remove_if(toeholdList.begin(), toeholdList.end(), [](SpriteGo* toehold) { return !toehold->GetActive(); }), toeholdList.end());
 
 	switch (status)
 	{
@@ -145,6 +146,16 @@ void SceneGame::AddMonster(ObjectMonster* monster)
 std::vector<ObjectMonster*> SceneGame::getAllMonsters() const
 {
 	return MonsterList;
+}
+
+void SceneGame::Addtoehold(SpriteGo* toehold)
+{
+	toeholdList.push_back(toehold);
+}
+
+std::vector<SpriteGo*> SceneGame::getAlltoehold() const
+{
+	return toeholdList;
 }
 
 void SceneGame::SetStatus(Status status)

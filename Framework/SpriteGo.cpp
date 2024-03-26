@@ -21,6 +21,11 @@ sf::RectangleShape SpriteGo::GetCustomBounds() const
 	return customBounds;
 }
 
+sf::FloatRect SpriteGo::GetCustomBoundsRect() const
+{
+	return customBounds.getGlobalBounds();
+}
+
 void SpriteGo::SetTexture(const std::string& textureId, bool resetRect)
 {
 	this->textureId = textureId;
