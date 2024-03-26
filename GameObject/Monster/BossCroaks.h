@@ -1,5 +1,8 @@
 #pragma once
 #include "ObjectMonster.h"
+
+class Player;
+
 class BossCroaks : public ObjectMonster
 {
 	enum class State
@@ -21,11 +24,12 @@ protected:
 
 	float fanTimer = 0.f;
 	float fanInterval = 8.f;
+	float fanBackwardSpeed = 50.f;
 
 	int shootCount = 0;
 	int fireFlyCount = 0;
 	int patternCount = 0;
-
+	Player* player;
 public:
 
 	BossCroaks(const std::string& name = "BossCroaks");
@@ -56,5 +60,7 @@ public:
 	void SetState(State state);
 
 	sf::FloatRect GetCustomBounds() const override;
+
+	bool GetFanState() { return state == State::Fan; }
 };
 

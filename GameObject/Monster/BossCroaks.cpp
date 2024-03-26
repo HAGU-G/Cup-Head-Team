@@ -2,6 +2,7 @@
 #include "BossCroaks.h"
 #include "SceneGame.h"
 #include "Bullet/BulletCroaksFirefly.h"
+#include "Player.h"
 
 BossCroaks::BossCroaks(const std::string& name)
 	:ObjectMonster(name)
