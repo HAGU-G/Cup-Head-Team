@@ -1,0 +1,20 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksIntro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksIntro.png,0,0,431,581,7
+resource/CroaksIntro.png,431,0,435,581,7
+resource/CroaksIntro.png,866,0,437,581,7
+resource/CroaksIntro.png,1303,0,436,581,7
+resource/CroaksIntro.png,1739,0,468,581,7
+resource/CroaksIntro.png,2207,0,524,581,7
+resource/CroaksIntro.png,2731,0,563,581,7
+resource/CroaksIntro.png,3294,0,562,581,7
+resource/CroaksIntro.png,3856,0,554,581,7
+resource/CroaksIntro.png,4410,0,541,581,7
+resource/CroaksIntro.png,4951,0,506,581,7
+resource/CroaksIntro.png,5457,0,514,581,7
+resource/CroaksIntro.png,5971,0,520,581,7
+resource/CroaksIntro.png,6491,0,548,581,7
+resource/CroaksIntro.png,7039,0,511,581,7
+resource/CroaksIntro.png,7550,0,461,581,7
+resource/CroaksIntro.png,8011,0,442,581,7

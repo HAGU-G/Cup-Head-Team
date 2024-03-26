@@ -37,10 +37,16 @@
     <ClCompile Include="Scene\SceneDev.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\SceneDev2.cpp" />
+    <ClCompile Include="GameObject\Monster\BossRibby.cpp" />
     <ClCompile Include="GameObject\Stage\Stage01.cpp" />
     <ClCompile Include="Scene\SceneTitle.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletRibbyBall.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletRibbyShoot.cpp" />
+    <ClCompile Include="GameObject\Monster\BossCroaks.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCroaksFirefly.cpp" />
     <ClCompile Include="GameObject\UI\ObjectButton.cpp" />
     <ClCompile Include="GameObject\UI\ObjectOption.cpp" />
+    <ClCompile Include="GameObject\Stage\Stage02.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -83,10 +89,16 @@
     <ClInclude Include="Scene\SceneDev.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\SceneDev2.h" />
+    <ClInclude Include="GameObject\Monster\BossRibby.h" />
     <ClInclude Include="GameObject\Stage\Stage01.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
+    <ClInclude Include="GameObject\Bullet\BulletRibbyBall.h" />
+    <ClInclude Include="GameObject\Bullet\BulletRibbyShoot.h" />
+    <ClInclude Include="GameObject\Monster\BossCroaks.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCroaksFirefly.h" />
     <ClInclude Include="GameObject\UI\ObjectButton.h" />
     <ClInclude Include="GameObject\UI\ObjectOption.h" />
+    <ClInclude Include="GameObject\Stage\Stage02.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

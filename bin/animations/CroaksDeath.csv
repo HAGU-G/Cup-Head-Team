@@ -1,0 +1,9 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksDeath,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksDeath.png,0,0,713,463,7
+resource/CroaksDeath.png,713,0,714,463,7
+resource/CroaksDeath.png,1427,0,714,463,7
+resource/CroaksDeath.png,2141,0,688,463,7
+resource/CroaksDeath.png,2829,0,715,463,7
+resource/CroaksDeath.png,3544,0,718,463,7

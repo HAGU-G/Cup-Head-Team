@@ -2,10 +2,18 @@
 #include "Scene.h"
 #include "GameObject/Monster/ObjectMonster.h"
 
+class SpriteGo;
+
 class SceneDev3 : public Scene
 {
 protected:
 	std::vector<ObjectMonster*> BossList;
+
+	SpriteGo* bg1;
+	SpriteGo* bg2;
+	SpriteGo* bg3;
+	SpriteGo* bg4;
+	SpriteGo* bg5;
 
 public:
 

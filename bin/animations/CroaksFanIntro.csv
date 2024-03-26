@@ -1,0 +1,33 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksFanIntro,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksFanIntro.png,0,0,409,689,7
+resource/CroaksFanIntro.png,409,0,369,689,7
+resource/CroaksFanIntro.png,778,0,355,689,7
+resource/CroaksFanIntro.png,1133,0,359,689,7
+resource/CroaksFanIntro.png,1492,0,333,689,7
+resource/CroaksFanIntro.png,1825,0,327,689,7
+resource/CroaksFanIntro.png,2152,0,335,689,7
+resource/CroaksFanIntro.png,2487,0,345,689,7
+resource/CroaksFanIntro.png,2832,0,351,689,7
+resource/CroaksFanIntro.png,3183,0,353,689,7
+resource/CroaksFanIntro.png,3536,0,423,689,7
+resource/CroaksFanIntro.png,3959,0,435,689,7
+resource/CroaksFanIntro.png,4394,0,476,689,7
+resource/CroaksFanIntro.png,4870,0,511,689,7
+resource/CroaksFanIntro.png,5381,0,509,689,7
+resource/CroaksFanIntro.png,5890,0,443,689,7
+resource/CroaksFanIntro.png,6333,0,376,689,7
+resource/CroaksFanIntro.png,6709,0,348,689,7
+resource/CroaksFanIntro.png,7057,0,308,689,7
+resource/CroaksFanIntro.png,7365,0,338,689,7
+resource/CroaksFanIntro.png,7703,0,366,689,7
+resource/CroaksFanIntro.png,8069,0,422,689,7
+resource/CroaksFanIntro.png,8491,0,390,689,7
+resource/CroaksFanIntro.png,8881,0,370,689,7
+resource/CroaksFanIntro.png,9251,0,373,689,7
+resource/CroaksFanIntro.png,9624,0,379,689,7
+resource/CroaksFanIntro.png,10003,0,365,689,7
+resource/CroaksFanIntro.png,10368,0,348,689,7
+resource/CroaksFanIntro.png,10716,0,365,689,7
+resource/CroaksFanIntro.png,11081,0,370,689,7

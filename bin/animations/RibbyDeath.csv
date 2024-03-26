@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+RibbyDeath,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/RibbyDeath.png,0,0,850,442,7
+resource/RibbyDeath.png,850,0,860,442,7
+resource/RibbyDeath.png,1710,0,841,442,7
+resource/RibbyDeath.png,2551,0,838,442,7
+resource/RibbyDeath.png,3389,0,837,442,7
+resource/RibbyDeath.png,4226,0,766,442,7
+resource/RibbyDeath.png,4992,0,757,442,7
+resource/RibbyDeath.png,5749,0,770,442,7
+resource/RibbyDeath.png,6519,0,763,442,7
