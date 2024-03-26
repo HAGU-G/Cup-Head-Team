@@ -51,7 +51,6 @@ void BossCarrot::Update(float dt)
 	case State::Ring:
 		eyeAnimator.Update(dt);
 		patternTimer += dt;
-		shootEyes.setPosition(position + sf::Vector2f(-5.f, -sprite.getGlobalBounds().getSize().y * 1.8f / 3.f));
 		if (patternTimer >= patternInterval)
 		{
 			patternTimer = 0.f;
@@ -79,10 +78,9 @@ void BossCarrot::Update(float dt)
 void BossCarrot::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
-	customBounds.width = shootEyes.getGlobalBounds().width * 0.5f;
-	customBounds.height = shootEyes.getGlobalBounds().height * 0.01f;
-	customBounds.left = sprite.getGlobalBounds().left + (sprite.getGlobalBounds().width - customBounds.width) * 0.5f;
-	customBounds.top = sprite.getGlobalBounds().top + (sprite.getGlobalBounds().height - customBounds.height) * 0.55f;
+	shootEyes.setPosition(position + sf::Vector2f(-5.f, -sprite.getGlobalBounds().getSize().y * 1.8f / 3.f));
+	SetCustomBounds(0.5f, 0.3f, Origins::MC);
+	customBounds.setPosition(shootEyes.getPosition());
 
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
@@ -215,7 +213,7 @@ bool BossCarrot::RingTimer(float dt)
 	return false;
 }
 
-sf::FloatRect BossCarrot::GetCustomBounds() const
+sf::RectangleShape BossCarrot::GetCustomBounds() const
 {
 	return customBounds;
 }

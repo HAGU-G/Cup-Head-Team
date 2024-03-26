@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ObjectMonster.h"
+#include "Effect/EffectBossExplosion.h"
 
 ObjectMonster::ObjectMonster(const std::string& name)
 	:SpriteGo(name)
@@ -42,4 +43,25 @@ bool ObjectMonster::OnDamage(int damage)
 		return true;
 	}
 	return false;
+}
+
+void ObjectMonster::SetCustomBounds(float ratioX, float ratioY, Origins origin)
+{
+	customBounds.setSize({ sprite.getGlobalBounds().getSize().x * ratioX, sprite.getGlobalBounds().getSize().y * ratioY });
+	Utils::SetOrigin(customBounds, origin);
+}
+
+
+void ObjectMonster::BossDieEffect(float dt)
+{
+	static float timer = 0.f;
+	static float timeLimit = 0.3f;
+	timer += dt;
+	if (timer >= timeLimit || dt < 0.f)
+	{
+		timer = 0.f;
+		auto bound = sprite.getGlobalBounds();
+		EffectBossExplosion::Create({ Utils::RandomRange(bound.left,bound.left + bound.width),Utils::RandomRange(bound.top,bound.top + bound.height) },
+			Utils::RandomInUnitCircle(), scene);
+	}
 }

@@ -20,7 +20,7 @@ private:
 	std::list<sf::Sound*> waiting;
 
 	float sfxVolume = 100.f;
-	float bgmVolume = 50.f;
+	float bgmVolume = 100.f;
 
 public:
 	void SetSfxVolume(float v);

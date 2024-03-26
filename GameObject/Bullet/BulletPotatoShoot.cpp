@@ -18,7 +18,7 @@ BulletPotatoShoot* BulletPotatoShoot::Create(const sf::Vector2f& pos, const sf::
 void BulletPotatoShoot::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	customBounds.setPosition(position);
 }
 
 void BulletPotatoShoot::Init()
@@ -27,6 +27,7 @@ void BulletPotatoShoot::Init()
 	ObjectBullet::Init();
 	animator.SetTarget(&sprite);
 	animator.Play("animations/potatoShoot1.csv");
+	SetCustomBounds(0.8f, 0.8f, Origins::MC);
 	SetSpeed(600.f);
 	SetRange(1200.f);
 	type = Type::Straight;
@@ -42,7 +43,7 @@ void BulletPotatoShoot::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletPotatoShoot::GetCustomBounds() const
+sf::RectangleShape BulletPotatoShoot::GetCustomBounds() const
 {
 	return customBounds;
 }

@@ -1,0 +1,14 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+bossExplosion,20,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/bossExplosion.png,0,0,166,728,4
+resource/bossExplosion.png,166,0,332,728,4
+resource/bossExplosion.png,498,0,454,728,4
+resource/bossExplosion.png,952,0,595,728,4
+resource/bossExplosion.png,1547,0,675,728,4
+resource/bossExplosion.png,2222,0,680,728,4
+resource/bossExplosion.png,2902,0,676,728,4
+resource/bossExplosion.png,3578,0,665,728,4
+resource/bossExplosion.png,4243,0,664,728,4
+resource/bossExplosion.png,4907,0,656,728,4
+resource/bossExplosion.png,5563,0,648,728,4

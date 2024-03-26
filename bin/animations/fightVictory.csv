@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-fightVictory,15,0,,
+fightVictory,20,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/FightText/FightText_KO_0000.png,0,0,512,288,4
 resource/FightText/FightText_KO_0001.png,0,0,512,288,4

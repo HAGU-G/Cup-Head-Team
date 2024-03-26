@@ -220,7 +220,7 @@ void SceneTitle::Update(float dt)
 		{
 			ShowStageCard(false);
 		}
-		else if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+		else if (InputMgr::GetKeyDown(sf::Keyboard::Z) || InputMgr::GetKeyDown(sf::Keyboard::Enter))
 		{
 			StartGame();
 		}
@@ -238,7 +238,7 @@ void SceneTitle::Update(float dt)
 		}
 
 		//버튼 클릭
-		if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !optionCard->GetActive())
+		if ((InputMgr::GetKeyDown(sf::Keyboard::Z) || InputMgr::GetKeyDown(sf::Keyboard::Enter)) && !optionCard->GetActive())
 		{
 			ButtonPress();
 		}
@@ -360,7 +360,6 @@ void SceneTitle::ChangeStageCard()
 void SceneTitle::StartGame()
 {
 	SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_StartLevel.wav");
-	SOUND_MGR.SetBgmVolume(bgmVolume);
 	switch (stageNum)
 	{
 	case 1:
@@ -388,8 +387,8 @@ void SceneTitle::StartGame()
 		return;
 	}
 
-	SCENE_MGR.ChangeScene(SceneIds::SceneGame);
 	ShowStageCard(false);
+	SCENE_MGR.ChangeScene(SceneIds::SceneGame);
 }
 
 void SceneTitle::ShowOption(bool value)

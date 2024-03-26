@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-fightReady,15,0,,
+fightReady,20,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/FightText/FightText_GetReady_0002.png,0,0,512,288,4
 resource/FightText/FightText_GetReady_0003.png,0,0,512,288,4

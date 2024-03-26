@@ -266,7 +266,7 @@ void ObjectOption::Update(float dt)
 	}
 
 	//버튼 클릭
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) || InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		ButtonPress();
 	}

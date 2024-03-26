@@ -139,6 +139,11 @@ void Stage01::LateUpdate(float dt)
 		}
 	}
 	playerPrePos = playerPos;
+
+	if (player->GetHp() <= 0 && sceneGame->GetStatus() < SceneGame::Status::Defeat)
+	{
+		sceneGame->SetStatus(SceneGame::Status::Defeat);
+	}
 }
 
 void Stage01::Reset()
