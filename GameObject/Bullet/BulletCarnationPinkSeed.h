@@ -30,7 +30,7 @@ public:
 	void Attack();
 	void TimerStart() { timerStart = true; }
 	void Flip() override;
-	sf::FloatRect GetCustomBounds() const;
+	sf::RectangleShape GetCustomBounds() const;
 	void SetRotation(float value)override;
 };
 

@@ -24,7 +24,8 @@ void BulletCarnationPinkCreaterAttack::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition(position);
 
 	SetScale({ -1.f, abs(direction.x) / direction.x });
 }
@@ -37,6 +38,8 @@ void BulletCarnationPinkCreaterAttack::Init()
 	SetRange(1000.f);
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -45,7 +48,7 @@ void BulletCarnationPinkCreaterAttack::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationPinkCreaterAttack::GetCustomBounds() const
+sf::RectangleShape BulletCarnationPinkCreaterAttack::GetCustomBounds() const
 {
 	return customBounds;
 }

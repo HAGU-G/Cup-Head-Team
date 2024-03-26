@@ -18,7 +18,8 @@ BulletCarnationBlueSeed* BulletCarnationBlueSeed::Create(const sf::Vector2f& pos
 void BulletCarnationBlueSeed::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition(position);
 }
 
 void BulletCarnationBlueSeed::Init()
@@ -64,7 +65,7 @@ void BulletCarnationBlueSeed::Frie()
 	animator.Play("animations/carnationVinusMove.csv");
 }
 
-sf::FloatRect BulletCarnationBlueSeed::GetCustomBounds() const
+sf::RectangleShape BulletCarnationBlueSeed::GetCustomBounds() const
 {
 	return customBounds;
 }

@@ -20,7 +20,8 @@ void BulletCarantionBackVine::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::BC);
+	customBounds.setPosition(position);
 	if (timer)
 	{
 		attackTimer += dt;
@@ -53,6 +54,8 @@ void BulletCarantionBackVine::Init()
 	SetScale({ 0.8f,0.8f });
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -90,7 +93,7 @@ void BulletCarantionBackVine::Die()
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarantionBackVine::OnDie, this));
 }
 
-sf::FloatRect BulletCarantionBackVine::GetCustomBounds() const
+sf::RectangleShape BulletCarantionBackVine::GetCustomBounds() const
 {
 	return customBounds;
 }

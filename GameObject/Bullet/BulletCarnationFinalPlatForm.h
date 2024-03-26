@@ -29,7 +29,7 @@ public:
 	void ReturnVine();
 	void Die();
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 	void SetRotation(float value);
 };
 

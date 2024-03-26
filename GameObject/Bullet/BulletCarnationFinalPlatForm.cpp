@@ -21,7 +21,8 @@ void BulletCarnationFinalPlatForm::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(0.6f, 1.f, Origins::BC);
+	customBounds.setPosition(position);
 	if (timer)
 	{
 		attackTimer += dt;
@@ -56,6 +57,8 @@ void BulletCarnationFinalPlatForm::Init()
 	SetScale({ 0.8f,0.8f });
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -98,7 +101,7 @@ void BulletCarnationFinalPlatForm::Die()
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::OnDie, this));
 }
 
-sf::FloatRect BulletCarnationFinalPlatForm::GetCustomBounds() const
+sf::RectangleShape BulletCarnationFinalPlatForm::GetCustomBounds() const
 {
 	return customBounds;
 }

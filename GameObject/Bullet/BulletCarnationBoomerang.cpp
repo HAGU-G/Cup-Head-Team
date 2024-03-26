@@ -19,7 +19,8 @@ void BulletCarnationBoomerang::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(0.9f, 0.8f, Origins::MC);
+	customBounds.setPosition(position);
 	if (sprite.getPosition().x <= -800)
 	{
 		SetPosition({ sprite.getPosition().x,-100.f });
@@ -40,6 +41,8 @@ void BulletCarnationBoomerang::Init()
 	SetRange(3000.f);
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -48,7 +51,7 @@ void BulletCarnationBoomerang::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationBoomerang::GetCustomBounds() const
+sf::RectangleShape BulletCarnationBoomerang::GetCustomBounds() const
 {
 	return customBounds;
 }

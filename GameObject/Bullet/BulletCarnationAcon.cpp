@@ -24,7 +24,8 @@ void BulletCarnationAcon::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(0.9f, 0.5f, Origins::MC);
+	customBounds.setPosition(position);
 
 	fireTimer += dt;
 	if (fireTimer >= fireInterval)
@@ -44,6 +45,8 @@ void BulletCarnationAcon::Init()
 	SetRange(1500.f);
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -52,7 +55,7 @@ void BulletCarnationAcon::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationAcon::GetCustomBounds() const
+sf::RectangleShape BulletCarnationAcon::GetCustomBounds() const
 {
 	return customBounds;
 }

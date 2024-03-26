@@ -47,9 +47,15 @@
     <ClCompile Include="GameObject\UI\ObjectButton.cpp" />
     <ClCompile Include="GameObject\UI\ObjectOption.cpp" />
     <ClCompile Include="GameObject\Stage\Stage02.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectBossExplosion.cpp" />
+    <ClCompile Include="GameObject\Stage\Stage03.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationCreating.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationFireSeed.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarantionBackVine.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationAcon.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationBlueSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationBoomerang.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarnationFinalPlatForm.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationFinalVine.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationFireSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.cpp" />
@@ -57,11 +63,7 @@
     <ClCompile Include="GameObject\Bullet\BulletCarnationPollen.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationPurpleSeed.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationVinus.cpp" />
-    <ClCompile Include="GameObject\Effect\EffectCarnationCreating.cpp" />
-    <ClCompile Include="GameObject\Effect\EffectCarnationFireSeed.cpp" />
-    <ClCompile Include="GameObject\Stage\Stage03.cpp" />
-    <ClCompile Include="GameObject\Bullet\BulletCarnationFinalPlatForm.cpp" />
-    <ClCompile Include="GameObject\Bullet\BulletCarantionBackVine.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationPinkDie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -114,21 +116,23 @@
     <ClInclude Include="GameObject\UI\ObjectButton.h" />
     <ClInclude Include="GameObject\UI\ObjectOption.h" />
     <ClInclude Include="GameObject\Stage\Stage02.h" />
+    <ClInclude Include="GameObject\Effect\EffectBossExplosion.h" />
+    <ClInclude Include="GameObject\Stage\Stage03.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationCreating.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationFireSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationVinus.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarantionBackVine.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationAcon.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationBlueSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationBoomerang.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarnationFinalPlatForm.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationFinalVine.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationFireSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPinkCreaterAttack.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPinkSeed.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPollen.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationPurpleSeed.h" />
-    <ClInclude Include="GameObject\Effect\EffectCarnationCreating.h" />
-    <ClInclude Include="GameObject\Effect\EffectCarnationFireSeed.h" />
-    <ClInclude Include="GameObject\Stage\Stage03.h" />
-    <ClInclude Include="GameObject\Bullet\BulletCarnationFinalPlatForm.h" />
-    <ClInclude Include="GameObject\Bullet\BulletCarantionBackVine.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationPinkDie.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

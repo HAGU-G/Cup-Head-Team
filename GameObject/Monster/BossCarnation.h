@@ -64,6 +64,6 @@ public:
 	void SetState(State state);
 
 	State GetState() { return state; }
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 };
 

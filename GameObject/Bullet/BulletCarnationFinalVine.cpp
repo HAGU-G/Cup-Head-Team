@@ -19,7 +19,8 @@ void BulletCarnationFinalVine::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 0.5f, Origins::BR);
+	customBounds.setPosition(position);
 }
 
 void BulletCarnationFinalVine::Init()
@@ -30,6 +31,8 @@ void BulletCarnationFinalVine::Init()
 	SetRange(3000.f);
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -38,7 +41,7 @@ void BulletCarnationFinalVine::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationFinalVine::GetCustomBounds() const
+sf::RectangleShape BulletCarnationFinalVine::GetCustomBounds() const
 {
 	return customBounds;
 }

@@ -2,6 +2,7 @@
 #include "BulletCarnationPinkSeed.h"
 #include "SceneGame.h"
 #include "BulletCarnationPinkCreaterAttack.h"
+#include "Effect/EffectCarnationPinkDie.h"
 
 BulletCarnationPinkSeed::BulletCarnationPinkSeed(const std::string& name)
 	:ObjectBullet(name)
@@ -21,7 +22,13 @@ void BulletCarnationPinkSeed::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition(position);
+	if (hp <= 0)
+	{
+		EffectCarnationPinkDie::Create({ position.x - sprite.getGlobalBounds().width * 0.4f,position.y - sprite.getGlobalBounds().height * 0.45f }, { 1.f,0.f }, scene);
+		OnDie();
+	}
 	if (sprite.getPosition().y <= -400)
 	{
 		timerStart = true;
@@ -78,10 +85,8 @@ void BulletCarnationPinkSeed::Init()
 
 void BulletCarnationPinkSeed::OnDie()
 {
-	//ObjectEffect* oe = new ObjectEffect("EffectCarrotBoom");
-	//oe->CreateInit(position, direction, scene);
-	//oe->GetAniamtor().Play("animations/carrotBoomDeath.csv");
-	//oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	isAlive = false;
+	scene->RemoveGo(this);
 	ObjectBullet::OnDie();
 }
 
@@ -117,7 +122,7 @@ void BulletCarnationPinkSeed::Flip()
 	}
 }
 
-sf::FloatRect BulletCarnationPinkSeed::GetCustomBounds() const
+sf::RectangleShape BulletCarnationPinkSeed::GetCustomBounds() const
 {
 	return customBounds;
 }

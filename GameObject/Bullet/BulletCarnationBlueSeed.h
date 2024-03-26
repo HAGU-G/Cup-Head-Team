@@ -22,6 +22,6 @@ public:
 
 	void Flip() override;
 	void Frie();
-	sf::FloatRect GetCustomBounds() const;
+	sf::RectangleShape GetCustomBounds() const;
 };
 

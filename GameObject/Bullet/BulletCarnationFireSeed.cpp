@@ -24,7 +24,8 @@ void BulletCarnationFireSeed::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition(position);
 	if (sprite.getPosition().y >= -10)
 	{
 		if (animator.GetCurrentCilpId() == "animations/carnationSeedBlue.csv")
@@ -42,6 +43,7 @@ void BulletCarnationFireSeed::Update(float dt)
 		else if (animator.GetCurrentCilpId() == "animations/carnationSeedPink.csv")
 		{
 			SetSpeed(0.f);
+			isPink = false;
 			animator.Play("animations/carnationSeedPinkGround.csv");
 			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::PinkVine, this));
 		}
@@ -73,6 +75,8 @@ void BulletCarnationFireSeed::Init()
 	SetDirection({ 0.f,1.f });
 	type = Type::Straight;
 	sprite.setRotation(GetRotation() - 90.f);
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -82,7 +86,7 @@ void BulletCarnationFireSeed::OnDie()
 	isAlive = false;
 }
 
-sf::FloatRect BulletCarnationFireSeed::GetCustomBounds() const
+sf::RectangleShape BulletCarnationFireSeed::GetCustomBounds() const
 {
 	return customBounds;
 }

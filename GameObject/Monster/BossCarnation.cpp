@@ -40,12 +40,37 @@ void BossCarnation::Update(float dt)
 	{
 		Death();
 	}
-	if (hp <= maxHp * 0.95 && state == State::Idle)
+	if (hp <= maxHp * 0.6 && state == State::Idle)
 	{
 		FinalIntro();
 	}
 	if (state == State::Idle)
 	{
+		/*patternTimer += dt;
+		if (patternTimer >= (float)Utils::RandomRange(5, 10))
+		{
+			int pattern = Utils::RandomRange(0, 80);
+			if (pattern <= 20)
+			{
+				FaHigh();
+				patternTimer = 0;
+			}
+			else if (pattern <= 40)
+			{
+				FaLow();
+				patternTimer = 0;
+			}
+			else if (pattern <= 60)
+			{
+				Creating();
+				patternTimer = 0;
+			}
+			else if (pattern <= 80)
+			{
+				FireSeed();
+				patternTimer = 0;
+			}
+		}*/
 		if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 		{
 			FaHigh();
@@ -92,10 +117,24 @@ void BossCarnation::Update(float dt)
 
 void BossCarnation::LateUpdate(float dt)
 {
-	customBounds.width = sprite.getGlobalBounds().width;
-	customBounds.height = sprite.getGlobalBounds().height * 0.5;
-	customBounds.left = sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.2f;
-	customBounds.top = sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.1;
+	SetCustomBounds(1.f,0.5f,Origins::TL);
+	if (GetState() == State::Idle)
+	{
+		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.2f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.1);
+	}
+	else if (animator.GetCurrentCilpId() == "animations/carnationBossFa_Low.csv")
+	{
+		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.5f);
+	}
+	else if(animator.GetCurrentCilpId() == "animations/carnationBossFa_High.csv")
+	{
+		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top);
+	}
+	else
+	{
+		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.2f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.1);
+	}
+
 	ObjectMonster::LateUpdate(dt);
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
@@ -181,11 +220,11 @@ void BossCarnation::FireSeed()
 void BossCarnation::AddSeed()
 {
 	int rnadom = Utils::RandomRange(0, 101);
-	if (rnadom <= 33)
+	if (rnadom <= 20)
 	{
 		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f,800.f)-200, position.y - 800 }, { 0.f , 1.f }, scene, 1);
 	}
-	else if (rnadom <= 66)
+	else if (rnadom <= 60)
 	{
 		BulletCarnationFireSeed::Create({ position.x - Utils::RandomRange(0.f, 800.f) - 200, position.y - 800 }, { 0.f , 1.f }, scene, 0);
 	}
@@ -303,7 +342,7 @@ void BossCarnation::SetState(State state)
 	}
 }
 
-sf::FloatRect BossCarnation::GetCustomBounds() const
+sf::RectangleShape BossCarnation::GetCustomBounds() const
 {
 	return customBounds;
 }

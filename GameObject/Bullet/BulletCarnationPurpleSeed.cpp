@@ -18,7 +18,8 @@ BulletCarnationPurpleSeed* BulletCarnationPurpleSeed::Create(const sf::Vector2f&
 void BulletCarnationPurpleSeed::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition({ position.x,position.y + 10.f });
 }
 
 void BulletCarnationPurpleSeed::Init()
@@ -44,7 +45,7 @@ void BulletCarnationPurpleSeed::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationPurpleSeed::GetCustomBounds() const
+sf::RectangleShape BulletCarnationPurpleSeed::GetCustomBounds() const
 {
 	return customBounds;
 }

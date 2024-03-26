@@ -20,7 +20,8 @@ void BulletCarnationPollen::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	customBounds = sprite.getGlobalBounds();
+	SetCustomBounds(1.f, 1.f, Origins::MC);
+	customBounds.setPosition(position);
 	fireTimer += dt;
 	if (fireTimer >= 0.3f)
 	{
@@ -47,6 +48,8 @@ void BulletCarnationPollen::Init()
 	SetRange(1500.f);
 	SetDirection({ -1.f,1.f });
 	type = Type::Straight;
+	maxHp = INT_MAX;
+	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 
@@ -56,7 +59,7 @@ void BulletCarnationPollen::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletCarnationPollen::GetCustomBounds() const
+sf::RectangleShape BulletCarnationPollen::GetCustomBounds() const
 {
 	return customBounds;
 }

@@ -21,7 +21,7 @@ public:
 	void Init() override;
 	void OnDie() override;
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 	int SetColor(int i) { return this->i = i; }
 
 	void SetRotation(float value) override;

@@ -20,6 +20,6 @@ public:
 	void SetRotation(float value)override;
 	void OnDie() override;
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 };
 

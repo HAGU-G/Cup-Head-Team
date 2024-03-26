@@ -22,6 +22,6 @@ public:
 	void OnDie() override;
 
 	float SetFireInterval(float f) { return fireInterval = f; }
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 };
 
