@@ -1,0 +1,6 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerSideUp,15,2,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerSideUp.png,0,0,126,150,7
+resource/PlayerSideUp.png,126,0,122,150,7
+resource/PlayerSideUp.png,248,0,122,150,7
