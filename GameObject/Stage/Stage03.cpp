@@ -3,6 +3,7 @@
 #include "SceneGame.h"
 #include "Player.h"
 #include "Monster/BossCarnation.h"
+#include "GameObject/CanationPlatForm.h"
 
 Stage03::Stage03(const std::string& name)
 	:GameObject(name)
@@ -158,9 +159,15 @@ void Stage03::Reset()
 		carnation = nullptr;
 	}
 
-
+	platForm1 = new CanationPlatForm();
+	platForm2 = new CanationPlatForm();
+	platForm3 = new CanationPlatForm();
 	player = new Player("Player");
 	carnation = new	BossCarnation();
+
+	platForm1->sortLayer = 0;
+	platForm2->sortLayer = 0;
+	platForm3->sortLayer = 0;
 
 	carnation->sortLayer = 0;
 	player->sortLayer = 1;
@@ -179,6 +186,11 @@ void Stage03::Reset()
 	player->SetPosition({ -playerPosCorrection.x, 0.f });
 	playerPrePos = playerPos;
 
+	platForm1->Create({ scene->GetWorldView().getCenter().x  - viewSize.x * 0.01f / 3.f,-viewSize.y * 0.15f }, scene);
+	platForm2->Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.61f / 3.f,-viewSize.y * 0.15f }, scene);
+	platForm3->Create({ scene->GetWorldView().getCenter().x - viewSize.x * 1.21f / 3.f,-viewSize.y * 0.15f }, scene);
+
+
 	scene->AddGo(mainBg);
 	scene->AddGo(skyBg);
 	scene->AddGo(cloudBg);
@@ -187,6 +199,10 @@ void Stage03::Reset()
 	scene->AddGo(frontCloudBg2);
 	scene->AddGo(frontBush);
 	scene->AddGo(frontBg);
+
+	scene->AddGo(platForm1);
+	scene->AddGo(platForm2);
+	scene->AddGo(platForm3);
 
 	scene->AddGo(player);
 	sceneGame->AddGo(carnation);

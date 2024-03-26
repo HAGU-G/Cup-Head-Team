@@ -27,6 +27,8 @@ protected:
 	float patternTimer = 0.f;
 	float patternInterval = 2.0f;
 	float shootSpeed = 1.0f;
+	float finalPollenTimer = 0.f;
+	float finalVineTimer = 0.f;
 	int shootCount = 0;
 
 public:

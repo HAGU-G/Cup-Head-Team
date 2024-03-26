@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject\CanationPlatForm.cpp" />
     <ClCompile Include="GameObject\Effect\EffectCarnationPinkDie.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarantionBackVine.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarnationAcon.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="GameObject\Stage\Stage02.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject\CanationPlatForm.h" />
     <ClInclude Include="GameObject\Effect\EffectCarnationPinkDie.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarantionBackVine.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarnationAcon.h" />

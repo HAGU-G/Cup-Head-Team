@@ -46,7 +46,7 @@ void BossCarnation::Update(float dt)
 	}
 	if (state == State::Idle)
 	{
-		/*patternTimer += dt;
+		patternTimer += dt;
 		if (patternTimer >= (float)Utils::RandomRange(5, 10))
 		{
 			int pattern = Utils::RandomRange(0, 80);
@@ -70,33 +70,21 @@ void BossCarnation::Update(float dt)
 				FireSeed();
 				patternTimer = 0;
 			}
-		}*/
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
-		{
-			FaHigh();
-		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
-		{
-			FaLow();
-		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num3))
-		{
-			Creating();
-		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num4))
-		{
-			FireSeed();
 		}
 	}
 	else if (state == State::FinalIdle)
 	{
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num5))
+		finalPollenTimer += dt;
+		if(finalPollenTimer >= Utils::RandomRange(4,8))
 		{
 			FinalFiringPollen();
+			finalPollenTimer = 0;
 		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Num6))
+		finalVineTimer += dt;
+		if(finalVineTimer >= Utils::RandomRange(4,8))
 		{
 			FinalAttackPlayForm();
+			finalVineTimer = 0;
 		}
 	}
 
@@ -124,7 +112,7 @@ void BossCarnation::LateUpdate(float dt)
 	}
 	else if (animator.GetCurrentCilpId() == "animations/carnationBossFa_Low.csv")
 	{
-		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.5f);
+		customBounds.setPosition(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.6f);
 	}
 	else if(animator.GetCurrentCilpId() == "animations/carnationBossFa_High.csv")
 	{
@@ -297,7 +285,34 @@ void BossCarnation::FinalFiringPollen()
 
 void BossCarnation::FinalAttackPlayForm()
 {
-	BulletCarnationFinalPlatForm::Create({ viewSize.x * 0.2f, 0 }, { 0.f , -1.f }, scene);
+	int random = std::rand() % 6;
+	if (random == 0)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.01f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
+	else if (random == 1)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.61f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
+	else if (random == 2)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 1.21f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
+	else if (random == 3)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.01f / 3.f , 0 }, { 1.f , -1.f }, scene);
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.61f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
+	else if (random == 4)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.01f / 3.f , 0 }, { 1.f , -1.f }, scene);
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 1.21f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
+	else if (random == 5)
+	{
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 0.61f / 3.f , 0 }, { 1.f , -1.f }, scene);
+		BulletCarnationFinalPlatForm::Create({ scene->GetWorldView().getCenter().x - viewSize.x * 1.21f / 3.f , 0 }, { 1.f , -1.f }, scene);
+	}
 }
 
 void BossCarnation::Death()

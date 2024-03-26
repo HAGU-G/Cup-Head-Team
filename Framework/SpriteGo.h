@@ -14,6 +14,7 @@ protected:
 	sf::RectangleShape customBounds;
 public:
 
+	bool onPlatForm = false;
 	bool onToehold = false;
 	SpriteGo(const std::string& name = "");
 
@@ -33,6 +34,8 @@ public:
 	void SetFlipX(bool filp) override;
 	void SetFlipY(bool filp) override;
 	void SetAlpha(sf::Uint8 alpha);
+
+	void SetCustomBounds(float ratioX, float ratioY, Origins origin);
 
 	void Update(float dt) override;
 	void Reset() override;

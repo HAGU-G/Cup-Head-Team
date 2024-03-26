@@ -5,6 +5,7 @@ class BossCarnation;
 class Player;
 class SpriteGo;
 class SceneGame;
+class CanationPlatForm;
 
 class Stage03 : public GameObject
 {
@@ -12,6 +13,9 @@ protected:
 	sf::Music bgm;
 	SceneGame* sceneGame;
 
+	CanationPlatForm* platForm1;
+	CanationPlatForm* platForm2;
+	CanationPlatForm* platForm3;
 	BossCarnation* carnation = nullptr;
 	Player* player = nullptr;
 

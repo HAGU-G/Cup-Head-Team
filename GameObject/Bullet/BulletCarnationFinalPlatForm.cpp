@@ -21,7 +21,8 @@ void BulletCarnationFinalPlatForm::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	SetCustomBounds(0.6f, 1.f, Origins::BC);
+	SetCustomBounds(0.6f, 0.7f, Origins::BC);
+	SetScale({ 0.8f,0.8f });
 	customBounds.setPosition(position);
 	if (timer)
 	{
@@ -49,12 +50,12 @@ void BulletCarnationFinalPlatForm::Update(float dt)
 void BulletCarnationFinalPlatForm::Init()
 {
 	ObjectBullet::Init();
+	SetSpeed(0.f);
+	SetRange(3000.f);
+	SetScale({ 0.6f,0.6f });
 	animator.Play("animations/carnationFinalVineAttackIdle.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), 1, std::bind(&BulletCarnationFinalPlatForm::BackVine, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::TimerStart, this));
-	SetSpeed(0.f);
-	SetRange(3000.f);
-	SetScale({ 0.8f,0.8f });
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
@@ -80,6 +81,7 @@ void BulletCarnationFinalPlatForm::TimerStart()
 
 void BulletCarnationFinalPlatForm::Attack()
 {
+	SetScale({ 0.8f,0.8f });
 	animator.Play("animations/carnationFinalVineAttack.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::ReturnStart, this));
 }
@@ -91,12 +93,14 @@ void BulletCarnationFinalPlatForm::ReturnStart()
 
 void BulletCarnationFinalPlatForm::ReturnVine()
 {
+	SetScale({ 0.8f,0.8f });
 	animator.Play("animations/carnationFinalVineAttackReturn.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-1, std::bind(&BulletCarnationFinalPlatForm::Die, this));
 }
 
 void BulletCarnationFinalPlatForm::Die()
 {
+	SetScale({ 0.8f,0.8f });
 	animator.Play("animations/carnationFinalVineAttackIdleReturn.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::OnDie, this));
 }
@@ -108,5 +112,5 @@ sf::RectangleShape BulletCarnationFinalPlatForm::GetCustomBounds() const
 
 void BulletCarnationFinalPlatForm::SetRotation(float value)
 {
-	ObjectBullet::SetRotation(value + 90.f);
+	ObjectBullet::SetRotation(value + 45.f);
 }

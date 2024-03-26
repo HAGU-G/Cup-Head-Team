@@ -20,7 +20,7 @@ protected:
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 
-	float gravity = 800.f;
+	float gravity = 3500.f;
 	float speed = 500.f;
 
 	float parryDamage = 100.f;
@@ -48,6 +48,7 @@ protected:
 	bool isCKeyPressed;
 	bool isParry = false;
 	bool isDamaging = false;
+	bool onPlatForm = false;
 
 	int maxHp = 100;
 	int hp;
@@ -72,6 +73,5 @@ public:
 	void OnDamage();
 	void OnDie();
 
-
-
+	bool OnPlatForm();
 };
