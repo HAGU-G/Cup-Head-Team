@@ -24,7 +24,7 @@ protected:
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
 
-	SceneGame* sceneGame;
+	SceneGame* sceneGame = nullptr;
 public:
 	BossPotato(const std::string& name = "BossPotato");
 	~BossPotato() override = default;

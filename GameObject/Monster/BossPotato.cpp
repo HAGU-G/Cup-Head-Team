@@ -3,6 +3,7 @@
 #include "SceneGame.h"
 #include "Bullet/BulletPotatoShoot.h"
 #include "Bullet/BulletPotatoShootPink.h"
+#include "Effect/ObjectEffect.h"
 
 BossPotato::BossPotato(const std::string& name)
 	:ObjectMonster(name)
@@ -25,7 +26,6 @@ void BossPotato::Reset()
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
 	Intro();
-
 	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 }
 
@@ -80,10 +80,24 @@ void BossPotato::LateUpdate(float dt)
 void BossPotato::Intro()
 {
 	SetState(State::None);
-	animator.ClearEvent();
-	animator.Play("animations/potatoIntro.csv");
-	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::Idle, this));
-
+	ObjectEffect* front = new ObjectEffect("PotatoIntroBack");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_RiseGround.wav");
+	front->SetScale({ 1.1f, 1.1f });
+	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
+	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
+	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+		[this, front]()
+		{
+			ObjectEffect* back = new ObjectEffect("PotatoIntroFront");
+			back->SetScale({ 1.1f, 1.1f });
+			back->sortLayer = -1;
+			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
+			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			animator.ClearEvent();
+			animator.Play("animations/potatoIntro.csv");
+			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::Idle, this));
+			patternTimer = 2.f;
+		});
 }
 
 void BossPotato::Idle()
@@ -127,6 +141,8 @@ void BossPotato::Leave()
 
 void BossPotato::OnDie()
 {
+	scene->RemoveGo(scene->FindGo("PotatoIntroBack"));
+	scene->RemoveGo(scene->FindGo("PotatoIntroFront"));
 	scene->RemoveGo(this);
 }
 

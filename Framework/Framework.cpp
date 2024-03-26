@@ -85,7 +85,7 @@ void Framework::Do()
 		else
 		{
 			postEffect.setTexture(pass1.getTexture());
-			window.draw(postEffect, &smooth);
+			window.draw(postEffect);
 		}
 		window.display();
 	}

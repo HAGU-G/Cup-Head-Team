@@ -1,5 +1,5 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
-potatoShoot,15,0,,
+potatoShoot,20,0,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
 resource/potatoShoot.png,0,0,527,402,7
 resource/potatoShoot.png,527,0,516,402,7
