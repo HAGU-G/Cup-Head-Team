@@ -149,6 +149,9 @@ void Player::Update(float dt)
 	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 
 	currentDirection = PreDirection;
+	
+	MoveDirection = position - prePosition;
+	prePosition = position;
 }
 
 void Player::UpdateDirection(float horizontalInput, float dt)
