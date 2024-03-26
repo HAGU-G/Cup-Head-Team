@@ -29,9 +29,13 @@ void BossCarrot::Reset()
 void BossCarrot::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
 
 	switch (state)
@@ -135,6 +139,7 @@ void BossCarrot::SetTargetDirection()
 
 void BossCarrot::Death()
 {
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();

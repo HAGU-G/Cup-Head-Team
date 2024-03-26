@@ -28,7 +28,7 @@ void SoundMgr::SetBgmVolume(float v)
 
 	if (isFading)
 	{
-		bgm[frontBgmIndex].setVolume(bgm[frontBgmIndex].getVolume() / bgmVolume * v);
+		bgm[frontBgmIndex].setVolume(bgm[frontBgmIndex].getVolume() * v / bgmVolume);
 		bgmVolume = v;
 	}
 	else
@@ -116,13 +116,9 @@ void SoundMgr::Update(float dt)
 
 void SoundMgr::PlayBgm(std::string id, bool crossFade, bool loop)
 {
-	frontBgmIndex = (frontBgmIndex + 1) % 2;
-	int backBgmIndex = (frontBgmIndex == 1) ? 0 : 1;
-
-	bgm[frontBgmIndex].setBuffer(RES_MGR_SOUND_BUFFER.Get(id));
-
 	if (crossFade)
 	{
+		frontBgmIndex = (frontBgmIndex + 1) % 2;
 		isFading = true;
 		bgm[frontBgmIndex].setVolume(0.f);
 	}
@@ -132,6 +128,7 @@ void SoundMgr::PlayBgm(std::string id, bool crossFade, bool loop)
 		bgm[frontBgmIndex].setVolume(bgmVolume);
 	}
 
+	bgm[frontBgmIndex].setBuffer(RES_MGR_SOUND_BUFFER.Get(id));
 	bgm[frontBgmIndex].setLoop(loop);
 	bgm[frontBgmIndex].play();
 }

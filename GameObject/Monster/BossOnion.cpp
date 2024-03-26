@@ -12,7 +12,7 @@ BossOnion::BossOnion(const std::string& name)
 void BossOnion::Init()
 {
 	ObjectMonster::Init();
-	sprite.setScale(1.f/1.1f, 1.f/1.1f);
+	sprite.setScale(1.f / 1.1f, 1.f / 1.1f);
 	hasHitBox = true;
 }
 
@@ -27,9 +27,13 @@ void BossOnion::Reset()
 void BossOnion::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::Crying)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::Crying)
+		{
+			Death();
+		}
 	}
 	if (hp <= maxHp * 0.95 && state == State::Idle)
 	{
@@ -113,6 +117,7 @@ void BossOnion::Tears()
 
 void BossOnion::Death()
 {
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();

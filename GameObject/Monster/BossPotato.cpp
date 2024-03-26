@@ -110,6 +110,7 @@ void BossPotato::ShootEnd()
 
 void BossPotato::Death()
 {
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();

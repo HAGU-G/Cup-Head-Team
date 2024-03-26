@@ -226,7 +226,7 @@ void Stage01::Reset()
 	field11->SetPosition({ 0.f, -viewSize.y * 0.43f });
 	sky->SetPosition({ 0.f, -viewSize.y * 0.50f });
 
-	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav");
+	SOUND_MGR.PlayBgm("resource/Sprite/stage01/bgm_level_veggies.wav",false);
 }
 
 void Stage01::Release()
