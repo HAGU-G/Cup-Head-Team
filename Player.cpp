@@ -399,7 +399,7 @@ void Player::LateUpdate(float dt)
 	auto monsters = sceneGame->getAllMonsters();
 	for (auto& monster : monsters)
 	{
-		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
+		if (monster != nullptr && monster->IsAlive() && GetCustomBounds().getGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
 		{
 			if (isJumping && monster->GetPink()/* && InputMgr::GetKeyDown(sf::Keyboard::Z)*/)
 			{

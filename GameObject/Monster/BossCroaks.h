@@ -24,12 +24,14 @@ protected:
 
 	float fanTimer = 0.f;
 	float fanInterval = 8.f;
-	float fanBackwardSpeed = 50.f;
+	float fanBackwardSpeed = 100.f;
 
 	int shootCount = 0;
 	int fireFlyCount = 0;
 	int patternCount = 0;
 	Player* player;
+	sf::Vector2f playerPos;
+	float deltatime;
 public:
 
 	BossCroaks(const std::string& name = "BossCroaks");
@@ -58,8 +60,6 @@ public:
 	bool FanTimer(float dt);
 
 	void SetState(State state);
-
-	bool GetFanState() { return state == State::Fan; }
 	sf::RectangleShape GetCustomBounds() const override;
 
 };
