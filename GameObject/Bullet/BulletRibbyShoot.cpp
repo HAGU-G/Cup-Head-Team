@@ -23,7 +23,10 @@ void BulletRibbyShoot::Update(float dt)
 	float shrinkFactor = 0.7f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 3;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	//customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	SetCustomBounds(shrinkFactor, shrinkFactor, Origins::TL);
+	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
+	
 }
 
 void BulletRibbyShoot::Init()
@@ -47,7 +50,7 @@ void BulletRibbyShoot::OnDie()
 	ObjectBullet::OnDie();
 }
 
-sf::FloatRect BulletRibbyShoot::GetCustomBounds() const
+sf::RectangleShape BulletRibbyShoot::GetCustomBounds() const
 {
 	return customBounds;
 }

@@ -119,7 +119,7 @@ void ObjectBullet::OnDie()
 	scene->RemoveGo(this);
 }
 
-sf::FloatRect ObjectBullet::GetCustomBounds() const
+sf::RectangleShape ObjectBullet::GetCustomBounds() const
 {
 	return customBounds;
 }

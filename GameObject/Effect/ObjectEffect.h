@@ -27,6 +27,7 @@ public:
 	void Draw(sf::RenderTexture& window) override;
 
 	void SetDirection(const sf::Vector2f direction);
+	inline void SetDieByTime(float duration, bool value = true) { this->duration = duration; isDieByTime = value; }
 
 	Animator& GetAniamtor() { return animator; }
 

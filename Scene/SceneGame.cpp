@@ -110,6 +110,12 @@ void SceneGame::Update(float dt)
 		}
 		break;
 	case SceneGame::Status::Defeat:
+		timer += dt;
+		if (timer >= timeLimit)
+		{
+			timer = 0.f;
+			SetStatus(Status::Exit);
+		}
 		break;
 	case SceneGame::Status::Option:
 		if (!option->GetActive())
@@ -118,7 +124,7 @@ void SceneGame::Update(float dt)
 		}
 		break;
 	case SceneGame::Status::GoTitle:
-			SetStatus(Status::Exit);
+		SetStatus(Status::Exit);
 		break;
 	case SceneGame::Status::Reset:
 		SetStatus(Status::Reset);
@@ -168,7 +174,7 @@ void SceneGame::SetStatus(Status status)
 				SOUND_MGR.PlaySfx(announcerLeft + "2_" + (char)Utils::RandomRange(97, 102) + announcerRight);
 			});
 		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(),
-			[oe,this]()
+			[oe, this]()
 			{
 				oe->OnDie();
 				this->SetStatus(Status::Fight);
@@ -186,14 +192,24 @@ void SceneGame::SetStatus(Status status)
 		oe->SetScale({ uiView.getSize().x / 512.f,uiView.getSize().x / 512.f });
 		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
 		oe->GetAniamtor().Play("animations/fightVictory.csv");
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 23, std::bind(&SceneGame::Play,this));
+		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 23, std::bind(&SceneGame::Play, this));
 		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		timer = 0.f;
 		timeLimit = 10.f;
 		break;
 	}
 	case SceneGame::Status::Defeat:
+	{
+		SOUND_MGR.PlaySfx("resource/FightText/sfx_player_death_0" + std::to_string(Utils::RandomRange(1, 3)) + ".wav");
+		ObjectEffect* oe = new ObjectEffect("FightText");
+		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
+		oe->SetTexture("resource/FightText/you_died_text_0001.png");
+		oe->SetOrigin(Origins::MC);
+		oe->SetDieByTime(3.f, true);
+		timer = 0.f;
+		timeLimit = 5.f;
 		break;
+	}
 	case SceneGame::Status::Exit:
 		SCENE_MGR.ChangeScene(SceneIds::SceneTitle);
 		Release();

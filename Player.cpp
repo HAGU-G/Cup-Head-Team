@@ -14,7 +14,7 @@ Player::~Player()
 
 void Player::Init()
 {
-	SpriteGo::Init(); 
+	SpriteGo::Init();
 
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
@@ -48,7 +48,7 @@ void Player::Update(float dt)
 	if (isInvincible)                                      //公利 惑怕 o
 	{
 		invincibilityTimer += dt;
-		if (invincibilityTimer >= invincibilityDuration) 
+		if (invincibilityTimer >= invincibilityDuration)
 		{
 			isDamaging = false;
 			isInvincible = false;                          //公利 惑怕 x
@@ -56,7 +56,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing) 
+	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing)
 	{
 		animator.Play("animations/PlayerDash.csv");
 		isDashing = true;
@@ -88,7 +88,7 @@ void Player::Update(float dt)
 		velocity.x = horizontalInput * speed;
 		velocity.y += gravity * dt;
 
-		if (!((isDownKeyPressed || isCKeyPressed) && isGrounded)|| isJumping)
+		if (!((isDownKeyPressed || isCKeyPressed) && isGrounded) || isJumping)
 		{
 			velocity.x = horizontalInput * speed;
 		}
@@ -124,19 +124,20 @@ void Player::Update(float dt)
 			fireTimer = 0.f;
 			Fire(currentDirection);
 		}
-		
-		if (InputMgr::GetKeyUp(sf::Keyboard::X) )
+
+		if (InputMgr::GetKeyUp(sf::Keyboard::X))
 		{
 			isFire = false;
 		}
 	}
-	
+
 
 	auto bounds = sprite.getGlobalBounds();
 	float shrinkFactor = 0.7f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
+	customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
+	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 
 }
 
@@ -146,7 +147,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	if (isJumping)
 	{
 		UpdateJumpingDirection(horizontalInput, InputMgr::GetAxisRaw(Axis::Vertical));
-		return; 
+		return;
 	}
 
 	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
@@ -155,11 +156,11 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	{
 		if (horizontalInput > 0.f)
 		{
-			if (verticalInput > 0.f )
+			if (verticalInput > 0.f)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
 				{
-				animator.Play("animations/PlayerAimSideDown.csv");
+					animator.Play("animations/PlayerAimSideDown.csv");
 				}
 				currentDirection = Direction::RightDown;
 			}
@@ -167,7 +168,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
 				{
-				animator.Play("animations/PlayerAimSideUp.csv");
+					animator.Play("animations/PlayerAimSideUp.csv");
 				}
 				currentDirection = Direction::RightUp;
 			}
@@ -175,7 +176,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimStraight.csv")
 				{
-				animator.Play("animations/PlayerAimStraight.csv");
+					animator.Play("animations/PlayerAimStraight.csv");
 				}
 				currentDirection = Direction::Right;
 			}
@@ -186,7 +187,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideDown.csv")
 				{
-				animator.Play("animations/PlayerAimSideDown.csv");
+					animator.Play("animations/PlayerAimSideDown.csv");
 				}
 				currentDirection = Direction::LeftDown;
 			}
@@ -194,7 +195,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				if (animator.GetCurrentCilpId() != "animations/PlayerAimSideUp.csv")
 				{
-				animator.Play("animations/PlayerAimSideUp.csv");
+					animator.Play("animations/PlayerAimSideUp.csv");
 				}
 				currentDirection = Direction::LeftUp;
 			}
@@ -213,7 +214,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			{
 				animator.Play("animations/PlayerAimDown.csv");
 			}
-			
+
 			currentDirection = Direction::Down;
 		}
 		else if (verticalInput < 0.f)
@@ -287,18 +288,18 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	SetOrigin(Origins::BC);
 }
 
-void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput) 
+void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput)
 {
 
-	if (horizontalInput > 0.f) 
+	if (horizontalInput > 0.f)
 	{
 		currentDirection = verticalInput > 0.f ? Direction::RightDown : verticalInput < 0.f ? Direction::RightUp : Direction::Right;
 	}
-	else if (horizontalInput < 0.f) 
+	else if (horizontalInput < 0.f)
 	{
 		currentDirection = verticalInput > 0.f ? Direction::LeftDown : verticalInput < 0.f ? Direction::LeftUp : Direction::Left;
 	}
-	else 
+	else
 	{
 		currentDirection = verticalInput > 0.f ? Direction::Down : verticalInput < 0.f ? Direction::Up : currentDirection;
 	}
@@ -349,12 +350,12 @@ void Player::Fire(Direction dir)
 	BulletPeashot::Create(pos, dir, scene);
 }
 
-void Player::Dash(float dt) 
+void Player::Dash(float dt)
 {
-	if (dashTimer > 0) 
+	if (dashTimer > 0)
 	{
 		sf::Vector2f dashDirection;
-		switch (currentDirection) 
+		switch (currentDirection)
 		{
 		case Direction::Right:
 			dashDirection = sf::Vector2f(1, 0);
@@ -368,7 +369,7 @@ void Player::Dash(float dt)
 		SetPosition(position + dashDirection * dashSpeed * dt);
 		dashTimer -= dt;
 	}
-	else 
+	else
 	{
 		isDashing = false;
 	}
@@ -376,7 +377,7 @@ void Player::Dash(float dt)
 
 void Player::OnDamage()
 {
-	
+
 	hp -= 1;
 	std::cout << "On" << std::endl;
 	if (hp == 0)
@@ -398,7 +399,7 @@ void Player::LateUpdate(float dt)
 	auto monsters = sceneGame->getAllMonsters();
 	for (auto& monster : monsters)
 	{
-		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
 		{
 			if (isJumping && monster->GetPink()/* && InputMgr::GetKeyDown(sf::Keyboard::Z)*/)
 			{
@@ -424,7 +425,7 @@ void Player::LateUpdate(float dt)
 				invincibilityTimer = 0.0f;
 				OnDamage();
 			}
-			
+
 		}
 	}
 }

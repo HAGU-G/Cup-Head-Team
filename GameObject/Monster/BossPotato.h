@@ -49,6 +49,6 @@ public:
 	bool PatternTimer(float dt);
 	void SetState(State state);
 
-	sf::FloatRect GetCustomBounds() const override;//////////   추가된 부분 입니다.
+	sf::RectangleShape GetCustomBounds() const override;//////////   추가된 부분 입니다.
 };
 

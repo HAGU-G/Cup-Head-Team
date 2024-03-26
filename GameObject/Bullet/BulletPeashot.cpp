@@ -45,7 +45,7 @@ void BulletPeashot::LateUpdate(float dt)
 	{
 		if (monster != nullptr)
 		{
-			if (monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds()))
+			if (monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
 			{
 				monster->OnDamage(10);
 				OnDie();

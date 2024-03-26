@@ -11,14 +11,14 @@ protected:
 
 	bool hasHitBox = false;
 	bool useRenderStates = false;
-	sf::FloatRect customBounds;
+	sf::RectangleShape customBounds;
 public:
 	SpriteGo(const std::string& name = "");
 
 	virtual sf::FloatRect GetLocalBounds() override;
 	virtual sf::FloatRect GetGlobalBounds() override;
 	virtual sf::Vector2f GetSize() { return size; }
-	virtual sf::FloatRect GetCustomBounds();
+	virtual sf::RectangleShape GetCustomBounds() const;
 	void SetTexture(const std::string& textureId, bool resetRect = true);
 
 	void SetPosition(const sf::Vector2f& pos) override;

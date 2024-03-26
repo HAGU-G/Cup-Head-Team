@@ -85,7 +85,9 @@ void BossCroaks::Update(float dt)
 	float shrinkFactor = 0.6f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
 	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+	//customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
+	SetCustomBounds(shrinkFactor, shrinkFactor, Origins::TL);
+	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 }
 
 void BossCroaks::LateUpdate(float dt)
@@ -236,7 +238,7 @@ void BossCroaks::SetState(State state)
 	}
 }
 
-sf::FloatRect BossCroaks::GetCustomBounds() const
+sf::RectangleShape BossCroaks::GetCustomBounds() const
 {
 	return customBounds;
 }

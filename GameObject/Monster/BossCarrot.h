@@ -54,6 +54,6 @@ public:
 	bool BoomTimer(float dt);
 	bool RingTimer(float dt);
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 };
 

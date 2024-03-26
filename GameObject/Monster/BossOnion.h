@@ -49,6 +49,6 @@ public:
 	bool TearTimer(float dt);
 	void SetState(State state);
 
-	sf::FloatRect GetCustomBounds() const override;
+	sf::RectangleShape GetCustomBounds() const override;
 };
 
