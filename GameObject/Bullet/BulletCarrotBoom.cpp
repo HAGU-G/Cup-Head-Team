@@ -38,6 +38,8 @@ void BulletCarrotBoom::Init()
 
 void BulletCarrotBoom::OnDie()
 {
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Bomb_Explode_0"
+		+ std::to_string(Utils::RandomRange(1, 5)) + ".wav");
 	ObjectEffect* oe = new ObjectEffect("EffectCarrotBoom");
 	oe->CreateInit(position, direction, scene);
 	oe->GetAniamtor().Play("animations/carrotBoomDeath.csv");

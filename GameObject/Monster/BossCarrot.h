@@ -14,6 +14,8 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
+	sf::Sound soundMindMeld;
+
 	sf::Sprite shootEyes;
 	Animator eyeAnimator;
 	sf::Vector2f ringCreatePos = { 0.f, 0.f };

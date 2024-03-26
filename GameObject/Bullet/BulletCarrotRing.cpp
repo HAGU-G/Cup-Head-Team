@@ -20,6 +20,8 @@ void BulletCarrotRing::Init()
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Init();
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_MindMeld_BeamFire_0"
+		+ std::to_string(Utils::RandomRange(1, 3)) + ".wav");
 	animator.Play("animations/carrotRing.csv");
 	SetSpeed(650.f);
 	SetRange(1000.f);
