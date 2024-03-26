@@ -1,0 +1,36 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationSeedPurple,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationSeedPurple.png,0,0,43,59,7
+resource/carnationSeedPurple.png,43,0,42,59,7
+resource/carnationSeedPurple.png,85,0,43,59,7
+resource/carnationSeedPurple.png,128,0,43,59,7
+resource/carnationSeedPurple.png,171,0,44,59,7
+resource/carnationSeedPurple.png,215,0,44,59,7
+resource/carnationSeedPurple.png,259,0,43,59,7
+resource/carnationSeedPurple.png,302,0,44,59,7
+resource/carnationSeedPurple.png,346,0,41,59,7
+resource/carnationSeedPurple.png,387,0,43,59,7
+resource/carnationSeedPurple.png,430,0,43,59,7
+resource/carnationSeedPurple.png,473,0,40,59,7
+resource/carnationSeedPurple.png,513,0,43,59,7
+resource/carnationSeedPurple.png,556,0,40,59,7
+resource/carnationSeedPurple.png,596,0,41,59,7
+resource/carnationSeedPurple.png,637,0,41,59,7
+resource/carnationSeedPurple.png,678,0,40,59,7
+resource/carnationSeedPurple.png,718,0,40,59,7
+resource/carnationSeedPurple.png,758,0,41,59,7
+resource/carnationSeedPurple.png,799,0,39,59,7
+resource/carnationSeedPurple.png,838,0,41,59,7
+resource/carnationSeedPurple.png,879,0,40,59,7
+resource/carnationSeedPurple.png,919,0,41,59,7
+resource/carnationSeedPurple.png,960,0,41,59,7
+resource/carnationSeedPurple.png,1001,0,40,59,7
+resource/carnationSeedPurple.png,1041,0,38,59,7
+resource/carnationSeedPurple.png,1079,0,42,59,7
+resource/carnationSeedPurple.png,1121,0,39,59,7
+resource/carnationSeedPurple.png,1160,0,40,59,7
+resource/carnationSeedPurple.png,1200,0,40,59,7
+resource/carnationSeedPurple.png,1240,0,39,59,7
+resource/carnationSeedPurple.png,1279,0,39,59,7
+resource/carnationSeedPurple.png,1318,0,39,59,7

@@ -1,0 +1,18 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+creatingEffect,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/creatingEffect.png,0,0,106,456,4
+resource/creatingEffect.png,106,0,175,456,4
+resource/creatingEffect.png,281,0,170,456,4
+resource/creatingEffect.png,451,0,172,456,4
+resource/creatingEffect.png,623,0,178,456,4
+resource/creatingEffect.png,801,0,172,456,4
+resource/creatingEffect.png,973,0,167,456,4
+resource/creatingEffect.png,1140,0,167,456,4
+resource/creatingEffect.png,1307,0,170,456,4
+resource/creatingEffect.png,1477,0,158,456,4
+resource/creatingEffect.png,1635,0,157,456,4
+resource/creatingEffect.png,1792,0,134,456,4
+resource/creatingEffect.png,1926,0,133,456,4
+resource/creatingEffect.png,2059,0,129,456,4
+resource/creatingEffect.png,2188,0,125,456,4

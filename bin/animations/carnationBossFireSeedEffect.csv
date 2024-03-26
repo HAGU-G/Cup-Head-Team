@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationBossFireSeedEffect,15,0,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationBossFireSeedEffect.png,0,0,87,38,7
+resource/carnationBossFireSeedEffect.png,87,0,64,38,7
+resource/carnationBossFireSeedEffect.png,151,0,19,38,7
+resource/carnationBossFireSeedEffect.png,0,0,87,38,7
+resource/carnationBossFireSeedEffect.png,87,0,64,38,7
+resource/carnationBossFireSeedEffect.png,151,0,19,38,7
+resource/carnationBossFireSeedEffect.png,0,0,87,38,7
+resource/carnationBossFireSeedEffect.png,87,0,64,38,7
+resource/carnationBossFireSeedEffect.png,151,0,19,38,7

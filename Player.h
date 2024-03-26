@@ -20,7 +20,7 @@ protected:
 	Direction currentDirection = Direction::Right;
 	Direction PreDirection = Direction::Right;
 
-	float gravity = 800.f;
+	float gravity = 3500.f;
 	float speed = 500.f;
 
 	float parryDamage = 100.f;
@@ -32,13 +32,14 @@ protected:
 
 	float fireTimer = 0.f;
 	float fireIntervel = 0.2f;
-
-	float invincibilityDuration = 0.5f;
+	float invincibilityDuration = 1.f;
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
 	
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
+	sf::Vector2f prePosition;
+	sf::Vector2f MoveDirection;
 
 	bool isGrounded = true;
 	bool isAlive = true;
@@ -47,8 +48,9 @@ protected:
 	bool isCKeyPressed;
 	bool isParry = false;
 	bool isDamaging = false;
+	bool onPlatForm = false;
 
-	int maxHp = 3;
+	int maxHp = 100;
 	int hp;
 
 	float horizontalInput;
@@ -71,6 +73,5 @@ public:
 	void OnDamage();
 	void OnDie();
 
-
-
+	bool OnPlatForm();
 };

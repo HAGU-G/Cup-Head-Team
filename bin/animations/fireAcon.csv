@@ -1,0 +1,7 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+fireAcon,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/fireAcon.png,0,0,88,38,4
+resource/fireAcon.png,88,0,85,38,4
+resource/fireAcon.png,173,0,88,36,4
+resource/fireAcon.png,261,0,88,37,4

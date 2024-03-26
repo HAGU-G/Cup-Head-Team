@@ -10,7 +10,6 @@ protected:
 	float hitEffectDuration = 0.1f;
 
 	bool isAlive = true;
-	
 
 	sf::Shader shaderHit;
 
@@ -36,7 +35,7 @@ public:
 	bool IsAlive() const { return isAlive; }/////////////////   추가된 부분 입니다.
 	bool GetPink() { return isPink; }
 
-	void SetCustomBounds(float ratio, float ratioY, Origins origin);
+//	void SetCustomBounds(float ratio, float ratioY, Origins origin);
 
 	/// <summary>
 	/// 0.5초마다 폭발 이펙트 생성

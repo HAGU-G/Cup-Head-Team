@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationVinusCreat,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationVinusCreat.png,0,0,36,51,7
+resource/carnationVinusCreat.png,36,0,41,51,7
+resource/carnationVinusCreat.png,77,0,45,51,7
+resource/carnationVinusCreat.png,122,0,52,51,7
+resource/carnationVinusCreat.png,174,0,54,51,7

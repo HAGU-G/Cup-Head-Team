@@ -1,0 +1,37 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationSeedBlue,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationSeedBlue.png,0,0,43,61,7
+resource/carnationSeedBlue.png,43,0,42,61,7
+resource/carnationSeedBlue.png,85,0,43,61,7
+resource/carnationSeedBlue.png,128,0,43,61,7
+resource/carnationSeedBlue.png,171,0,44,61,7
+resource/carnationSeedBlue.png,215,0,44,61,7
+resource/carnationSeedBlue.png,259,0,43,61,7
+resource/carnationSeedBlue.png,302,0,44,61,7
+resource/carnationSeedBlue.png,346,0,43,61,7
+resource/carnationSeedBlue.png,389,0,43,61,7
+resource/carnationSeedBlue.png,432,0,43,61,7
+resource/carnationSeedBlue.png,475,0,40,61,7
+resource/carnationSeedBlue.png,515,0,40,61,7
+resource/carnationSeedBlue.png,555,0,40,61,7
+resource/carnationSeedBlue.png,595,0,40,61,7
+resource/carnationSeedBlue.png,635,0,42,61,7
+resource/carnationSeedBlue.png,677,0,40,61,7
+resource/carnationSeedBlue.png,717,0,41,61,7
+resource/carnationSeedBlue.png,758,0,41,61,7
+resource/carnationSeedBlue.png,799,0,40,61,7
+resource/carnationSeedBlue.png,839,0,41,61,7
+resource/carnationSeedBlue.png,880,0,41,61,7
+resource/carnationSeedBlue.png,921,0,39,61,7
+resource/carnationSeedBlue.png,960,0,41,61,7
+resource/carnationSeedBlue.png,1001,0,41,61,7
+resource/carnationSeedBlue.png,1042,0,38,61,7
+resource/carnationSeedBlue.png,1080,0,42,61,7
+resource/carnationSeedBlue.png,1122,0,39,61,7
+resource/carnationSeedBlue.png,1161,0,40,61,7
+resource/carnationSeedBlue.png,1201,0,39,61,7
+resource/carnationSeedBlue.png,1240,0,39,61,7
+resource/carnationSeedBlue.png,1279,0,39,61,7
+resource/carnationSeedBlue.png,1318,0,39,61,7
+resource/carnationSeedBlue.png,1357,0,49,61,7

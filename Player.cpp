@@ -18,7 +18,7 @@ void Player::Init()
 
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
-
+	prePosition = position;
 }
 
 void Player::Reset()
@@ -27,7 +27,7 @@ void Player::Reset()
 	hp = maxHp;
 	animator.Play("animations/PlayerIdle.csv");
 	SetOrigin(Origins::BC);
-
+	prePosition = position;
 	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetScene(SceneIds::SceneGame));
 }
 
@@ -35,6 +35,7 @@ void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
 	animator.Update(dt);
+
 
 	if (state == PlayerState::Dead)
 	{
@@ -75,7 +76,7 @@ void Player::Update(float dt)
 		if (isGrounded)
 		{
 			isGrounded = false;
-			velocity.y = -700.f;
+			velocity.y = -1400.f;
 		}
 	}
 
@@ -139,6 +140,8 @@ void Player::Update(float dt)
 	customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
 	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 
+	MoveDirection = position - prePosition;
+	prePosition = position;
 }
 
 void Player::UpdateDirection(float horizontalInput, float dt)
@@ -392,6 +395,18 @@ void Player::OnDie()
 	state = PlayerState::Dead;
 }
 
+bool Player::OnPlatForm()
+{
+	if (onPlatForm)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
@@ -399,9 +414,9 @@ void Player::LateUpdate(float dt)
 	auto monsters = sceneGame->getAllMonsters();
 	for (auto& monster : monsters)
 	{
-		if (monster != nullptr && monster->IsAlive() && this->GetGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
+		if (monster != nullptr && monster->IsAlive() && GetCustomBounds().getGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
 		{
-			if (isJumping && monster->GetPink()/* && InputMgr::GetKeyDown(sf::Keyboard::Z)*/)
+			if (isJumping && monster->GetPink())
 			{
 				//ÆÐ¸µ
 				if (!isParry)
@@ -410,7 +425,7 @@ void Player::LateUpdate(float dt)
 					animator.PlayQueue("animations/PlayerJump.csv");
 					isParry = true;
 					isGrounded = false;
-					velocity.y = -500.f;
+					velocity.y = -1000.f;
 					std::cout << "Parry" << std::endl;
 				}
 			}
@@ -426,6 +441,42 @@ void Player::LateUpdate(float dt)
 				OnDamage();
 			}
 
+		}
+	}
+
+	auto toeholds = sceneGame->getAlltoehold();
+	for (auto& toehold : toeholds)
+	{
+		if (position.y <= toehold->GetCustomBoundsRect().top)
+		{
+			toehold->onToehold = true;
+		}
+		if (toehold != nullptr && toehold->GetActive() && 
+			toehold->onToehold &&
+			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width)&&
+			(toehold->GetCustomBoundsRect().left + toehold->GetCustomBoundsRect().width >= this->GetGlobalBounds().left))
+		{
+			if (MoveDirection.y >= 0)
+			{
+				if (this->GetGlobalBounds().intersects(toehold->GetCustomBoundsRect()))
+				{
+
+					position.y = toehold->GetCustomBoundsRect().top;
+					velocity.y = 0;
+					isGrounded = true;
+					isJumping = false;
+					toehold->onPlatForm = true;
+				}
+			}
+			else if(isJumping)
+			{
+				toehold->onPlatForm = false;
+			}
+		}
+		if (position.y > toehold->GetCustomBoundsRect().top+gravity*dt)
+		{
+			toehold->onToehold = false;
+			toehold->onPlatForm = false;
 		}
 	}
 }

@@ -2,6 +2,7 @@
 #include "SceneDev2.h"
 #include "Player.h"
 #include "Monster/BossPotato.h"
+#include "Monster/BossCarnation.h"
 
 SceneDev2::SceneDev2(SceneIds id)
 	:Scene(id)
@@ -14,22 +15,11 @@ SceneDev2::~SceneDev2()
 
 void SceneDev2::Init()
 {
-	sf::Vector2f windowSize = (sf::Vector2f)FRAMEWORK.GetWindowSize();
-	sf::Vector2f centerPos = windowSize * 0.5f;
-	worldView.setSize(windowSize);
-	worldView.setCenter({0,0});
-	uiView.setSize(windowSize);
-	uiView.setCenter(centerPos);
+	worldView.setSize(FRAMEWORK.GetStageViewSize());
+	worldView.setCenter(FRAMEWORK.GetStageViewCenter());
+	player = new Player();
+	AddGo(player);
 
-	background = new SpriteGo();
-	background->SetTexture("resource/RuseofanOoze.png");
-	background->SetOrigin(Origins::MC);
-	background->SetPosition({ 0,0 });
-	AddGo(background);
-
-	AddGo(new Player());
-
-	AddGo(new BossPotato("potato"))->SetPosition({300.f, 0.f});
 	Scene::Init();
 }
 
@@ -51,11 +41,9 @@ void SceneDev2::Exit()
 void SceneDev2::Update(float dt)
 {
 	Scene::Update(dt);
-
 }
 
 void SceneDev2::Draw(sf::RenderTexture& window)
 {
-	window.draw(circle);
 	Scene::Draw(window);
 }

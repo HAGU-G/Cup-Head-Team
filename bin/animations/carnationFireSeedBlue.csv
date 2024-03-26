@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationFireSeedBlue,15,0,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationFireSeedBlue.png,0,0,89,157,7
+resource/carnationFireSeedBlue.png,89,0,120,157,7
+resource/carnationFireSeedPurple.png,0,0,114,156,7
+resource/carnationFireSeedPurple.png,114,0,111,156,7
+resource/carnationFireSeedBlue.png,209,0,102,157,7
+resource/carnationFireSeedBlue.png,311,0,114,157,7
+resource/carnationFireSeedPurple.png,225,0,111,156,7
+resource/carnationFireSeedPurple.png,336,0,112,156,7

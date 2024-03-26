@@ -21,6 +21,11 @@ sf::RectangleShape SpriteGo::GetCustomBounds() const
 	return customBounds;
 }
 
+sf::FloatRect SpriteGo::GetCustomBoundsRect() const
+{
+	return customBounds.getGlobalBounds();
+}
+
 void SpriteGo::SetTexture(const std::string& textureId, bool resetRect)
 {
 	this->textureId = textureId;
@@ -101,6 +106,12 @@ void SpriteGo::SetAlpha(sf::Uint8 alpha)
 	sf::Color color = sprite.getColor();
 	color.a = alpha;
 	sprite.setColor(color);
+}
+
+void SpriteGo::SetCustomBounds(float ratioX, float ratioY, Origins origin)
+{
+	customBounds.setSize({ sprite.getGlobalBounds().getSize().x * ratioX, sprite.getGlobalBounds().getSize().y * ratioY });
+	Utils::SetOrigin(customBounds, origin);
 }
 
 void SpriteGo::Update(float dt)
