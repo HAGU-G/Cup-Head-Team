@@ -36,9 +36,13 @@ void BossPotato::Update(float dt)
 	SetCustomBounds(0.4f, 0.9f, Origins::BC);
 	customBounds.setPosition(position);
 	//////////////////////////////////////
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
 
 	switch (state)
