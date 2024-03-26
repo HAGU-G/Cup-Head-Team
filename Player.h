@@ -32,13 +32,14 @@ protected:
 
 	float fireTimer = 0.f;
 	float fireIntervel = 0.2f;
-
-	float invincibilityDuration = 0.5f;
+	float invincibilityDuration = 1.f;
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
 	
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
+	sf::Vector2f prePosition;
+	sf::Vector2f MoveDirection;
 
 	bool isGrounded = true;
 	bool isAlive = true;

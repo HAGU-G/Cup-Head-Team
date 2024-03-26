@@ -25,7 +25,7 @@ public:
 
 protected:
 	std::vector<ObjectMonster*> MonsterList;
-
+	std::vector<SpriteGo*>toeholdList;
 	Status status = Status::None;
 	float timer = 0.f;
 	float timeLimit = 2.f;
@@ -57,6 +57,8 @@ public:
 	void Draw(sf::RenderTexture& window) override;
 	void AddMonster(ObjectMonster* monster);
 	std::vector<ObjectMonster*> getAllMonsters() const;
+	void Addtoehold(SpriteGo* toehold);
+	std::vector<SpriteGo*> getAlltoehold() const;
 
 	void SetStatus(Status status);
 	inline Status GetStatus() const { return status; }

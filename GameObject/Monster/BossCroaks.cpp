@@ -2,6 +2,7 @@
 #include "BossCroaks.h"
 #include "SceneGame.h"
 #include "Bullet/BulletCroaksFirefly.h"
+#include "Effect/ObjectEffect.h"
 #include "Player.h"
 
 BossCroaks::BossCroaks(const std::string& name)
@@ -129,6 +130,10 @@ void BossCroaks::Idle()
 
 void BossCroaks::Fan()
 {
+	ObjectEffect* oe = new ObjectEffect("EffectFanWind");
+	oe->CreateInit(position, direction, scene);
+	oe->GetAniamtor().Play("animations/CroaksFanWind.csv");
+
 	playerPos = player->GetPosition();
 	playerPos.x -= fanBackwardSpeed * deltatime;
 	player->SetPosition(playerPos);

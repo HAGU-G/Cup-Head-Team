@@ -1,0 +1,12 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+CroaksFanWind,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/CroaksFanWind.png,0,0,504,568,7
+resource/CroaksFanWind.png,504,0,293,568,7
+resource/CroaksFanWind.png,797,0,436,568,7
+resource/CroaksFanWind.png,1233,0,580,568,7
+resource/CroaksFanWind.png,1813,0,641,568,7
+resource/CroaksFanWind.png,2454,0,654,568,7
+resource/CroaksFanWind.png,3108,0,633,568,7
+resource/CroaksFanWind.png,3741,0,669,568,7
+resource/CroaksFanWind.png,4410,0,637,568,7

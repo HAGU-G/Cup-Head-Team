@@ -15,6 +15,7 @@ class BossCroaks : public ObjectMonster
 		None
 	};
 protected:
+	Player* player;
 
 	State state = State::None;
 	State preState = State::None;
@@ -24,14 +25,15 @@ protected:
 
 	float fanTimer = 0.f;
 	float fanInterval = 8.f;
-	float fanBackwardSpeed = 100.f;
+	float fanBackwardSpeed = 300.f;
+	float deltatime;
 
 	int shootCount = 0;
 	int fireFlyCount = 0;
 	int patternCount = 0;
-	Player* player;
+
 	sf::Vector2f playerPos;
-	float deltatime;
+	sf::Vector2f direction;
 public:
 
 	BossCroaks(const std::string& name = "BossCroaks");
