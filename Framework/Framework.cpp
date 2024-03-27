@@ -64,6 +64,8 @@ void Framework::Do()
 
 
 		//1Â÷ ·»´õ¸µ
+		Framework::PostEffectOnOff();
+
 		pass1.clear(sf::Color::Transparent);
 		SCENE_MGR.Draw(pass1);
 		pass1.display();
@@ -75,12 +77,20 @@ void Framework::Do()
 		window.clear(sf::Color::White);
 		if (useShader)
 		{
-			pass2.clear(sf::Color::Transparent);
-			Pass2(GetDT());
-			pass2.draw(sf::Sprite(pass1.getTexture()),renderStates);
+			if (onFilmGrain)
+			{
+				pass2.clear(sf::Color::Transparent);
+				Pass2(GetDT());
+			}
+			else { pass2.clear(sf::Color::White); }
+
+			pass2.draw(sf::Sprite(pass1.getTexture()), renderStates);
+
 			pass2.display();
 			postEffect.setTexture(pass2.getTexture());
-			window.draw(postEffect,&smooth);
+
+			if (onSmooth) { window.draw(postEffect, &smooth); }
+			else { window.draw(postEffect); }
 		}
 		else
 		{
@@ -115,7 +125,7 @@ void Framework::LoadPostEffect()
 	smooth.loadFromFile("resource/Shader/Smooth.frag", sf::Shader::Fragment);
 	smooth.setUniform("texture", sf::Shader::CurrentTexture);
 
-	renderStates.blendMode = sf::BlendMode(sf::BlendMode::DstAlpha,sf::BlendMode::One, sf::BlendMode::Min);
+	renderStates.blendMode = sf::BlendMode(sf::BlendMode::DstAlpha, sf::BlendMode::One, sf::BlendMode::Min);
 	renderStates.shader = &bleeding;
 
 	float filmScale = std::max(pass1.getSize().x / 1024.f, pass1.getSize().y / 512.f);
@@ -179,4 +189,22 @@ inline void Framework::SetBleedingValue(float value)
 {
 	bleedingValue = Utils::Clamp(value, 0.f, 1.f);
 	bleeding.setUniform("bleedingValue", bleedingValue);
+}
+
+void Framework::PostEffectOnOff()
+{
+	if (InputMgr::GetKeyDown(sf::Keyboard::LBracket))
+	{
+		onBleeding = !onBleeding;
+		if (onBleeding) { renderStates.shader = &bleeding; }
+		else { renderStates.shader = &noneShader; }
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::RBracket))
+	{
+		onFilmGrain = !onFilmGrain;
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::BackSlash))
+	{
+		onSmooth = !onSmooth;
+	}
 }

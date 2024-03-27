@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "BulletRibbyBall.h"
-#include "SceneDev3.h"
 #include "SceneGame.h"
 
 BulletRibbyBall::BulletRibbyBall(const std::string& name)
