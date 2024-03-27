@@ -25,6 +25,8 @@ void BulletRibbyBall::Update(float dt)
 	{
 		direction.y = -direction.y; 
 		SetDirection(direction, true); 
+		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_clap_bounce_02.wav");
+
 	}
 
 	auto bounds = sprite.getGlobalBounds();

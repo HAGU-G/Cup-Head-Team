@@ -66,6 +66,7 @@ void Stage02::LateUpdate(float dt)
 
 void Stage02::Reset()
 {
+	SOUND_MGR.StopBgm();
 	croaks = new BossCroaks();
 	ribby = new BossRibby();
 	player = new Player("Player");
@@ -99,10 +100,13 @@ void Stage02::Reset()
 	bg4->SetPosition({ 0.f, 50.f });
 	bg5->SetPosition({ 0.f, 70.f });
 	bg6->SetPosition({ viewSize.x * 0.003f, -viewSize.y * 0.315f });
+
+	SOUND_MGR.PlayBgm("resource/Sprite/stage03/MUS_Frogs.wav", false);
 }
 
 void Stage02::Release()
 {
+	SOUND_MGR.StopBgm();
 	GameObject::Release();
 }
 

@@ -15,6 +15,8 @@ class BossCroaks : public ObjectMonster
 		None
 	};
 protected:
+	sf::Sound soundFan;
+
 	Player* player;
 
 	State state = State::None;
@@ -45,13 +47,13 @@ public:
 
 	void Init() override;
 	void Reset() override;
+	void Release() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
 
 	void Intro();
 	void Idle();
 	void Fan();
-	void FanEnd();
 	void Shoot();
 	void ShootEnd();
 	void Death();
