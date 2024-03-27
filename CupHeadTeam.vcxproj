@@ -205,10 +205,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\SceneTitle.cpp" />
     <ClCompile Include="Scene\SceneGame.cpp" />
-    <ClCompile Include="Scene\SceneDev3.cpp" />
-    <ClCompile Include="Scene\SceneDev.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
-    <ClCompile Include="Scene\SceneDev2.cpp" />
     <ClCompile Include="GameObject\Stage\Stage02.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -283,10 +280,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\SceneTitle.h" />
     <ClInclude Include="Scene\SceneGame.h" />
-    <ClInclude Include="Scene\SceneDev3.h" />
-    <ClInclude Include="Scene\SceneDev.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
-    <ClInclude Include="Scene\SceneDev2.h" />
     <ClInclude Include="GameObject\Stage\Stage02.h" />
   </ItemGroup>
   <ItemGroup>

@@ -352,6 +352,4 @@ void Stage01::SetBackground()
 	bc->SetTexture("resource/Sprite/stage01/veggie_bg_clouds_0007.png");
 	backgrounds.push_back(bc);
 
-	//TODO Å¸ÀÌ¾î
-
 }

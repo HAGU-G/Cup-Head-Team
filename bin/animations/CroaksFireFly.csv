@@ -1,13 +1,13 @@
 ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
 CroaksFireFly,15,1,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
-resource/CroaksFireFly.png,0,0,112,197,7
-resource/CroaksFireFly.png,112,0,115,197,7
-resource/CroaksFireFly.png,227,0,116,197,7
-resource/CroaksFireFly.png,343,0,118,197,7
-resource/CroaksFireFly.png,461,0,108,197,7
-resource/CroaksFireFly.png,569,0,116,197,7
-resource/CroaksFireFly.png,685,0,113,197,7
-resource/CroaksFireFly.png,798,0,118,197,7
-resource/CroaksFireFly.png,916,0,119,197,7
-resource/CroaksFireFly.png,1035,0,109,197,7
+resource/CroaksFireFly.png,0,0,112,197,4
+resource/CroaksFireFly.png,112,0,115,197,4
+resource/CroaksFireFly.png,227,0,116,197,4
+resource/CroaksFireFly.png,343,0,118,197,4
+resource/CroaksFireFly.png,461,0,108,197,4
+resource/CroaksFireFly.png,569,0,116,197,4
+resource/CroaksFireFly.png,685,0,113,197,4
+resource/CroaksFireFly.png,798,0,118,197,4
+resource/CroaksFireFly.png,916,0,119,197,4
+resource/CroaksFireFly.png,1035,0,109,197,4

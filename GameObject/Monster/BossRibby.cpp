@@ -28,9 +28,13 @@ void BossRibby::Reset()
 void BossRibby::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
 
 	if (isMovingRight)
@@ -135,12 +139,15 @@ void BossRibby::Intro2()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.AddEvent("animations/RibbyRolling.csv", animator.GetCurrentClip()->GetLastFrame(), [this]() {
+		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_rolling_crash_01.wav");
+
 		animator.Play("animations/RibbyIntro2.csv");
 		animator.AddEvent("animations/RibbyIntro2.csv", animator.GetCurrentClip()->GetTotalFrame(),
 			[this]()
 			{
 				SetScale({ -1.f,1.f });
 				patternTimer = 6.f;
+				SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_rolling_end.wav");
 				SetState(State::Phase2Idle);
 			});
 		});
@@ -197,6 +204,8 @@ void BossRibby::Shoot()
 
 	if (shootCount < 7)
 	{
+		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_fireball_04.wav");
+
 		BulletRibbyShoot::Create(bulletPosition, { -1.f, 0.f }, scene);
 	}
 	shootCount++;
@@ -222,6 +231,8 @@ void BossRibby::Ball()
 	{
 		ballDirection = { 1,-2 };
 	}
+	SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_clap_bounce_02.wav");
+
 	BulletRibbyBall::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.7f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), ballDirection, scene);
 	ballCount++;
 }
@@ -232,6 +243,8 @@ void BossRibby::ballEnd()
 
 void BossRibby::Death()
 {
+	SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_death_04.wav");
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();

@@ -253,7 +253,6 @@ void SceneGame::LateUpdate(float dt)
 
 
 
-	//toeholdList.erase(std::remove_if(toeholdList.begin(), toeholdList.end(), [](SpriteGo* toehold) { return !toehold->GetActive(); }), toeholdList.end());
 
 }
 
