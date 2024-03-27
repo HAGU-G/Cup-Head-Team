@@ -4,6 +4,8 @@
 #include "Monster/BossCroaks.h"
 #include "Player.h"
 #include "SceneGame.h"
+#include "Effect/EffectStage2BgGirls.h"
+#include "Effect/EffectStage2BgWaiter.h"
 
 Stage02::Stage02(const std::string& name)
 	:GameObject(name)
@@ -35,9 +37,12 @@ void Stage02::Init()
 
 	viewSize = FRAMEWORK.GetStageViewSize();
 
+
 	scene = SCENE_MGR.GetScene(SceneIds::SceneGame);
 	sceneGame = dynamic_cast<SceneGame*>(scene);
 
+	EffectStage2BgGirls::Create({ viewSize.x * 0.1f / 3,-viewSize.y * 0.7f/2 }, { 1.f,0.f }, scene);
+	EffectStage2BgWaiter::Create({ viewSize.x * 0.1f ,-viewSize.y * 0.4f / 2 }, { 1.f,0.f }, scene);
 	SetBackground();
 }
 
@@ -68,16 +73,16 @@ void Stage02::Reset()
 	scene->AddGo(ribby);
 	scene->AddGo(player);
 
-	croaks->Init();
-	ribby->Init();
+	//croaks->Init();
+	//ribby->Init();
 	player->Init();
 
-	croaks->Reset();
-	ribby->Reset();
+	//croaks->Reset();
+	//ribby->Reset();
 	player->Reset();
 
-	croaks->SetPosition({300.f, 0.f });
-	ribby->SetPosition({300.f, 0.f});
+	//croaks->SetPosition({300.f, 0.f });
+	//ribby->SetPosition({300.f, 0.f});
 	player->SetPosition({ -300.f, 0.f });
 
 	bg1->SetPosition({ 0.f, -viewSize.y * 0.43f });
