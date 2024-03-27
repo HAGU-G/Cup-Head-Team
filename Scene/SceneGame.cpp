@@ -374,6 +374,10 @@ void SceneGame::SetPlayerHp(int i)
 	{
 		playerHp->GetAniamtor().Stop();
 		playerHp->SetTexture("resource/FightText/hud_hp_dead.png");
+		if (status < SceneGame::Status::Defeat)
+		{
+			SetStatus(SceneGame::Status::Defeat);
+		}
 	}
 	else if (i == 1)
 	{

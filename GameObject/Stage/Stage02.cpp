@@ -64,7 +64,7 @@ void Stage02::Reset()
 	sceneGame->AddMonster(croaks);
 	sceneGame->AddMonster(ribby);
 
-	//scene->AddGo(croaks);
+	scene->AddGo(croaks);
 	scene->AddGo(ribby);
 	scene->AddGo(player);
 

@@ -33,7 +33,7 @@ protected:
 	float dashTimer = 0.f;    
 
 	float fireTimer = 0.f;
-	float fireIntervel = 0.2f;
+	float fireIntervel = 0.133f;
 	float invincibilityDuration = 1.f;
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
