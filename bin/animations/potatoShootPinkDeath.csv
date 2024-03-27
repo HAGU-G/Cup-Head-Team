@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+potatoShootPinkDeath,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/potatoShootPinkDeath.png,0,0,117,244,4
+resource/potatoShootPinkDeath.png,117,0,167,244,4
+resource/potatoShootPinkDeath.png,284,0,212,244,4
+resource/potatoShootPinkDeath.png,496,0,227,244,4
+resource/potatoShootPinkDeath.png,723,0,254,244,4

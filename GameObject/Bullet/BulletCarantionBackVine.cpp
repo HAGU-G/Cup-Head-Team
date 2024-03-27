@@ -12,7 +12,7 @@ BulletCarantionBackVine* BulletCarantionBackVine::Create(const sf::Vector2f& pos
 	BulletCarantionBackVine* bcb = new BulletCarantionBackVine();
 	bcb->CreateInit(pos, direction, scene);
 	bcb->sortLayer = -1;
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcb);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcb);
 	return bcb;
 }
 

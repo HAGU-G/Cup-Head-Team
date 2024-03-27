@@ -11,7 +11,7 @@ BulletRibbyShoot* BulletRibbyShoot::Create(const sf::Vector2f& pos, const sf::Ve
 {
 	BulletRibbyShoot* brs = new BulletRibbyShoot();
 	brs->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(brs);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(brs);
 	return brs;
 }
 

@@ -3,6 +3,7 @@
 #include "GameObject/Monster/ObjectMonster.h"
 
 class ObjectOption;
+class ObjectBullet;
 
 class SceneGame : public Scene
 {
@@ -24,8 +25,9 @@ public:
 	};
 
 protected:
-	std::vector<ObjectMonster*> MonsterList;
-	std::vector<SpriteGo*>toeholdList;
+	std::list<ObjectMonster*> monsterList;
+	std::vector<SpriteGo*> toeholdList;
+	std::deque<ObjectBullet*> enemyBulletList;
 	Status status = Status::None;
 	float timer = 0.f;
 	float timeLimit = 2.f;
@@ -39,10 +41,12 @@ protected:
 	std::string fightTextRight = ".png";
 
 	bool pauseWorld = false;
-
+	float parryEffectTimer = 0.0f;
+	float parryEffectDuration = 0.35f;
 	ObjectOption* option = nullptr;
 
 public:
+	bool isParryed = false;
 
 	SceneGame(SceneIds id);
 	virtual ~SceneGame();
@@ -54,11 +58,17 @@ public:
 	void Exit() override;
 
 	void Update(float dt) override;
+	void LateUpdate(float dt) override;
 	void Draw(sf::RenderTexture& window) override;
+
 	void AddMonster(ObjectMonster* monster);
-	std::vector<ObjectMonster*> getAllMonsters() const;
+	const std::list<ObjectMonster*>& GetAllMonsters() const;
+
 	void Addtoehold(SpriteGo* toehold);
-	std::vector<SpriteGo*> getAlltoehold() const;
+	const std::vector<SpriteGo*>& GetAlltoehold() const;
+
+	void AddEnemyBullet(ObjectBullet* enemyBullet);
+	const std::deque<ObjectBullet*>& GetAllEnemyBullet() const;
 
 	void SetStatus(Status status);
 	inline Status GetStatus() const { return status; }

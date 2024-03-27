@@ -65,6 +65,8 @@
     <ClCompile Include="GameObject\Bullet\BulletCarnationVinus.cpp" />
     <ClCompile Include="GameObject\Effect\EffectCarnationPinkDie.cpp" />
     <ClCompile Include="GameObject\CanationPlatForm.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCarrotBoomSmall.cpp" />
+    <ClCompile Include="GameObject\Bullet\BulletCloud.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -135,6 +137,8 @@
     <ClInclude Include="GameObject\Bullet\BulletCarnationPurpleSeed.h" />
     <ClInclude Include="GameObject\Effect\EffectCarnationPinkDie.h" />
     <ClInclude Include="GameObject\CanationPlatForm.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCarrotBoomSmall.h" />
+    <ClInclude Include="GameObject\Bullet\BulletCloud.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

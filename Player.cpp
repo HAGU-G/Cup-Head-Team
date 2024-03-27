@@ -218,6 +218,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					}
 					PreDirection = Direction::Right;
 				}
+				PreDirection = Direction::Right;
 			}
 			else if (horizontalInput < 0.f)
 			{
@@ -245,6 +246,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					}
 					PreDirection = Direction::Left;
 				}
+				PreDirection = Direction::Left;
 			}
 			else if (verticalInput < 0.f && horizontalInput == 0)
 			{
@@ -561,28 +563,27 @@ void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
 
+
 	if (state == PlayerState::Dead)
 	{
 		return;
 	}
 
-	auto monsters = sceneGame->getAllMonsters();
-	for (auto& monster : monsters)
+	for (auto enemyBullet : sceneGame->GetAllEnemyBullet())
 	{
-		if (monster != nullptr && monster->IsAlive() && GetCustomBounds().getGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
+		if (enemyBullet->IsAlive() && GetCustomBoundsRect().intersects(enemyBullet->GetCustomBoundsRect()))
 		{
-			if (isJumping && monster->GetPink())
+			if (isJumping && !isParry && enemyBullet->GetPink())
 			{
 				//ÆÐ¸µ
-				if (!isParry)
-				{
-					animator.Play("animations/PlayerParry.csv");
-					animator.PlayQueue("animations/PlayerJump.csv");
-					isParry = true;
-					isGrounded = false;
-					velocity.y = -1000.f;
-					std::cout << "Parry" << std::endl;
-				}
+				animator.Play("animations/PlayerParry.csv");
+				animator.PlayQueue("animations/PlayerJump.csv");
+				isParry = true;
+				isGrounded = false;
+				velocity.y = -1000.f;
+				enemyBullet->OnDamage(1);
+				sceneGame->Pause();
+				sceneGame->isParryed = true;
 			}
 			else if (!isInvincible)
 			{
@@ -594,19 +595,33 @@ void Player::LateUpdate(float dt)
 				isInvincible = true;
 				invincibilityTimer = 0.0f;
 				OnDamage();
+				enemyBullet->OnDamage(1);
 			}
-
 		}
 	}
 
-	auto toeholds = sceneGame->getAlltoehold();
-	for (auto& toehold : toeholds)
+	for (auto& monster : sceneGame->GetAllMonsters())
+	{
+		if (!isInvincible && monster->IsAlive() && GetCustomBoundsRect().intersects(monster->GetCustomBoundsRect()))
+		{
+			if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+			{
+				animator.Play("animations/PlayerDamage.csv");
+			}
+			isDamaging = true;
+			isInvincible = true;
+			invincibilityTimer = 0.0f;
+			OnDamage();
+		}
+	}
+
+	for (auto& toehold : sceneGame->GetAlltoehold())
 	{
 		if (position.y <= toehold->GetCustomBoundsRect().top)
 		{
 			toehold->onToehold = true;
 		}
-		if (toehold != nullptr && toehold->GetActive() && 
+		if (toehold->GetActive() && 
 			toehold->onToehold &&
 			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width)&&
 			(toehold->GetCustomBoundsRect().left + toehold->GetCustomBoundsRect().width >= this->GetGlobalBounds().left))
@@ -618,9 +633,9 @@ void Player::LateUpdate(float dt)
 
 					position.y = toehold->GetCustomBoundsRect().top;
 					velocity.y = 0;
+					toehold->onPlatForm = true;
 					isGrounded = true;
 					isJumping = false;
-					toehold->onPlatForm = true;
 				}
 			}
 			else if(isJumping)
@@ -632,8 +647,15 @@ void Player::LateUpdate(float dt)
 		{
 			toehold->onToehold = false;
 			toehold->onPlatForm = false;
+			if (MoveDirection.y > 0)
+			{
+				isGrounded = false;
+				isJumping = true;
+			}
 		}
 	}
+
+
 }
 
 

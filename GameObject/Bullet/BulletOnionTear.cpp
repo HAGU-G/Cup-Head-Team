@@ -13,7 +13,7 @@ BulletOnionTear* BulletOnionTear::Create(const sf::Vector2f& pos, const sf::Vect
 	BulletOnionTear* bot = new BulletOnionTear();
 	bot->isPink = isPink;
 	bot->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bot);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bot);
 	return bot;
 }
 

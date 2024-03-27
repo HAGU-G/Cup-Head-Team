@@ -1,12 +1,18 @@
 #include "pch.h"
 #include "BossCarrot.h"
 #include "Bullet/BulletCarrotBoom.h"
+#include "Bullet/BulletCarrotBoomSmall.h"
 #include "Bullet/BulletCarrotRing.h"
 #include "Effect/ObjectEffect.h"
 
 BossCarrot::BossCarrot(const std::string& name)
 	:ObjectMonster(name)
 {
+}
+
+BossCarrot::~BossCarrot()
+{
+	Release();
 }
 
 void BossCarrot::Init()
@@ -96,6 +102,12 @@ void BossCarrot::LateUpdate(float dt)
 	}
 }
 
+void BossCarrot::Release()
+{
+	soundMindMeld.stop();
+	ObjectMonster::Release();
+}
+
 void BossCarrot::Draw(sf::RenderTexture& window)
 {
 	ObjectMonster::Draw(window);
@@ -109,6 +121,7 @@ void BossCarrot::Draw(sf::RenderTexture& window)
 void BossCarrot::Intro()
 {
 	SetState(State::None);
+	soundMindMeld.play();
 	ObjectEffect* front = new ObjectEffect("CarrotIntroBack");
 	front->sortLayer = -3;
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Rise.wav");
@@ -160,7 +173,9 @@ void BossCarrot::SetTargetDirection()
 void BossCarrot::Death()
 {
 	soundMindMeld.stop();
+	scene->RemoveGo(scene->FindGo("EffectCarrotRingIntro"));
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Die.wav");
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
@@ -169,6 +184,7 @@ void BossCarrot::Death()
 
 void BossCarrot::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(this);
 }
 
@@ -179,12 +195,17 @@ void BossCarrot::SetState(State state)
 	{
 
 	case BossCarrot::State::Pattern1:
-		soundMindMeld.play();
+		patternInterval = 13.0f;
 		animator.Play("animations/carrotIdle.csv");
 		SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_MindMeld_Start.wav");
+		BulletCarrotBoomSmall::Create(position + sf::Vector2f(scene->GetWorldView().getSize().x / 4.f, 1.0f * GetGlobalBounds().height), { 0.f, -1.f }, scene);
+		BulletCarrotBoomSmall::Create(position + sf::Vector2f(-scene->GetWorldView().getSize().x / 3.5f, 1.5f * GetGlobalBounds().height), { 0.f, -1.f }, scene);
+		BulletCarrotBoomSmall::Create(position + sf::Vector2f(scene->GetWorldView().getSize().x / 3.f, 2.0f * GetGlobalBounds().height), { 0.f, -1.f }, scene);
+		BulletCarrotBoomSmall::Create(position + sf::Vector2f(-scene->GetWorldView().getSize().x / 2.5f, 2.5f * GetGlobalBounds().height), { 0.f, -1.f }, scene);
 		preState = State::Pattern1;
 		break;
 	case BossCarrot::State::Pattern2:
+		patternInterval = ringInterval * 2.9f;
 		animator.ClearEvent();
 		if (preState == State::Ring)
 		{

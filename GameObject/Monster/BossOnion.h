@@ -11,7 +11,6 @@ class BossOnion : public ObjectMonster
 	};
 
 protected:
-
 	sf::Sound soundCrying;
 
 	State state = State::None;
@@ -27,9 +26,10 @@ protected:
 	float patternInterval = 2.0f;
 	float shootSpeed = 1.0f;
 	int shootCount = 0;
+
 public:
 	BossOnion(const std::string& name = "BossOnion");
-	~BossOnion() override = default;
+	~BossOnion() override;
 	BossOnion(const BossOnion&) = delete;
 	BossOnion(BossOnion&&) = delete;
 	BossOnion& operator=(const BossOnion&) = delete;
@@ -39,6 +39,7 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
+	void Release() override;
 
 	void Intro();
 	void Idle();

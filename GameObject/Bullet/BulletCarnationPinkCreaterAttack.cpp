@@ -16,7 +16,7 @@ BulletCarnationPinkCreaterAttack* BulletCarnationPinkCreaterAttack::Create(const
 	bpa->isPink = true;
 	bpa->CreateInit(pos, direction, scene);
 	bpa->SetDirection(playerPos - bpa->GetPosition());
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bpa);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bpa);
 	return bpa;
 }
 

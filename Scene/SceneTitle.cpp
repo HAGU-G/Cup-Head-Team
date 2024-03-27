@@ -43,22 +43,27 @@ void SceneTitle::Init()
 	//버튼
 	start = new ObjectButton("Start");
 	option = new ObjectButton("Option");
+	animationTool = new ObjectButton("AnimationTool");
 	exit = new ObjectButton("Exit");
 
+	animationTool->SetNextButton(start);
 	start->SetNextButton(option);
 	option->SetNextButton(exit);
-	exit->SetNextButton(start);
+	exit->SetNextButton(animationTool);
 
 	start->SetOrigin(Origins::BC);
 	option->SetOrigin(Origins::BC);
+	animationTool->SetOrigin(Origins::BC);
 	exit->SetOrigin(Origins::BC);
 
 	start->SetString(L"시작");
 	option->SetString(L"옵션");
+	animationTool->SetString(L"애니메이션 툴");
 	exit->SetString(L"종료");
 
 	start->SetCharacterSize(textSize);
 	option->SetCharacterSize(textSize);
+	animationTool->SetCharacterSize(textSize);
 	exit->SetCharacterSize(textSize);
 
 	start->SetFunction([this]() {
@@ -70,12 +75,18 @@ void SceneTitle::Init()
 		ShowOption();
 		return option;
 		});
+	animationTool->SetFunction([this]() {
+		SCENE_MGR.ChangeScene(SceneIds::SceneDev1);
+		return start;
+		});
 	exit->SetFunction([this]() {
 		FRAMEWORK.GetWindowReal().close();
 		return exit;
 		});
 
 	sf::Vector2f buttonPos = { float(-textSize), float(-textSize * 3) };
+	animationTool->SetPosition(uiView.getCenter() + buttonPos);
+	buttonPos.y += textSize;
 	start->SetPosition(uiView.getCenter() + buttonPos);
 	buttonPos.y += textSize;
 	option->SetPosition(uiView.getCenter() + buttonPos);
@@ -84,6 +95,7 @@ void SceneTitle::Init()
 
 	AddGo(start, Ui);
 	AddGo(option, Ui);
+	AddGo(animationTool, Ui);
 	AddGo(exit, Ui);
 
 	//스테이지 카드
@@ -143,6 +155,7 @@ void SceneTitle::Init()
 void SceneTitle::Release()
 {
 	SOUND_MGR.StopBgm();
+	hint.stop();
 	Scene::Release();
 }
 
@@ -156,10 +169,18 @@ void SceneTitle::Enter()
 
 	start->Select(false);
 	option->UnSelect();
+	animationTool->UnSelect();
 	exit->UnSelect();
 	currentButton = start;
 
 	titleReady = true;
+
+
+
+	bg->SetTexture("resource/Menu/cuphead_secondary_title_screen.png");
+	stageCardBack->SetTexture("resource/Menu/title_card_background.png");
+	stageCardNotReady->SetTexture("resource/Menu/COMING SOON.png");
+	stageCardX->SetFont(RES_MGR_FONT.Get("resource/Font/YoonBackjaeM Bold.ttf"));
 }
 
 void SceneTitle::Exit()
@@ -280,6 +301,7 @@ void SceneTitle::ShowStageCard(bool value)
 
 	start->SetActive(!value);
 	option->SetActive(!value);
+	animationTool->SetActive(!value);
 	exit->SetActive(!value);
 
 	stageCardBack->SetActive(value);
@@ -357,6 +379,7 @@ void SceneTitle::ChangeStageCard()
 void SceneTitle::StartGame()
 {
 	SOUND_MGR.PlaySfx("resource/Menu/sfx_WorldMap_LevelSelect_StartLevel.wav");
+	SOUND_MGR.StopBgm();
 	switch (stageNum)
 	{
 	case 1:
@@ -399,6 +422,7 @@ void SceneTitle::ShowOption(bool value)
 
 	start->SetActive(!value);
 	option->SetActive(!value);
+	animationTool->SetActive(!value);
 	exit->SetActive(!value);
 
 }

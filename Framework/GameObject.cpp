@@ -8,6 +8,7 @@ GameObject::GameObject(const std::string& name)
 
 GameObject::~GameObject()
 {
+	Release();
 }
 
 void GameObject::SetOrigin(Origins preset)

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BulletPotatoShoot.h"
 #include "SceneGame.h"
+#include <Effect/ObjectEffect.h>
 
 BulletPotatoShoot::BulletPotatoShoot(const std::string& name)
 	:ObjectBullet(name)
@@ -11,7 +12,7 @@ BulletPotatoShoot* BulletPotatoShoot::Create(const sf::Vector2f& pos, const sf::
 {
 	BulletPotatoShoot* bps = new BulletPotatoShoot();
 	bps->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bps);
 	return bps;
 }
 
@@ -40,6 +41,11 @@ void BulletPotatoShoot::OnCreate()
 
 void BulletPotatoShoot::OnDie()
 {
+	ObjectEffect* oe = new ObjectEffect("EffectPotatoShoot");
+	oe->CreateInit(position, direction, scene);
+	oe->GetAniamtor().Play("animations/potatoShootDeath.csv");
+	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+
 	ObjectBullet::OnDie();
 }
 

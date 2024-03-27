@@ -12,7 +12,7 @@ protected:
 
 public:
 	ObjectEffect(const std::string& name = "Effect");
-	virtual ~ObjectEffect() = default;
+	~ObjectEffect() override = default;
 	ObjectEffect(const ObjectEffect&) = delete;
 	ObjectEffect(ObjectEffect&&) = delete;
 	ObjectEffect& operator=(const ObjectEffect&) = delete;

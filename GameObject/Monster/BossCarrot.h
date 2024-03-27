@@ -23,14 +23,14 @@ protected:
 	float patternTimer = 0.f;
 	float patternInterval = 13.0f;
 	float boomTimer = 0.f;
-	float boomInterval = 3.7f;
+	float boomInterval = 2.5f;
 	float ringTimer = 5.f;
-	float ringInterval = 4.1f;
+	float ringInterval = 2.3f;
 	int ringCount = 0;
 
 public:
 	BossCarrot(const std::string& name = "BossCarrot");
-	~BossCarrot() override = default;
+	~BossCarrot() override;
 	BossCarrot(const BossCarrot&) = delete;
 	BossCarrot(BossCarrot&&) = delete;
 	BossCarrot& operator=(const BossCarrot&) = delete;
@@ -40,6 +40,7 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
+	void Release() override;
 	void Draw(sf::RenderTexture& window) override;
 
 	void Intro();

@@ -11,7 +11,7 @@ BulletCarnationFinalVine* BulletCarnationFinalVine::Create(const sf::Vector2f& p
 {
 	BulletCarnationFinalVine* bcf = new BulletCarnationFinalVine();
 	bcf->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcf);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcf);
 	return bcf;
 }
 

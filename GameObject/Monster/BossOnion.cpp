@@ -9,6 +9,11 @@ BossOnion::BossOnion(const std::string& name)
 {
 }
 
+BossOnion::~BossOnion()
+{
+	Release();
+}
+
 void BossOnion::Init()
 {
 	ObjectMonster::Init();
@@ -71,8 +76,6 @@ void BossOnion::Update(float dt)
 			SetState(State::Pattern1);
 		}
 		break;
-	default:
-		break;
 	}
 
 	auto bounds = sprite.getGlobalBounds();
@@ -91,7 +94,11 @@ void BossOnion::LateUpdate(float dt)
 		OnDamage(10);
 	}
 }
-
+void BossOnion::Release()
+{
+	soundCrying.stop();
+	ObjectMonster::Release();
+}
 void BossOnion::Intro()
 {
 	SetState(State::None);
@@ -129,16 +136,17 @@ void BossOnion::Cry()
 void BossOnion::Tears()
 {
 	soundCrying.play();
-	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, cryingDuration * 1.15f);
-	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, cryingDuration * 1.15f);
+	EffectOnionTears::Create(position + sf::Vector2f(sprite.getGlobalBounds().width / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { 1.f, 0.f }, scene, cryingDuration * 1.15f)->name = "OnionTears1";
+	EffectOnionTears::Create(position + sf::Vector2f(-sprite.getGlobalBounds().width * 2.f / 25.f, -sprite.getGlobalBounds().height * 5.f / 8.f), { -1.f, 0.f }, scene, cryingDuration * 1.15f)->name = "OnionTears2";
 }
 
 void BossOnion::Death()
 {
-	scene->RemoveGo(scene->FindGo("OnionTears"));
-	scene->RemoveGo(scene->FindGo("OnionTears"));
+	scene->RemoveGo(scene->FindGo("OnionTears1"));
+	scene->RemoveGo(scene->FindGo("OnionTears2"));
 	soundCrying.stop();
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/onion/sfx_level_veggies_Onion_Die.wav");
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
@@ -155,6 +163,7 @@ void BossOnion::Leave()
 
 void BossOnion::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(scene->FindGo("OnionIntroBack"));
 	scene->RemoveGo(scene->FindGo("OnionIntroFront"));
 	scene->RemoveGo(this);
