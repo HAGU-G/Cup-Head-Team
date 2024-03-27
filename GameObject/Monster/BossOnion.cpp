@@ -107,15 +107,15 @@ void BossOnion::Intro()
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/onion/sfx_level_veggies_Onion_Rise.wav");
 	front->SetScale({ 1.1f, 1.1f });
 	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
-	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
-	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+	front->GetAnimator().Play("animations/potatoIntroFront.csv");
+	front->GetAnimator().AddEvent(front->GetAnimator().GetCurrentCilpId(), 8,
 		[this, front]()
 		{
 			ObjectEffect* back = new ObjectEffect("OnionIntroFront");
 			back->SetScale({ 1.1f, 1.1f });
 			back->sortLayer = -1;
 			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
-			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			back->GetAnimator().Play("animations/potatoIntroBack.csv");
 			animator.ClearEvent();
 			animator.Play("animations/onionIntro.csv");
 			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossOnion::Idle, this));

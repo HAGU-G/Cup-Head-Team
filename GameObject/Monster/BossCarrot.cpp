@@ -74,14 +74,14 @@ void BossCarrot::Update(float dt)
 		{
 			ObjectEffect* oe = new ObjectEffect("EffectCarrotRingIntro");
 			oe->CreateInit(shootEyes.getPosition() + sf::Vector2f(0.f, -shootEyes.getGlobalBounds().height * 0.6f), { 1.f, 0.f }, scene);
-			oe->GetAniamtor().Play("animations/carrotRingIntro.csv");
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 10, std::bind(&BossCarrot::SetTargetDirection, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 9, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 7, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 5, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 3, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame() - 1, std::bind(&BossCarrot::ShootRing, this));
-			oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+			oe->GetAnimator().Play("animations/carrotRingIntro.csv");
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 10, std::bind(&BossCarrot::SetTargetDirection, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 9, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 7, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 5, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 3, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame() - 1, std::bind(&BossCarrot::ShootRing, this));
+			oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		}
 		break;
 	default:
@@ -128,15 +128,15 @@ void BossCarrot::Intro()
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/carrot/sfx_level_veggies_Carrot_Rise.wav");
 	front->SetScale({ 0.9f, 0.9f });
 	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
-	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
-	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+	front->GetAnimator().Play("animations/potatoIntroFront.csv");
+	front->GetAnimator().AddEvent(front->GetAnimator().GetCurrentCilpId(), 8,
 		[this, front]()
 		{
 			ObjectEffect* back = new ObjectEffect("CarrotIntroFront");
 			back->SetScale({ 1.1f, 1.1f });
 			back->sortLayer = -4;
 			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
-			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			back->GetAnimator().Play("animations/potatoIntroBack.csv");
 			animator.ClearEvent();
 			animator.Play("animations/carrotIntro.csv");
 			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarrot::Pattern1, this));

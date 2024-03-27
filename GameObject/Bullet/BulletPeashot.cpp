@@ -75,6 +75,7 @@ void BulletPeashot::LateUpdate(float dt)
 		if (monster->IsAlive() && this->customBounds.getGlobalBounds().intersects(monster->GetCustomBoundsRect()))
 		{
 			monster->OnDamage(4);
+			SOUND_MGR.PlaySfx("resource/sfx_player_weapon_peashot_death_001.wav");
 			OnDie();
 		}
 	}

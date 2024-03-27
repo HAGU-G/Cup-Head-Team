@@ -1,0 +1,8 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+playerParryEffect,20,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/playerParryEffect.png,0,0,163,249,4
+resource/playerParryEffect.png,163,0,185,249,4
+resource/playerParryEffect.png,348,0,203,249,4
+resource/playerParryEffect.png,551,0,230,249,4
+resource/playerParryEffect.png,781,0,245,249,4

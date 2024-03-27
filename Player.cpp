@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "SceneGame.h"
 #include "Bullet/BulletPeashot.h"
+#include "Effect/ObjectEffect.h"
 
 Player::Player(const std::string& name)
 	:SpriteGo(name)
@@ -76,7 +77,7 @@ void Player::Update(float dt)
 		velocity.y = 0;
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping &&!isDashing)
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping && !isDashing)
 	{
 		animator.Play("animations/PlayerJump.csv");
 		isParry = false;
@@ -149,7 +150,7 @@ void Player::Update(float dt)
 	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 
 	currentDirection = PreDirection;
-	
+
 	MoveDirection = position - prePosition;
 	prePosition = position;
 }
@@ -265,7 +266,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 				currentDirection = Direction::Down;
 			}
 		}
-		if(!isXKeyPressed && isCKeyPressed)
+		if (!isXKeyPressed && isCKeyPressed)
 		{
 			if (verticalInput < 0.f && horizontalInput == 0)
 			{
@@ -362,7 +363,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	if (!isCKeyPressed && !isDamaging && !isDuck)
 	{
 		// C 키x, 방향은 변경o, 
-		if (InputMgr::GetKey(sf::Keyboard::X) &&  verticalInput < 0.f && horizontalInput == 0)
+		if (InputMgr::GetKey(sf::Keyboard::X) && verticalInput < 0.f && horizontalInput == 0)
 		{
 			if (animator.GetCurrentCilpId() != "animations/PlayerShootUp.csv")
 			{
@@ -495,7 +496,7 @@ void Player::Fire(Direction dir)
 		}
 		break;
 	case Direction::Left:
-		if (isDuck) 
+		if (isDuck)
 		{
 			pos.x -= 70.f;
 			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 80.f;
@@ -552,11 +553,11 @@ void Player::Dash(float dt)
 		DashEnd();
 		return;
 	}
-	if (PreDirection == Direction::Right) 
+	if (PreDirection == Direction::Right)
 	{
 		velocity.x = dashSpeed;
 	}
-	else if (PreDirection == Direction::Left) 
+	else if (PreDirection == Direction::Left)
 	{
 		velocity.x = -dashSpeed;
 	}
@@ -650,6 +651,12 @@ void Player::LateUpdate(float dt)
 				enemyBullet->OnDamage(1000);
 				sceneGame->Pause();
 				sceneGame->isParryed = true;
+				SOUND_MGR.PlaySfx("resource/sfx_player_parry_slap_0" + std::to_string(Utils::RandomRange(1, 3)) + ".wav");
+				ObjectEffect* oe = new ObjectEffect("EffectParry");
+				oe->CreateInit((position + enemyBullet->GetPosition()) * 0.5f, MoveDirection, scene);
+				oe->GetAnimator().Play("animations/playerParryEffect.csv");
+				oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+
 			}
 			else if (!isInvincible)
 			{
@@ -687,9 +694,9 @@ void Player::LateUpdate(float dt)
 		{
 			toehold->onToehold = true;
 		}
-		if (toehold->GetActive() && 
+		if (toehold->GetActive() &&
 			toehold->onToehold &&
-			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width)&&
+			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width) &&
 			(toehold->GetCustomBoundsRect().left + toehold->GetCustomBoundsRect().width >= this->GetGlobalBounds().left))
 		{
 			if (MoveDirection.y >= 0)
@@ -704,12 +711,12 @@ void Player::LateUpdate(float dt)
 					isJumping = false;
 				}
 			}
-			else if(isJumping)
+			else if (isJumping)
 			{
 				toehold->onPlatForm = false;
 			}
 		}
-		if (position.y > toehold->GetCustomBoundsRect().top+gravity*dt)
+		if (position.y > toehold->GetCustomBoundsRect().top + gravity * dt)
 		{
 			toehold->onToehold = false;
 			toehold->onPlatForm = false;

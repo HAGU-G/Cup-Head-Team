@@ -73,7 +73,7 @@ void SceneGame::Enter()
 	option->SetActive(false);
 
 	playerHp = new SpriteGo("PlayerHp");
-	playerHp->GetAniamtor().SetTarget(&playerHp->GetSprite());
+	playerHp->GetAnimator().SetTarget(&playerHp->GetSprite());
 	playerHp->SetTexture("resource/FightText/hud_hp_3.png");
 	playerHp->SetOrigin(Origins::BL);
 	playerHp->SetPosition(uiView.getCenter() + sf::Vector2f(-uiView.getSize().x, uiView.getSize().y) * 0.48f);
@@ -92,8 +92,8 @@ void SceneGame::Update(float dt)
 {
 	if (isParryed)
 	{
-		parryEffectTimer = 0.0f;
 		isParryed = false;
+		parryEffectTimer = 0.0f;
 	}
 
 
@@ -302,13 +302,13 @@ void SceneGame::SetStatus(Status status)
 		ObjectEffect* oe = new ObjectEffect("FightText");
 		oe->SetScale({ uiView.getSize().x / 512.f,uiView.getSize().x / 512.f });
 		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
-		oe->GetAniamtor().Play("animations/fightReady.csv");
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 20,
+		oe->GetAnimator().Play("animations/fightReady.csv");
+		oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), 20,
 			[this]()
 			{
 				SOUND_MGR.PlaySfx(announcerLeft + "2_" + (char)Utils::RandomRange(97, 102) + announcerRight);
 			});
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(),
+		oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(),
 			[oe, this]()
 			{
 				oe->OnDie();
@@ -326,11 +326,11 @@ void SceneGame::SetStatus(Status status)
 		ObjectEffect* oe = new ObjectEffect("FightText");
 		oe->SetScale({ uiView.getSize().x / 512.f,uiView.getSize().x / 512.f });
 		oe->CreateInit(uiView.getCenter(), { 1.f, 0.f }, this, Ui);
-		oe->GetAniamtor().Play("animations/fightVictory.csv");
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), 23, std::bind(&SceneGame::Play, this));
-		oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+		oe->GetAnimator().Play("animations/fightVictory.csv");
+		oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), 23, std::bind(&SceneGame::Play, this));
+		oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 		timer = 0.f;
-		timeLimit = 10.f;
+		timeLimit = 6.f;
 		break;
 	}
 	case SceneGame::Status::Defeat:
@@ -342,7 +342,7 @@ void SceneGame::SetStatus(Status status)
 		oe->SetOrigin(Origins::MC);
 		oe->SetDieByTime(3.f, true);
 		timer = 0.f;
-		timeLimit = 5.f;
+		timeLimit = 3.f;
 		break;
 	}
 	case SceneGame::Status::Exit:
@@ -372,7 +372,7 @@ void SceneGame::SetPlayerHp(int i)
 {
 	if (i <= 0)
 	{
-		playerHp->GetAniamtor().Stop();
+		playerHp->GetAnimator().Stop();
 		playerHp->SetTexture("resource/FightText/hud_hp_dead.png");
 		if (status < SceneGame::Status::Defeat)
 		{
@@ -381,16 +381,16 @@ void SceneGame::SetPlayerHp(int i)
 	}
 	else if (i == 1)
 	{
-		playerHp->GetAniamtor().Play("animations/hud_hp_1.csv");
+		playerHp->GetAnimator().Play("animations/hud_hp_1.csv");
 	}
 	else if (i >= 9)
 	{
-		playerHp->GetAniamtor().Stop();
+		playerHp->GetAnimator().Stop();
 		playerHp->SetTexture("resource/FightText/hud_hp_9.png");
 	}
 	else
 	{
-		playerHp->GetAniamtor().Stop();
+		playerHp->GetAnimator().Stop();
 		playerHp->SetTexture("resource/FightText/hud_hp_" + std::to_string(i) + ".png");
 	}
 }

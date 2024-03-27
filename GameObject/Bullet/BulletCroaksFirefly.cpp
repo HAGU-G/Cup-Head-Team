@@ -85,7 +85,7 @@ void BulletCroaksFirefly::OnDie()
 {
 	ObjectEffect* oe = new ObjectEffect("EffectFireFly");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/CroaksFireFlyDeath.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/CroaksFireFlyDeath.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }

@@ -128,7 +128,7 @@ void BossCroaks::Fan()
 {
 	ObjectEffect* oe = new ObjectEffect("EffectFanWind");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/CroaksFanWind.csv");
+	oe->GetAnimator().Play("animations/CroaksFanWind.csv");
 
 	playerPos = player->GetPosition();
 	playerPos.x -= fanBackwardSpeed * deltatime;

@@ -85,15 +85,15 @@ void BossPotato::Intro()
 	SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_RiseGround.wav");
 	front->SetScale({ 1.1f, 1.1f });
 	front->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.09f), { 1.f,0.f }, scene);
-	front->GetAniamtor().Play("animations/potatoIntroFront.csv");
-	front->GetAniamtor().AddEvent(front->GetAniamtor().GetCurrentCilpId(), 8,
+	front->GetAnimator().Play("animations/potatoIntroFront.csv");
+	front->GetAnimator().AddEvent(front->GetAnimator().GetCurrentCilpId(), 8,
 		[this, front]()
 		{
 			ObjectEffect* back = new ObjectEffect("PotatoIntroFront");
 			back->SetScale({ 1.1f, 1.1f });
 			back->sortLayer = -1;
 			back->CreateInit(position + sf::Vector2f(0.f, scene->GetWorldView().getSize().y * 0.03f), { 1.f,0.f }, scene);
-			back->GetAniamtor().Play("animations/potatoIntroBack.csv");
+			back->GetAnimator().Play("animations/potatoIntroBack.csv");
 			animator.ClearEvent();
 			animator.Play("animations/potatoIntro.csv");
 			animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossPotato::Idle, this));
@@ -110,8 +110,8 @@ void BossPotato::Shoot()
 {
 	ObjectEffect* oe = new ObjectEffect();
 	oe->CreateInit(sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 6.7f / 8.f), { 1.f,0.f }, scene);
-	oe->GetAniamtor().Play("animations/potatoShootEffect.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/potatoShootEffect.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	if (++shootCount < 4)
 	{
 		SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_Spit_00"

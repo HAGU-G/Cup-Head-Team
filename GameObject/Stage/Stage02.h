@@ -22,6 +22,7 @@ protected:
 	SpriteGo* bg3;
 	SpriteGo* bg4;
 	SpriteGo* bg5;
+	SpriteGo* bg6;
 
 	bool isVictory = false;
 

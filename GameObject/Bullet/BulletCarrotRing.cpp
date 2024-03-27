@@ -39,7 +39,7 @@ void BulletCarrotRing::OnDie()
 {
 	ObjectEffect* oe = new ObjectEffect("EffectCarrotRing");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/carrotRingDeath.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/carrotRingDeath.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }
