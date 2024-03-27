@@ -12,6 +12,10 @@ BulletCarnationPollen* BulletCarnationPollen::Create(const sf::Vector2f& pos, co
 	BulletCarnationPollen* bcp = new BulletCarnationPollen();
 	bcp->SetColor(i);
 	bcp->CreateInit(pos, direction, scene);
+	if (i == 1)
+	{
+		bcp->isPink = true;
+	}
 	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcp);
 	return bcp;
 }
@@ -41,15 +45,12 @@ void BulletCarnationPollen::Init()
 	}
 	else if (i == 1)
 	{
-		isPink = true;
 		animator.Play("animations/carnationFinalFirePollenPink.csv");
 	}
 	SetSpeed(450.f);
 	SetRange(1500.f);
 	SetDirection({ -1.f,1.f });
 	type = Type::Straight;
-	maxHp = INT_MAX;
-	hp = INT_MAX;
 	ObjectBullet::Init();
 }
 

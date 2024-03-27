@@ -86,6 +86,7 @@ void BulletCarnationPinkSeed::Init()
 void BulletCarnationPinkSeed::OnDie()
 {
 	isAlive = false;
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_mermaid_turtle_shell_pop.wav");
 	scene->RemoveGo(this);
 	ObjectBullet::OnDie();
 }

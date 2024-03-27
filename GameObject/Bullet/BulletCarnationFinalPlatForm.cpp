@@ -54,6 +54,7 @@ void BulletCarnationFinalPlatForm::Init()
 	SetRange(3000.f);
 	SetScale({ 0.6f,0.6f });
 	animator.Play("animations/carnationFinalVineAttackIdle.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_level_flower_vinehand_grow_Start.wav");
 	animator.AddEvent(animator.GetCurrentCilpId(), 1, std::bind(&BulletCarnationFinalPlatForm::BackVine, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::TimerStart, this));
 	type = Type::Straight;
@@ -83,6 +84,7 @@ void BulletCarnationFinalPlatForm::Attack()
 {
 	SetScale({ 0.8f,0.8f });
 	animator.Play("animations/carnationFinalVineAttack.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_level_flower_vinehand_grow_End.wav");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFinalPlatForm::ReturnStart, this));
 }
 

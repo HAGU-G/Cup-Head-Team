@@ -74,7 +74,7 @@ void BossCarnation::Update(float dt)
 		}
 		if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 		{
-			FaLow();
+			FireSeed();
 		}
 	}
 	else if (state == State::FinalIdle)
@@ -284,7 +284,7 @@ void BossCarnation::FinalIntro()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossFinalIntro.csv");
-
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_man_phaseOneTwo_transition.wav");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-7, std::bind(&BossCarnation::CreateFinalVine, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
 }
