@@ -16,6 +16,31 @@ Player::~Player()
 void Player::Init()
 {
 	SpriteGo::Init();
+	
+	RES_MGR_TEXTURE.Load("resource/PlayerIntro.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerShootDown.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerShootUp.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerSideDown.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerSideUp.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDie.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDamage.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerAimDown.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerAimSideDown.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerAimSideUP.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerAimStraight.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerAimUp.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDash.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDuck.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDuckIdle.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerDuckShoot.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerIdle.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerJump.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerParry.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerRun.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerRunShooting.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerShootStraight.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerSideShooting.png");
+	RES_MGR_TEXTURE.Load("resource/PlayerSideShooting.png.png");
 
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
