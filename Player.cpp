@@ -76,10 +76,10 @@ void Player::Update(float dt)
 		velocity.y = 0;
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping)
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping &&!isDashing)
 	{
 		animator.Play("animations/PlayerJump.csv");
-
+		isParry = false;
 		isJumping = true;
 
 		if (isGrounded)
@@ -165,7 +165,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 
 	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
 
-	if (isCKeyPressed && !isDamaging)
+	if (isCKeyPressed && !isDamaging && !isDuck)
 	{
 		if (isXKeyPressed && isCKeyPressed)
 		{
@@ -359,7 +359,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			}
 		}
 	}
-	if (!isCKeyPressed && !isDamaging)
+	if (!isCKeyPressed && !isDamaging && !isDuck)
 	{
 		// C 키x, 방향은 변경o, 
 		if (InputMgr::GetKey(sf::Keyboard::X) &&  verticalInput < 0.f && horizontalInput == 0)
@@ -426,12 +426,20 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 		}
 	}
 
-	if (!isJumping && !isCKeyPressed && InputMgr::GetKey(sf::Keyboard::Down))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Down) && !isJumping && !isCKeyPressed)
 	{
-		if (animator.GetCurrentCilpId() != "animations/PlayerDuck.csv")
-		{
-			animator.Play("animations/PlayerDuck.csv");
-		}
+		animator.Play("animations/PlayerDuck.csv");
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DuskIdle, this));
+
+	}
+
+	if (InputMgr::GetKey(sf::Keyboard::Down) && !isJumping && !isCKeyPressed)
+	{
+		isDuck = true;
+	}
+	else
+	{
+		isDuck = false;
 	}
 
 	SetOrigin(Origins::BC);
@@ -473,22 +481,64 @@ void Player::Fire(Direction dir)
 	switch (dir)
 	{
 	case Direction::Right:
-		pos.x += 60.f;
-		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		PreDirection = Direction::Right;
+		if (isDuck)
+		{
+			pos.x += 70.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 80.f;
+			PreDirection = Direction::Right;
+		}
+		else
+		{
+			pos.x += 70.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
+			PreDirection = Direction::Right;
+		}
 		break;
 	case Direction::Left:
-		pos.x -= 60.f;
-		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		PreDirection = Direction::Left;
+		if (isDuck) 
+		{
+			pos.x -= 70.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 80.f;
+			PreDirection = Direction::Left;
+		}
+		else
+		{
+			pos.x -= 70.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
+			PreDirection = Direction::Left;
+		}
 		break;
 	case Direction::Up:
-		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y -= 70.f;
+		if (PreDirection == Direction::Left)
+		{
+			pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random - 20.f;
+			pos.y -= 80.f;
+		}
+		else if (PreDirection == Direction::Right)
+		{
+			pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random + 20.f;
+			pos.y -= 80.f;
+		}
 		break;
 	case Direction::Down:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y += 70.f;
+		pos.y += 80.f;
+		break;
+	case Direction::RightUp:
+		pos.x += 45.f;
+		pos.y -= 30.f;
+		break;
+	case Direction::LeftUp:
+		pos.x -= 45.f;
+		pos.y -= 30.f;
+		break;
+	case Direction::RightDown:
+		pos.x += 40.f;
+		pos.y += 55.f;
+		break;
+	case Direction::LeftDown:
+		pos.x -= 40.f;
+		pos.y += 55.f;
 		break;
 	}
 	pos.y -= 100;
@@ -497,8 +547,11 @@ void Player::Fire(Direction dir)
 
 void Player::Dash(float dt)
 {
-	dashTimer -= dt;
-
+	if (isDamaging)
+	{
+		DashEnd();
+		return;
+	}
 	if (PreDirection == Direction::Right) 
 	{
 		velocity.x = dashSpeed;
@@ -510,10 +563,7 @@ void Player::Dash(float dt)
 
 	velocity.y = 0;
 
-	if (dashTimer <= 0)
-	{
-		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DashEnd, this));
-	}
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DashEnd, this));
 
 	position += velocity * dt;
 	SetPosition(position);
@@ -522,7 +572,14 @@ void Player::Dash(float dt)
 void Player::DashEnd()
 {
 	isDashing = false;
-	if (isJumping)
+	if (isDamaging)
+	{
+		if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+		{
+			animator.Play("animations/PlayerDamage.csv");
+		}
+	}
+	else if (isJumping)
 	{
 		animator.Play("animations/PlayerJump.csv");
 	}
@@ -538,6 +595,14 @@ void Player::OnDamage()
 	if (hp == 0)
 	{
 		OnDie();
+	}
+}
+
+void Player::DuskIdle()
+{
+	if (animator.GetCurrentCilpId() != "animations/PlayerDuckIdle.csv")
+	{
+		animator.Play("animations/PlayerDuckIdle.csv");
 	}
 }
 

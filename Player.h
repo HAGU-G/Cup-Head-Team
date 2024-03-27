@@ -53,6 +53,8 @@ protected:
 	bool isIntro = true;
 	bool isXKeyPressed;
 	bool onPlatForm = false;
+	bool isDuck = false;
+	bool isDucking = false;
 	int maxHp = 3;
 
 	int hp;
@@ -75,6 +77,7 @@ public:
 	void ReSetHp() { hp = maxHp; }
 	void Dash(float dt);
 	void DashEnd();
+	void DuskIdle();
 	void OnDamage();
 	void OnDie();
 
