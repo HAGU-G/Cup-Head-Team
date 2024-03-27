@@ -53,7 +53,7 @@ protected:
 	bool isIntro = true;
 	bool isXKeyPressed;
 	bool onPlatForm = false;
-	int maxHp = 3;
+	int maxHp = 103;
 
 	int hp;
 

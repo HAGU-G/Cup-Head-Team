@@ -26,19 +26,26 @@ void BulletCarnationBoomerang::Update(float dt)
 		SetPosition({ sprite.getPosition().x,-100.f });
 		SetDirection({ 1.f,0.f });
 	}
+	else if (sprite.getPosition().x >= 700.f)
+	{
+		OnDie();
+	}
+
 	fireTimer += dt;
 	if (fireTimer >= 1.f)
 	{
 		SetSpeed(800.f);
 	}
+
 }
 
 void BulletCarnationBoomerang::Init()
 {
 	ObjectBullet::Init();
 	animator.Play("animations/boomerang.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_boomerang_projectile.wav", true);
 	SetSpeed(0.f);
-	SetRange(3000.f);
+	SetRange(2500.f);
 	type = Type::Straight;
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
@@ -48,6 +55,8 @@ void BulletCarnationBoomerang::Init()
 
 void BulletCarnationBoomerang::OnDie()
 {
+	SOUND_MGR.StopAll();
+	isAlive = false;
 	ObjectBullet::OnDie();
 }
 

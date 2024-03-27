@@ -20,6 +20,18 @@ void Stage03::Init()
 	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIntro.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossFinalIdle.png");
 	RES_MGR_TEXTURE.Load("resource/carnationBossDie.png");
+	RES_MGR_TEXTURE.Load("resource/carnationBossCreating.png");
+	RES_MGR_TEXTURE.Load("resource/carnationBossCreatPinkCreaterAttack.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFinalVine.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFinalVineAttack.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFinalVineAttackIdle.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFinalVineBack.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFinalVineBackAttack.png");
+	RES_MGR_TEXTURE.Load("resource/carnationFiringPollen.png");
+	RES_MGR_TEXTURE.Load("resource/carnationSeedBlue.png");
+	RES_MGR_TEXTURE.Load("resource/carnationSeedPink.png");
+	RES_MGR_TEXTURE.Load("resource/carnationSeedPurple.png");
+	RES_MGR_TEXTURE.Load("resource/carnationSeedVine.png");
 
 	mainBg = new SpriteGo("mainBg");
 	mainBg->SetTexture("resource/Sprite/stage02/flower_bg_main1.png");
@@ -145,7 +157,7 @@ void Stage03::LateUpdate(float dt)
 
 void Stage03::Reset()
 {
-	bgm.stop();
+	SOUND_MGR.StopBgm();
 	if (player)
 	{
 		player->Release();
@@ -206,10 +218,12 @@ void Stage03::Reset()
 
 	scene->AddGo(player);
 	sceneGame->AddGo(carnation);
+	SOUND_MGR.PlayBgm("resource/Sprite/stage02/MUS_Flower.wav", false);
 }
 
 void Stage03::Release()
 {
+	SOUND_MGR.StopBgm();
 	GameObject::Release();
 }
 
