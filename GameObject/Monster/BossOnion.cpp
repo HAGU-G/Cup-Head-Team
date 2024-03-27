@@ -7,6 +7,7 @@
 BossOnion::BossOnion(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 400;
 }
 
 BossOnion::~BossOnion()
@@ -89,9 +90,9 @@ void BossOnion::Update(float dt)
 void BossOnion::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::BackSpace))
 	{
-		OnDamage(10);
+		OnDamage(100);
 	}
 }
 void BossOnion::Release()

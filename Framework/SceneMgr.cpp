@@ -101,4 +101,14 @@ void SceneMgr::FixedUpdate(float dt)
 void SceneMgr::Draw(sf::RenderTexture& window)
 {
 	scenes[(int)currentScene]->Draw(window);
+	if (isDeveloperMode)
+	{
+		sf::Text text;
+		text.setCharacterSize(50);
+		text.setFillColor(sf::Color::Magenta);
+		text.setFont(RES_MGR_FONT.Get("resource/Font/CupheadVogue-ExtraBold.ttf"));
+		text.setString(std::to_string(int(1.f / FRAMEWORK.GetDT())));
+		text.setPosition(GetCurrentScene()->GetUiView().getCenter() - GetCurrentScene()->GetUiView().getSize() * 0.5f);
+		window.draw(text);
+	}
 }

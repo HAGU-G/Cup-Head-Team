@@ -24,6 +24,7 @@ public:
 	virtual sf::Vector2f GetSize() { return size; }
 	virtual sf::RectangleShape GetCustomBounds() const;
 	virtual sf::FloatRect GetCustomBoundsRect() const;
+
 	void SetTexture(const std::string& textureId, bool resetRect = true);
 
 	void SetPosition(const sf::Vector2f& pos) override;
@@ -41,6 +42,9 @@ public:
 	void Update(float dt) override;
 	void Reset() override;
 	void Draw(sf::RenderTexture& window) override;
+
+	Animator& GetAniamtor() { return animator; }
+	sf::Sprite& GetSprite() { return sprite; }
 
 	inline void UseRenderStates(bool value) { useRenderStates = value; }
 	inline sf::RenderStates& GetRenderStates() { return renderStates; }

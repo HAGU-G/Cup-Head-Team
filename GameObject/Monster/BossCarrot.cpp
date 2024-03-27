@@ -8,6 +8,7 @@
 BossCarrot::BossCarrot(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 475;
 }
 
 BossCarrot::~BossCarrot()
@@ -96,9 +97,9 @@ void BossCarrot::LateUpdate(float dt)
 	customBounds.setPosition(shootEyes.getPosition());
 
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::BackSpace))
 	{
-		OnDamage(10);
+		OnDamage(100);
 	}
 }
 
