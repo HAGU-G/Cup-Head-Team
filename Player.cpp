@@ -180,7 +180,7 @@ void Player::Update(float dt)
 		}
 
 		fireTimer += dt;
-		if (isXKeyPressed && fireTimer > fireIntervel)
+		if (isXKeyPressed && fireTimer > fireIntervel && !isDamaging)
 		{
 			isFire = true;
 			fireTimer = 0.f;
@@ -233,6 +233,16 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	{
 		UpdateJumpingDirection(horizontalInput, InputMgr::GetAxisRaw(Axis::Vertical));
 		return;
+	}
+	if (horizontalInput > 0) 
+	{
+		currentDirection = Direction::Right;
+		PreDirection = currentDirection;
+	}
+	else if (horizontalInput < 0) 
+	{
+		currentDirection = Direction::Left;
+		PreDirection = currentDirection;
 	}
 
 	float verticalInput = InputMgr::GetAxisRaw(Axis::Vertical);
@@ -378,8 +388,8 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					{
 						animator.Play("animations/PlayerAimStraight.csv");
 					}
-					PreDirection = Direction::Right;
-					currentDirection = PreDirection;
+					currentDirection = Direction::Right;
+					PreDirection = currentDirection;
 				}
 				PreDirection = Direction::Right;
 			}
@@ -447,6 +457,14 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 			if (animator.GetCurrentCilpId() != "animations/PlayerShootStraight.csv")
 			{
 				animator.Play("animations/PlayerShootStraight.csv");
+			}
+			if (currentDirection == Direction::Right)
+			{
+				PreDirection = Direction::Right;
+			}
+			else if (currentDirection == Direction::Left)
+			{
+				PreDirection = Direction::Left;
 			}
 		}
 		else if (horizontalInput > 0.f)
@@ -672,6 +690,7 @@ void Player::DashEnd()
 
 void Player::OnDamage()
 {
+	isFire = false;
 	hp -= 1;
 	if (hp == 0)
 	{
@@ -821,5 +840,7 @@ void Player::LateUpdate(float dt)
 
 }
 
-
-
+void Player::InvincibleMode() 
+{
+	
+}
