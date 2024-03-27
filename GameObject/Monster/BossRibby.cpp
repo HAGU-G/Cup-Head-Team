@@ -44,7 +44,7 @@ void BossRibby::Update(float dt)
 	}
 
 	sf::Vector2f currentPosition = position;
-	float leftBoundary = -500;
+	float leftBoundary = -700;
 
 	if (currentPosition.x < leftBoundary && state < State::None)
 	{
@@ -146,7 +146,7 @@ void BossRibby::Intro2()
 				Idle();
 			});
 		});
-	SetPosition({ -400, 0 });
+	SetPosition({ -500, 0 });
 }
 
 void BossRibby::Idle()
