@@ -41,9 +41,11 @@ protected:
 	std::string fightTextRight = ".png";
 
 	bool pauseWorld = false;
-	float parryEffectTimer = 0.0f;
+	float parryEffectTimer = -1.f;
 	float parryEffectDuration = 0.35f;
 	ObjectOption* option = nullptr;
+
+	SpriteGo* playerHp = nullptr;
 
 public:
 	bool isParryed = false;
@@ -75,5 +77,7 @@ public:
 
 	inline void Pause() { pauseWorld = true; }
 	inline void Play() { pauseWorld = false; }
+
+	void SetPlayerHp(int i);
 };
 

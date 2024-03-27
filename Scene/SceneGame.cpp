@@ -58,16 +58,28 @@ void SceneGame::Release()
 	monsterList.clear();
 	toeholdList.clear();
 	enemyBulletList.clear();
+	option = nullptr;
+	playerHp = nullptr;
 }
 
 void SceneGame::Enter()
 {
 	Scene::Enter();
+
 	option = dynamic_cast<ObjectOption*>(AddGo(new ObjectOption("Option"), Ui));
 	option->SetScene(this);
 	option->Init();
 	option->Reset();
 	option->SetActive(false);
+
+	playerHp = new SpriteGo("PlayerHp");
+	playerHp->GetAniamtor().SetTarget(&playerHp->GetSprite());
+	playerHp->SetTexture("resource/FightText/hud_hp_3.png");
+	playerHp->SetOrigin(Origins::BL);
+	playerHp->SetPosition(uiView.getCenter() + sf::Vector2f(-uiView.getSize().x, uiView.getSize().y) * 0.48f);
+	playerHp->Init();
+	playerHp->Reset();
+	AddGo(playerHp, Ui);
 }
 
 void SceneGame::Exit()
@@ -96,14 +108,14 @@ void SceneGame::Update(float dt)
 	}
 
 	Scene::Update2(dt, pauseWorld);
-	
+
 	switch (status)
 	{
 	case SceneGame::Status::None:
-		Play();
 		SetStatus(Status::Intro);
 		break;
 	case SceneGame::Status::Intro:
+		Play();
 		timer += dt;
 		if (timer >= timeLimit)
 		{
@@ -240,7 +252,7 @@ void SceneGame::LateUpdate(float dt)
 	}
 
 
-	
+
 	//toeholdList.erase(std::remove_if(toeholdList.begin(), toeholdList.end(), [](SpriteGo* toehold) { return !toehold->GetActive(); }), toeholdList.end());
 
 }
@@ -354,6 +366,29 @@ void SceneGame::SetStatus(Status status)
 		break;
 	}
 
+}
+
+void SceneGame::SetPlayerHp(int i)
+{
+	if (i <= 0)
+	{
+		playerHp->GetAniamtor().Stop();
+		playerHp->SetTexture("resource/FightText/hud_hp_dead.png");
+	}
+	else if (i == 1)
+	{
+		playerHp->GetAniamtor().Play("animations/hud_hp_1.csv");
+	}
+	else if (i >= 9)
+	{
+		playerHp->GetAniamtor().Stop();
+		playerHp->SetTexture("resource/FightText/hud_hp_9.png");
+	}
+	else
+	{
+		playerHp->GetAniamtor().Stop();
+		playerHp->SetTexture("resource/FightText/hud_hp_" + std::to_string(i) + ".png");
+	}
 }
 
 void SceneGame::AddEnemyBullet(ObjectBullet* enemyBullet)

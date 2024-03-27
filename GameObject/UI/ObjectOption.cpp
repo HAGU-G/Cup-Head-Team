@@ -15,10 +15,6 @@ void ObjectOption::Init()
 {
 	textSize = 50 * FRAMEWORK.GetWindowSize().y / 1080;
 	sf::Vector2f buttonPos = { float(-textSize), float(-textSize * 3) };
-	SpriteGo* bg = new SpriteGo("Background");
-	bg->SetTexture("resource/Menu/cuphead_secondary_title_screen.png");
-	float scale = std::max(scene->GetWorldView().getSize().x / bg->GetSize().x, scene->GetWorldView().getSize().y / bg->GetSize().y);
-	sf::Vector2f scaleVec = { scale, scale };
 
 	//¿É¼Ç
 	optionBack = new SpriteGo("Option");
@@ -49,7 +45,7 @@ void ObjectOption::Init()
 	buttonPos.y += textSize * 2.f;
 	optionEscape->SetPosition(scene->GetUiView().getCenter() + buttonPos);
 
-	optionBack->SetScale(scaleVec);
+	optionBack->SetScale({ FRAMEWORK.GetWindowSize().y / 1080.f * 1.3f, FRAMEWORK.GetWindowSize().y / 1080.f * 1.3f });
 	sf::Color colorSelect = { 200,50,50,255 };
 	optionAudio->SetColorSelect(colorSelect);
 	optionVisual->SetColorSelect(colorSelect);
@@ -245,8 +241,6 @@ void ObjectOption::Init()
 	{
 		optionAudio->Select(false);
 	}
-
-	delete bg;
 }
 
 void ObjectOption::Update(float dt)
