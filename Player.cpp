@@ -45,6 +45,9 @@ void Player::Init()
 	animator.SetTarget(&sprite);
 	hasHitBox = true;
 	prePosition = position;
+
+	fireSound.setBuffer(RES_MGR_SOUND_BUFFER.Get("resource/sfx_player_default_fire_loop_01.wav"));
+	fireSound.setLoop(true);
 }
 
 void Player::Reset()
@@ -71,6 +74,8 @@ void Player::Update(float dt)
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
+	fireSound.setVolume(SOUND_MGR.GetSfxVolume());
+	
 	if (state != PlayerState::Normal)
 	{
 		return;
@@ -80,6 +85,11 @@ void Player::Update(float dt)
 	isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 	isXKeyPressed = InputMgr::GetKey(sf::Keyboard::X);
+
+	if (!isXKeyPressed)
+	{
+		fireSound.pause();
+	}
 
 	if (isInvincible)                                      //무적 상태 o
 	{
@@ -95,6 +105,7 @@ void Player::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing)
 	{
+		SOUND_MGR.PlaySfx("resource/sfx_player_jump_01.wav");
 		animator.Play("animations/PlayerDash.csv");
 		isDashing = true;
 		dashTimer = dashDuration;
@@ -108,12 +119,13 @@ void Player::Update(float dt)
 		isJumping = true;
 		position.y += gravity * dt;
 		velocity.y = gravity * dt;
-
+		SOUND_MGR.PlaySfx("resource/sfx_player_jump_01.wav");
 		animator.Play("animations/PlayerJump.csv");
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping &&!isDashing)
 	{
+		SOUND_MGR.PlaySfx("resource/sfx_player_jump_01.wav");
 		animator.Play("animations/PlayerJump.csv");
 		isParry = false;
 		isJumping = true;
@@ -543,7 +555,10 @@ void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput)
 void Player::Fire(Direction dir)
 {
 	sf::Vector2f pos = position; 
-
+	if (fireSound.getStatus() != sf::Sound::Playing)
+	{
+		fireSound.play();
+	}
 	const float random = 20.f;
 	int temp = rand();
 	switch (dir)
@@ -663,6 +678,7 @@ void Player::OnDamage()
 		OnDie();
 	}
 	sceneGame->SetPlayerHp(hp);
+	fireSound.stop();
 }
 
 void Player::DuckIdle()
@@ -728,11 +744,6 @@ void Player::LateUpdate(float dt)
 				sceneGame->Pause();
 				sceneGame->isParryed = true;
 				SOUND_MGR.PlaySfx("resource/sfx_player_parry_slap_0" + std::to_string(Utils::RandomRange(1, 3)) + ".wav");
-				ObjectEffect* oe = new ObjectEffect("EffectParry");
-				oe->CreateInit((position + enemyBullet->GetPosition()) * 0.5f, MoveDirection, scene);
-				oe->GetAnimator().Play("animations/playerParryEffect.csv");
-				oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
-
 			}
 			else if (!isInvincible)
 			{

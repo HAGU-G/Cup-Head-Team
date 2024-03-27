@@ -38,6 +38,7 @@ protected:
 	float invincibilityTimer = 0.f;
 	bool isInvincible = false;
 	
+	sf::Sound fireSound;
 	sf::Vector2f velocity;
 	sf::Vector2f fireDir;
 	sf::Vector2f prePosition;
@@ -55,6 +56,7 @@ protected:
 	bool onPlatForm = false;
 	bool isDuck = false;
 	bool isDucking = false;
+	bool InvincibleMode = false;
 	int maxHp = 3;
 
 	int hp;

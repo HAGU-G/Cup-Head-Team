@@ -292,6 +292,7 @@
   <ItemGroup>
     <None Include="bin\resource\Shader\Smooth.frag" />
     <None Include="bin\resource\Shader\Hit.frag" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="bin\resource\Shader\Bleeding.frag" />
