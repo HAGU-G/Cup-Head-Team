@@ -33,7 +33,7 @@ void BulletCarnationFinalVine::Init()
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
 	hp = INT_MAX;
-	ObjectBullet::Init();
+	renderStates = sf::RenderStates();
 }
 
 void BulletCarnationFinalVine::OnDie()
