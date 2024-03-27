@@ -1,0 +1,11 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+Stage3bgWaiter,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/Stage3bgWaiter.png,0,0,192,227,7
+resource/Stage3bgWaiter.png,192,0,193,227,7
+resource/Stage3bgWaiter.png,385,0,194,227,7
+resource/Stage3bgWaiter.png,579,0,189,227,7
+resource/Stage3bgWaiter.png,768,0,183,227,7
+resource/Stage3bgWaiter.png,951,0,185,227,7
+resource/Stage3bgWaiter.png,1136,0,177,227,7
+resource/Stage3bgWaiter.png,1313,0,183,227,7

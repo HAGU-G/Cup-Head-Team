@@ -24,7 +24,7 @@ protected:
 	float patternInterval = 13.0f;
 	float boomTimer = 0.f;
 	float boomInterval = 2.5f;
-	float ringTimer = 5.f;
+	float ringTimer = 2.3f;
 	float ringInterval = 2.3f;
 	int ringCount = 0;
 

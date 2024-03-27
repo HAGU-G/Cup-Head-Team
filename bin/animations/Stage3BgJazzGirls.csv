@@ -1,0 +1,21 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+Stage3BgJazzGirls,15,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/Stage3BgJazzGirls.png,0,0,164,125,7
+resource/Stage3BgJazzGirls.png,164,0,164,125,7
+resource/Stage3BgJazzGirls.png,328,0,163,125,7
+resource/Stage3BgJazzGirls.png,491,0,161,125,7
+resource/Stage3BgJazzGirls.png,652,0,159,125,7
+resource/Stage3BgJazzGirls.png,811,0,160,125,7
+resource/Stage3BgJazzGirls.png,971,0,145,125,7
+resource/Stage3BgJazzGirls.png,1116,0,127,125,7
+resource/Stage3BgJazzGirls.png,1243,0,131,125,7
+resource/Stage3BgJazzGirls.png,1374,0,117,125,7
+resource/Stage3BgJazzGirls.png,1491,0,121,125,7
+resource/Stage3BgJazzGirls.png,1612,0,128,125,7
+resource/Stage3BgJazzGirls.png,1740,0,103,125,7
+resource/Stage3BgJazzGirls.png,1843,0,108,125,7
+resource/Stage3BgJazzGirls.png,1951,0,112,125,7
+resource/Stage3BgJazzGirls.png,2063,0,111,125,7
+resource/Stage3BgJazzGirls.png,2174,0,136,125,7
+resource/Stage3BgJazzGirls.png,2310,0,151,125,7

@@ -13,6 +13,7 @@
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 1300;
 }
 
 void BossCarnation::Init()
@@ -28,6 +29,7 @@ void BossCarnation::Reset()
 {
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 	animator.SetTarget(&sprite);
 
 	Intro();
@@ -36,11 +38,15 @@ void BossCarnation::Reset()
 void BossCarnation::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
-	if (hp <= maxHp * 0.6 && state == State::Idle)
+	if (hp <= 598 && state == State::Idle)
 	{
 		FinalIntro();
 	}
@@ -67,9 +73,18 @@ void BossCarnation::Update(float dt)
 			}
 			else if (pattern <= 80)
 			{
+
 				FireSeed();
 				patternTimer = 0;
 			}
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
+		{
+			FireSeed();
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			SetState(State::FinalIdle);
 		}
 	}
 	else if (state == State::FinalIdle)
@@ -124,10 +139,22 @@ void BossCarnation::LateUpdate(float dt)
 	}
 
 	ObjectMonster::LateUpdate(dt);
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-	{
-		OnDamage(10);
-	}
+}
+
+void BossCarnation::FaSfx()
+{
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_top_laser_attack_start.wav");
+}
+
+void BossCarnation::FaIng()
+{
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_top_laser_attack_hold_loop.wav");
+}
+
+void BossCarnation::FaEnd()
+{
+	SOUND_MGR.PauseAllSfx();
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_top_laser_attack_end.wav");
 }
 
 void BossCarnation::FaHigh()
@@ -137,7 +164,9 @@ void BossCarnation::FaHigh()
 	sf::Vector2f Pos = GetPosition();
 	SetPosition({ Pos.x + 160.f,Pos.y });
 	animator.Play("animations/carnationBossFa_High.csv");
-
+	animator.AddEvent(animator.GetCurrentCilpId(), 1, std::bind(&BossCarnation::FaSfx, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), 20, std::bind(&BossCarnation::FaIng, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), 36, std::bind(&BossCarnation::FaEnd, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 
@@ -148,6 +177,9 @@ void BossCarnation::FaLow()
 	sf::Vector2f Pos = GetPosition();
 	SetPosition({ Pos.x + 160.f,Pos.y + 20.f });
 	animator.Play("animations/carnationBossFa_Low.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), 1, std::bind(&BossCarnation::FaSfx, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), 20, std::bind(&BossCarnation::FaIng, this));
+	animator.AddEvent(animator.GetCurrentCilpId(), 36, std::bind(&BossCarnation::FaEnd, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 }
 
@@ -156,6 +188,7 @@ void BossCarnation::Creating()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossCreating.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_pot_hands_start.wav");
 	animator.AddEvent("animations/carnationBossCreating.csv", 20, std::bind(&BossCarnation::CreatingEffect, this));
 	animator.AddEvent("animations/carnationBossCreating.csv", 54, std::bind(&BossCarnation::CreatingEffect, this));
 	animator.AddEvent("animations/carnationBossCreating.csv", 86, std::bind(&BossCarnation::CreatingEffect, this));
@@ -165,7 +198,7 @@ void BossCarnation::Creating()
 void BossCarnation::CreatingEffect()
 {
 	EffectCarnationCreating::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height*0.5f}, {1.f, 0.f}, scene);
-
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_pot_hands_open.wav");
 	if (Utils::RandomRange(0, 100) < 50)
 	{
 		BulletCarnationAcon::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.3f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.5f - 100.f }, { -1.f,0.f }, scene, 1.f);
@@ -180,6 +213,7 @@ void BossCarnation::CreatingEffect()
 
 void BossCarnation::FireSeedEffect()
 {
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_gattling_loop.wav");
 	EffectCarnationFireSeed::Create({ sprite.getPosition().x - sprite.getGlobalBounds().width * 0.1f -10.f,sprite.getPosition().y - sprite.getGlobalBounds().height * 0.9f }, { 1.f,0.f }, scene);
 }
 
@@ -188,6 +222,7 @@ void BossCarnation::FireSeed()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carntionBossFireSeed.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_gattling_start.wav");
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 6, std::bind(&BossCarnation::FireSeedEffect, this));
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 16, std::bind(&BossCarnation::FireSeedEffect, this));
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 26, std::bind(&BossCarnation::FireSeedEffect, this));
@@ -202,7 +237,13 @@ void BossCarnation::FireSeed()
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 56, std::bind(&BossCarnation::AddSeed, this));
 	animator.AddEvent("animations/carntionBossFireSeed.csv", 66, std::bind(&BossCarnation::AddSeed, this));
 
+	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-1, std::bind(&BossCarnation::StopFireSeedSfx, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
+}
+
+void BossCarnation::StopFireSeedSfx()
+{
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_gattling_end.wav");
 }
 
 void BossCarnation::AddSeed()
@@ -229,8 +270,14 @@ void BossCarnation::Intro()
 	sf::Vector2f Pos = GetPosition();
 	SetPosition({ Pos.x + 155.f,Pos.y });
 	animator.Play("animations/carnationBossIntro.csv");
+	animator.AddEvent(animator.GetCurrentCilpId(), 2, std::bind(&BossCarnation::IntroSfx, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::Idle, this));
 	
+}
+
+void BossCarnation::IntroSfx()
+{
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_intro_yell.wav");
 }
 
 void BossCarnation::Idle()
@@ -243,7 +290,7 @@ void BossCarnation::FinalIntro()
 	SetState(State::None);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossFinalIntro.csv");
-
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_man_phaseOneTwo_transition.wav");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-7, std::bind(&BossCarnation::CreateFinalVine, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCarnation::FinalIdle, this));
 }
@@ -319,6 +366,7 @@ void BossCarnation::Death()
 {
 	isAlive = false;
 	SetState(State::None);
+	sceneGame->SetStatus(SceneGame::Status::Victory);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossDie.csv");
 }

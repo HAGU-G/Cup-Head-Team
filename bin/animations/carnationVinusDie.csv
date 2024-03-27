@@ -1,0 +1,13 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+carnationVinusDie,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/carnationVinusDie.png,0,0,69,298,4
+resource/carnationVinusDie.png,69,0,79,298,4
+resource/carnationVinusDie.png,148,0,124,298,4
+resource/carnationVinusDie.png,272,0,206,298,4
+resource/carnationVinusDie.png,478,0,218,298,4
+resource/carnationVinusDie.png,696,0,249,298,4
+resource/carnationVinusDie.png,945,0,276,298,4
+resource/carnationVinusDie.png,1221,0,271,298,4
+resource/carnationVinusDie.png,1492,0,292,298,4
+resource/carnationVinusDie.png,1784,0,233,298,4

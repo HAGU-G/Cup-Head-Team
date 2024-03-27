@@ -22,7 +22,7 @@ void BulletCarnationPinkSeed::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	SetCustomBounds(1.f, 1.f, Origins::MC);
+	SetCustomBounds(0.8f, 0.8f, Origins::MC);
 	customBounds.setPosition(position);
 	if (hp <= 0)
 	{
@@ -79,13 +79,14 @@ void BulletCarnationPinkSeed::Init()
 	SetRange(15000.f);
 	type = Type::Straight;
 	SetRotateSpeed(400.f);
-	maxHp = 50;
-	hp = 50;
+	maxHp = 24;
+	hp = 24;
 }
 
 void BulletCarnationPinkSeed::OnDie()
 {
 	isAlive = false;
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_mermaid_turtle_shell_pop.wav");
 	scene->RemoveGo(this);
 	ObjectBullet::OnDie();
 }

@@ -44,14 +44,19 @@ public:
 	void Update(float dt) override;
 	void LateUpdate(float dt) override;
 
+	void FaSfx();
+	void FaIng();
+	void FaEnd();
 	void FaHigh();
 	void FaLow();
 	void Creating();
 	void CreatingEffect();
 	void FireSeedEffect();
 	void FireSeed();
+	void StopFireSeedSfx();
 	void AddSeed();
 	void Intro();
+	void IntroSfx();
 	void Idle();
 	void FinalIntro();
 	void CreateFinalVine();

@@ -67,6 +67,10 @@
     <ClCompile Include="GameObject\CanationPlatForm.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCarrotBoomSmall.cpp" />
     <ClCompile Include="GameObject\Bullet\BulletCloud.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationVinusDie.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectCarnationChompDie.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectStage2BgGirls.cpp" />
+    <ClCompile Include="GameObject\Effect\EffectStage2BgWaiter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject\Bullet\BulletCarrotRing.h" />
@@ -139,6 +143,10 @@
     <ClInclude Include="GameObject\CanationPlatForm.h" />
     <ClInclude Include="GameObject\Bullet\BulletCarrotBoomSmall.h" />
     <ClInclude Include="GameObject\Bullet\BulletCloud.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationVinusDie.h" />
+    <ClInclude Include="GameObject\Effect\EffectCarnationChompDie.h" />
+    <ClInclude Include="GameObject\Effect\EffectStage2BgGirls.h" />
+    <ClInclude Include="GameObject\Effect\EffectStage2BgWaiter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\resource\Shader\Hit.frag" />

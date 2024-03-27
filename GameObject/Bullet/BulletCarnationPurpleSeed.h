@@ -20,6 +20,8 @@ public:
 	void SetRotation(float value)override;
 	void OnDie() override;
 
+	void PlaySfx();
+
 	sf::RectangleShape GetCustomBounds() const override;
 };
 

@@ -21,10 +21,10 @@ protected:
 	State preState = State::None;
 
 	float patternTimer = 0.f;
-	float patternInterval = 2.f;
+	float patternInterval = 6.f;
 
 	float fanTimer = 0.f;
-	float fanInterval = 8.f;
+	float fanDuration = 8.f;
 	float fanBackwardSpeed = 300.f;
 	float deltatime;
 

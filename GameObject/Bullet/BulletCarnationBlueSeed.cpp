@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BulletCarnationBlueSeed.h"
 #include "SceneGame.h"
+#include "Effect/EffectCarnationVinusDie.h"
 
 BulletCarnationBlueSeed::BulletCarnationBlueSeed(const std::string& name)
 	:ObjectBullet(name)
@@ -18,8 +19,13 @@ BulletCarnationBlueSeed* BulletCarnationBlueSeed::Create(const sf::Vector2f& pos
 void BulletCarnationBlueSeed::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	SetCustomBounds(1.f, 1.f, Origins::MC);
+	SetCustomBounds(0.6f, 0.6f, Origins::MC);
 	customBounds.setPosition(position);
+	if (hp <= 0)
+	{
+		EffectCarnationVinusDie::Create({ sprite.getPosition()}, { -direction.x,direction.y}, scene);
+		OnDie();
+	}
 }
 
 void BulletCarnationBlueSeed::Init()
@@ -27,6 +33,7 @@ void BulletCarnationBlueSeed::Init()
 	owner = Owner::Enemy;
 	ObjectBullet::Init();
 	animator.Play("animations/carnationVinusCreat.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_venus_grow_end.wav");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationBlueSeed::Frie, this));
 	SetSpeed(0.f);
 	SetRange(15000.f);
@@ -38,10 +45,8 @@ void BulletCarnationBlueSeed::Init()
 
 void BulletCarnationBlueSeed::OnDie()
 {
-	//ObjectEffect* oe = new ObjectEffect("EffectCarrotBoom");
-	//oe->CreateInit(position, direction, scene);
-	//oe->GetAniamtor().Play("animations/carrotBoomDeath.csv");
-	//oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_mermaid_turtle_shell_pop.wav");
+	isAlive = false;
 	ObjectBullet::OnDie();
 }
 

@@ -27,6 +27,7 @@ void BulletCarnationFinalVine::Init()
 {
 	ObjectBullet::Init();
 	animator.Play("animations/carnationFinalVine.csv");
+	SOUND_MGR.PlaySfx("resource/Sprite/stage02/sfx_flower_intro_vinegrow.wav");
 	SetSpeed(0.f);
 	SetRange(3000.f);
 	type = Type::Straight;

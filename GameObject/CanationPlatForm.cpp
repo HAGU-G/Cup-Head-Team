@@ -30,14 +30,12 @@ void CanationPlatForm::Update(float dt)
 
 		if (onPlatForm && newPos.y < Pos.y + 15.f)
 		{
-			std::cout << "true" << std::endl;
 			newPos.x = position.x;
 			newPos.y = position.y + speed * dt;
 			SetPosition(newPos);
 		}
 		else if (!onPlatForm)
 		{
-			std::cout << "false" << std::endl;
 			newPos.y = position.y - speed * dt;
 			SetPosition(newPos);
 			if (newPos.y <= Pos.y)

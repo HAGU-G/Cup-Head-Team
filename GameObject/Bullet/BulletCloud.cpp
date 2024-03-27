@@ -14,6 +14,7 @@ BulletCloud* BulletCloud::Create(const sf::Vector2f& pos, const sf::Vector2f& di
 	bc->CreateInit(pos, direction, scene);
 	bc->SetRotation(0.f);
 	bc->SetScale({ 1.f, 1.f });
+	bc->hasHitBox = false;
 	return bc;
 }
 

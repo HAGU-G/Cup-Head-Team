@@ -16,6 +16,7 @@ BulletCarnationFireSeed* BulletCarnationFireSeed::Create(const sf::Vector2f& pos
 	BulletCarnationFireSeed* bcf = new BulletCarnationFireSeed();
 	bcf->SetColor(i);
 	bcf->CreateInit(pos, direction, scene);
+	bcf->hp = 10;
 	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcf);
 	return bcf;
 }
@@ -24,8 +25,19 @@ void BulletCarnationFireSeed::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	SetCustomBounds(1.f, 1.f, Origins::MC);
 	customBounds.setPosition(position);
+	if (animator.GetCurrentCilpId() == "animations/carnationSeedBlue.csv")
+	{
+		isPink = false;
+	}
+	else if (animator.GetCurrentCilpId() == "animations/carnationSeedPurple.csv")
+	{
+		isPink = false;
+	}
+	else if (animator.GetCurrentCilpId() == "animations/carnationSeedPink.csv")
+	{
+		isPink = true;
+	}
 	if (sprite.getPosition().y >= -10)
 	{
 		if (animator.GetCurrentCilpId() == "animations/carnationSeedBlue.csv")
@@ -60,30 +72,30 @@ void BulletCarnationFireSeed::Init()
 	if (i == 0)
 	{
 		animator.Play("animations/carnationSeedBlue.csv");
+		hp = 10;
 	}
 	else if (i == 1)
 	{
-		isPink = true;
 		animator.Play("animations/carnationSeedPink.csv");
+		hp = 10;
 	}
 	else if( i == 2)
 	{
 		animator.Play("animations/carnationSeedPurple.csv");
+		hp = 10;
 	}
+	SetCustomBounds(0.6f, 0.6f, Origins::BC);
 	SetSpeed(400.f);
 	SetRange(1000.f);
 	SetDirection({ 0.f,1.f });
 	type = Type::Straight;
 	sprite.setRotation(GetRotation() - 90.f);
-	maxHp = INT_MAX;
-	hp = INT_MAX;
-	ObjectBullet::Init();
 }
 
 void BulletCarnationFireSeed::OnDie()
 {
-	ObjectBullet::OnDie();
 	isAlive = false;
+	ObjectBullet::OnDie();
 }
 
 sf::RectangleShape BulletCarnationFireSeed::GetCustomBounds() const
@@ -98,12 +110,14 @@ void BulletCarnationFireSeed::SetRotation(float value)
 
 void BulletCarnationFireSeed::Vine()
 {
+	renderStates = sf::RenderStates();
 	animator.Play("animations/carnationSeedVine.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::VineReturn, this));
 }
 
 void BulletCarnationFireSeed::VineReturn()
 {
+	renderStates = sf::RenderStates();
 	BulletCarnationBlueSeed::Create({ position.x ,position.y - sprite.getGlobalBounds().height }, { 1.f,1.f }, scene);
 	animator.Play("animations/carnationSeedVineReturn.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
@@ -111,6 +125,8 @@ void BulletCarnationFireSeed::VineReturn()
 
 void BulletCarnationFireSeed::PurpleVine()
 {
+	renderStates = sf::RenderStates();
+	SetCustomBounds(0.1f, 0.5f, Origins::BC);
 	animator.Play("animations/carnationFireSeedPurpleVine.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), 4, std::bind(&BulletCarnationFireSeed::CreatePurpleMonster, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
@@ -123,6 +139,7 @@ void BulletCarnationFireSeed::CreatePurpleMonster()
 
 void BulletCarnationFireSeed::PinkVine()
 {
+	renderStates = sf::RenderStates();
 	animator.Play("animations/carnationSeedPinkVine.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame()-3, std::bind(&BulletCarnationFireSeed::CreatePinkMonster, this));
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::PinkVineReturn, this));
@@ -130,6 +147,7 @@ void BulletCarnationFireSeed::PinkVine()
 
 void BulletCarnationFireSeed::PinkVineReturn()
 {
+	renderStates = sf::RenderStates();
 	animator.Play("animations/carnationSeedPinkVineReturn.csv");
 	animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BulletCarnationFireSeed::OnDie, this));
 }
