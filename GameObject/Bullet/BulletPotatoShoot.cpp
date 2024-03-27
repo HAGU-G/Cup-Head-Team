@@ -32,7 +32,6 @@ void BulletPotatoShoot::Init()
 	SetSpeed(600.f);
 	SetRange(1200.f);
 	type = Type::Straight;
-	ObjectBullet::Init();
 }
 
 void BulletPotatoShoot::OnCreate()

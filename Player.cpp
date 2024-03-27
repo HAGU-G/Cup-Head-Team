@@ -596,6 +596,7 @@ void Player::OnDamage()
 	{
 		OnDie();
 	}
+	sceneGame->SetPlayerHp(hp);
 }
 
 void Player::DuskIdle()

@@ -114,7 +114,7 @@ void Stage01::Update(float dt)
 		if (carrot->GetHp() <= 0)
 		{
 			sceneGame->SetStatus(SceneGame::Status::Victory);
-			phase = -1;
+			phase = 4;
 		}
 		carrotHp = carrot->GetHp();
 		break;
@@ -176,13 +176,13 @@ void Stage01::Reset()
 	{
 		onion->Release();
 		scene->RemoveGo(onion);
-		potato = nullptr;
+		onion = nullptr;
 	}
 	if (carrot)
 	{
 		carrot->Release();
 		scene->RemoveGo(carrot);
-		potato = nullptr;
+		carrot = nullptr;
 	}
 
 	player = new Player("Player");

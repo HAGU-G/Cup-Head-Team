@@ -8,6 +8,7 @@
 BossPotato::BossPotato(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 360;
 }
 
 void BossPotato::Init()
@@ -71,9 +72,9 @@ void BossPotato::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::BackSpace))
 	{
-		OnDamage(10);
+		OnDamage(100);
 	}
 }
 
