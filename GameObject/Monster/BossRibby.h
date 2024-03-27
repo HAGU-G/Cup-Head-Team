@@ -6,6 +6,7 @@ class BossRibby : public ObjectMonster
 	enum class State
 	{
 		Idle,
+		Phase2Idle,
 		Pattern1,
 		Pattern2,
 		Roll,
@@ -16,10 +17,8 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
-	float shootTimer = 0.f;
-	float shootInterval = 3.0f;
-	float patternTimer = 0.f;
-	float patternInterval = 2.0f;
+	float patternTimer = 6.f;
+	float patternInterval = 6.0f;
 	float moveSpeed = 100.f;
 
 	int shootCount = 0;
@@ -58,7 +57,6 @@ public:
 	void Death();
 	void OnDie();
 
-	bool ShootTimer(float dt);
 	bool PatternTimer(float dt);
 
 	void SetState(State state);

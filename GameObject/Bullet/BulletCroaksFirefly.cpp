@@ -77,8 +77,8 @@ void BulletCroaksFirefly::Init()
 		break;
 	}
 	type = Type::Straight;
-	maxHp = 30;
-	hp = 30;
+	maxHp = 1;
+	hp = 1;
 }
 
 void BulletCroaksFirefly::OnDie()

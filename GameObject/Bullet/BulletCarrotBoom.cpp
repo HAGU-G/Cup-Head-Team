@@ -32,8 +32,8 @@ void BulletCarrotBoom::Init()
 	SetRange(1500.f);
 	type = Type::Homing;
 	SetRotateSpeed(180.f);
-	maxHp = 30;
-	hp = 30;
+	maxHp = 12;
+	hp = 12;
 }
 
 void BulletCarrotBoom::OnDie()

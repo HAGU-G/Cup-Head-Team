@@ -44,6 +44,14 @@ void Stage02::Init()
 void Stage02::Update(float dt)
 {
 	GameObject::Update(dt);
+	int currentHp = std::min(croaks->GetHp(), ribby->GetHp());
+	croaks->SetHp(currentHp);
+	ribby->SetHp(currentHp);
+	if (!isVictory && currentHp == 0)
+	{
+		isVictory = true;
+		sceneGame->SetStatus(SceneGame::Status::Victory);
+	}
 }
 
 void Stage02::LateUpdate(float dt)
@@ -64,7 +72,7 @@ void Stage02::Reset()
 	sceneGame->AddMonster(croaks);
 	sceneGame->AddMonster(ribby);
 
-	//scene->AddGo(croaks);
+	scene->AddGo(croaks);
 	scene->AddGo(ribby);
 	scene->AddGo(player);
 

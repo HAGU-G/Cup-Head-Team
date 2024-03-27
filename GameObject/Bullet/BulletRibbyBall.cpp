@@ -44,8 +44,9 @@ void BulletRibbyBall::Init()
 
 	owner = Owner::Enemy;
 	SetTexture("resource/Ribbyball1.png");
+	SetOrigin(Origins::MC);
 	SetSpeed(600.f);
-	SetRange(1200.f);
+	SetRange(3000.f);
 	type = Type::Straight;
 }
 
