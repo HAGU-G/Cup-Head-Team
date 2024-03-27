@@ -74,7 +74,7 @@ public:
 	int GetHp() { return hp; }
 	void ReSetHp() { hp = maxHp; }
 	void Dash(float dt);
-
+	void DashEnd();
 	void OnDamage();
 	void OnDie();
 

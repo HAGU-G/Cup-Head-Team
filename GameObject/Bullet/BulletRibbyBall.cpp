@@ -13,7 +13,7 @@ BulletRibbyBall* BulletRibbyBall::Create(const sf::Vector2f& pos, const sf::Vect
 	BulletRibbyBall* brb = new BulletRibbyBall();
 	brb->CreateInit(pos, direction, scene);
 	//dynamic_cast<SceneDev3*>(scene)->AddMonster(brb);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(brb);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(brb);
 	return brb;
 }
 

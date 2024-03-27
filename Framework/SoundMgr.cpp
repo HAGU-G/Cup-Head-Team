@@ -49,16 +49,17 @@ void SoundMgr::Init(int totalChannels)
 
 void SoundMgr::Release()
 {
-	// StopAll();
-	// StopBgm();
-
+	//StopAll();
+	StopBgm();
 	for (auto sound : waiting)
 	{
+		sound->stop();
 		delete sound;
 	}
 	waiting.clear();
 	for (auto sound : playing)
 	{
+		sound->stop();
 		delete sound;
 	}
 	playing.clear();

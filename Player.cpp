@@ -66,17 +66,17 @@ void Player::Update(float dt)
 		}
 	}
 
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::LShift) && !isDashing)
 	{
 		animator.Play("animations/PlayerDash.csv");
 		isDashing = true;
 		dashTimer = dashDuration;
+		velocity.x = (PreDirection == Direction::Right ? 1 : -1) * dashSpeed;
+		velocity.y = 0;
 	}
-	if (InputMgr::GetKeyUp(sf::Keyboard::LShift))
-	{
-		animator.Play("animations/PlayerIdle.csv");
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z))
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping)
 	{
 		animator.Play("animations/PlayerJump.csv");
 
@@ -218,6 +218,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					}
 					PreDirection = Direction::Right;
 				}
+				PreDirection = Direction::Right;
 			}
 			else if (horizontalInput < 0.f)
 			{
@@ -245,6 +246,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					}
 					PreDirection = Direction::Left;
 				}
+				PreDirection = Direction::Left;
 			}
 			else if (verticalInput < 0.f && horizontalInput == 0)
 			{
@@ -307,6 +309,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					PreDirection = Direction::Right;
 					currentDirection = PreDirection;
 				}
+				PreDirection = Direction::Right;
 			}
 			else if (horizontalInput < 0.f)
 			{
@@ -335,6 +338,7 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 					PreDirection = Direction::Left;
 					currentDirection = PreDirection;
 				}
+				PreDirection = Direction::Left;
 			}
 			else if (verticalInput > 0.f)
 			{
@@ -469,22 +473,22 @@ void Player::Fire(Direction dir)
 	switch (dir)
 	{
 	case Direction::Right:
-		pos.x += 50.f;
+		pos.x += 60.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
 		PreDirection = Direction::Right;
 		break;
 	case Direction::Left:
-		pos.x -= 50.f;
+		pos.x -= 60.f;
 		pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
 		PreDirection = Direction::Left;
 		break;
 	case Direction::Up:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y -= 60.f;
+		pos.y -= 70.f;
 		break;
 	case Direction::Down:
 		pos.x += (rand() % static_cast<int>(random * 2 + 1)) - random;
-		pos.y += 60.f;
+		pos.y += 70.f;
 		break;
 	}
 	pos.y -= 100;
@@ -493,28 +497,38 @@ void Player::Fire(Direction dir)
 
 void Player::Dash(float dt)
 {
-	if (dashTimer > 0)
+	dashTimer -= dt;
+
+	if (PreDirection == Direction::Right) 
 	{
-		sf::Vector2f dashDirection;
-		switch (currentDirection)
-		{
-		case Direction::Right:
-			dashDirection = sf::Vector2f(1, 0);
-			PreDirection = Direction::Right;
-			break;
-		case Direction::Left:
-			dashDirection = sf::Vector2f(-1, 0);
-			PreDirection = Direction::Left;
-			break;
+		velocity.x = dashSpeed;
+	}
+	else if (PreDirection == Direction::Left) 
+	{
+		velocity.x = -dashSpeed;
+	}
 
-		}
+	velocity.y = 0;
 
-		SetPosition(position + dashDirection * dashSpeed * dt);
-		dashTimer -= dt;
+	if (dashTimer <= 0)
+	{
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DashEnd, this));
+	}
+
+	position += velocity * dt;
+	SetPosition(position);
+}
+
+void Player::DashEnd()
+{
+	isDashing = false;
+	if (isJumping)
+	{
+		animator.Play("animations/PlayerJump.csv");
 	}
 	else
 	{
-		isDashing = false;
+		animator.Play("animations/PlayerIdle.csv");
 	}
 }
 
@@ -549,23 +563,27 @@ void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
 
-	auto monsters = sceneGame->getAllMonsters();
-	for (auto& monster : monsters)
+
+	if (state == PlayerState::Dead)
 	{
-		if (monster != nullptr && monster->IsAlive() && GetCustomBounds().getGlobalBounds().intersects(monster->GetCustomBounds().getGlobalBounds()))
+		return;
+	}
+
+	for (auto enemyBullet : sceneGame->GetAllEnemyBullet())
+	{
+		if (enemyBullet->IsAlive() && GetCustomBoundsRect().intersects(enemyBullet->GetCustomBoundsRect()))
 		{
-			if (isJumping && monster->GetPink())
+			if (isJumping && !isParry && enemyBullet->GetPink())
 			{
 				//ÆÐ¸µ
-				if (!isParry)
-				{
-					animator.Play("animations/PlayerParry.csv");
-					animator.PlayQueue("animations/PlayerJump.csv");
-					isParry = true;
-					isGrounded = false;
-					velocity.y = -1000.f;
-					std::cout << "Parry" << std::endl;
-				}
+				animator.Play("animations/PlayerParry.csv");
+				animator.PlayQueue("animations/PlayerJump.csv");
+				isParry = true;
+				isGrounded = false;
+				velocity.y = -1000.f;
+				enemyBullet->OnDamage(1);
+				sceneGame->Pause();
+				sceneGame->isParryed = true;
 			}
 			else if (!isInvincible)
 			{
@@ -577,19 +595,33 @@ void Player::LateUpdate(float dt)
 				isInvincible = true;
 				invincibilityTimer = 0.0f;
 				OnDamage();
+				enemyBullet->OnDamage(1);
 			}
-
 		}
 	}
 
-	auto toeholds = sceneGame->getAlltoehold();
-	for (auto& toehold : toeholds)
+	for (auto& monster : sceneGame->GetAllMonsters())
+	{
+		if (!isInvincible && monster->IsAlive() && GetCustomBoundsRect().intersects(monster->GetCustomBoundsRect()))
+		{
+			if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+			{
+				animator.Play("animations/PlayerDamage.csv");
+			}
+			isDamaging = true;
+			isInvincible = true;
+			invincibilityTimer = 0.0f;
+			OnDamage();
+		}
+	}
+
+	for (auto& toehold : sceneGame->GetAlltoehold())
 	{
 		if (position.y <= toehold->GetCustomBoundsRect().top)
 		{
 			toehold->onToehold = true;
 		}
-		if (toehold != nullptr && toehold->GetActive() && 
+		if (toehold->GetActive() && 
 			toehold->onToehold &&
 			(toehold->GetCustomBoundsRect().left <= this->GetGlobalBounds().left + this->GetGlobalBounds().width)&&
 			(toehold->GetCustomBoundsRect().left + toehold->GetCustomBoundsRect().width >= this->GetGlobalBounds().left))
@@ -601,9 +633,9 @@ void Player::LateUpdate(float dt)
 
 					position.y = toehold->GetCustomBoundsRect().top;
 					velocity.y = 0;
+					toehold->onPlatForm = true;
 					isGrounded = true;
 					isJumping = false;
-					toehold->onPlatForm = true;
 				}
 			}
 			else if(isJumping)
@@ -615,8 +647,15 @@ void Player::LateUpdate(float dt)
 		{
 			toehold->onToehold = false;
 			toehold->onPlatForm = false;
+			if (MoveDirection.y > 0)
+			{
+				isGrounded = false;
+				isJumping = true;
+			}
 		}
 	}
+
+
 }
 
 

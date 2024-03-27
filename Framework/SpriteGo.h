@@ -17,6 +17,7 @@ public:
 	bool onPlatForm = false;
 	bool onToehold = false;
 	SpriteGo(const std::string& name = "");
+	~SpriteGo() override = default;
 
 	virtual sf::FloatRect GetLocalBounds() override;
 	virtual sf::FloatRect GetGlobalBounds() override;

@@ -16,7 +16,7 @@ BulletCarnationAcon* BulletCarnationAcon::Create(const sf::Vector2f& pos, const 
 	bca->CreateInit(pos, direction, scene);
 	bca->SetFireInterval(interval);
 	bca->SetDirection(playerPos - bca->GetPosition());
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bca);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bca);
 	return bca;
 }
 

@@ -13,7 +13,7 @@ BulletCarnationFinalPlatForm* BulletCarnationFinalPlatForm::Create(const sf::Vec
 	BulletCarnationFinalPlatForm* bcp = new BulletCarnationFinalPlatForm();
 	bcp->CreateInit(pos, direction, scene);
 	bcp->sortLayer = 2;
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcp);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcp);
 	return bcp;
 }
 
@@ -60,7 +60,7 @@ void BulletCarnationFinalPlatForm::Init()
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
 	hp = INT_MAX;
-	ObjectBullet::Init();
+	renderStates = sf::RenderStates();
 }
 
 void BulletCarnationFinalPlatForm::OnDie()

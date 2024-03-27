@@ -16,7 +16,7 @@ BulletCarnationFireSeed* BulletCarnationFireSeed::Create(const sf::Vector2f& pos
 	BulletCarnationFireSeed* bcf = new BulletCarnationFireSeed();
 	bcf->SetColor(i);
 	bcf->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcf);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcf);
 	return bcf;
 }
 

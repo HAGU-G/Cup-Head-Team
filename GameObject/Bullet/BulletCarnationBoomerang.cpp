@@ -11,7 +11,7 @@ BulletCarnationBoomerang* BulletCarnationBoomerang::Create(const sf::Vector2f& p
 {
 	BulletCarnationBoomerang* bcb = new BulletCarnationBoomerang();
 	bcb->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcb);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcb);
 	return bcb;
 }
 

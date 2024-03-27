@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BulletPotatoShootPink.h"
 #include "SceneGame.h"
+#include <Effect/ObjectEffect.h>
 
 BulletPotatoShootPink::BulletPotatoShootPink(const std::string& name)
 	:ObjectBullet(name)
@@ -11,7 +12,7 @@ BulletPotatoShootPink* BulletPotatoShootPink::Create(const sf::Vector2f& pos, co
 {
 	BulletPotatoShootPink* bps = new BulletPotatoShootPink();
 	bps->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bps);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bps);
 	return bps;
 }
 
@@ -40,6 +41,13 @@ void BulletPotatoShootPink::OnCreate()
 
 void BulletPotatoShootPink::OnDie()
 {
+	ObjectEffect* oe = new ObjectEffect("EffectPotatoShootPink");
+	oe->CreateInit(position, direction, scene);
+	oe->GetAniamtor().Play("animations/potatoShootPinkDeath.csv");
+	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	SOUND_MGR.PlaySfx("resource/Sprite/stage01/potato/sfx_level_veggies_Potato_Worm_Explode_0"
+		+ std::to_string(Utils::RandomRange(1,3)) + ".wav");
+
 	ObjectBullet::OnDie();
 }
 

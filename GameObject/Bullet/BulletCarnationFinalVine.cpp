@@ -11,7 +11,7 @@ BulletCarnationFinalVine* BulletCarnationFinalVine::Create(const sf::Vector2f& p
 {
 	BulletCarnationFinalVine* bcf = new BulletCarnationFinalVine();
 	bcf->CreateInit(pos, direction, scene);
-	dynamic_cast<SceneGame*>(scene)->AddMonster(bcf);
+	dynamic_cast<SceneGame*>(scene)->AddEnemyBullet(bcf);
 	return bcf;
 }
 
@@ -33,7 +33,7 @@ void BulletCarnationFinalVine::Init()
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
 	hp = INT_MAX;
-	ObjectBullet::Init();
+	renderStates = sf::RenderStates();
 }
 
 void BulletCarnationFinalVine::OnDie()

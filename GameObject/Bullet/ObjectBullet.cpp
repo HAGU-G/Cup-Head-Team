@@ -4,11 +4,11 @@
 ObjectBullet::ObjectBullet(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 1;
 }
 
 ObjectBullet::~ObjectBullet()
 {
-	OnDie();
 }
 
 void ObjectBullet::Init()
@@ -52,14 +52,7 @@ void ObjectBullet::LateUpdate(float dt)
 	ObjectMonster::LateUpdate(dt);
 	if (moveDistance >= range || position.y > 0.f || hp <= 0)
 	{
-		if (isAlive)
-		{
-			isAlive = false;
-		}
-		else
-		{
-			OnDie();
-		}
+		OnDie();
 	}
 }
 
@@ -116,6 +109,7 @@ void ObjectBullet::OnCreate()
 
 void ObjectBullet::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(this);
 }
 

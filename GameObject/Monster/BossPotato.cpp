@@ -149,6 +149,7 @@ void BossPotato::Leave()
 
 void BossPotato::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(scene->FindGo("PotatoIntroBack"));
 	scene->RemoveGo(scene->FindGo("PotatoIntroFront"));
 	scene->RemoveGo(this);

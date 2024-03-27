@@ -46,11 +46,13 @@ void Scene::Release()
 {
 	for (auto obj : gameObjects)
 	{
+		obj->Release();
 		delete obj;
 	}
 
 	for (auto obj : uiGameObjects)
 	{
+		obj->Release();
 		delete obj;
 	}
 
