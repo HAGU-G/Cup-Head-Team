@@ -24,7 +24,7 @@ void BulletCarnationPinkCreaterAttack::Update(float dt)
 {
 	owner = Owner::Enemy;
 	ObjectBullet::Update(dt);
-	SetCustomBounds(1.f, 1.f, Origins::MC);
+	SetCustomBounds(0.8f, 0.8f, Origins::MC);
 	customBounds.setPosition(position);
 
 	SetScale({ -1.f, abs(direction.x) / direction.x });

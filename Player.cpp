@@ -582,7 +582,7 @@ void Player::LateUpdate(float dt)
 				isParry = true;
 				isGrounded = false;
 				velocity.y = -1000.f;
-				enemyBullet->OnDamage(1);
+				enemyBullet->OnDamage(1000);
 				sceneGame->Pause();
 				sceneGame->isParryed = true;
 			}

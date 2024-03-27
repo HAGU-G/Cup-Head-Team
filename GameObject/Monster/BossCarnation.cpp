@@ -13,6 +13,7 @@
 BossCarnation::BossCarnation(const std::string& name)
 	:ObjectMonster(name)
 {
+	hp = maxHp = 1300;
 }
 
 void BossCarnation::Init()
@@ -28,6 +29,7 @@ void BossCarnation::Reset()
 {
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 	animator.SetTarget(&sprite);
 
 	Intro();
@@ -36,11 +38,15 @@ void BossCarnation::Reset()
 void BossCarnation::Update(float dt)
 {
 	ObjectMonster::Update(dt);
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
-	if (hp <= maxHp * 0.6 && state == State::Idle)
+	if (hp <= 598 && state == State::Idle)
 	{
 		FinalIntro();
 	}
@@ -75,6 +81,10 @@ void BossCarnation::Update(float dt)
 		if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 		{
 			FireSeed();
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+		{
+			SetState(State::FinalIdle);
 		}
 	}
 	else if (state == State::FinalIdle)
@@ -129,10 +139,6 @@ void BossCarnation::LateUpdate(float dt)
 	}
 
 	ObjectMonster::LateUpdate(dt);
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-	{
-		OnDamage(10);
-	}
 }
 
 void BossCarnation::FaSfx()
@@ -360,6 +366,7 @@ void BossCarnation::Death()
 {
 	isAlive = false;
 	SetState(State::None);
+	sceneGame->SetStatus(SceneGame::Status::Victory);
 	animator.ClearEvent();
 	animator.Play("animations/carnationBossDie.csv");
 }

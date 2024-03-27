@@ -42,10 +42,12 @@ void BulletCarnationPollen::Init()
 	if (i == 0)
 	{
 		animator.Play("animations/carnationFinalFirePollenWhite.csv");
+		hp = 10;
 	}
 	else if (i == 1)
 	{
 		animator.Play("animations/carnationFinalFirePollenPink.csv");
+		hp = 10;
 	}
 	SetSpeed(450.f);
 	SetRange(1500.f);

@@ -19,7 +19,7 @@ BulletCarnationPurpleSeed* BulletCarnationPurpleSeed::Create(const sf::Vector2f&
 void BulletCarnationPurpleSeed::Update(float dt)
 {
 	ObjectBullet::Update(dt);
-	SetCustomBounds(1.f, 1.f, Origins::MC);
+	SetCustomBounds(0.6f, 0.5f, Origins::BC);
 	customBounds.setPosition({ position.x,position.y + 10.f });
 	if (hp <= 0)
 	{
