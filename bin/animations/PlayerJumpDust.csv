@@ -1,0 +1,17 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+PlayerJumpDust,15,0,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/PlayerJumpDust.png,0,0,110,152,7
+resource/PlayerJumpDust.png,110,0,165,152,7
+resource/PlayerJumpDust.png,275,0,178,152,7
+resource/PlayerJumpDust.png,453,0,195,152,7
+resource/PlayerJumpDust.png,648,0,218,152,7
+resource/PlayerJumpDust.png,866,0,234,152,7
+resource/PlayerJumpDust.png,1100,0,238,152,7
+resource/PlayerJumpDust.png,1338,0,245,152,7
+resource/PlayerJumpDust.png,1583,0,249,152,7
+resource/PlayerJumpDust.png,1832,0,255,152,7
+resource/PlayerJumpDust.png,2087,0,265,152,7
+resource/PlayerJumpDust.png,2352,0,274,152,7
+resource/PlayerJumpDust.png,2626,0,282,152,7
+resource/PlayerJumpDust.png,2908,0,285,152,7

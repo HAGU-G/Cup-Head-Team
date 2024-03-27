@@ -52,7 +52,7 @@ void Player::Update(float dt)
 	}
 
 	float horizontalInput = InputMgr::GetAxisRaw(Axis::Horizontal);
-	bool isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
+	isDownKeyPressed = InputMgr::GetKey(sf::Keyboard::Down);
 	isCKeyPressed = InputMgr::GetKey(sf::Keyboard::C);
 	isXKeyPressed = InputMgr::GetKey(sf::Keyboard::X);
 
@@ -77,7 +77,17 @@ void Player::Update(float dt)
 		velocity.y = 0;
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping && !isDashing)
+	if (isDownKeyPressed && InputMgr::GetKeyDown(sf::Keyboard::Z) && isGrounded && onPlatForm)
+	{
+		isGrounded = false;
+		isJumping = true;
+		position.y += gravity * dt;
+		velocity.y = gravity * dt;
+
+		animator.Play("animations/PlayerJump.csv");
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Z) && !isJumping &&!isDashing)
 	{
 		animator.Play("animations/PlayerJump.csv");
 		isParry = false;
@@ -113,11 +123,15 @@ void Player::Update(float dt)
 
 		if (position.y > 0.f)
 		{
+			if (isDownKeyPressed && !isCKeyPressed)
+			{
+				DuckIdle();
+			}
 			isGrounded = true;
-			isJumping = false;
 			isParry = false;
 			position.y = 0.f;
 			velocity.y = 0.f;
+			isJumping = false;
 		}
 		UpdateDirection(horizontalInput, dt);
 
@@ -141,18 +155,38 @@ void Player::Update(float dt)
 		}
 	}
 
-
-	auto bounds = sprite.getGlobalBounds();
-	float shrinkFactor = 0.7f;
-	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
-	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
-	customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
-	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
+	if (!isDashing)
+	{
+		auto bounds = sprite.getGlobalBounds();
+		float shrinkFactor = 0.7f;
+		float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+		float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+		customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
+		customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
+	}
+	else
+	{
+		auto bounds = sprite.getGlobalBounds();
+		float shrinkFactor = 0.1f;
+		float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
+		float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+		customBounds.setSize({ bounds.width * shrinkFactor, bounds.height * shrinkFactor });
+		customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
+	}
 
 	currentDirection = PreDirection;
 
 	MoveDirection = position - prePosition;
 	prePosition = position;
+
+	if (position.x <= -580.f)
+	{
+		position.x = -580.f;
+	}
+	else if (position.x >= 580.f)
+	{
+		position.x = 580.f;
+	}
 }
 
 void Player::UpdateDirection(float horizontalInput, float dt)
@@ -430,12 +464,20 @@ void Player::UpdateDirection(float horizontalInput, float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Down) && !isJumping && !isCKeyPressed)
 	{
 		animator.Play("animations/PlayerDuck.csv");
-		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DuskIdle, this));
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetTotalFrame(), std::bind(&Player::DuckIdle, this));
 
 	}
 
 	if (InputMgr::GetKey(sf::Keyboard::Down) && !isJumping && !isCKeyPressed)
 	{
+		if (horizontalInput > 0.f)
+		{
+			PreDirection = Direction::Right;
+		}
+		else if(horizontalInput < 0.f)
+		{
+			PreDirection = Direction::Left;
+		}
 		isDuck = true;
 	}
 	else
@@ -475,39 +517,37 @@ void Player::UpdateJumpingDirection(float horizontalInput, float verticalInput)
 
 void Player::Fire(Direction dir)
 {
-	sf::Vector2f pos = position;                 //손가락 포지션 변경 필요
+	sf::Vector2f pos = position; 
 
-	const float random = 20.f;                   //약간의 랜덤 방향으로 발사
+	const float random = 20.f;
 	int temp = rand();
 	switch (dir)
 	{
 	case Direction::Right:
 		if (isDuck)
 		{
-			pos.x += 70.f;
-			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 80.f;
-			PreDirection = Direction::Right;
+			pos.x += 80.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 40.f;
 		}
 		else
 		{
 			pos.x += 70.f;
 			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
-			PreDirection = Direction::Right;
 		}
+		PreDirection = Direction::Right;
 		break;
 	case Direction::Left:
 		if (isDuck)
 		{
-			pos.x -= 70.f;
-			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 80.f;
-			PreDirection = Direction::Left;
+			pos.x -= 80.f;
+			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random + 40.f;
 		}
 		else
 		{
 			pos.x -= 70.f;
 			pos.y += (rand() % static_cast<int>(random * 2 + 1)) - random;
-			PreDirection = Direction::Left;
 		}
+		PreDirection = Direction::Left;
 		break;
 	case Direction::Up:
 		if (PreDirection == Direction::Left)
@@ -600,12 +640,23 @@ void Player::OnDamage()
 	sceneGame->SetPlayerHp(hp);
 }
 
-void Player::DuskIdle()
+void Player::DuckIdle()
 {
-	if (animator.GetCurrentCilpId() != "animations/PlayerDuckIdle.csv")
+	if(!InputMgr::GetKey(sf::Keyboard::X))
 	{
-		animator.Play("animations/PlayerDuckIdle.csv");
+		if (animator.GetCurrentCilpId() != "animations/PlayerDuckIdle.csv")
+		{
+			animator.Play("animations/PlayerDuckIdle.csv");
+		}
 	}
+	else
+	{
+		if (animator.GetCurrentCilpId() != "animations/PlayerDuckShoot.csv")
+		{
+			animator.Play("animations/PlayerDuckShoot.csv");
+		}
+	}
+	
 }
 
 void Player::OnDie()
@@ -701,25 +752,28 @@ void Player::LateUpdate(float dt)
 		{
 			if (MoveDirection.y >= 0)
 			{
-				if (this->GetGlobalBounds().intersects(toehold->GetCustomBoundsRect()))
+				if (!(isDownKeyPressed && InputMgr::GetKeyDown(sf::Keyboard::Z)))
 				{
+					if (this->GetGlobalBounds().intersects(toehold->GetCustomBoundsRect()))
+					{
 
-					position.y = toehold->GetCustomBoundsRect().top;
-					velocity.y = 0;
-					toehold->onPlatForm = true;
-					isGrounded = true;
-					isJumping = false;
+						position.y = toehold->GetCustomBoundsRect().top;
+						velocity.y = 0;
+						toehold->onPlatForm = onPlatForm = true;
+						isGrounded = true;
+						isJumping = false;
+					}
 				}
 			}
 			else if (isJumping)
 			{
-				toehold->onPlatForm = false;
+				toehold->onPlatForm = onPlatForm = false;
 			}
 		}
 		if (position.y > toehold->GetCustomBoundsRect().top + gravity * dt)
 		{
 			toehold->onToehold = false;
-			toehold->onPlatForm = false;
+			toehold->onPlatForm = onPlatForm = false;
 			if (MoveDirection.y > 0)
 			{
 				isGrounded = false;
