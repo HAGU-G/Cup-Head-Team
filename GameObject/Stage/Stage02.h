@@ -23,6 +23,8 @@ protected:
 	SpriteGo* bg4;
 	SpriteGo* bg5;
 
+	bool isVictory = false;
+
 	std::list<SpriteGo*> backgrounds;
 
 	sf::Vector2f viewSize;

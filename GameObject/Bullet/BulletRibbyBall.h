@@ -5,7 +5,6 @@ class BulletRibbyBall : public ObjectBullet
 protected:
 
 public:
-
 	BulletRibbyBall(const std::string& name = "BulletRibbyBall");
 	~BulletRibbyBall() override = default;
 	BulletRibbyBall(const BulletRibbyBall&) = delete;

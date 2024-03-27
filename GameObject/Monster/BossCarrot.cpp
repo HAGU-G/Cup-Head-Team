@@ -143,7 +143,6 @@ void BossCarrot::Intro()
 			patternTimer = 2.f;
 		});
 
-
 }
 
 void BossCarrot::Pattern1()

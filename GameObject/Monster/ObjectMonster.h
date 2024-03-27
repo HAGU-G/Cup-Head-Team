@@ -30,6 +30,7 @@ public:
 	virtual bool OnDamage(int damage);
 
 	inline int GetHp() const { return hp; }
+	inline void SetHp(int value) { hp = value; }
 	inline int GetMaxHp() const { return hp; }
 
 	bool IsAlive() const { return isAlive; }/////////////////   추가된 부분 입니다.
