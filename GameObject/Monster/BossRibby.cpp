@@ -12,7 +12,7 @@ BossRibby::BossRibby(const std::string& name)
 void BossRibby::Init()
 {
 	ObjectMonster::Init();
-
+	hp = maxHp = 1400;
 	hasHitBox = true;
 }
 
@@ -59,7 +59,13 @@ void BossRibby::Update(float dt)
 		{
 			SetState(State::Pattern1);
 		}
-		if (PatternTimer(dt) && hp <= maxHp * 0.50 && state == preState)
+		else if (hp <= maxHp * 0.60 && state != State::Roll)
+		{
+			SetState(State::Roll);
+		}
+		break;
+	case BossRibby::State::Phase2Idle:
+		if (PatternTimer(dt) && hp <= maxHp * 0.60 && state == preState)
 		{
 			SetState(State::Pattern2);
 		}
@@ -80,7 +86,7 @@ void BossRibby::Update(float dt)
 		if (state == State::Pattern2 && ballCount > 2)
 		{
 			ballCount = 0;
-			SetState(State::Idle);
+			SetState(State::Phase2Idle);
 		}
 		break;
 	case BossRibby::State::Roll:
@@ -101,24 +107,15 @@ void BossRibby::Update(float dt)
 	auto bounds = sprite.getGlobalBounds();
 	float shrinkFactor = 0.5f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2 - 50;
-	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - 1.f) / 2;
 	// customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top + heightReduction, bounds.width * shrinkFactor, bounds.height * shrinkFactor);
-	SetCustomBounds(shrinkFactor, shrinkFactor, Origins::TL);
+	SetCustomBounds(shrinkFactor, 1.f, Origins::TL);
 	customBounds.setPosition(sf::Vector2f(bounds.left + widthReduction, bounds.top + heightReduction));
 }
 
 void BossRibby::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-	{
-		SetState(State::Pattern2);
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
-	{
-		SetState(State::Pattern1);
-	}
 
 }
 
@@ -143,7 +140,8 @@ void BossRibby::Intro2()
 			[this]()
 			{
 				SetScale({ -1.f,1.f });
-				Idle();
+				patternTimer = 6.f;
+				SetState(State::Phase2Idle);
 			});
 		});
 	SetPosition({ -500, 0 });
@@ -170,6 +168,7 @@ void BossRibby::MoveToLeft(float dt)
 {
 	sf::Vector2f newPosition = position - sf::Vector2f(moveSpeed * dt, 0);
 	SetPosition(newPosition);
+	moveSpeed += moveSpeed * dt*dt;
 }
 
 void BossRibby::MoveToRight(float dt)
@@ -245,17 +244,6 @@ void BossRibby::OnDie()
 	scene->RemoveGo(this);
 }
 
-bool BossRibby::ShootTimer(float dt)
-{
-	shootTimer += dt;
-	if (shootTimer >= shootInterval)
-	{
-		shootTimer = 0.f;
-		return true;
-	}
-	return false;
-}
-
 bool BossRibby::PatternTimer(float dt)
 {
 	patternTimer += dt;
@@ -293,6 +281,22 @@ void BossRibby::SetState(State state)
 			}
 			preState = State::Idle;
 			break;
+		case BossRibby::State::Phase2Idle:
+			if (preState == State::Pattern1)
+			{
+				animator.Play("animations/RibbyShootEnd.csv");
+				animator.PlayQueue("animations/RibbyIdle.csv");
+			}
+			else if (preState == State::Pattern2)
+			{
+				animator.Play("animations/RibbyIdle.csv");
+			}
+			else
+			{
+				animator.Play("animations/RibbyIdle.csv");
+			}
+			preState = State::Phase2Idle;
+			break;
 		case BossRibby::State::Pattern1:
 			if (shootCount < 7)
 			{
@@ -317,9 +321,9 @@ void BossRibby::SetState(State state)
 			preState = State::Pattern2;
 			break;
 		case BossRibby::State::Roll:
-			Roll();
-			if (preState == State::Pattern1)
+			if (preState == State::Pattern1 || preState == State::Idle)
 			{
+			Roll();
 				isMovingLeft = true;
 				isMovingRight = false;
 			}

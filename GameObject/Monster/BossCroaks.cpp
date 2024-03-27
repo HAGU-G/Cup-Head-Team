@@ -13,7 +13,7 @@ BossCroaks::BossCroaks(const std::string& name)
 void BossCroaks::Init()
 {
 	ObjectMonster::Init();
-
+	hp = maxHp = 1400;
 	hasHitBox = true;
 }
 
@@ -72,6 +72,7 @@ void BossCroaks::Update(float dt)
 		if (FanTimer(dt))
 		{
 			SetState(State::Idle);
+			patternTimer = 4.5f;
 		}
 		else
 		{
@@ -94,23 +95,18 @@ void BossCroaks::Update(float dt)
 	auto bounds = sprite.getGlobalBounds();
 	float shrinkFactor = 0.6f;
 	float widthReduction = bounds.width * (1 - shrinkFactor) / 2;
-	float heightReduction = bounds.height * (1 - shrinkFactor) / 2;
+	float heightReduction = bounds.height * (1 - 1.f) / 2;
 	//customBounds = sf::FloatRect(bounds.left + widthReduction, bounds.top, bounds.width * shrinkFactor, bounds.height);
-	SetCustomBounds(shrinkFactor, shrinkFactor, Origins::TL);
+	SetCustomBounds(shrinkFactor, 1.f, Origins::TL);
 	customBounds.setPosition(bounds.left + widthReduction, bounds.top + heightReduction);
 }
 
 void BossCroaks::LateUpdate(float dt)
 {
 	ObjectMonster::LateUpdate(dt);
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::BackSpace))
 	{
-		SetState(State::Pattern2);
-	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
-	{
-		SetState(State::Pattern1);
+		OnDamage(100);
 	}
 
 }
@@ -196,7 +192,7 @@ bool BossCroaks::PatternTimer(float dt)
 bool BossCroaks::FanTimer(float dt)
 {
 	fanTimer += dt;
-	if (fanTimer >= fanInterval)
+	if (fanTimer >= fanDuration)
 	{
 		fanTimer = 0.f;
 		return true;
