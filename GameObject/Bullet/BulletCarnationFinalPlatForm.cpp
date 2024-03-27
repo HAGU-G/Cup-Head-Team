@@ -60,6 +60,7 @@ void BulletCarnationFinalPlatForm::Init()
 	SetTargetPosition({ 0.f, 300.f });
 	maxHp = INT_MAX;
 	hp = INT_MAX;
+	renderStates = sf::RenderStates();
 }
 
 void BulletCarnationFinalPlatForm::OnDie()
