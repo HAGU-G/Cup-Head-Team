@@ -33,7 +33,6 @@ void BulletOnionTear::Init()
 	SetSpeed(600.f);
 	SetRange(1200.f);
 	type = Type::Straight;
-	ObjectBullet::Init();
 }
 
 void BulletOnionTear::Update(float dt)
