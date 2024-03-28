@@ -113,6 +113,7 @@ void Stage01::Update(float dt)
 	case 3:
 		if (carrot->GetHp() <= 0)
 		{
+			player->InvincibleMode();
 			sceneGame->SetStatus(SceneGame::Status::Victory);
 			phase = 4;
 		}

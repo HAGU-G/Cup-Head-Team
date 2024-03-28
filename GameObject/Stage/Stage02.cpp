@@ -55,6 +55,7 @@ void Stage02::Update(float dt)
 	if (!isVictory && currentHp == 0)
 	{
 		isVictory = true;
+		player->InvincibleMode();
 		sceneGame->SetStatus(SceneGame::Status::Victory);
 	}
 }
