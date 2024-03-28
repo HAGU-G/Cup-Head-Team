@@ -772,6 +772,11 @@ void Player::LateUpdate(float dt)
 				sceneGame->Pause();
 				sceneGame->isParryed = true;
 				SOUND_MGR.PlaySfx("resource/sfx_player_parry_slap_0" + std::to_string(Utils::RandomRange(1, 3)) + ".wav");
+
+				ObjectEffect* oe = new ObjectEffect("EffectParry");
+				oe->CreateInit((position + enemyBullet->GetPosition()) * 0.5f, MoveDirection, scene);
+				oe->GetAnimator().Play("animations/playerParryEffect.csv");
+				oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 			}
 			else if (!isInvincible)
 			{
