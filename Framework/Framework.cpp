@@ -8,7 +8,7 @@ void Framework::Init(int width, int height, const std::string& name)
 	windowSize.x = width;
 	windowSize.y = height;
 
-	window.create(sf::VideoMode(windowSize.x, windowSize.y), name, sf::Style::Fullscreen);
+	window.create(sf::VideoMode(windowSize.x, windowSize.y), name);
 	LoadPostEffect();
 
 	InputMgr::Init();
