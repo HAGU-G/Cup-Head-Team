@@ -75,7 +75,6 @@ void Framework::Do()
 
 		//ÈÄÃ³¸®
 		window.clear(sf::Color::White);
-		useShader = sf::Shader::isAvailable();
 		if (useShader)
 		{
 			if (onFilmGrain)
@@ -114,6 +113,7 @@ void Framework::Release()
 
 void Framework::LoadPostEffect()
 {
+	useShader = sf::Shader::isAvailable();
 	pass1.create(windowSize.x * scale, windowSize.y * scale);
 	pass1.setSmooth(true);
 	pass2.create(pass1.getSize().x, pass1.getSize().y);
