@@ -22,7 +22,7 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
-	float patternTimer = 0.f;
+	float patternTimer = -4.f;
 	float patternInterval = 6.f;
 
 	float fanTimer = 0.f;

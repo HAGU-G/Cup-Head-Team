@@ -42,8 +42,6 @@ protected:
 	float cloudSpeed = -50.f;
 	float frontCloudSpeed = -40.f;
 
-	bool isVictory = false;
-
 public:
 	Stage03(const std::string& name = "Stage03");
 	~Stage03() override = default;
