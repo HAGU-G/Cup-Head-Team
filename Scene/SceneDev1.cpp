@@ -396,7 +396,15 @@ void SceneDev1::Draw(sf::RenderTexture& window)
 	Utils::SetOrigin(spriteRender, Origins::ML);
 	spriteRender.setPosition(0.f, windowSize.y * 0.5f);
 
+	sf::RectangleShape background;
+	background.setSize(sf::Vector2f(windowSize));
+	background.setFillColor(sf::Color::Black);
+	background.setOrigin(background.getSize() * 0.5f);
+	background.setPosition(worldView.getCenter());
+
+
 	window.setView(worldView);
+	window.draw(background);
 	window.draw(spriteRender);
 	window.draw(loadShape);
 	window.draw(saveShape);
