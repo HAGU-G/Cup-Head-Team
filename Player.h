@@ -42,7 +42,7 @@ protected:
 	sf::Vector2f fireDir;
 	sf::Vector2f prePosition;
 	sf::Vector2f MoveDirection;
-
+	bool isDownKeyPressed;
 	bool isGrounded = true;
 	bool isAlive = true;
 	bool isFire = false;
@@ -51,7 +51,7 @@ protected:
 	bool isParry = false;
 	bool isDamaging = false;
 	bool isIntro = true;
-	bool isXKeyPressed;
+	bool isXKeyPressed = false;
 	bool onPlatForm = false;
 	bool isDuck = false;
 	bool isDucking = false;
@@ -77,7 +77,7 @@ public:
 	void ReSetHp() { hp = maxHp; }
 	void Dash(float dt);
 	void DashEnd();
-	void DuskIdle();
+	void DuckIdle();
 	void OnDamage();
 	void OnDie();
 

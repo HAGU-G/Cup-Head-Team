@@ -83,9 +83,11 @@ void BulletCroaksFirefly::Init()
 
 void BulletCroaksFirefly::OnDie()
 {
+
+	SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_tall_firefly_death_03.wav");
 	ObjectEffect* oe = new ObjectEffect("EffectFireFly");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/CroaksFireFlyDeath.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/CroaksFireFlyDeath.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }

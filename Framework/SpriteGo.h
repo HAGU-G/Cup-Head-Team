@@ -43,7 +43,7 @@ public:
 	void Reset() override;
 	void Draw(sf::RenderTexture& window) override;
 
-	Animator& GetAniamtor() { return animator; }
+	Animator& GetAnimator() { return animator; }
 	sf::Sprite& GetSprite() { return sprite; }
 
 	inline void UseRenderStates(bool value) { useRenderStates = value; }

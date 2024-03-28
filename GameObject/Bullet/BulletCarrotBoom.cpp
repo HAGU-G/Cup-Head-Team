@@ -42,8 +42,8 @@ void BulletCarrotBoom::OnDie()
 		+ std::to_string(Utils::RandomRange(1, 5)) + ".wav");
 	ObjectEffect* oe = new ObjectEffect("EffectCarrotBoom");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/carrotBoomDeath.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/carrotBoomDeath.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }
 

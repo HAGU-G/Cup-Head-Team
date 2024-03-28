@@ -15,6 +15,9 @@ void BossCroaks::Init()
 	ObjectMonster::Init();
 	hp = maxHp = 1400;
 	hasHitBox = true;
+
+	soundFan.setBuffer(RES_MGR_SOUND_BUFFER.Get("resource/Sprite/stage03/sfx_frogs_tall_fan_attack_loop_01.wav"));
+	soundFan.setLoop(true);
 }
 
 void BossCroaks::Reset()
@@ -22,19 +25,31 @@ void BossCroaks::Reset()
 	ObjectMonster::Reset();
 	scene = SCENE_MGR.GetCurrentScene();
 	animator.SetTarget(&sprite);
-	SetPosition({300,0});
+	SetPosition({ 300,0 });
 	Intro();
 
 	player = dynamic_cast<Player*>(SCENE_MGR.GetCurrentScene()->FindGo("Player"));
 }
 
+void BossCroaks::Release()
+{
+	soundFan.stop();
+	ObjectMonster::Release();
+}
+
 void BossCroaks::Update(float dt)
 {
+
+	soundFan.setVolume(SOUND_MGR.GetSfxVolume());
 	ObjectMonster::Update(dt);
 	deltatime = dt;
-	if (hp == 0 && state < State::None)
+	if (hp == 0)
 	{
-		Death();
+		BossDieEffect(dt);
+		if (state < State::None)
+		{
+			Death();
+		}
 	}
 
 	if (animator.GetCurrentCilpId() == "animations/CroaksFanLoop.csv")
@@ -85,6 +100,8 @@ void BossCroaks::Update(float dt)
 			if (FanTimer(dt))
 			{
 				fanTimer = 0;
+				soundFan.stop();
+				SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_tall_fan_end_01.wav");
 				animator.Play("animations/CroaksFanOutro.csv");
 				animator.AddEvent("animations/CroaksFanOutro.csv", animator.GetCurrentClip()->GetTotalFrame(), std::bind(&BossCroaks::Idle, this));
 			}
@@ -126,18 +143,9 @@ void BossCroaks::Idle()
 
 void BossCroaks::Fan()
 {
-	ObjectEffect* oe = new ObjectEffect("EffectFanWind");
-	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/CroaksFanWind.csv");
-
 	playerPos = player->GetPosition();
 	playerPos.x -= fanBackwardSpeed * deltatime;
 	player->SetPosition(playerPos);
-}
-
-void BossCroaks::FanEnd()
-{
-	SetState(State::Idle);
 }
 
 void BossCroaks::Shoot()
@@ -145,6 +153,7 @@ void BossCroaks::Shoot()
 	if (shootCount < 3)
 	{
 		shootCount++;
+		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_tall_spit_shoot_01.wav");
 		BulletCroaksFirefly::Create(sf::Vector2f(sprite.getGlobalBounds().left + sprite.getGlobalBounds().width * 0.1f, sprite.getGlobalBounds().top + sprite.getGlobalBounds().height * 0.4f), { -1.f , 0.f }, scene);
 	}
 	else
@@ -161,15 +170,19 @@ void BossCroaks::ShootEnd()
 
 void BossCroaks::Death()
 {
+	soundFan.stop();
 	isAlive = false;
 	SetState(State::None);
 	animator.ClearEvent();
+	SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_tall_death_03.wav");
+	SOUND_MGR.PlaySfx("resource/FightText/sfx_level_knockout_boom_01.wav");
 	animator.Play("animations/CroaksDeath.csv");
 
 }
 
 void BossCroaks::OnDie()
 {
+	isAlive = false;
 	scene->RemoveGo(this);
 }
 
@@ -239,7 +252,9 @@ void BossCroaks::SetState(State state)
 		break;
 	case BossCroaks::State::Fan:
 		animator.ClearEvent();
+		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_tall_fan_start_01.wav");
 		animator.Play("animations/CroaksFanIntro.csv");
+		animator.AddEvent(animator.GetCurrentCilpId(), animator.GetCurrentClip()->GetLastFrame(), [this]() { soundFan.play(); });
 		animator.PlayQueue("animations/CroaksFanLoop.csv");
 		preState = State::Fan;
 		break;

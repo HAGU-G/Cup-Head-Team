@@ -23,6 +23,7 @@ protected:
 	sf::RenderStates renderStates;
 	float scale = 2.f;
 
+	sf::Shader noneShader;
 	sf::Shader bleeding;
 	float bleedingValue = 0.5f;
 	sf::Shader smooth;
@@ -40,6 +41,9 @@ protected:
 	float fixedUpdateTime = 1.f / 50.f;
 
 	bool useShader = true;
+	bool onFilmGrain = true;
+	bool onBleeding = true;
+	bool onSmooth = true;
 
 	sf::Clock clock;
 	float timeScale = 1.f;
@@ -82,6 +86,8 @@ public:
 	void LoadPostEffect();
 	void Pass2(float dt);
 	inline void SetBleedingValue(float value);
+
+	void PostEffectOnOff();
 };
 
 #define FRAMEWORK (Singleton<Framework>::Instance())

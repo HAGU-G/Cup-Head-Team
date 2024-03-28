@@ -42,8 +42,8 @@ void BulletPotatoShoot::OnDie()
 {
 	ObjectEffect* oe = new ObjectEffect("EffectPotatoShoot");
 	oe->CreateInit(position, direction, scene);
-	oe->GetAniamtor().Play("animations/potatoShootDeath.csv");
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().Play("animations/potatoShootDeath.csv");
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 
 	ObjectBullet::OnDie();
 }

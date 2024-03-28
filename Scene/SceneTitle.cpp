@@ -347,7 +347,7 @@ void SceneTitle::ChangeStageCard()
 		stageCardName->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, -stageCardGlow->GetGlobalBounds().height * 0.45f));
 		stageCardTitle->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, stageCardGlow->GetGlobalBounds().height * 0.475f));
 		stageCardX->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, -stageCardGlow->GetGlobalBounds().height * 0.275f));
-		stageCardNotReady->SetActive(true);
+		stageCardNotReady->SetActive(false);
 		break;
 	case 3:
 		hint.setBuffer(RES_MGR_SOUND_BUFFER.Get("resource/Menu/sfx_worldmap_hint_flower.wav"));
@@ -363,7 +363,7 @@ void SceneTitle::ChangeStageCard()
 		stageCardName->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, -stageCardGlow->GetGlobalBounds().height * 0.45f));
 		stageCardTitle->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, stageCardGlow->GetGlobalBounds().height * 0.60f));
 		stageCardX->SetPosition(stageCardGlow->GetPosition() + sf::Vector2f(0.f, -stageCardGlow->GetGlobalBounds().height * 0.20f));
-		stageCardNotReady->SetActive(true);
+		stageCardNotReady->SetActive(false);
 		break;
 	default:
 		break;

@@ -51,14 +51,14 @@ void BulletOnionTear::OnDie()
 	oe->CreateInit(position, { 1.f, 0.f }, scene);
 	if (isPink)
 	{
-		oe->GetAniamtor().Play("animations/onionTearPinkDeath.csv");
+		oe->GetAnimator().Play("animations/onionTearPinkDeath.csv");
 	}
 	else
 	{
 
-		oe->GetAniamtor().Play("animations/onionTearDeath.csv");
+		oe->GetAnimator().Play("animations/onionTearDeath.csv");
 	}
-	oe->GetAniamtor().AddEvent(oe->GetAniamtor().GetCurrentCilpId(), oe->GetAniamtor().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
+	oe->GetAnimator().AddEvent(oe->GetAnimator().GetCurrentCilpId(), oe->GetAnimator().GetCurrentClip()->GetTotalFrame(), std::bind(&ObjectEffect::OnDie, oe));
 	ObjectBullet::OnDie();
 }
 

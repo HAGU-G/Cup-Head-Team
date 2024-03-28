@@ -66,6 +66,7 @@ void Stage02::LateUpdate(float dt)
 
 void Stage02::Reset()
 {
+	SOUND_MGR.StopBgm();
 	croaks = new BossCroaks();
 	ribby = new BossRibby();
 	player = new Player("Player");
@@ -81,16 +82,16 @@ void Stage02::Reset()
 	scene->AddGo(ribby);
 	scene->AddGo(player);
 
-	//croaks->Init();
-	//ribby->Init();
+	croaks->Init();
+	ribby->Init();
 	player->Init();
 
-	//croaks->Reset();
-	//ribby->Reset();
+	croaks->Reset();
+	ribby->Reset();
 	player->Reset();
 
-	//croaks->SetPosition({300.f, 0.f });
-	//ribby->SetPosition({300.f, 0.f});
+	croaks->SetPosition({300.f, 0.f });
+	ribby->SetPosition({300.f, 0.f});
 	player->SetPosition({ -300.f, 0.f });
 
 	bg1->SetPosition({ 0.f, -viewSize.y * 0.43f });
@@ -98,10 +99,14 @@ void Stage02::Reset()
 	bg3->SetPosition({ 0.f, -viewSize.y * 0.38f });
 	bg4->SetPosition({ 0.f, 50.f });
 	bg5->SetPosition({ 0.f, 70.f });
+	bg6->SetPosition({ viewSize.x * 0.003f, -viewSize.y * 0.315f });
+
+	SOUND_MGR.PlayBgm("resource/Sprite/stage03/MUS_Frogs.wav", false);
 }
 
 void Stage02::Release()
 {
+	SOUND_MGR.StopBgm();
 	GameObject::Release();
 }
 
@@ -117,24 +122,29 @@ void Stage02::SetBackground()
 	bg3 = new SpriteGo();
 	bg4 = new SpriteGo();
 	bg5 = new SpriteGo();
+	bg6 = new SpriteGo();
 
 	bg1->SetTexture("resource/Sprite/stage03/jazzbar_bg_01.png");
 	bg2->SetTexture("resource/Sprite/stage03/jazzbar_bg_02.png");
 	bg3->SetTexture("resource/Sprite/stage03/jazzbar_bg_03.png");
 	bg4->SetTexture("resource/Sprite/stage03/jazzbar_bg_04.png");
 	bg5->SetTexture("resource/Sprite/stage03/jazzbar_bg_05.png");
+	bg6->GetAnimator().SetTarget(&bg6->GetSprite());
+	bg6->GetAnimator().Play("animations/frogCrowdA.csv");
 
 	bg1->SetPosition({ 0,-170 });
 	bg2->SetPosition({ 0,-120 });
 	bg3->SetPosition({ 0,80 });
 	bg4->SetPosition({ 0,130 });
 	bg5->SetPosition({ 0,170 });
+	bg6->SetPosition({ 0,0 });
 
 	backgrounds.push_back(bg1);
 	backgrounds.push_back(bg2);
 	backgrounds.push_back(bg3);
 	backgrounds.push_back(bg4);
 	backgrounds.push_back(bg5);
+	backgrounds.push_back(bg6);
 
 	for (auto bg : backgrounds)
 	{
@@ -142,11 +152,14 @@ void Stage02::SetBackground()
 		bg->SetScale({ 1.3f, 1.3f });
 	}
 
+	bg6->SetScale({ 0.74f, 0.74f });
+
 	bg1->sortLayer = -3;
 	bg2->sortLayer = -2;
 	bg3->sortLayer = -1;
 	bg4->sortLayer = 3;
 	bg5->sortLayer = 4;
+	bg6->sortLayer = -1;
 	
 	for (auto bg : backgrounds)
 	{

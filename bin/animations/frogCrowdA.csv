@@ -1,0 +1,27 @@
+ID,FPS,LOOPTYPE(0:SINGLE 1:LOOP 2:PING PONG),,,
+frogCrowdA,20,1,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,ORIGIN
+resource/frogCrowdA.png,0,0,840,335,4
+resource/frogCrowdA.png,840,0,832,335,4
+resource/frogCrowdA.png,1672,0,836,335,4
+resource/frogCrowdA.png,2508,0,839,335,4
+resource/frogCrowdA.png,3347,0,844,335,4
+resource/frogCrowdA.png,4191,0,839,335,4
+resource/frogCrowdA.png,5030,0,839,335,4
+resource/frogCrowdA.png,5869,0,835,335,4
+resource/frogCrowdA.png,6704,0,840,335,4
+resource/frogCrowdA.png,7544,0,832,335,4
+resource/frogCrowdA.png,8376,0,836,335,4
+resource/frogCrowdA.png,9212,0,839,335,4
+resource/frogCrowdA.png,10051,0,844,335,4
+resource/frogCrowdA.png,10895,0,839,335,4
+resource/frogCrowdA.png,11734,0,839,335,4
+resource/frogCrowdA.png,12573,0,835,335,4
+resource/frogCrowdA.png,13408,0,840,335,4
+resource/frogCrowdA.png,14248,0,832,335,4
+resource/frogCrowdA.png,15080,0,836,335,4
+resource/frogCrowdA.png,0,335,839,335,4
+resource/frogCrowdA.png,839,335,844,335,4
+resource/frogCrowdA.png,1683,335,839,335,4
+resource/frogCrowdA.png,2522,335,839,335,4
+resource/frogCrowdA.png,3361,335,835,335,4
