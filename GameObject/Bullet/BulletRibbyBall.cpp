@@ -21,10 +21,14 @@ void BulletRibbyBall::Update(float dt)
 	ObjectBullet::Update(dt);
 	float upperBound = -600.0f; 
 	float lowerBound = -20.f;
-	if (position.y <= upperBound || position.y >= lowerBound)
+	if (position.y <= upperBound || position.y > lowerBound)
 	{
-		direction.y = -direction.y; 
-		SetDirection(direction, true); 
+		if (position.y > lowerBound)
+		{
+			SetPosition({ position.x,lowerBound });
+		}
+		direction.y = -direction.y;
+		SetDirection(direction, true);
 		SOUND_MGR.PlaySfx("resource/Sprite/stage03/sfx_frogs_short_clap_bounce_02.wav");
 
 	}
