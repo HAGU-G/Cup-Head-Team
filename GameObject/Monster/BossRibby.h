@@ -17,7 +17,7 @@ protected:
 	State state = State::None;
 	State preState = State::None;
 
-	float patternTimer = 6.f;
+	float patternTimer = 2.f;
 	float patternInterval = 6.0f;
 	float moveSpeed = 100.f;
 

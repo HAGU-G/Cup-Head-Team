@@ -39,8 +39,8 @@ void BulletCarnationBlueSeed::Init()
 	SetRange(15000.f);
 	type = Type::Homing;
 	SetRotateSpeed(400.f);
-	maxHp = 30;
-	hp = 30;
+	maxHp = 12;
+	hp = 12;
 }
 
 void BulletCarnationBlueSeed::OnDie()

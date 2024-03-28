@@ -137,12 +137,6 @@ void Stage03::Update(float dt)
 	frontCloudBg2->SetPosition(frontCloudPos2);
 
 	carnationHp = carnation->GetHp();
-	if (carnationHp <= 0 && !isVictory)
-	{
-		isVictory = true;
-		player->InvincibleMode();
-		sceneGame->SetStatus(SceneGame::Status::Victory);
-	}
 }
 
 void Stage03::LateUpdate(float dt)
