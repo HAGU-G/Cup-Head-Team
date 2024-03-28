@@ -56,6 +56,7 @@ protected:
 	bool onPlatForm = false;
 	bool isDuck = false;
 	bool isDucking = false;
+	bool invincibleMode = false;
 	int maxHp = 3;
 
 	int hp;

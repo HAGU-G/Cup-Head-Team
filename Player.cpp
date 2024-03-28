@@ -71,6 +71,11 @@ void Player::Intro()
 
 void Player::Update(float dt)
 {
+	if (dt == 0.0f)
+	{
+		return;
+	}
+
 	SpriteGo::Update(dt);
 	animator.Update(dt);
 
@@ -673,7 +678,7 @@ void Player::DashEnd()
 	isDashing = false;
 	if (isDamaging)
 	{
-		if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+		if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv" && !invincibleMode)
 		{
 			animator.Play("animations/PlayerDamage.csv");
 		}
@@ -690,6 +695,11 @@ void Player::DashEnd()
 
 void Player::OnDamage()
 {
+	if (invincibleMode)
+	{
+		return;
+	}
+
 	isFire = false;
 	hp -= 1;
 	if (hp == 0)
@@ -741,7 +751,6 @@ void Player::LateUpdate(float dt)
 {
 	SpriteGo::LateUpdate(dt);
 
-
 	if (state == PlayerState::Dead)
 	{
 		return;
@@ -766,7 +775,7 @@ void Player::LateUpdate(float dt)
 			}
 			else if (!isInvincible)
 			{
-				if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+				if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv" && !invincibleMode)
 				{
 					animator.Play("animations/PlayerDamage.csv");
 				}
@@ -783,7 +792,7 @@ void Player::LateUpdate(float dt)
 	{
 		if (!isInvincible && monster->IsAlive() && GetCustomBoundsRect().intersects(monster->GetCustomBoundsRect()))
 		{
-			if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv")
+			if (animator.GetCurrentCilpId() != "animations/PlayerDamage.csv" && !invincibleMode)
 			{
 				animator.Play("animations/PlayerDamage.csv");
 			}
@@ -842,5 +851,5 @@ void Player::LateUpdate(float dt)
 
 void Player::InvincibleMode() 
 {
-	
+	invincibleMode = !invincibleMode;
 }
