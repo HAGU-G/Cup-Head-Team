@@ -5,7 +5,7 @@
 int main()
 {
 	srand(time(NULL));
-	FRAMEWORK.Init(1280,720,"Cuphead");
+	FRAMEWORK.Init(1920,1080,"Cuphead");
 	FRAMEWORK.Do();
 	FRAMEWORK.Release();
 
